@@ -1,13 +1,14 @@
 ---
-title: 'Quizz2'
+title: 'Cinéma'
 date: '2020-04-12'
-accroche: 'Accroche quizz 2'
-question: 'Question Quizz 2'
+accroche: 'James Bond'
+question: 'Quel acteur incarnant James Bond s’est vu proposer un contrat professionnel par Manchester United lo'
 answers: 
-    1: 'Plouf'
-    2: 'Plaf'
-    3: 'Tic'
-    4: 'Tac'
+    1: 'Sean Connery'
+    2: 'Roger Moore'
+    3: 'Daniel Craig'
+    4: 'Timothy Dalton'
 answer: 1
+backgroundVideo: 'https://cdn.rts.ch/rtschallengeassets/challenges/sport-paques-20/videos/S_Rinaldi_Q1_1.mp4'
 ---
 Plouf plat tic tac?

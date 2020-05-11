@@ -1,4 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
     root: {
@@ -13,6 +15,6 @@ export default function PossibleAnswer(props) {
     const classes = useStyles();
 
     return (
-        <div>{props.val}</div>
+        <Grid item><Button variant="contained">{props.val}</Button></Grid>
     );
 }

@@ -7,6 +7,7 @@ import utilStyles from '../../styles/utils.module.css'
 import PossibleAnswer from '../../components/possibleAnswer'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 
 const useStyles = makeStyles({
@@ -22,6 +23,9 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    answers: {
+        padding: '1rem',
+    }
 });
 
 
@@ -45,9 +49,15 @@ export async function getStaticProps({ params }) {
 function ChallengeLayout(props) {
 
     console.log(props);
+    const classes = useStyles();
 
     return (
         <article>
+
+
+
+
+
             <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
             <Typography color="textSecondary">
                 <Date dateString={props.challengeData.date} />
@@ -59,14 +69,18 @@ function ChallengeLayout(props) {
 
                         <div>
                             <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
-                            {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
+                            <Grid className={classes.answers} container justify="center" spacing={2}>
+                                {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
+                            </Grid>
                         </div>
                     )
                 } else {
                     return (
                         <div>
                             <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
-                            <Button onClick={() => { props.onClick("start") }}>Démarrer le défi</Button>
+                            <Grid container justify="center">
+                                <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
+                            </Grid>
                         </div>
                     )
                 }
