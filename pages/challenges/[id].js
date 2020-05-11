@@ -44,6 +44,10 @@ export async function getStaticProps({ params }) {
 
 class Plouf extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
 
         return (
