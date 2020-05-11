@@ -38,3 +38,9 @@ amplify/backend/awscloudformation
 build/
 dist/
 node_modules/
+.idea/misc.xml
+.idea/modules.xml
+.idea/sonarlint/
+.idea/vcs.xml
+.idea/web-front-v3.iml
+.idea/workspace.xml
