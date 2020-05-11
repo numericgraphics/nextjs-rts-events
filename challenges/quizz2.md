@@ -2,6 +2,7 @@
 title: 'Quizz2'
 date: '2020-04-12'
 accroche: 'Accroche quizz 2'
+question: 'Question Quizz 2'
 answers: 
     1: 'Plouf'
     2: 'Plaf'

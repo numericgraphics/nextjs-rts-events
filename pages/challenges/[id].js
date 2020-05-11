@@ -42,23 +42,73 @@ export async function getStaticProps({ params }) {
     }
 }
 
-class Plouf extends React.Component {
+function ChallengeLayout(props) {
+
+    console.log(props);
+
+    return (
+        <article>
+            <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
+            <Typography color="textSecondary">
+                <Date dateString={props.challengeData.date} />
+            </Typography>
+
+            {(() => {
+                if (props.started) {
+                    return (
+
+                        <div>
+                            <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
+                            {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div>
+                            <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
+                            <Button onClick={() => { props.onClick("start") }}>Démarrer le défi</Button>
+                        </div>
+                    )
+                }
+            })()}
+        </article>
+    )
+
+}
+
+
+class ChallengeController extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            started: false,
+        }
+
+    }
+
+    handleClick(e) {
+        console.log("Click");
+        console.log(e);
+        switch (e) {
+            case "start":
+                this.setState({
+                    started: true
+                });
+        }
     }
 
     render() {
 
+        const started = this.state.started;
+
         return (
-            <article>
-                <Typography variant="h5" component="h2">{this.props.challengeData.title}</Typography>
-                <Typography color="textSecondary">
-                    <Date dateString={this.props.challengeData.date} />
-                </Typography>
-                <Typography variant="body2" component="p">{this.props.challengeData.accroche}</Typography>
-                <Button>Démarrer le défi</Button>
-            </article>
+            <ChallengeLayout
+                challengeData={this.props.challengeData}
+                onClick={(e) => this.handleClick(e)}
+                started={started}
+            />
         )
     }
 }
@@ -72,7 +122,7 @@ export default function Challenge({ challengeData }) {
             <Head>
                 <title>{challengeData.title}</title>
             </Head>
-            <Plouf challengeData={challengeData} />
+            <ChallengeController challengeData={challengeData} />
         </Layout>
     )
 }
@@ -83,4 +133,6 @@ export default function Challenge({ challengeData }) {
                 </div>
 
                 <div dangerouslySetInnerHTML={{ __html: challengeData.contentHtml }} />
+
+                <Button onClick={() => { props.onClick("start") }}>Démarrer le défi</Button>
 */
