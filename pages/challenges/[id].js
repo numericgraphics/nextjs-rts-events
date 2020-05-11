@@ -42,6 +42,23 @@ export async function getStaticProps({ params }) {
     }
 }
 
+class Plouf extends React.Component {
+
+    render() {
+
+        return (
+            <article>
+                <Typography variant="h5" component="h2">{this.props.challengeData.title}</Typography>
+                <Typography color="textSecondary">
+                    <Date dateString={this.props.challengeData.date} />
+                </Typography>
+                <Typography variant="body2" component="p">{this.props.challengeData.accroche}</Typography>
+                <Button>Démarrer le défi</Button>
+            </article>
+        )
+    }
+}
+
 export default function Challenge({ challengeData }) {
 
     const classes = useStyles();
@@ -51,14 +68,7 @@ export default function Challenge({ challengeData }) {
             <Head>
                 <title>{challengeData.title}</title>
             </Head>
-            <article>
-                <Typography variant="h5" component="h2">{challengeData.title}</Typography>
-                <Typography className={classes.pos} color="textSecondary">
-                    <Date dateString={challengeData.date} />
-                </Typography>
-                <Typography variant="body2" component="p">{challengeData.accroche}</Typography>
-                <Button>Démarrer le défi</Button>
-            </article>
+            <Plouf challengeData={challengeData} />
         </Layout>
     )
 }
