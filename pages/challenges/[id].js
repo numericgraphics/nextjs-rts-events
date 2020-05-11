@@ -11,20 +11,30 @@ import Grid from '@material-ui/core/Grid';
 
 
 const useStyles = makeStyles({
-    root: {
-        background: 'white',
-        minWidth: 275,
-        margin: '1rem',
-        cursor: 'pointer',
-    },
     title: {
         fontSize: 14,
     },
     pos: {
         marginBottom: 12,
     },
+    question: {
+        background: 'rgba(0,0,0,0.5)',
+    },
     answers: {
         padding: '1rem',
+    },
+    main: {
+        position: 'relative',
+    },
+    Video: {
+        objectFit: 'cover',
+        width: '100%',
+        height: '15rem',
+        'z-index': 0
+    },
+    devantLaVideo: {
+        position: 'relative',
+        'z-index':1
     }
 });
 
@@ -52,39 +62,43 @@ function ChallengeLayout(props) {
     const classes = useStyles();
 
     return (
-        <article>
+        <article className={classes.main}>
 
+            <video autoPlay={true} muted={props.muted} loop playsInline className={classes.Video}>
+                <source src={props.challengeData.backgroundVideo}
+                    type="video/mp4" />
+            </video>
 
+            <div className={classes.devantLaVideo}>
 
+                <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
+                <Typography color="textSecondary">
+                    <Date dateString={props.challengeData.date} />
+                </Typography>
 
+                {(() => {
+                    if (props.started) {
+                        return (
 
-            <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
-            <Typography color="textSecondary">
-                <Date dateString={props.challengeData.date} />
-            </Typography>
-
-            {(() => {
-                if (props.started) {
-                    return (
-
-                        <div>
-                            <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
-                            <Grid className={classes.answers} container justify="center" spacing={2}>
-                                {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
-                            </Grid>
-                        </div>
-                    )
-                } else {
-                    return (
-                        <div>
-                            <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
-                            <Grid container justify="center">
-                                <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
-                            </Grid>
-                        </div>
-                    )
-                }
-            })()}
+                            <div>
+                                <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
+                                <Grid className={classes.answers} container justify="center" spacing={2}>
+                                    {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
+                                </Grid>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
+                                <Grid container justify="center">
+                                    <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
+                                </Grid>
+                            </div>
+                        )
+                    }
+                })()}
+            </div>
         </article>
     )
 
@@ -98,6 +112,7 @@ class ChallengeController extends React.Component {
 
         this.state = {
             started: false,
+            muted: true,
         }
 
     }
@@ -108,7 +123,8 @@ class ChallengeController extends React.Component {
         switch (e) {
             case "start":
                 this.setState({
-                    started: true
+                    started: true,
+                    muted: false
                 });
         }
     }
@@ -116,12 +132,14 @@ class ChallengeController extends React.Component {
     render() {
 
         const started = this.state.started;
+        const muted = this.state.muted;
 
         return (
             <ChallengeLayout
                 challengeData={this.props.challengeData}
                 onClick={(e) => this.handleClick(e)}
                 started={started}
+                muted={muted}
             />
         )
     }

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'white',
         padding: '1rem',
-        'max-width': '36rem',
+        'max-width': '24rem',
         margin: '3rem auto 6rem'
     },
     header: {
