@@ -1,40 +1,39 @@
 import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
+import Layout, { siteTitle } from '../components/eventLayout'
 import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
+import { getSortedChallengesData } from '../lib/challenges'
 import Link from 'next/link'
 import Date from '../components/date'
 
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
+  const allChallengesData = getSortedChallengesData()
   return {
     props: {
-      allPostsData
+      allChallengesData
     }
   }
 }
 
 
 
-export default function Home({ allPostsData }) {
+export default function Home({ allChallengesData }) {
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
         <p>
-          (PLOUF This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+          Description
         </p>
       </section>
+
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>Challenges List</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {allChallengesData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href="/posts/[id]" as={`/posts/${id}`}>
+              <Link href="/challenges/[id]" as={`/challenges/${id}`}>
                 <a>{title}</a>
               </Link>
               <br />
@@ -45,6 +44,7 @@ export default function Home({ allPostsData }) {
           ))}
         </ul>
       </section>
+
     </Layout>
   )
 }
