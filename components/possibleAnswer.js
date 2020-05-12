@@ -4,17 +4,15 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
     root: {
-        background: 'white',
-        minWidth: 275,
-        margin: '1rem',
-        cursor: 'pointer',
+        margin: '10px 5px 0 5px',
     }
 });
 
 export default function PossibleAnswer(props) {
+
     const classes = useStyles();
 
     return (
-        <Grid item><Button variant="contained">{props.val}</Button></Grid>
+        <Grid item className={classes.root}><Button variant="contained" >{props.val}</Button></Grid>
     );
 }

@@ -20,34 +20,29 @@ const useStyles = makeStyles({
     question: {
         background: 'rgba(0,0,0,0.5)',
     },
-    answers: {
-        padding: '1rem',
-    },
     main: {
         position: 'relative',
+        minHeight: '25rem',
+        height: '100%',
     },
     video: {
+        position: 'absolute',
         objectFit: 'cover',
         width: '100%',
-        height: '15rem',
-        'z-index': 0
-    },
-    'kenwrap': {
-        width: '100%',
-        height: '50vw',
-        margin: '0 auto',
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    ken: {
-        objectFit: 'cover',
-        width: '100%',
-        height: '15rem',
-        'z-index': 0
+        height: '100%',
+        zIndex: 0
     },
     devantLaVideo: {
         position: 'relative',
-        'z-index': 1
+        zIndex: 1,
+        padding: '1rem',
+        background: 'linear-gradient(to bottom,  rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.4) 70%,rgba(0,0,0,0) 100%)', /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    },
+    buttonsContainer: {
+        position: 'absolute',
+        width: '100%',
+        bottom: 0,
+        marginBottom: '1rem',
     }
 });
 
@@ -105,10 +100,28 @@ function ChallengeLayout(props) {
                 {(() => {
                     if (props.started) {
                         return (
-
                             <div>
                                 <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
-                                <Grid className={classes.answers} container justify="center" spacing={2}>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
+                            </div>
+                        )
+                    }
+                })()}
+            </div>
+
+            <div className={classes.buttonsContainer}>
+
+                {(() => {
+                    if (props.started) {
+                        return (
+
+                            <div>
+                                <Grid container justify="center">
                                     {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
                                 </Grid>
                             </div>
@@ -116,8 +129,7 @@ function ChallengeLayout(props) {
                     } else {
                         return (
                             <div>
-                                <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
-                                <Grid container justify="center">
+                                <Grid container justify="center" >
                                     <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
                                 </Grid>
                             </div>
@@ -125,6 +137,9 @@ function ChallengeLayout(props) {
                     }
                 })()}
             </div>
+
+
+
         </article>
     )
 
