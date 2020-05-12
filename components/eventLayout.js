@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         'max-width': '24rem',
         margin: '0 auto 6rem',
         maxHeight: '45rem',
-        minHeight: '20rem',
+        minHeight: '25rem',
         display: 'flex',
         flexDirection: 'column',
     },
