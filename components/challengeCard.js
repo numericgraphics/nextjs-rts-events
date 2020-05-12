@@ -34,9 +34,13 @@ export default function ChallengeCard(props) {
 
             <Card className={classes.root}>
                 <CardContent>
+
+                    {/*
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                         {props.cardTitle}
                     </Typography>
+                    */}
+
                     <Typography variant="h5" component="h2">
                         {props.cardTitle}
                     </Typography>
@@ -44,8 +48,8 @@ export default function ChallengeCard(props) {
                         {props.date}
                     </Typography>
                     <Typography variant="body2" component="p">
-                        TODO: Description du challenge
-                </Typography>
+                        {props.accroche}
+                    </Typography>
                 </CardContent>
             </Card>
         </Link>

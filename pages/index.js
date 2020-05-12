@@ -27,15 +27,14 @@ export default function Home({ allChallengesData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>
-          Description
+          Venez tester vos connaissances sportives et tentez de gagner des cadeaux!!
         </p>
       </section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Challenges List</h2>
 
-        {allChallengesData.map(({ id, date, title }) => (
-          <ChallengeCard key={id} cardTitle={title} date={date} challengeID={id} />
+        {allChallengesData.map(({ id, date, title, accroche }) => (
+          <ChallengeCard key={id} cardTitle={title} date={date} challengeID={id} accroche={accroche} />
         ))}
 
       </section>
