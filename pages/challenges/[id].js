@@ -26,7 +26,20 @@ const useStyles = makeStyles({
     main: {
         position: 'relative',
     },
-    Video: {
+    video: {
+        objectFit: 'cover',
+        width: '100%',
+        height: '15rem',
+        'z-index': 0
+    },
+    'kenwrap': {
+        width: '100%',
+        height: '50vw',
+        margin: '0 auto',
+        overflow: 'hidden',
+        position: 'relative',
+    },
+    ken: {
         objectFit: 'cover',
         width: '100%',
         height: '15rem',
@@ -34,7 +47,7 @@ const useStyles = makeStyles({
     },
     devantLaVideo: {
         position: 'relative',
-        'z-index':1
+        'z-index': 1
     }
 });
 
@@ -64,10 +77,23 @@ function ChallengeLayout(props) {
     return (
         <article className={classes.main}>
 
-            <video autoPlay={true} muted={props.muted} loop playsInline className={classes.Video}>
-                <source src={props.challengeData.backgroundVideo}
-                    type="video/mp4" />
-            </video>
+            {(() => {
+                if (props.challengeData.backgroundVideo) {
+
+                    return (
+                        <video autoPlay={true} muted={props.muted} loop playsInline className={classes.video}>
+                            <source src={props.challengeData.backgroundVideo}
+                                type="video/mp4" />
+                        </video>
+                    )
+                } else if (props.challengeData.backgroundImage) {
+                    return (
+                        <div className={`${utilStyles.kenwrap}`}>
+                            <img className={`${utilStyles.kenimg}`} src={props.challengeData.backgroundImage} />
+                        </div>
+                    )
+                }
+            })()}
 
             <div className={classes.devantLaVideo}>
 
