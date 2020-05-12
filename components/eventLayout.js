@@ -21,14 +21,6 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
 
-    },
-
-    backToHome: {
-        margin: 0,
-        fontSize: '0.8em',
-        position: 'absolute',
-        left: 0,
-        zIndex: 33,
     }
 });
 
@@ -50,13 +42,6 @@ export default function EventLayout({ children, home }) {
                     <h1 className={utilStyles.heading2Xl}>Events by {' '}
                         <a href="https://www.rts.ch">RTS</a>
                     </h1>
-                )}
-                {!home && (
-                    <div className={classes.backToHome}>
-                        <Link href="/">
-                            <a>← Back to home</a>
-                        </Link>
-                    </div>
                 )}
             </header>
 

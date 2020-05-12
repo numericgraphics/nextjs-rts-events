@@ -1,3 +1,5 @@
+import React, { useRef} from 'react';
+import ReactDOM from 'react-dom';
 import Layout from '../../components/eventLayout'
 import { getAllChallengesIds, getChallengeData } from '../../lib/challenges'
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,9 +8,11 @@ import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
 import PossibleAnswer from '../../components/possibleAnswer'
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Button, IconButton } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Div100vh from 'react-div-100vh';
+import Link from 'next/link'
+import { KeyboardArrowLeft, KeyboardArrowRight, VolumeOff, VolumeUp, PlayArrow, Pause, Home } from '@material-ui/icons';
 
 
 const useStyles = makeStyles({
@@ -35,13 +39,25 @@ const useStyles = makeStyles({
     devantLaVideo: {
         position: 'relative',
         zIndex: 1,
-        padding: '1rem',
+        padding: '2rem 1rem 1rem',
         background: 'linear-gradient(to bottom,  rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.4) 70%,rgba(0,0,0,0) 100%)', /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     },
     buttonsContainer: {
         position: 'absolute',
         width: '100%',
         bottom: '1rem'
+    },
+    home: {
+        position: 'absolute',
+        zIndex: 2,
+        fontSize: '0.8em',
+        left: 0,
+    },
+    controls: {
+        position: 'absolute',
+        right: 0,
+        zIndex: 2,
+        fontSize: '0.8em',
     }
 });
 
@@ -67,12 +83,27 @@ function ChallengeLayout(props) {
 
     console.log(props);
     const classes = useStyles();
+    const vidRef = useRef(null);
 
     return (
         <Div100vh className={classes.mainContainer}>
 
+            <div className={classes.home} >
+                <Link href="/">
+                    <a>← Back to home</a>
+                </Link>
+            </div>
+
+            <div className={classes.controls} >
+                <IconButton onClick={() => props.onClick("unMute", null)}><VolumeUp /></IconButton>
+                <IconButton onClick={() => props.onClick("mute", null)}><VolumeOff /></IconButton>
+                <IconButton onClick={() => props.onClick("play", vidRef)}><PlayArrow /></IconButton>
+                <IconButton onClick={() => props.onClick("pause", vidRef)}><Pause /></IconButton>
+            </div>
+
+
             {props.challengeData.backgroundVideo && (
-                <video autoPlay={true} muted={props.muted} loop playsInline className={classes.video}>
+                <video ref={vidRef} autoPlay={!props.paused} muted={props.muted} loop playsInline className={classes.video}>
                     <source src={props.challengeData.backgroundVideo}
                         type="video/mp4" />
                 </video>
@@ -116,7 +147,7 @@ function ChallengeLayout(props) {
                 {!props.started && (
                     <div>
                         <Grid container justify="center" >
-                            <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
+                            <Grid item><Button variant="contained" onClick={() => { props.onClick("start", null) }}>Démarrer le défi</Button></Grid>
                         </Grid>
                     </div>
                 )}
@@ -137,19 +168,44 @@ class ChallengeController extends React.Component {
         this.state = {
             started: false,
             muted: true,
+            paused: false,
         }
 
     }
 
-    handleClick(e) {
+    handleClick(e,param) {
         console.log("Click");
         console.log(e);
+        console.log(param);
         switch (e) {
             case "start":
                 this.setState({
                     started: true,
                     muted: false
                 });
+                break;
+            case "mute":
+                this.setState({
+                    muted: true,
+                });
+                break;
+            case "unMute":
+                this.setState({
+                    muted: false,
+                });
+                break;
+            case "play":
+                this.setState({
+                    paused: false,
+                });
+                param.current.play();
+                break;
+            case "pause":
+                this.setState({
+                    paused: true,
+                });
+                param.current.pause();
+                break;
         }
     }
 
@@ -157,13 +213,15 @@ class ChallengeController extends React.Component {
 
         const started = this.state.started;
         const muted = this.state.muted;
+        const paused = this.state.paused;
 
         return (
             <ChallengeLayout
                 challengeData={this.props.challengeData}
-                onClick={(e) => this.handleClick(e)}
+                onClick={(e, param) => this.handleClick(e, param)}
                 started={started}
                 muted={muted}
+                paused={paused}
             />
         )
     }
@@ -184,11 +242,5 @@ export default function Challenge({ challengeData }) {
 }
 
 /*
-<div>
-                    {Object.keys(challengeData.answers).map( key => <PossibleAnswer key={key} val={challengeData.answers[key]} />)}
-                </div>
-
                 <div dangerouslySetInnerHTML={{ __html: challengeData.contentHtml }} />
-
-                <Button onClick={() => { props.onClick("start") }}>Démarrer le défi</Button>
 */
