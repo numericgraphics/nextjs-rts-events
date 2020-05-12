@@ -1,4 +1,4 @@
-import React, { useRef} from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../../components/eventLayout'
 import { getAllChallengesIds, getChallengeData } from '../../lib/challenges'
@@ -58,7 +58,11 @@ const useStyles = makeStyles({
         right: 0,
         zIndex: 2,
         fontSize: '0.8em',
+    },
+    controlBtn: {
+        color: '#666',
     }
+
 });
 
 
@@ -94,12 +98,22 @@ function ChallengeLayout(props) {
                 </Link>
             </div>
 
-            <div className={classes.controls} >
-                <IconButton onClick={() => props.onClick("unMute", null)}><VolumeUp /></IconButton>
-                <IconButton onClick={() => props.onClick("mute", null)}><VolumeOff /></IconButton>
-                <IconButton onClick={() => props.onClick("play", vidRef)}><PlayArrow /></IconButton>
-                <IconButton onClick={() => props.onClick("pause", vidRef)}><Pause /></IconButton>
-            </div>
+            {props.challengeData.backgroundVideo && (
+                <div className={classes.controls} >
+                    {props.muted && props.started && (
+                        <IconButton onClick={() => props.onClick("unMute", null)}><VolumeUp className={classes.controlBtn} /></IconButton>
+                    )}
+                    {!props.muted && props.started && (
+                        <IconButton onClick={() => props.onClick("mute", null)}><VolumeOff className={classes.controlBtn} /></IconButton>
+                    )}
+                    {props.paused && (
+                        <IconButton onClick={() => props.onClick("play", vidRef)}><PlayArrow className={classes.controlBtn} /></IconButton>
+                    )}
+                    {!props.paused && (
+                        <IconButton onClick={() => props.onClick("pause", vidRef)}><Pause className={classes.controlBtn} /></IconButton>
+                    )}
+                </div>
+            )}
 
 
             {props.challengeData.backgroundVideo && (
@@ -173,7 +187,7 @@ class ChallengeController extends React.Component {
 
     }
 
-    handleClick(e,param) {
+    handleClick(e, param) {
         console.log("Click");
         console.log(e);
         console.log(param);
