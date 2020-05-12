@@ -20,10 +20,11 @@ const useStyles = makeStyles({
     question: {
         background: 'rgba(0,0,0,0.5)',
     },
-    main: {
-        position: 'relative',
-        minHeight: '25rem',
+    mainArticle: {
         height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
     },
     video: {
         position: 'absolute',
@@ -70,7 +71,7 @@ function ChallengeLayout(props) {
     const classes = useStyles();
 
     return (
-        <article className={classes.main}>
+        <article className={classes.mainArticle}>
 
             {(() => {
                 if (props.challengeData.backgroundVideo) {
