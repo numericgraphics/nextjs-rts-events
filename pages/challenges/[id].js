@@ -8,6 +8,7 @@ import PossibleAnswer from '../../components/possibleAnswer'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Div100vh from 'react-div-100vh';
 
 
 const useStyles = makeStyles({
@@ -20,11 +21,9 @@ const useStyles = makeStyles({
     question: {
         background: 'rgba(0,0,0,0.5)',
     },
-    mainArticle: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        flexGrow: 1,
+    mainContainer: {
+        maxHeight: '45rem',
+        position: 'relative',
     },
     video: {
         position: 'absolute',
@@ -42,8 +41,7 @@ const useStyles = makeStyles({
     buttonsContainer: {
         position: 'absolute',
         width: '100%',
-        bottom: 0,
-        marginBottom: '1rem',
+        bottom: '1rem'
     }
 });
 
@@ -71,7 +69,7 @@ function ChallengeLayout(props) {
     const classes = useStyles();
 
     return (
-        <article className={classes.mainArticle}>
+        <Div100vh className={classes.mainContainer}>
 
             {(() => {
                 if (props.challengeData.backgroundVideo) {
@@ -94,10 +92,7 @@ function ChallengeLayout(props) {
             <div className={classes.devantLaVideo}>
 
                 <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
-                <Typography color="textSecondary">
-                    <Date dateString={props.challengeData.date} />
-                </Typography>
-
+                
                 {(() => {
                     if (props.started) {
                         return (
@@ -141,7 +136,7 @@ function ChallengeLayout(props) {
 
 
 
-        </article>
+        </Div100vh>
     )
 
 }
