@@ -71,70 +71,57 @@ function ChallengeLayout(props) {
     return (
         <Div100vh className={classes.mainContainer}>
 
-            {(() => {
-                if (props.challengeData.backgroundVideo) {
+            {props.challengeData.backgroundVideo && (
+                <video autoPlay={true} muted={props.muted} loop playsInline className={classes.video}>
+                    <source src={props.challengeData.backgroundVideo}
+                        type="video/mp4" />
+                </video>
+            )}
 
-                    return (
-                        <video autoPlay={true} muted={props.muted} loop playsInline className={classes.video}>
-                            <source src={props.challengeData.backgroundVideo}
-                                type="video/mp4" />
-                        </video>
-                    )
-                } else if (props.challengeData.backgroundImage) {
-                    return (
-                        <div className={`${utilStyles.kenwrap}`}>
-                            <img className={`${utilStyles.kenimg}`} src={props.challengeData.backgroundImage} />
-                        </div>
-                    )
-                }
-            })()}
+            {!props.challengeData.backgroundVideo && props.challengeData.backgroundImage && (
+                <div className={`${utilStyles.kenwrap}`}>
+                    <img className={`${utilStyles.kenimg}`} src={props.challengeData.backgroundImage} />
+                </div>
+            )}
 
             <div className={classes.devantLaVideo}>
 
                 <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
-                
-                {(() => {
-                    if (props.started) {
-                        return (
-                            <div>
-                                <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div>
-                                <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
-                            </div>
-                        )
-                    }
-                })()}
+
+                {props.started && (
+                    <div>
+                        <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
+                    </div>
+                )}
+
+                {!props.started && (
+                    <div>
+                        <Typography variant="body2" component="p">{props.challengeData.accroche}</Typography>
+                    </div>
+                )}
+
             </div>
 
             <div className={classes.buttonsContainer}>
 
-                {(() => {
-                    if (props.started) {
-                        return (
+                {props.started && (
 
-                            <div>
-                                <Grid container justify="center">
-                                    {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
-                                </Grid>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div>
-                                <Grid container justify="center" >
-                                    <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
-                                </Grid>
-                            </div>
-                        )
-                    }
-                })()}
+                    <div>
+                        <Grid container justify="center">
+                            {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
+                        </Grid>
+                    </div>
+                )}
+
+                {!props.started && (
+                    <div>
+                        <Grid container justify="center" >
+                            <Grid item><Button variant="contained" onClick={() => { props.onClick("start") }}>Démarrer le défi</Button></Grid>
+                        </Grid>
+                    </div>
+                )}
+
             </div>
-
-
 
         </Div100vh>
     )
