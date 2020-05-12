@@ -33,8 +33,8 @@ export default function Home({ allChallengesData }) {
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
 
-        {allChallengesData.map(({ id, date, title, accroche }) => (
-          <ChallengeCard key={id} cardTitle={title} date={date} challengeID={id} accroche={accroche} />
+        {allChallengesData.map(({ id, date, title, accroche, backgroundImage }) => (
+          <ChallengeCard key={id} cardTitle={title} date={date} challengeID={id} accroche={accroche} image={backgroundImage} />
         ))}
 
       </section>

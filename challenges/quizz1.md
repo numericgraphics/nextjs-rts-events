@@ -10,5 +10,6 @@ answers:
     4: '14 fois'
 answer: 2
 backgroundVideo: 'https://cdn.rts.ch/rtschallengeassets/challenges/sport-paques-20/videos/B_Wakker_Q3_1.mp4'
+backgroundImage: 'https://rdsimages.cookieless.ca/polopoly_fs/1.6831123.1561131392!/img/httpImage/image.jpg_gen/derivatives/main-xxxhdpi/image.jpg'
 ---
 Plouf plat tic tac?
