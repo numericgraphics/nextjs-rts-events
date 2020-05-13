@@ -8,7 +8,7 @@ export const siteTitle = 'TODO:SiteTitle'
 
 const useStyles = makeStyles({
     root: {
-        background: '#666',
+        background: '#fff',
         border: 0,
         color: 'white',
         width: '100vw',
