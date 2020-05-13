@@ -12,7 +12,7 @@ import { Button, IconButton } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Div100vh from 'react-div-100vh';
 import Link from 'next/link'
-import { KeyboardArrowLeft, KeyboardArrowRight, VolumeOff, VolumeUp, PlayArrow, Pause, Home } from '@material-ui/icons';
+import { KeyboardArrowLeft, KeyboardArrowRight, VolumeOff, VolumeUp, PlayArrow, Pause, Home, Close } from '@material-ui/icons';
 
 
 const useStyles = makeStyles({
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     devantLaVideo: {
         position: 'relative',
         zIndex: 1,
-        padding: '2rem 1rem 1rem',
+        padding: '2.5rem 1rem 1rem',
         background: 'linear-gradient(to bottom,  rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.4) 70%,rgba(0,0,0,0) 100%)', /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     },
     buttonsContainer: {
@@ -57,7 +57,6 @@ const useStyles = makeStyles({
         position: 'absolute',
         right: 0,
         zIndex: 2,
-        fontSize: '0.8em',
     },
     controlBtn: {
         color: '#666',
@@ -94,7 +93,7 @@ function ChallengeLayout(props) {
 
             <div className={classes.home} >
                 <Link href="/">
-                    <a>← Back to home</a>
+                    <a><IconButton onClick={() => props.onClick("close", null)}><Close className={classes.controlBtn} /></IconButton></a>
                 </Link>
             </div>
 
