@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Div100vh from 'react-div-100vh';
 import Link from 'next/link'
 import { KeyboardArrowLeft, KeyboardArrowRight, VolumeOff, VolumeUp, PlayArrow, Pause, Home, Close } from '@material-ui/icons';
+import { motion } from 'framer-motion';
 
 
 const useStyles = makeStyles({
@@ -133,9 +134,15 @@ function ChallengeLayout(props) {
                 <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
 
                 {props.started && (
-                    <div>
+                    <motion.div
+                        animate={{
+                            scale: [1, 2, 2, 1, 1],
+                            rotate: [0, 0, 270, 270, 0],
+                            borderRadius: ['20%', '20%', '50%', '50%', '20%']
+                        }}
+                    >
                         <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
-                    </div>
+                    </motion.div>
                 )}
 
                 {!props.started && (
@@ -149,20 +156,25 @@ function ChallengeLayout(props) {
             <div className={classes.buttonsContainer}>
 
                 {props.started && (
-
-                    <div>
+                    <motion.div
+                        animate={{
+                            scale: [1, 2, 2, 1, 1],
+                            rotate: [0, 0, 270, 270, 0],
+                            borderRadius: ['20%', '20%', '50%', '50%', '20%']
+                        }}
+                    >
                         <Grid container justify="center">
                             {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
                         </Grid>
-                    </div>
+                    </motion.div>
                 )}
 
                 {!props.started && (
-                    <div>
-                        <Grid container justify="center" >
-                            <Grid item><Button variant="contained" onClick={() => { props.onClick("start", null) }}>Démarrer le défi</Button></Grid>
-                        </Grid>
-                    </div>
+
+                    <Grid container justify="center" >
+                        <Grid item><Button variant="contained" onClick={() => { props.onClick("start", null) }}>Démarrer le défi</Button></Grid>
+                    </Grid>
+
                 )}
 
             </div>
@@ -245,12 +257,22 @@ export default function Challenge({ challengeData }) {
     const classes = useStyles();
 
     return (
-        <Layout>
-            <Head>
-                <title>{challengeData.title}</title>
-            </Head>
-            <ChallengeController challengeData={challengeData} />
-        </Layout>
+
+        <motion.div
+            animate={{
+                scale: [1, 2, 2, 1, 1],
+                rotate: [0, 0, 270, 270, 0],
+                borderRadius: ['20%', '20%', '50%', '50%', '20%']
+            }}
+        >
+            <Layout>
+                <Head>
+                    <title>{challengeData.title}</title>
+                </Head>
+                <ChallengeController challengeData={challengeData} />
+            </Layout>
+        </motion.div>
+
     )
 }
 
