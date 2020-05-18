@@ -44,3 +44,4 @@ node_modules/
 .idea/vcs.xml
 .idea/web-front-v3.iml
 .idea/workspace.xml
+.idea/jsLibraryMappings.xml

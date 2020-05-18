@@ -2,31 +2,35 @@ import React, { useState } from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
 
-function Signup() {
+const signinWithNumber = async (number) => {
+    const response = await fetch('/api/number', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ number }),
+    })
+
+    if (response.status !== 200) {
+        throw new Error(await response.text())
+    }
+
+    // Router.push('/home')
+
+    console.log('go to home page');
+}
+
+function Number() {
     const [userData, setUserData] = useState({
-        phone: '',
+        number: '',
     })
 
     async function handleSubmit(event) {
         event.preventDefault()
         setUserData({ ...userData, error: '' })
 
-        const phone = userData.phone
+        const number = userData.number
 
         try {
-            const response = await fetch('/api/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone }),
-            })
-
-            if (response.status !== 200) {
-                throw new Error(await response.text())
-            }
-
-            console.log('Page/Signup - response', response)
-
-            Router.push('/number')
+            await signinWithNumber(number)
         } catch (error) {
             console.error(error)
             setUserData({ ...userData, error: error.message })
@@ -35,29 +39,29 @@ function Signup() {
 
     return (
         <Layout>
-            <div className="signup">
+            <div className="login">
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="phone">Phone</label>
+                    <label htmlFor="number">Number</label>
 
                     <input
                         type="text"
-                        id="phone"
-                        name="phone"
-                        value={userData.phone}
+                        id="number"
+                        name="number"
+                        value={userData.number}
                         onChange={event =>
                             setUserData(
-                                Object.assign({}, userData, { phone: event.target.value })
+                                Object.assign({}, userData, { number: event.target.value })
                             )
                         }
                     />
 
-                    <button type="submit">Login</button>
+                    <button type="submit">Send the Number receive</button>
 
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </form>
             </div>
             <style jsx>{`
-        .signup {
+        .login {
           max-width: 340px;
           margin: 0 auto;
           padding: 1rem;
@@ -90,4 +94,4 @@ function Signup() {
     )
 }
 
-export default Signup
+export default Number
