@@ -12,14 +12,16 @@ export default async (req, res) => {
     }
 
     // Check if rts-event cookie is available
-    const rtsEventCookie = null;
+    let rtsEventCookie = null;
+    let cookies = null;
     if (req.headers.cookie) {
-      const cookies = cookie.parse(req.headers.cookie ?? '');
-      const rtsEventCookie = cookies['RTS-Events'];
+      cookies = cookie.parse(req.headers.cookie ?? '');
+      rtsEventCookie = cookies['RTS-Events'];
     }
-    // if rts-event cookie is available with code and userID call getData
+    // if rts-event cookie is available
     if(rtsEventCookie !== null){
       const cookieValue = JSON.parse(cookies['RTS-Events']);
+      // Cookie contain userID and code
       if(cookieValue.code){
         // getData to get timeline
         const code = cookieValue.code;
@@ -47,6 +49,7 @@ export default async (req, res) => {
 
 
       }else{
+        // cookie dont have code property
         // user will receive sms code, 302 to redirect to Code page
         res.status(302).end()
       }
