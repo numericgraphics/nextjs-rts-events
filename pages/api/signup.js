@@ -23,8 +23,7 @@ export default async (req, res) => {
         console.log('API signup  - code', cookieValue.code);
         if(cookieValue.code){
           // getData to get timeline and send 200
-
-          const code = cookieValue.code;
+            const code = cookieValue.code;
             const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -44,21 +43,25 @@ export default async (req, res) => {
         }
       }
     } else {
-      // try {
-      //   const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSyncUser', {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: { "num": phone },
-      //   })
-      //
-      //   if (response.status !== 200) {
-      //     throw new Error(await response.text())
-      //   }
-      //
-      // } catch (error) {
-      //   console.error('create user error:', error)
-      //   throw new Error('User already exists.')
-      // }
+      try {
+        const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 'num': phone }),
+        })
+
+        //Get body data to set the useID in the cookie
+        const content = await response.json();
+        console.log('response content', content);
+
+        if (response.status !== 200) {
+          throw new Error(await response.text())
+        }
+
+      } catch (error) {
+        console.error('create user error:', error)
+        throw new Error('User already exists.')
+      }
 
       res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: 'plouf', code: '34'}), { path: '/' }));
       // res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: 'plouf'}), { path: '/' }));
