@@ -13,7 +13,7 @@ const signinWithNumber = async (number) => {
         throw new Error(await response.text())
     }
 
-    // Router.push('/home')
+    Router.push('/home')
 
     console.log('go to home page');
 }

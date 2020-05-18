@@ -20,13 +20,18 @@ function Signup() {
                 body: JSON.stringify({ phone }),
             })
 
+            if (response.status === 302) {
+                Router.push('/number');
+                return
+            }
+
             if (response.status !== 200) {
                 throw new Error(await response.text())
             }
 
-            console.log('Page/Signup - response', response)
+            console.log('Page/Signup - response', response);
+            Router.push('/home')
 
-            Router.push('/number')
         } catch (error) {
             console.error(error)
             setUserData({ ...userData, error: error.message })
