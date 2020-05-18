@@ -1,7 +1,7 @@
 ---
 title: 'Cyclisme'
 date: '2020-04-12'
-accroche: 'Phrase accroche'
+accroche: 'Phrase accroche ergse aergaerg aergaer aegaeg '
 question: 'Combien de fois la Suisse a-t-elle accueilli les mondiaux de cyclisme sur route?'
 answers: 
     1: '8 fois'

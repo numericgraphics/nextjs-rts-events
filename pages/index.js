@@ -40,10 +40,10 @@ export default function Home({ allChallengesData }) {
 
         {allChallengesData.map(({ id, date, title, accroche, backgroundImage }) => (
           <motion.div
-            whileHover={{ scale: 1.2, rotate: 10 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{
-              scale: 0.8,
-              rotate: -10,
+              scale: 0.9,
+              
               borderRadius: "100%"
             }}
           >

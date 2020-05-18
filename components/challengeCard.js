@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link'
 import { motion } from 'framer-motion';
+import { red } from '@material-ui/core/colors';
 
 
 
@@ -17,25 +18,30 @@ const useStyles = makeStyles({
         position: 'relative',
         background: 'white',
         minWidth: 275,
-        margin: '1rem',
+        margin: '1rem 2rem',
         cursor: 'pointer',
     },
     title: {
         fontSize: 14,
     },
     pos: {
-        marginBottom: 12,
+
+        color: 'grey',
+        fontSize: 14,
+        marginBottom: 5,
     },
     media: {
         position: 'absolute',
-        width: '100%',
+        width: '40%',
         height: '100%',
         'z-index': 0,
         top: 0,
         left: 0,
-        opacity: 0.2,
+        opacity: 1,
     },
     content: {
+        color: '#333',
+        padding: '0rem 0rem 0rem 8rem',
         position: 'relative',
         'z-index': 1,
     },

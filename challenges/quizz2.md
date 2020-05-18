@@ -1,7 +1,7 @@
 ---
 title: 'Cinéma'
 date: '2020-04-12'
-accroche: 'James Bond'
+accroche: 'Une question sur le dernier film de James Bond'
 question: 'Quel acteur incarnant James Bond s’est vu proposer un contrat professionnel par Manchester United lo'
 answers: 
     1: 'Sean Connery'

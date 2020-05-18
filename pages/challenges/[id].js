@@ -46,21 +46,21 @@ const useStyles = makeStyles({
     buttonsContainer: {
         position: 'absolute',
         width: '100%',
-        bottom: '1rem'
+        bottom: '5rem'
     },
     home: {
         position: 'absolute',
         zIndex: 2,
         fontSize: '0.8em',
-        left: 0,
+        right: 0,
     },
     controls: {
         position: 'absolute',
-        right: 0,
+        left: 0,
         zIndex: 2,
     },
     controlBtn: {
-        color: '#666',
+        color: 'red',
     }
 
 });
@@ -134,12 +134,14 @@ function ChallengeLayout(props) {
                 <Typography variant="h5" component="h2">{props.challengeData.title}</Typography>
 
                 {props.started && (
-                    <motion.div
-                        animate={{
-                            scale: [1, 2, 2, 1, 1],
-                            rotate: [0, 0, 270, 270, 0],
-                            borderRadius: ['20%', '20%', '50%', '50%', '20%']
-                        }}
+                     <motion.div
+                     initial={{ scale: 0.5 }}
+                     animate={{ scale: 1 }}
+                     transition={{
+                       type: "spring",
+                       stiffness: 260,
+                       damping: 20
+                     }}
                     >
                         <Typography variant="body2" component="p">{props.challengeData.question}</Typography>
                     </motion.div>
@@ -157,11 +159,14 @@ function ChallengeLayout(props) {
 
                 {props.started && (
                     <motion.div
-                        animate={{
-                            scale: [1, 2, 2, 1, 1],
-                            rotate: [0, 0, 270, 270, 0],
-                            borderRadius: ['20%', '20%', '50%', '50%', '20%']
-                        }}
+                    initial={{ scale: 0.5 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 20
+                    }}
+                     
                     >
                         <Grid container justify="center">
                             {Object.keys(props.challengeData.answers).map(key => <PossibleAnswer key={key} val={props.challengeData.answers[key]} />)}
@@ -259,11 +264,13 @@ export default function Challenge({ challengeData }) {
     return (
 
         <motion.div
-            animate={{
-                scale: [1, 2, 2, 1, 1],
-                rotate: [0, 0, 270, 270, 0],
-                borderRadius: ['20%', '20%', '50%', '50%', '20%']
-            }}
+                     initial={{ scale: 0.7 }}
+                     animate={{ scale: 1 }}
+                     transition={{
+                       type: "spring",
+                       stiffness: 260,
+                       damping: 20
+                     }}
         >
             <Layout>
                 <Head>
