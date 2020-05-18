@@ -1,4 +1,6 @@
 import cookie, { serialize } from 'cookie';
+import fetch  from 'node-fetch';
+// const fetch = require("node-fetch");
 
 export default async (req, res) => {
   const { phone } = await req.body
@@ -21,7 +23,21 @@ export default async (req, res) => {
         console.log('API signup  - code', cookieValue.code);
         if(cookieValue.code){
           // getData to get timeline and send 200
-          res.status(200).end()
+
+          const code = cookieValue.code;
+            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ code }),
+            })
+
+          if (response.status === 200) {
+            res.status(200).end()
+          }else{
+            throw new Error('Error trying calling the getData api');
+          }
+
+
         }else{
           // user gone receive code, 302 to redirect to Number page
           res.status(302).end()
@@ -44,8 +60,8 @@ export default async (req, res) => {
       //   throw new Error('User already exists.')
       // }
 
-      // res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: '654345654', code: '654345654'}), { path: '/' }));
-      res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: '654345654'}), { path: '/' }));
+      res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: 'plouf', code: '34'}), { path: '/' }));
+      // res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: 'plouf'}), { path: '/' }));
       res.status(302).end()
     }
 
