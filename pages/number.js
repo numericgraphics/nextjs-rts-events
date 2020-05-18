@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
 
-const signinWithNumber = async (number) => {
+const signinWithNumber = async (code) => {
     const response = await fetch('/api/number', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ number }),
+        body: JSON.stringify({ code }),
     })
 
     if (response.status !== 200) {
@@ -20,17 +20,17 @@ const signinWithNumber = async (number) => {
 
 function Number() {
     const [userData, setUserData] = useState({
-        number: '',
+        code: '',
     })
 
     async function handleSubmit(event) {
         event.preventDefault()
         setUserData({ ...userData, error: '' })
 
-        const number = userData.number
+        const code = userData.code
 
         try {
-            await signinWithNumber(number)
+            await signinWithNumber(code)
         } catch (error) {
             console.error(error)
             setUserData({ ...userData, error: error.message })
@@ -41,21 +41,21 @@ function Number() {
         <Layout>
             <div className="login">
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="number">Number</label>
+                    <label htmlFor="code">Code</label>
 
                     <input
                         type="text"
-                        id="number"
-                        name="number"
-                        value={userData.number}
+                        id="code"
+                        name="code"
+                        value={userData.code}
                         onChange={event =>
                             setUserData(
-                                Object.assign({}, userData, { number: event.target.value })
+                                Object.assign({}, userData, { code: event.target.value })
                             )
                         }
                     />
 
-                    <button type="submit">Send the Number receive</button>
+                    <button type="submit">Send the code you receive</button>
 
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </form>
