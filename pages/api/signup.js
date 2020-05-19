@@ -4,6 +4,17 @@ import fetch  from 'node-fetch';
 
 let userData = {};
 
+async function postNum(num){
+  const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ num }),
+  });
+  console.log('postNum status', response.status);
+  console.log('postNum response', response);
+  return response;
+}
+
 export default async (req, res) => {
   const { phone } = await req.body;
   try {
@@ -51,6 +62,11 @@ export default async (req, res) => {
       }else{
         // cookie dont have code property
         // user will receive sms code, 302 to redirect to Code page
+        // TODO continue to refactor the call by using postNum
+        // console.log('302 ------');
+        // postNum(cookieValue.userID).then(response => {
+        //   console.log('reponse', response.status);
+        // });
         res.status(302).end()
       }
     } else {
@@ -69,21 +85,17 @@ export default async (req, res) => {
           userID: content.userID
         };
         console.log('response content', content.userID);
+        console.log('response status', response.status);
 
         if (response.status !== 200) {
           throw new Error(await response.text())
         }
-
       } catch (error) {
         throw new Error('User already exists.')
       }
-
       res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: userData.userID}), { path: '/' }));
       res.status(302).end()
     }
-
-
-
   } catch (error) {
     res.status(400).send(error.message)
   }
