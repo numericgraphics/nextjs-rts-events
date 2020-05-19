@@ -8,17 +8,21 @@
     "start": "next start"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.13",
+    "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
-    "date-fns": "^2.12.0",
-    "framer-motion": "^1.10.3",
+    "cookie": "0.4.1",
+    "date-fns": "^2.14.0",
+    "dotenv": "8.2.0",
+    "framer-motion": "^1.11.0",
     "gray-matter": "^4.0.2",
+    "js-cookie": "^2.2.0",
     "next": "9.3.5",
+    "node-fetch": "latest",
     "react": "16.13.1",
     "react-div-100vh": "^0.3.8",
     "react-dom": "16.13.1",
     "remark": "^12.0.0",
-    "remark-html": "^11.0.1",
+    "remark-html": "^11.0.2",
     "typeface-roboto": "0.0.75"
   }
 }
