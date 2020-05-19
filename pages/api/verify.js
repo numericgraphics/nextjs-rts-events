@@ -4,14 +4,16 @@ import fetch from "node-fetch";
 export default async (req, res) => {
         let rtsEventCookie = null;
         let cookies = null;
-        
+
         // Check if rts-event cookie is available
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '');
             rtsEventCookie = cookies['RTS-Events'];
+
             if(rtsEventCookie){
                 const cookieValue = JSON.parse(cookies['RTS-Events']);
                 if(cookieValue.code){
+
                     // getData to get timeline
                     const code = cookieValue.code;
                     const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {

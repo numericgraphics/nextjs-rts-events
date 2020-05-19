@@ -7,6 +7,8 @@ import Link from 'next/link'
 import Date from '../components/date'
 import { makeStyles } from '@material-ui/core/styles';
 import { motion } from 'framer-motion';
+import React, {useEffect, useState} from "react";
+import Router from "next/router";
 
 
 
@@ -19,14 +21,41 @@ export async function getStaticProps() {
     }
 }
 
+const verifyElement = <div><p style={{textAlign: 'center'}}> Process to verify your account ! </p></div>;
 const useStyles = makeStyles({
 
 });
 
 
 export default function Home({ allChallengesData }) {
+    const [isVerify, setVerify] = useState(true);
+
+    async function handleVerify() {
+        try {
+            const response = await fetch('/api/verify');
+
+            if (response.status === 200) {
+                setVerify(false);
+            }else {
+                Router.push('/')
+
+            }
+
+        } catch (error) {
+            setVerify(false);
+            throw new Error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        handleVerify().then();
+    }, []);
+
+
     return (
         <Layout home>
+            {isVerify ? verifyElement :
+                <div>
             <Head>
                 <title>{siteTitle}</title>
             </Head>
@@ -52,7 +81,7 @@ export default function Home({ allChallengesData }) {
                 ))}
 
             </section>
-
+                </div>}
         </Layout>
     )
 }

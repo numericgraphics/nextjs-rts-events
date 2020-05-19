@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
 
-const loadingElement = <div><p style={{textAlign: 'center'}}> Process to verify your account ! </p></div>;
+const verifyElement = <div><p style={{textAlign: 'center'}}> Process to verify your account ! </p></div>;
 
 function SignUp() {
     const [userData, setUserData] = useState({ phone: ''});
@@ -61,7 +61,7 @@ function SignUp() {
 
     return (
         <Layout>
-            {isVerify ? loadingElement :
+            {isVerify ? verifyElement :
                 <div className="signup">
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="phone">Phone</label>

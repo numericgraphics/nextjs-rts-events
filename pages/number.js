@@ -20,18 +20,18 @@ const signInWithCode = async (code) => {
 function Number() {
     const [userData, setUserData] = useState({
         code: '',
-    })
+    });
 
     async function handleSubmit(event) {
         event.preventDefault()
-        setUserData({ ...userData, error: '' })
+        setUserData({ ...userData, error: '' });
 
-        const code = userData.code
+        const code = userData.code;
 
         try {
             await signInWithCode(code)
         } catch (error) {
-            console.error(error)
+            console.error(error);
             setUserData({ ...userData, error: error.message })
         }
     }
