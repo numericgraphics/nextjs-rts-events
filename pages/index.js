@@ -1,11 +1,28 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
 
-function Signup() {
-    const [userData, setUserData] = useState({
-        phone: '',
-    })
+const loadingElement = <div><p style={{textAlign: 'center'}}> Process to verify your account ! </p></div>;
+
+function SignUp() {
+    const [userData, setUserData] = useState({ phone: ''});
+    const [isVerify, setVerify] = useState(true);
+
+    async function handleVerify() {
+        try {
+            const response = await fetch('/api/verify');
+
+            if (response.status === 200) {
+                Router.push('/home')
+            }else {
+                setVerify(false);
+            }
+
+        } catch (error) {
+            setVerify(false);
+            throw new Error(error.message);
+        }
+    }
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -37,29 +54,36 @@ function Signup() {
         }
     }
 
+    useEffect(() => {
+        console.log('signup init');
+        handleVerify().then();
+    }, []);
+
     return (
         <Layout>
-            <div className="signup">
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="phone">Phone</label>
+            {isVerify ? loadingElement :
+                <div className="signup">
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="phone">Phone</label>
 
-                    <input
-                        type="text"
-                        id="phone"
-                        name="phone"
-                        value={userData.phone}
-                        onChange={event =>
-                            setUserData(
-                                Object.assign({}, userData, { phone: event.target.value })
-                            )
-                        }
-                    />
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={userData.phone}
+                            onChange={event =>
+                                setUserData(
+                                    Object.assign({}, userData, { phone: event.target.value })
+                                )
+                            }
+                        />
 
-                    <button type="submit">Login</button>
+                        <button type="submit">Login</button>
 
-                    {userData.error && <p className="error">Error: {userData.error}</p>}
-                </form>
-            </div>
+                        {userData.error && <p className="error">Error: {userData.error}</p>}
+                    </form>
+                </div>
+            }
             <style jsx>{`
         .signup {
           max-width: 340px;
@@ -94,4 +118,4 @@ function Signup() {
     )
 }
 
-export default Signup
+export default SignUp

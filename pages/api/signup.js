@@ -11,22 +11,21 @@ export default async (req, res) => {
     if (!phone) {
       throw new Error('phone must be provided.')
     }
-    // Check if rts-event cookie is available
+// Check if rts-event cookie is available
     let rtsEventCookie = null;
     let cookies = null;
+
     if (req.headers.cookie) {
-      console.log('rtsEventCookie', rtsEventCookie);
       cookies = cookie.parse(req.headers.cookie ?? '');
       rtsEventCookie = cookies['RTS-Events'];
-      console.log('rtsEventCookie in', rtsEventCookie);
     }
-    console.log('rtsEventCookie', rtsEventCookie);
-    // if rts-event cookie is available
+
+// if rts-event cookie is available
     if(rtsEventCookie){
       const cookieValue = JSON.parse(cookies['RTS-Events']);
-      // Cookie contain userID and code
+// Cookie contain userID and code
       if(cookieValue.code){
-        // getData to get timeline
+// getData to get timeline
         const code = cookieValue.code;
         const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {
           method: 'POST',
@@ -34,11 +33,11 @@ export default async (req, res) => {
           body: JSON.stringify({ code }),
         });
 
-        // validated request
+// validated request
         if (response.status === 200) {
           res.status(200).end()
         }else{
-          // kill cookie
+// kill cookie
           const cookieSerialized = cookie.serialize('RTS-Events', '', {
             sameSite: 'lax',
             secure: false,
@@ -51,7 +50,7 @@ export default async (req, res) => {
         }
 
       }else{
-        // cookie dont have code property, user will receive sms code
+// cookie dont have code property, user will receive sms code
         console.log('302 ------');
         const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
           method: 'POST',
@@ -59,7 +58,7 @@ export default async (req, res) => {
           body: JSON.stringify({ 'num': phone }),
         });
 
-        // validated request 302 to redirect to Code page
+// validated request 302 to redirect to Code page
         if (response.status === 200) {
           res.status(302).end()
         }else  {
@@ -67,26 +66,22 @@ export default async (req, res) => {
         }
       }
     } else {
-      // No cookie
-      try {
-        const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 'num': phone }),
-        });
+// No cookie
+      const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'num': phone }),
+      });
 
-        //Get body data to set the useID in the cookie
-        const content = await response.json();
+//Get body data to set the useID in the cookie
+      const content = await response.json();
 
-        userData = {
-          userID: content.userID
-        };
+      userData = {
+        userID: content.userID
+      };
 
-        if (response.status !== 200) {
-          throw new Error(await response.text())
-        }
-      } catch (error) {
-        throw new Error('User already exists.')
+      if (response.status !== 200) {
+        throw new Error('There is a probleme with your phone')
       }
       res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: userData.userID}), { path: '/' }));
       res.status(302).end()
