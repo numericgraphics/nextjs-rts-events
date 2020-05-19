@@ -1,36 +1,28 @@
-import cookie, { serialize } from 'cookie';
-import fetch  from 'node-fetch';
+import cookie, {serialize} from 'cookie';
+import fetch from 'node-fetch';
 // const fetch = require("node-fetch");
 
 let userData = {};
 
-async function postNum(num){
-  const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ num }),
-  });
-  console.log('postNum status', response.status);
-  console.log('postNum response', response);
-  return response;
-}
-
 export default async (req, res) => {
   const { phone } = await req.body;
+  console.log('signup phone', phone);
   try {
     if (!phone) {
       throw new Error('phone must be provided.')
     }
-
     // Check if rts-event cookie is available
     let rtsEventCookie = null;
     let cookies = null;
     if (req.headers.cookie) {
+      console.log('rtsEventCookie', rtsEventCookie);
       cookies = cookie.parse(req.headers.cookie ?? '');
       rtsEventCookie = cookies['RTS-Events'];
+      console.log('rtsEventCookie in', rtsEventCookie);
     }
+    console.log('rtsEventCookie', rtsEventCookie);
     // if rts-event cookie is available
-    if(rtsEventCookie !== null){
+    if(rtsEventCookie){
       const cookieValue = JSON.parse(cookies['RTS-Events']);
       // Cookie contain userID and code
       if(cookieValue.code){
@@ -40,9 +32,9 @@ export default async (req, res) => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code }),
-        })
+        });
 
-        // validate request
+        // validated request
         if (response.status === 200) {
           res.status(200).end()
         }else{
@@ -55,19 +47,24 @@ export default async (req, res) => {
             path: '/',
           });
           res.setHeader('Set-Cookie', cookieSerialized);
-          throw new Error('Error trying calling the getData api');
+          throw new Error('Error account syn, try again');
         }
 
-
       }else{
-        // cookie dont have code property
-        // user will receive sms code, 302 to redirect to Code page
-        // TODO continue to refactor the call by using postNum
-        // console.log('302 ------');
-        // postNum(cookieValue.userID).then(response => {
-        //   console.log('reponse', response.status);
-        // });
-        res.status(302).end()
+        // cookie dont have code property, user will receive sms code
+        console.log('302 ------');
+        const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/createOrSync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 'num': phone }),
+        });
+
+        // validated request 302 to redirect to Code page
+        if (response.status === 200) {
+          res.status(302).end()
+        }else  {
+          throw new Error('The Phone number sent is not the one registered.');
+        }
       }
     } else {
       // No cookie
@@ -84,8 +81,6 @@ export default async (req, res) => {
         userData = {
           userID: content.userID
         };
-        console.log('response content', content.userID);
-        console.log('response status', response.status);
 
         if (response.status !== 200) {
           throw new Error(await response.text())

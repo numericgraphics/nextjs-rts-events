@@ -8,10 +8,10 @@ function Signup() {
     })
 
     async function handleSubmit(event) {
-        event.preventDefault()
-        setUserData({ ...userData, error: '' })
+        event.preventDefault();
+        setUserData({ ...userData, error: '' });
 
-        const phone = userData.phone
+        const phone = userData.phone;
 
         try {
             const response = await fetch('/api/signup', {
@@ -29,11 +29,10 @@ function Signup() {
                 throw new Error(await response.text())
             }
 
-            console.log('Page/Signup - response', response);
             Router.push('/home')
 
         } catch (error) {
-            console.error(error)
+            console.error(error);
             setUserData({ ...userData, error: error.message })
         }
     }

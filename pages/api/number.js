@@ -24,7 +24,20 @@ export default async (req, res) => {
                 body: JSON.stringify({'code': userData.code}),
             });
 
-            console.log('response', response);
+            console.log('api number - response status', response.status);
+
+            if (response.status === 401) {
+                // kill cookie
+                const cookieSerialized = cookie.serialize('RTS-Events', '', {
+                    sameSite: 'lax',
+                    secure: false,
+                    maxAge: -1,
+                    httpOnly: true,
+                    path: '/',
+                });
+                res.setHeader('Set-Cookie', cookieSerialized);
+                throw new Error('The code used is not the right one')
+            }
 
             if (response.status !== 200) {
                 throw new Error('There is a issue with the createOrSync request')
@@ -33,8 +46,6 @@ export default async (req, res) => {
         } else {
             throw new Error('There is a issue with the cookie RTS-Events')
         }
-
-
 
         res.setHeader('Set-Cookie', serialize('RTS-Events',  JSON.stringify({userID: userData.userID, code: userData.code}), { path: '/' }));
         res.status(200).end()

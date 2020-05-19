@@ -2,21 +2,20 @@ import React, { useState } from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
 
-const signinWithNumber = async (code) => {
+const signInWithCode = async (code) => {
     const response = await fetch('/api/number', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
-    })
+    });
 
     if (response.status !== 200) {
+        Router.push('/');
         throw new Error(await response.text())
     }
 
-    Router.push('/home')
-
-    console.log('go to home page');
-}
+    Router.push('/home');
+};
 
 function Number() {
     const [userData, setUserData] = useState({
@@ -30,7 +29,7 @@ function Number() {
         const code = userData.code
 
         try {
-            await signinWithNumber(code)
+            await signInWithCode(code)
         } catch (error) {
             console.error(error)
             setUserData({ ...userData, error: error.message })
