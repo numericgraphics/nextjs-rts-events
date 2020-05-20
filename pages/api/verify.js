@@ -17,6 +17,7 @@ export default async (req, res) => {
                     // getData to get timeline
                     const code = cookieValue.code;
                     const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {
+                        credentials: 'include',
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ code }),

@@ -19,6 +19,7 @@ export default async (req, res) => {
             };
 
             const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${userData.userID}/getData`, {
+                credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 'code': userData.code }),
@@ -50,7 +51,7 @@ export default async (req, res) => {
         res.setHeader('Set-Cookie', serialize('RTS-Events', JSON.stringify({
             userID: userData.userID,
             code: userData.code
-        }), { path: '/' }));
+        }), { path: '/', maxAge: 60*60*24*14 }));
 
         res.status(200).end()
 
