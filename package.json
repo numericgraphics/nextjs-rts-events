@@ -17,6 +17,7 @@
     "gray-matter": "^4.0.2",
     "js-cookie": "^2.2.0",
     "next": "9.3.5",
+    "next-pwa": "^2.4.1",
     "node-fetch": "latest",
     "react": "16.13.1",
     "react-div-100vh": "^0.3.8",
