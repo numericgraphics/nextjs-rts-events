@@ -31,11 +31,7 @@ export default function EventLayout({ children, home }) {
     return (
         <div className={classes.root}>
             <Head>
-                <link rel="icon" href="/favicon.ico" />
-                <meta
-                    name="description"
-                    content="TODO"
-                />
+                <meta name="description" content="Test RTS Event PWA" />
                 <meta charSet="utf-8"/>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
                 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
@@ -45,6 +41,9 @@ export default function EventLayout({ children, home }) {
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
                 <meta name="mobile-web-app-capable" content="yes"/>
                 <meta name="browsermode" content="application"/>
+
+                <link rel="icon" href="/favicon.ico" />
+                <link rel='manifest' href='/manifest.json' />
             </Head>
             <header className={classes.header}>
                 {home && (

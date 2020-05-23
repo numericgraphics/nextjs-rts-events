@@ -47,3 +47,8 @@ node_modules/
 .idea/web-front-v3.iml
 .idea/workspace.xml
 .idea/jsLibraryMappings.xml
+
+
+# next-pwa
+/public/workbox-*.js
+/public/sw.js
