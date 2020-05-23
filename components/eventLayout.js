@@ -42,6 +42,8 @@ export default function EventLayout({ children, home }) {
                 <meta name="description" content="Description"/>
                 <meta name="keywords" content="Keywords"/>
                 <meta name="full-screen" content="yes"/>
+                <meta name="apple-mobile-web-app-capable" content="yes"/>
+                <meta name="mobile-web-app-capable" content="yes"/>
                 <meta name="browsermode" content="application"/>
             </Head>
             <header className={classes.header}>
