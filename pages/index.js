@@ -64,7 +64,7 @@ function SignUp() {
             {isVerify ? verifyElement :
                 <div className="signup">
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="phone">Phone</label>
+                        <label htmlFor="phone">Phone MASTER</label>
 
                         <input
                             type="text"
