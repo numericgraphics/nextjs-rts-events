@@ -21,17 +21,6 @@ class MyApp extends App {
 
 export default MyApp;
 */
-try {
-    console.log('APP - add beforeinstallprompt event');
-    let installPromptEvent;
-    window.addEventListener('beforeinstallprompt', (event) => {
-        console.log('beforeinstallprompt - event dispatched', event);
-        event.preventDefault();
-        installPromptEvent = event;
-    });
-} catch (error) {
-    console.log('beforeinstallprompt - error', error);
-}
 
 
 export default function App({ Component, pageProps }) {
