@@ -52,3 +52,4 @@ node_modules/
 # next-pwa
 /public/workbox-*.js
 /public/sw.js
+/public/sw.js.map
