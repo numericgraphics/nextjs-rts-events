@@ -47,9 +47,9 @@ node_modules/
 .idea/web-front-v3.iml
 .idea/workspace.xml
 .idea/jsLibraryMappings.xml
-/.idea
-/.idea/codeStyles/
-/.idea/inspectionProfiles/
+.idea
+.idea/codeStyles/
+.idea/inspectionProfiles/
 
 
 # next-pwa
