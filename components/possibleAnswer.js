@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles({
     root: {
-        margin: '10px 5px 0 5px'
+        margin: '10px 5px 0 5px',
+        zIndex: 0
     }
 })
 
