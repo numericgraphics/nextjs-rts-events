@@ -1,8 +1,7 @@
+import React from 'react'
 import Head from 'next/head'
 import utilStyles from '../styles/utils.module.css'
 import { makeStyles } from '@material-ui/core/styles'
-import Link from 'next/link'
-
 
 export const siteTitle = 'TODO:SiteTitle'
 
@@ -14,19 +13,18 @@ const useStyles = makeStyles({
         width: '100vw',
         maxWidth: '24rem',
         margin: '0 auto 0',
-        minHeight: '25rem',
+        minHeight: '25rem'
     },
     header: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'center'
 
     }
-});
+})
 
-export default function EventLayout({ children, home }) {
-
-    const classes = useStyles();
+export default function EventLayout ({ children, home }) {
+    const classes = useStyles()
 
     return (
         <div className={classes.root}>
@@ -44,9 +42,7 @@ export default function EventLayout({ children, home }) {
                     </h1>
                 )}
             </header>
-
             <main>{children}</main>
-
         </div>
     )
 }
