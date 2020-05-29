@@ -1,121 +1,50 @@
 import React, {useEffect, useState} from 'react'
+import getConfig from 'next/config'
 import Router from 'next/router'
+import fetch from 'node-fetch';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Layout from '../components/eventLayout'
 
-const verifyElement = <div><p style={{textAlign: 'center'}}> Process to verify your account ! </p></div>;
 
-function SignUp() {
-    const [userData, setUserData] = useState({ phone: ''});
-    const [isVerify, setVerify] = useState(true);
+const {publicRuntimeConfig} = getConfig()
+const {API_URL} = publicRuntimeConfig
 
-    async function handleVerify() {
-        try {
-            const response = await fetch('/api/verify');
+const dev = true;
+export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-pwa.rtsch.now.sh/';
 
-            if (response.status === 200) {
-                Router.push('/home')
-            }else {
-                setVerify(false);
-            }
-
-        } catch (error) {
-            setVerify(false);
-            throw new Error(error.message);
-        }
-    }
-
-    async function handleSubmit(event) {
-        event.preventDefault();
-        setUserData({ ...userData, error: '' });
-
-        const phone = userData.phone;
-
-        try {
-            const response = await fetch('/api/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone }),
-            })
-
-            if (response.status === 302) {
-                Router.push('/number');
-                return
-            }
-
-            if (response.status !== 200) {
-                throw new Error(await response.text())
-            }
-
-            Router.push('/home')
-
-        } catch (error) {
-            console.error(error);
-            setUserData({ ...userData, error: error.message })
-        }
-    }
+function Gifts(props) {
 
     useEffect(() => {
-        console.log('signup init');
-        handleVerify().then();
+        console.log('Gifts - init - props', props);
     }, []);
 
     return (
         <Layout>
-            {isVerify ? verifyElement :
-                <div className="signup">
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="phone">Phone MASTER</label>
-
-                        <input
-                            type="text"
-                            id="phone"
-                            name="phone"
-                            value={userData.phone}
-                            onChange={event =>
-                                setUserData(
-                                    Object.assign({}, userData, { phone: event.target.value })
-                                )
-                            }
-                        />
-
-                        <button type="submit">Login</button>
-
-                        {userData.error && <p className="error">Error: {userData.error}</p>}
-                    </form>
-                </div>
-            }
-            <style jsx>{`
-        .signup {
-          max-width: 340px;
-          margin: 0 auto;
-          padding: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-        }
-
-        form {
-          display: flex;
-          flex-flow: column;
-        }
-
-        label {
-          font-weight: 600;
-        }
-
-        input {
-          padding: 8px;
-          margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-        }
-
-        .error {
-          margin: 0.5rem 0 0;
-          color: brown;
-        }
-      `}</style>
+            <Container maxWidth="sm">
+                <Box my={4}>
+                    <Typography variant="h4" component="h1" gutterBottom>
+                        Gift Page
+                    </Typography>
+                </Box>
+            </Container>
         </Layout>
     )
 }
 
-export default SignUp
+export async function getStaticProps({ req }) {
+    try {
+        const response = await fetch(`${server}/api/init`);
+        const data = await response.json()
+        return {
+            props: {
+                data
+            }
+        }
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+export default Gifts
