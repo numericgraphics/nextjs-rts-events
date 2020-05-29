@@ -247,7 +247,6 @@ class ChallengeController extends React.Component {
 }
 
 export default function Challenge ({ challengeData }) {
-
     return (
 
         <motion.div
@@ -269,4 +268,3 @@ export default function Challenge ({ challengeData }) {
 
     )
 }
-
