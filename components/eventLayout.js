@@ -12,7 +12,6 @@ const useStyles = makeStyles({
         border: 0,
         color: '#fff',
         width: '100vw',
-        maxWidth: '24rem',
         margin: '0 auto 0',
         minHeight: '25rem',
     },
