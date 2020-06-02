@@ -41,7 +41,7 @@ export async function getStaticProps({ req }) {
         console.log('getStaticProps publicRuntimeConfig', publicRuntimeConfig);
         let data;
         try {
-            const response = await fetch('https://zdfgsghihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/challenges/NIFFF');
+            const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/challenges/NIFFF');
             data = await response.json();
         } catch(err) {
             console.log('fetch err', err);
