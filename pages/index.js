@@ -12,7 +12,7 @@ const {publicRuntimeConfig} = getConfig()
 const {API_URL} = publicRuntimeConfig
 
 const dev = API_URL === 'dev';
-export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh/';
+export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh';
 
 function Gifts(props) {
 
