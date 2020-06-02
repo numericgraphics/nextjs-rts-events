@@ -11,13 +11,15 @@ import Layout from '../components/eventLayout'
 const {publicRuntimeConfig} = getConfig()
 const {API_URL} = publicRuntimeConfig
 
-const dev = true;
+const dev = API_URL === 'dev';
 export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-pwa.rtsch.now.sh/';
 
 function Gifts(props) {
 
     useEffect(() => {
         console.log('Gifts - init - props', props);
+        console.log('Gifts - init - API_URL', API_URL);
+        console.log('Gifts - init - server', server);
     }, []);
 
     return (

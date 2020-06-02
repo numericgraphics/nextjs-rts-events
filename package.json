@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "API_URL=dev next dev",
+    "build": "API_URL=prod next build",
     "start": "next start"
   },
   "dependencies": {
