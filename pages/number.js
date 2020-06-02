@@ -6,32 +6,30 @@ const signInWithCode = async (code) => {
     const response = await fetch('/api/number', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code }),
-    });
+        body: JSON.stringify({ code })
+    })
 
     if (response.status !== 200) {
-        Router.push('/');
+        await Router.push('/')
         throw new Error(await response.text())
     }
 
-    Router.push('/home');
-};
+    await Router.push('/home')
+}
 
-function Number() {
+function Number () {
     const [userData, setUserData] = useState({
-        code: '',
-    });
+        code: ''
+    })
 
-    async function handleSubmit(event) {
+    async function handleSubmit (event) {
         event.preventDefault()
-        setUserData({ ...userData, error: '' });
-
-        const code = userData.code;
-
+        setUserData({ ...userData, error: '' })
+        const code = userData.code
         try {
             await signInWithCode(code)
         } catch (error) {
-            console.error(error);
+            console.error(error)
             setUserData({ ...userData, error: error.message })
         }
     }
@@ -41,7 +39,6 @@ function Number() {
             <div className="login">
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="code">Code</label>
-
                     <input
                         type="text"
                         id="code"
@@ -53,9 +50,7 @@ function Number() {
                             )
                         }
                     />
-
                     <button type="submit">Send the code you receive</button>
-
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </form>
             </div>
