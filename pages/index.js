@@ -23,7 +23,8 @@ const styles = {
         bottom: 0
     },
     button: {
-        bottom: 20
+        bottom: 20,
+        borderRadius: 20
     }
 }
 
@@ -50,7 +51,7 @@ function Index (props) {
                     <Container style={styles.containerOverlay} >
                         <GiftsStepper steps={props.data.gifts} activeStep={activeStep}/>
                         <Button variant="contained" color="secondary" style={styles.button}>
-                            Secondary
+                            Commencer
                         </Button>
                     </Container>
                     <Gifts data={props.data.gifts} indexCallBack={slideIndexCallBack}/>
