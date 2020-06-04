@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
+import fetch from 'node-fetch'
 
 const verifyElement = <div><p style={{ textAlign: 'center' }}> Process to verify your account ! </p></div>
 
