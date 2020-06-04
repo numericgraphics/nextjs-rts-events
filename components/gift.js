@@ -25,7 +25,7 @@ const styles = {
         color: 'green',
     },
     slideDescription: {
-        width: '100%',
+        // width: '100%',
         textAlign: 'center',
         color: 'white',
     }
@@ -39,7 +39,7 @@ export default function Gift(props) {
                     <p>Titre</p>
                 </div>
                 <div style={styles.slideDescription}>
-                    {props.description}
+                    <p>{props.description}</p>
                 </div>
             </div>
         </div>
