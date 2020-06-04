@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 const styles = {
     slide: {
         minHeight: '100vh',
-        backgroundColor: 'red',
+        backgroundColor: 'red'
     },
     slideHeader: {
         position: 'absolute',
@@ -22,16 +22,16 @@ const styles = {
         alignContent: 'center',
         textAlign: 'center',
         fontSize: '2rem',
-        color: 'green',
+        color: 'green'
     },
     slideDescription: {
         // width: '100%',
         textAlign: 'center',
-        color: 'white',
+        color: 'white'
     }
-};
+}
 
-export default function Gift(props) {
+export default function Gift (props) {
     return (
         <div style={styles.slide}>
             <div style={styles.slideHeader}>
@@ -43,5 +43,5 @@ export default function Gift(props) {
                 </div>
             </div>
         </div>
-    );
+    )
 }

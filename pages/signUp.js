@@ -1,44 +1,43 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import Layout from '../components/eventLayout'
 
-const verifyElement = <div><p style={{textAlign: 'center'}}> Process to verify your account ! </p></div>;
+const verifyElement = <div><p style={{ textAlign: 'center' }}> Process to verify your account ! </p></div>
 
-function SignUp() {
-    const [userData, setUserData] = useState({ phone: ''});
-    const [isVerify, setVerify] = useState(true);
+function SignUp () {
+    const [userData, setUserData] = useState({ phone: '' })
+    const [isVerify, setVerify] = useState(true)
 
-    async function handleVerify() {
+    async function handleVerify () {
         try {
-            const response = await fetch('/api/verify');
+            const response = await fetch('/api/verify')
 
             if (response.status === 200) {
                 Router.push('/home')
-            }else {
-                setVerify(false);
+            } else {
+                setVerify(false)
             }
-
         } catch (error) {
-            setVerify(false);
-            throw new Error(error.message);
+            setVerify(false)
+            throw new Error(error.message)
         }
     }
 
-    async function handleSubmit(event) {
-        event.preventDefault();
-        setUserData({ ...userData, error: '' });
+    async function handleSubmit (event) {
+        event.preventDefault()
+        setUserData({ ...userData, error: '' })
 
-        const phone = userData.phone;
+        const phone = userData.phone
 
         try {
             const response = await fetch('/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone }),
+                body: JSON.stringify({ phone })
             })
 
             if (response.status === 302) {
-                Router.push('/number');
+                Router.push('/number')
                 return
             }
 
@@ -47,44 +46,43 @@ function SignUp() {
             }
 
             Router.push('/home')
-
         } catch (error) {
-            console.error(error);
+            console.error(error)
             setUserData({ ...userData, error: error.message })
         }
     }
 
     useEffect(() => {
-        console.log('signup init');
-        handleVerify().then();
-    }, []);
+        console.log('signup init')
+        handleVerify().then()
+    }, [])
 
     return (
         <Layout>
-        {isVerify ? verifyElement :
-        <div className="signup">
-        <form onSubmit={handleSubmit}>
-        <label htmlFor="phone">Phone MASTER</label>
+            {isVerify ? verifyElement
+                : <div className="signup">
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="phone">Phone MASTER</label>
 
-    <input
-    type="text"
-    id="phone"
-    name="phone"
-    value={userData.phone}
-    onChange={event =>
-    setUserData(
-        Object.assign({}, userData, { phone: event.target.value })
-    )
-}
-    />
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={userData.phone}
+                            onChange={event =>
+                                setUserData(
+                                    Object.assign({}, userData, { phone: event.target.value })
+                                )
+                            }
+                        />
 
-    <button type="submit">Login</button>
+                        <button type="submit">Login</button>
 
-    {userData.error && <p className="error">Error: {userData.error}</p>}
-    </form>
-    </div>
-    }
-<style jsx>{`
+                        {userData.error && <p className="error">Error: {userData.error}</p>}
+                    </form>
+                </div>
+            }
+            <style jsx>{`
         .signup {
           max-width: 340px;
           margin: 0 auto;
@@ -114,8 +112,8 @@ function SignUp() {
           color: brown;
         }
       `}</style>
-    </Layout>
-)
+        </Layout>
+    )
 }
 
 export default SignUp
