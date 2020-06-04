@@ -1,17 +1,11 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
-import { motion } from 'framer-motion';
-import { red } from '@material-ui/core/colors';
-
-
-
 
 const useStyles = makeStyles({
     root: {
@@ -19,16 +13,15 @@ const useStyles = makeStyles({
         background: 'white',
         minWidth: 275,
         margin: '1rem 2rem',
-        cursor: 'pointer',
+        cursor: 'pointer'
     },
     title: {
-        fontSize: 14,
+        fontSize: 14
     },
     pos: {
-
         color: 'grey',
         fontSize: 14,
-        marginBottom: 5,
+        marginBottom: 5
     },
     media: {
         position: 'absolute',
@@ -37,20 +30,19 @@ const useStyles = makeStyles({
         'z-index': 0,
         top: 0,
         left: 0,
-        opacity: 1,
+        opacity: 1
     },
     content: {
         color: '#333',
         padding: '0rem 0rem 0rem 8rem',
         position: 'relative',
-        'z-index': 1,
-    },
-});
+        'z-index': 1
+    }
+})
 
-export default function ChallengeCard(props) {
-    const classes = useStyles();
-    const id = props.challengeID;
-    console.log(props);
+export default function ChallengeCard (props) {
+    const classes = useStyles()
+    const id = props.challengeID
 
     return (
         <Link href="/challenges/[id]" as={`/challenges/${id}`}>
@@ -85,5 +77,5 @@ export default function ChallengeCard(props) {
                 </CardActions>
             </Card>
         </Link>
-    );
+    )
 }
