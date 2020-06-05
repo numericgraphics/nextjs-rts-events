@@ -33,7 +33,6 @@ function Index (props) {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        console.log('data', props.data)
         setActiveStep(0)
         setLoading(false)
     }, [])
