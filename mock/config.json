@@ -1,0 +1,51 @@
+
+{
+  "PLOUF": "La question était:",
+  "shortName": "NIFFF-MOCK",
+  "baseURL": "https://web-front-v3.now.sh/NIFFF",
+  "gifts": [
+    {
+      "description": "Badge d'honneur de 1er niveau.",
+      "imageURL": "https://source.unsplash.com/1080x1920/?bike",
+      "teaser": "Faites du sport comme un fou, avec un velo ?",
+      "title": "Niveau 1"
+    },
+    {
+      "description": "Tirage au sort pour gagner deux billets pour la fête des vignerons !",
+      "imageURL": "https://source.unsplash.com/1080x1920/?travel",
+      "teaser": "Gagne un séjour dans l'hôtel de ton choix !",
+      "title": "Niveau 2"
+    },
+    {
+      "description": "Tirage au sort d'une montre suisse officielle de la FeVi",
+      "imageURL": "https://source.unsplash.com/1080x1920/?soccer",
+      "teaser": "Vivez l'ambiance d'un stade de foot",
+      "title": "Niveau 3"
+    }
+  ],
+  "themeID": "NIFFF",
+  "usePhoneNumber": false,
+  "cguURL": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+  "theme": {
+    "backgroundColor": "#363434",
+    "foregroundColor": "#DBDBDB",
+    "cardColor": "#FFFFFE",
+    "foregroundCardColor": "#333333",
+    "actionColor": "#AF001E",
+    "foregroundActionColor": "#FFFFFF",
+    "accentColor": "#409AD3",
+    "foregroundAccentColor": "#FFFFFF"
+  },
+  "timeControl": {
+    "ts": 1591263733,
+    "startDate": 1593756000,
+    "endDate": 1594504799,
+    "startDisplay": 1593554400,
+    "endDisplay": 1595368799,
+    "started": false,
+    "ended": false,
+    "isStartable": false,
+    "isDisplayable": false,
+    "status": "UNAVAILABLE"
+  }
+}

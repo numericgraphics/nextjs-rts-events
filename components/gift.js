@@ -15,6 +15,7 @@ const styles = {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'flex-end',
         padding: '20px',
         width: '100%',
         minHeight: '30vh',
@@ -38,31 +39,33 @@ const styles = {
     slideBody: {
         width: '100%',
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
         alignItems: 'flex-end',
         minHeight: '40vh'
     }
 }
 
 export default function Gift (props) {
+    const { description, teaser, title, imageURL } = props.data
     useEffect(() => {
     }, [props.selected])
 
     return (
-        <Box style={styles.slide}>
+        <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
             <Container style={styles.slideHeader}>
-                <Box style={styles.slideTitle}>
-                    <Typography variant="h3">Titre</Typography>
-                </Box>
                 <Box style={styles.slideDescription}>
-                    <Typography variant="body1">{props.description}</Typography>
+                    <Typography variant="body1">{description}</Typography>
                 </Box>
             </Container>
             <Container style={styles.slideBody}>
+                <Box style={styles.slideTitle}>
+                    <Typography variant="h2">{title}</Typography>
+                </Box>
                 <Grow in={props.selected}
-                    style={{ transformOrigin: '50 500 50' }}
+                    style={{ transformOrigin: '50 50 0' }}
                     {...(props.selected ? { timeout: 1000 } : {})}>
-                    <Typography variant="h4">Gagner</Typography>
+                    <Typography variant="h4" align={'center'}>{teaser}</Typography>
                 </Grow>
             </Container>
         </Box>

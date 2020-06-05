@@ -19,7 +19,7 @@ export default function Gifts (props) {
         >
             {props.data.map((item, index) => {
                 return (
-                    <Gift key={index} description={item.description} selected={activeStep === index}/>
+                    <Gift key={index} data={item} selected={activeStep === index}/>
                 )
             })}
         </SwipeableViews>
