@@ -11,6 +11,13 @@ const styles = {
         minHeight: '100vh',
         backgroundColor: 'gray'
     },
+    slideGradient: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        zIndex: 1,
+        background: 'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.75) 100%)'
+    },
     slideHeader: {
         position: 'relative',
         display: 'flex',
@@ -19,8 +26,8 @@ const styles = {
         padding: '20px',
         width: '100%',
         minHeight: '30vh',
-        backgroundColor: 'pink',
-        zIndex: 1
+        zIndex: 2,
+        backgroundColor: 'pink'
     },
     slideTitle: {
         width: '100%',
@@ -42,7 +49,8 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        minHeight: '40vh'
+        minHeight: '40vh',
+        zIndex: 2
     }
 }
 
@@ -53,6 +61,7 @@ export default function Gift (props) {
 
     return (
         <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
+            <Box style={styles.slideGradient}/>
             <Container style={styles.slideHeader}>
                 <Box style={styles.slideDescription}>
                     <Typography variant="body1">{description}</Typography>
