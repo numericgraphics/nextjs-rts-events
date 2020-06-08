@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Grow from '@material-ui/core/Grow'
 import { useTweenMax } from '../hooks/useTweenMax'
+import { isIOS } from '../utils'
 
 const styles = {
     slide: {
@@ -43,9 +44,20 @@ const styles = {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        minHeight: '40vh',
+        minHeight: '50vh',
+        zIndex: 2
+    },
+    slideBodyIOS: {
+        position: 'absolute',
+        top: '30vh',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        minHeight: '35vh',
         zIndex: 2
     },
     slideTeaser: {
@@ -79,7 +91,7 @@ export default function Gift (props) {
         <Box>
             <Box style={styles.slideGradient}/>
             <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
-                <Container style={styles.slideBody}>
+                <Container style={isIOS() ? styles.slideBodyIOS : styles.slideBody}>
                     <Box ref={spintTitle} style={styles.slideTitle}>
                         <Typography variant="h4" style={styles.slideTitleTypo}>{title}</Typography>
                     </Box>
