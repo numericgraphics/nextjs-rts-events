@@ -16,6 +16,8 @@ const ColorLibConnector = withStyles({
 
 const styles = makeStyles({
     stepper: {
+        width: '60vw',
+        alignSelf: 'center',
         backgroundColor: 'transparent'
     }
 })

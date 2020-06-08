@@ -40,8 +40,8 @@ const styles = {
         color: 'white',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        backgroundSize: '100%',
-        minHeight: '20vh',
+        backgroundSize: '50%',
+        minHeight: '10vh',
         zIndex: 3
     },
     containerOverlay: {

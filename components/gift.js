@@ -62,7 +62,7 @@ export default function Gift (props) {
 
     const { teaser, title, imageURL } = props.data
     const [spinInHandler] = useTweenMax(spintTitle, 1.2, {
-        rotation: getRandomInt(6),
+        rotation: -getRandomInt(6),
         transformOrigin: 'center'
     })
     const [spinOutHandler] = useTweenMax(spintTitle, 0.2, {
