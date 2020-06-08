@@ -16,7 +16,7 @@ const ColorLibConnector = withStyles({
 
 const styles = makeStyles({
     stepper: {
-        width: '50vw',
+        width: '30vw',
         alignSelf: 'center',
         backgroundColor: 'transparent',
         padding: 5
@@ -27,7 +27,7 @@ function ColorLibStepIcon (props) {
     const { active } = props
     return (
         <div>
-            <FiberManualRecordIcon style={{ color: active ? '#409AD3' : 'white' }} fontSize="small"/>
+            <FiberManualRecordIcon style={{ color: active ? '#409AD3' : 'white', fontSize: 15 }} />
         </div>
     )
 }
