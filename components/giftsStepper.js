@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
-import StarIcon from '@material-ui/icons/Star'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 const ColorLibConnector = withStyles({
     line: {
@@ -16,7 +16,7 @@ const ColorLibConnector = withStyles({
 
 const styles = makeStyles({
     stepper: {
-        width: '60vw',
+        width: '50vw',
         alignSelf: 'center',
         backgroundColor: 'transparent'
     }
@@ -26,7 +26,7 @@ function ColorLibStepIcon (props) {
     const { active } = props
     return (
         <div>
-            <StarIcon style={{ color: active ? '#409AD3' : 'white' }} />
+            <FiberManualRecordIcon style={{ color: active ? '#409AD3' : 'white' }} fontSize="small"/>
         </div>
     )
 }

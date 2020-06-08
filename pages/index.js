@@ -52,8 +52,10 @@ const styles = {
         zIndex: 1
     },
     button: {
+        width: '80vw',
         bottom: 20,
         borderRadius: 20,
+        alignSelf: 'center',
         backgroundColor: '#AF001E'
     }
 }
