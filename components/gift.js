@@ -7,9 +7,11 @@ import { useTweenMax } from '../hooks/useTweenMax'
 
 const styles = {
     slide: {
+        top: '30vh',
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
+        zIndex: 0,
         backgroundColor: 'gray'
     },
     slideGradient: {
@@ -19,17 +21,6 @@ const styles = {
         zIndex: 1,
         background: 'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.75) 100%)'
     },
-    slideHeader: {
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '20px',
-        width: '100%',
-        minHeight: '30vh',
-        zIndex: 2,
-        backgroundColor: '#409AD3'
-    },
     slideTitle: {
         width: '100%',
         minHeight: '10vh',
@@ -37,15 +28,14 @@ const styles = {
         alignContent: 'center',
         textAlign: 'center',
         fontSize: '2rem',
-        color: 'green'
+        color: 'green',
+        paddingBottom: 20
     },
     slideTitleTypo: {
+        fontFamily: 'srgssr-type-BdIt',
+        lineHeight: 1,
+        padding: 10,
         backgroundColor: '#409AD3',
-        color: 'white'
-    },
-    slideDescription: {
-        // width: '100%',
-        textAlign: 'center',
         color: 'white'
     },
     slideBody: {
@@ -54,17 +44,25 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        minHeight: '40vh',
+        minHeight: '80vh',
         zIndex: 2
+    },
+    slideTeaser: {
+        fontFamily: 'srgssr-type-Bd',
+        color: 'white'
     }
+}
+
+function getRandomInt (max) {
+    return Math.floor(Math.random() * Math.floor(max))
 }
 
 export default function Gift (props) {
     const spintTitle = createRef()
 
-    const { description, teaser, title, imageURL } = props.data
+    const { teaser, title, imageURL } = props.data
     const [spinInHandler] = useTweenMax(spintTitle, 1.2, {
-        rotation: 5,
+        rotation: getRandomInt(6),
         transformOrigin: 'center'
     })
     const [spinOutHandler] = useTweenMax(spintTitle, 0.2, {
@@ -77,23 +75,20 @@ export default function Gift (props) {
     }, [props.selected])
 
     return (
-        <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
+        <Box>
             <Box style={styles.slideGradient}/>
-            <Container style={styles.slideHeader}>
-                <Box style={styles.slideDescription}>
-                    <Typography variant="body1">{description}</Typography>
-                </Box>
-            </Container>
-            <Container style={styles.slideBody}>
-                <Box ref={spintTitle} style={styles.slideTitle}>
-                    <Typography variant="h2" style={styles.slideTitleTypo}>{title}</Typography>
-                </Box>
-                <Grow in={props.selected}
-                    style={{ transformOrigin: '50 50 0' }}
-                    {...(props.selected ? { timeout: 1000 } : {})}>
-                    <Typography variant="h4" align={'center'}>{teaser}</Typography>
-                </Grow>
-            </Container>
+            <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
+                <Container style={styles.slideBody}>
+                    <Box ref={spintTitle} style={styles.slideTitle}>
+                        <Typography variant="h4" style={styles.slideTitleTypo}>{title}</Typography>
+                    </Box>
+                    <Grow in={props.selected}
+                        style={{ transformOrigin: '50 50 0' }}
+                        {...(props.selected ? { timeout: 1000 } : {})}>
+                        <Typography style={styles.slideTeaser} variant="h5" align={'center'}>{teaser}</Typography>
+                    </Grow>
+                </Container>
+            </Box>
         </Box>
     )
 }

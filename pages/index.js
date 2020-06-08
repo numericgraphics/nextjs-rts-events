@@ -8,6 +8,7 @@ import EventLayout from '../components/eventLayout'
 import Gifts from '../components/gifts'
 import GiftsStepper from '../components/giftsStepper'
 import mockData from '../mock/config.json'
+import Typography from '@material-ui/core/Typography'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL, USE_MOCK } = publicRuntimeConfig
@@ -16,12 +17,39 @@ export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-
 
 const loadingElement = <div><p style={{ textAlign: 'center' }}> Loading process ! </p></div>
 const styles = {
+    slideHeader: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        top: 0,
+        padding: '20px',
+        width: '100%',
+        minHeight: '30vh',
+        zIndex: 2,
+        backgroundColor: '#409AD3'
+    },
+    slideDescription: {
+        textAlign: 'center'
+    },
+    slideDescriptionType: {
+        fontFamily: 'srgssr-type-Rg',
+        color: 'white'
+    },
+    slideLogo: {
+        color: 'white',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100%',
+        minHeight: '20vh',
+        zIndex: 3
+    },
     containerOverlay: {
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
-        zIndex: 1,
-        bottom: 0
+        bottom: 0,
+        zIndex: 1
     },
     button: {
         bottom: 20,
@@ -48,6 +76,12 @@ function Index (props) {
             { isLoading
                 ? loadingElement
                 : <Box>
+                    <Container style={styles.slideHeader}>
+                        <Box style={{ ...styles.slideLogo, backgroundImage: `url(${props.data.logoUrl})` }}/>
+                        <Box style={styles.slideDescription}>
+                            <Typography variant="body1" style={styles.slideDescriptionType}>{props.data.description}</Typography>
+                        </Box>
+                    </Container>
                     <Container style={styles.containerOverlay} >
                         <GiftsStepper steps={props.data.gifts} activeStep={activeStep}/>
                         <Button variant="contained" color="secondary" style={styles.button}>
