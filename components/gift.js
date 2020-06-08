@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { createRef, useEffect } from 'react'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Grow from '@material-ui/core/Grow'
+import { useTweenMax } from '../hooks/useTweenMax'
 
 const styles = {
     slide: {
@@ -59,8 +60,20 @@ const styles = {
 }
 
 export default function Gift (props) {
+    const spintTitle = createRef()
+
     const { description, teaser, title, imageURL } = props.data
+    const [spinInHandler] = useTweenMax(spintTitle, 1.2, {
+        rotation: 5,
+        transformOrigin: 'center'
+    })
+    const [spinOutHandler] = useTweenMax(spintTitle, 0.2, {
+        rotation: 0,
+        transformOrigin: 'center'
+    })
+
     useEffect(() => {
+        props.selected ? spinInHandler() : spinOutHandler()
     }, [props.selected])
 
     return (
@@ -72,7 +85,7 @@ export default function Gift (props) {
                 </Box>
             </Container>
             <Container style={styles.slideBody}>
-                <Box style={styles.slideTitle}>
+                <Box ref={spintTitle} style={styles.slideTitle}>
                     <Typography variant="h2" style={styles.slideTitleTypo}>{title}</Typography>
                 </Box>
                 <Grow in={props.selected}

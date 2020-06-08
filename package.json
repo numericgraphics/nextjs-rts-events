@@ -18,6 +18,7 @@
     "dotenv": "8.2.0",
     "framer-motion": "^1.11.0",
     "gray-matter": "^4.0.2",
+    "gsap": "^3.3.1",
     "js-cookie": "^2.2.0",
     "next": "9.3.5",
     "node-fetch": "latest",
