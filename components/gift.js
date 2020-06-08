@@ -7,7 +7,6 @@ import { useTweenMax } from '../hooks/useTweenMax'
 
 const styles = {
     slide: {
-        top: '30vh',
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
@@ -39,12 +38,14 @@ const styles = {
         color: 'white'
     },
     slideBody: {
+        position: 'absolute',
+        top: '30vh',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        minHeight: '70vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '40vh',
         zIndex: 2
     },
     slideTeaser: {

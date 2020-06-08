@@ -47,12 +47,13 @@ const styles = {
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'flex-end',
         bottom: 0,
         zIndex: 1
     },
     button: {
         width: '80vw',
-        bottom: 20,
+        bottom: 10,
         borderRadius: 20,
         alignSelf: 'center',
         backgroundColor: '#AF001E'

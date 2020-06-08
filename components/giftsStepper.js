@@ -18,7 +18,8 @@ const styles = makeStyles({
     stepper: {
         width: '50vw',
         alignSelf: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        padding: 5
     }
 })
 
