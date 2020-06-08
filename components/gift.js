@@ -27,7 +27,7 @@ const styles = {
         width: '100%',
         minHeight: '30vh',
         zIndex: 2,
-        backgroundColor: 'pink'
+        backgroundColor: '#409AD3'
     },
     slideTitle: {
         width: '100%',
@@ -37,6 +37,10 @@ const styles = {
         textAlign: 'center',
         fontSize: '2rem',
         color: 'green'
+    },
+    slideTitleTypo: {
+        backgroundColor: '#409AD3',
+        color: 'white'
     },
     slideDescription: {
         // width: '100%',
@@ -69,7 +73,7 @@ export default function Gift (props) {
             </Container>
             <Container style={styles.slideBody}>
                 <Box style={styles.slideTitle}>
-                    <Typography variant="h2">{title}</Typography>
+                    <Typography variant="h2" style={styles.slideTitleTypo}>{title}</Typography>
                 </Box>
                 <Grow in={props.selected}
                     style={{ transformOrigin: '50 50 0' }}

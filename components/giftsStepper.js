@@ -24,7 +24,7 @@ function ColorLibStepIcon (props) {
     const { active } = props
     return (
         <div>
-            <StarIcon style={{ color: active ? 'green' : 'pink' }} />
+            <StarIcon style={{ color: active ? '#409AD3' : 'white' }} />
         </div>
     )
 }
