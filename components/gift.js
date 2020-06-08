@@ -46,7 +46,7 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        minHeight: '50vh',
+        minHeight: '40vh',
         zIndex: 2
     },
     slideBodyIOS: {
