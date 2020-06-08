@@ -57,6 +57,11 @@ const styles = {
         borderRadius: 20,
         alignSelf: 'center',
         backgroundColor: '#AF001E'
+    },
+    cg: {
+        alignSelf: 'center',
+        color: 'white',
+        marginBottom: 10
     }
 }
 
@@ -89,6 +94,7 @@ function Index (props) {
                         <Button variant="contained" color="secondary" style={styles.button}>
                             Commencer
                         </Button>
+                        <Typography variant="caption" style={styles.cg}>{props.data.cg}</Typography>
                     </Container>
                     <Gifts data={props.data.gifts} indexCallBack={slideIndexCallBack}/>
                 </Box>

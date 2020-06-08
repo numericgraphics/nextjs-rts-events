@@ -5,6 +5,7 @@
   "baseURL": "https://web-front-v3.now.sh/NIFFF",
   "logoUrl": "https://cdn.rts.ch/rtschallengeassets/events/tdr/logo_les-defis-du-Tour.png",
   "description": "Venez tester vos connaissances sur l’histoire du tour et le patrimoine Romand. Tentez de gagner des cadeaux.",
+  "cg": "Lire les conditions générales",
   "gifts": [
     {
       "imageURL": "https://images.unsplash.com/photo-1572417227948-70bbb81e814c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=1920&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=1080",
