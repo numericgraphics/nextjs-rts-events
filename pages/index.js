@@ -17,14 +17,19 @@ export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-
 
 const loadingElement = <div><p style={{ textAlign: 'center' }}> Loading process ! </p></div>
 const styles = {
-    slideHeader: {
-        position: 'absolute',
+    slideGlobal: {
         display: 'flex',
+        flexDirection: 'column'
+    },
+    slideHeader: {
+        position: 'relative',
+        display: 'flex',
+        flexShrink: 0,
         flexDirection: 'column',
         justifyContent: 'center',
         top: 0,
         width: '100%',
-        minHeight: '30vh',
+        height: '30vh',
         zIndex: 2,
         backgroundColor: '#409AD3'
     },
@@ -82,7 +87,7 @@ function Index (props) {
         <EventLayout>
             { isLoading
                 ? loadingElement
-                : <Box>
+                : <Box style={styles.slideGlobal}>
                     <Container style={styles.slideHeader}>
                         <Box style={{ ...styles.slideLogo, backgroundImage: `url(${props.data.logoUrl})` }}/>
                         <Box style={styles.slideDescription}>

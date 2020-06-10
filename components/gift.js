@@ -16,10 +16,11 @@ const styles = {
     },
     slideGradient: {
         position: 'absolute',
-        width: '100%',
-        height: '100%',
+        width: '100vw',
+        height: '70vh',
+        flexGrow: 1,
         zIndex: 1,
-        background: 'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0.75) 100%)'
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,0) 70%,rgba(0,0,0,1) 100%)'
     },
     slideTitle: {
         width: '100%',
@@ -40,7 +41,6 @@ const styles = {
     },
     slideBody: {
         position: 'absolute',
-        top: '30vh',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -72,7 +72,6 @@ function getRandomInt (max) {
 
 export default function Gift (props) {
     const spintTitle = createRef()
-
     const { teaser, title, imageURL } = props.data
     const [spinInHandler] = useTweenMax(spintTitle, 1.2, {
         rotation: -getRandomInt(6),
