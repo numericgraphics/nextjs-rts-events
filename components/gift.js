@@ -20,7 +20,7 @@ const styles = {
         height: '70vh',
         flexGrow: 1,
         zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,0) 70%,rgba(0,0,0,1) 100%)'
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)'
     },
     slideTitle: {
         width: '100%',
