@@ -1,7 +1,21 @@
 import React from 'react'
+import App from 'next/app'
 import '../styles/global.css'
 import 'typeface-roboto'
+import UserContext from '../components/UserContext'
 
-export default function App ({ Component, pageProps }) {
-    return <Component {...pageProps} />
+function MyApp ({ Component, pageProps }) {
+    return (
+        <UserContext.Provider value={{ dataEvent: pageProps.data }}>
+            <Component {...pageProps} />
+        </UserContext.Provider>
+    )
 }
+
+// RUN ALL GETINITIALPROPS IN PAGE
+MyApp.getInitialProps = async (appContext) => {
+    const appProps = await App.getInitialProps(appContext)
+    return { ...appProps }
+}
+
+export default MyApp
