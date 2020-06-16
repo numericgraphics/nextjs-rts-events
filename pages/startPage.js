@@ -1,18 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react'
 import getConfig from 'next/config'
-import fetch from 'node-fetch'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import EventLayout from '../components/eventLayout'
 import Gifts from '../components/gifts'
 import GiftsStepper from '../components/giftsStepper'
-import mockData from '../mock/config.json'
 import Typography from '@material-ui/core/Typography'
 import UserContext from '../components/UserContext'
 
 const { publicRuntimeConfig } = getConfig()
-const { API_URL, USE_MOCK } = publicRuntimeConfig
+const { API_URL } = publicRuntimeConfig
 const dev = API_URL === 'dev'
 export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh'
 
@@ -75,13 +73,14 @@ const styles = {
 function StartPage (props) {
     const [activeStep, setActiveStep] = useState(0)
     const [isLoading, setLoading] = useState(true)
-    //
-    const { dataEvent } = useContext(UserContext)
+    const { dataProvider } = useContext(UserContext)
 
     useEffect(() => {
-        console.log('StartPage - useEffect dataEvent', dataEvent)
+        console.log('StartPage - useEffect dataEvent', dataProvider.getAllData())
+        console.log('StartPage - useEffect dataEvent', dataProvider)
+        console.log('StartPage - useEffect dataEvent', dataProvider.getGift())
         setActiveStep(0)
-        setLoading(false)
+        setLoading(true)
     }, [])
 
     function slideIndexCallBack (index) {
@@ -111,30 +110,6 @@ function StartPage (props) {
             }
         </EventLayout>
     )
-}
-
-export async function getStaticProps () {
-    try {
-        let data
-        if (USE_MOCK) {
-            data = mockData
-        } else {
-            try {
-                const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/NIFFF')
-                data = await response.json()
-            } catch (err) {
-                data = { message: 'no-data' }
-            }
-        }
-
-        return {
-            props: {
-                data
-            }
-        }
-    } catch (error) {
-        throw new Error(error.message)
-    }
 }
 
 export default StartPage
