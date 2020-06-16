@@ -79,6 +79,7 @@ function StartPage (props) {
         console.log('StartPage - useEffect dataEvent', dataProvider.getAllData())
         console.log('StartPage - useEffect dataEvent', dataProvider)
         console.log('StartPage - useEffect dataEvent', dataProvider.getGift())
+        console.log('StartPage - useEffect dataEvent', dataProvider.getPromos())
         setActiveStep(0)
         setLoading(true)
     }, [])

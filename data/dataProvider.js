@@ -1,11 +1,6 @@
 class DataProvider {
     constructor () {
         this.data = {}
-        this.setData = this.setData.bind(this)
-        this.getAllData = this.getAllData.bind(this)
-        this.getTheme = this.getTheme.bind(this)
-        this.getGift = this.getGift.bind(this)
-        this.getTimeControl = this.getTimeControl.bind(this)
     }
 
     setData (data) {
@@ -22,6 +17,10 @@ class DataProvider {
 
     getGift () {
         return this.data.gifts
+    }
+
+    getPromos () {
+        return this.data.promos
     }
 
     getTimeControl () {

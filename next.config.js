@@ -7,6 +7,6 @@ dotenv.config()
 module.exports = {
     publicRuntimeConfig: {
         API_URL: process.env.API_URL,
-        USE_MOCK: true
+        USE_MOCK: false
     }
 }
