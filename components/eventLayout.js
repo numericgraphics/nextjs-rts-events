@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import utilStyles from '../styles/utils.module.css'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -9,12 +8,12 @@ export const siteTitle = 'TODO:SiteTitle'
 
 const useStyles = makeStyles({
     root: {
-        background: '#333',
+        backgroundColor: 'gray',
         border: 0,
         color: '#fff',
         width: '100vw',
         margin: '0 auto 0',
-        minHeight: '25rem'
+        minHeight: '100vh'
     },
     header: {
         display: 'flex',
@@ -62,13 +61,6 @@ export default function EventLayout ({ children, home }) {
                     content="TODO"
                 />
             </Head>
-            <header className={classes.header}>
-                {home && (
-                    <h1 className={utilStyles.heading2Xl}>Events by {' '}
-                        <a href="https://www.rts.ch">RTS</a>
-                    </h1>
-                )}
-            </header>
             {
                 isLandscape
                     ? <Box style={styles.alerte}>

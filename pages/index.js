@@ -1,40 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import getConfig from 'next/config'
-import Button from '@material-ui/core/Button'
-import EventLayout from '../components/eventLayout'
 import mockData from '../mock/config'
-import Router from 'next/router'
+import { makeStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Container from '@material-ui/core/Container'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL, USE_MOCK } = publicRuntimeConfig
 const dev = API_URL === 'dev'
 export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh'
+const useStyles = makeStyles({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100vh',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'gray'
+    }
+})
 
-const LoadingElement = <div><p style={{ textAlign: 'center' }}> Loading process ! </p></div>
-
-function goToStarPage () {
-    Router.push('/startPage')
-}
-
-const DebugElement = <div><p style={{ textAlign: 'center' }}> Debug process ! </p>
-    <Button variant="contained" onClick={goToStarPage}>StartPage</Button>
-</div>
-
-function Index (props) {
-    const [isLoading, setLoading] = useState(true)
-
-    useEffect(() => {
-        console.log('App - useEffect props', props)
-        setLoading(false)
-    }, [])
-
+function Index () {
+    const classes = useStyles()
     return (
-        <EventLayout>
-            { isLoading
-                ? LoadingElement
-                : DebugElement
-            }
-        </EventLayout>
+        <Container className={classes.container}>
+            <CircularProgress />
+        </Container>
     )
 }
 

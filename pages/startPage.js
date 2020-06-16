@@ -76,10 +76,10 @@ function StartPage (props) {
     const { dataProvider } = useContext(UserContext)
 
     useEffect(() => {
-        console.log('StartPage - useEffect dataEvent', dataProvider.getAllData())
-        console.log('StartPage - useEffect dataEvent', dataProvider)
-        console.log('StartPage - useEffect dataEvent', dataProvider.getGift())
-        console.log('StartPage - useEffect dataEvent', dataProvider.getPromos())
+        console.log('StartPage - useEffect getAllData', dataProvider.getAllData())
+        console.log('StartPage - useEffect  dataProvider', dataProvider)
+        console.log('StartPage - useEffect getGift', dataProvider.getGift())
+        console.log('StartPage - useEffect  getPromos', dataProvider.getPromos())
         setActiveStep(0)
         setLoading(true)
     }, [])
@@ -93,20 +93,14 @@ function StartPage (props) {
             { isLoading
                 ? loadingElement
                 : <Box style={styles.slideGlobal}>
-                    <Container style={styles.slideHeader}>
-                        <Box style={{ ...styles.slideLogo, backgroundImage: `url(${props.data.logoUrl})` }}/>
-                        <Box style={styles.slideDescription}>
-                            <Typography variant="body1" style={styles.slideDescriptionType}>{props.data.description}</Typography>
-                        </Box>
-                    </Container>
                     <Container style={styles.containerOverlay} >
-                        <GiftsStepper steps={props.data.gifts} activeStep={activeStep}/>
+                        <GiftsStepper steps={dataProvider.data.gifts} activeStep={activeStep}/>
                         <Button variant="contained" color="secondary" style={styles.button}>
                             Commencer
                         </Button>
                         <Typography variant="caption" style={styles.cg}>{props.data.cg}</Typography>
                     </Container>
-                    <Gifts data={props.data.gifts} indexCallBack={slideIndexCallBack}/>
+                    <Gifts data={dataProvider.data.gifts} indexCallBack={slideIndexCallBack}/>
                 </Box>
             }
         </EventLayout>
