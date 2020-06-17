@@ -11,7 +11,7 @@ const styles = {
         justifyContent: 'center',
         width: '100vw',
         minHeight: '100vh',
-        backgroundColor: 'pink'
+        backgroundColor: 'gray'
     }
 }
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     containerGlobal: {
         width: '100vw',
         minHeight: '100vh',
-        backgroundColor: 'pink'
+        backgroundColor: 'gray'
     },
     gradient: {
         position: 'absolute',

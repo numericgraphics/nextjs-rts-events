@@ -12,7 +12,7 @@ const styles = {
         justifyContent: 'center',
         width: '100vw',
         minHeight: '100vh',
-        backgroundColor: 'pink'
+        backgroundColor: 'gray'
     }
 }
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     containerGlobal: {
         width: '100vw',
         minHeight: '100vh',
-        backgroundColor: 'pink'
+        backgroundColor: 'gray'
     },
     gradient: {
         position: 'absolute',
@@ -55,9 +55,9 @@ export default function PromoLogo (props) {
                 <Box className={classes.image}>
                     <CardMedia
                         component="img"
-                        alt="Contemplative Reptile"
+                        alt={description}
                         image={logoURL}
-                        title="Contemplative Reptile"
+                        title={title}
                     />
                 </Box>
                 <Box className={classes.text}>
