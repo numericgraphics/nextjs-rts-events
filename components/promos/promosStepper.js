@@ -24,7 +24,7 @@ const styles = makeStyles({
     }
 })
 
-// TODO - ADD GOOD SVG FORM DESIGNER WITH --> vPromoSvgIcon
+// TODO - ADD GOOD SVG FORM DESIGNER WITH --> PromoSvgIcon
 // <PromoSvgIcon style={{ color: active ? '#409AD3' : 'white', fontSize: 15 }} />
 // <RemoveIcon style={{ color: active ? '#409AD3' : 'white', fontSize: '5rem' }} />
 function ColorLibStepIcon (props) {

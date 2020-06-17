@@ -47,7 +47,15 @@ const useStyles = makeStyles({
         minHeight: '10vh',
         zIndex: 3
     },
-    containerOverlay: {
+    containerOverlayHeader: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        top: 0,
+        zIndex: 2
+    },
+    containerOverlayFooter: {
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
@@ -91,8 +99,11 @@ function StartPage (props) {
     return (
         <EventLayout>
             <Box className={classes.slideGlobal}>
-                <Container className={classes.containerOverlay} >
+                <Container className={classes.containerOverlayHeader} >
                     <PromosStepper steps={promos} activeStep={activeStep}/>
+                </Container>
+                <Container className={classes.containerOverlayFooter} >
+
                     <Button variant="contained" color="secondary" className={classes.button}>
                         {translation.startPageButtonText}
                     </Button>
