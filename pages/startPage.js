@@ -76,6 +76,7 @@ function StartPage (props) {
     const { dataProvider } = useContext(UserContext)
 
     useEffect(() => {
+        console.log('StartPage - dataProvider', dataProvider)
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         setActiveStep(0)

@@ -1,10 +1,6 @@
-import React, { createRef, useEffect } from 'react'
-import Container from '@material-ui/core/Container'
+import React, { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import Grow from '@material-ui/core/Grow'
-import { useTweenMax } from '../../hooks/useTweenMax'
-import { isIOS } from '../../utils'
 
 const styles = {
     slide: {
@@ -66,41 +62,14 @@ const styles = {
     }
 }
 
-function getRandomInt (max) {
-    return Math.floor(Math.random() * Math.floor(max))
-}
-
-export default function Promo (props) {
-    const spintTitle = createRef()
-    const { teaser, title, imageURL } = props.data
-    const [spinInHandler] = useTweenMax(spintTitle, 1.2, {
-        rotation: -getRandomInt(6),
-        transformOrigin: 'center'
-    })
-    const [spinOutHandler] = useTweenMax(spintTitle, 0.2, {
-        rotation: 0,
-        transformOrigin: 'center'
-    })
-
+export default function PromoImage (props) {
     useEffect(() => {
-        props.selected ? spinInHandler() : spinOutHandler()
+
     }, [props.selected])
 
     return (
         <Box>
-            <Box style={styles.slideGradient}/>
-            <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
-                <Container style={isIOS() ? styles.slideBodyIOS : styles.slideBody}>
-                    <Box ref={spintTitle} style={styles.slideTitle}>
-                        <Typography variant="h4" style={styles.slideTitleTypo}>{title}</Typography>
-                    </Box>
-                    <Grow in={props.selected}
-                        style={{ transformOrigin: '50 50 0' }}
-                        {...(props.selected ? { timeout: 1000 } : {})}>
-                        <Typography style={styles.slideTeaser} variant="h5" align={'center'}>{teaser}</Typography>
-                    </Grow>
-                </Container>
-            </Box>
+            <Typography style={styles.slideTeaser} variant="h5" align={'center'}>PromoImage</Typography>
         </Box>
     )
 }
