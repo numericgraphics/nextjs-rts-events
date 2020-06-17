@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import App from 'next/app'
 import '../styles/global.css'
 import 'typeface-roboto'
@@ -7,6 +7,7 @@ import DataProvider from '../data/dataProvider'
 import Router from 'next/router'
 
 function MyApp ({ Component, pageProps }) {
+    const [eventData, setEventData] = useState([])
     async function handleVerify () {
         try {
             const response = await fetch('/api/verify')
@@ -39,12 +40,13 @@ function MyApp ({ Component, pageProps }) {
 
     useEffect(() => {
         if (pageProps.eventData) {
+            setEventData(pageProps.eventData)
             DataProvider.setData(pageProps.eventData)
         }
     }, [pageProps])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData }}>
             <Component {...pageProps} />
         </UserContext.Provider>
     )

@@ -3,8 +3,8 @@ import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Grow from '@material-ui/core/Grow'
-import { useTweenMax } from '../hooks/useTweenMax'
-import { isIOS } from '../utils'
+import { useTweenMax } from '../../hooks/useTweenMax'
+import { isIOS } from '../../utils'
 
 const styles = {
     slide: {

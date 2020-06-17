@@ -15,7 +15,7 @@ class DataProvider {
         return this.data.theme
     }
 
-    getGift () {
+    getGifts () {
         return this.data.gifts
     }
 
@@ -25,6 +25,10 @@ class DataProvider {
 
     getTimeControl () {
         return this.data.timeControl
+    }
+
+    getTranslation () {
+        return this.data.translation
     }
 }
 

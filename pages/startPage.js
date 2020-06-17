@@ -4,8 +4,8 @@ import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import EventLayout from '../components/eventLayout'
-import Gifts from '../components/gifts'
-import GiftsStepper from '../components/giftsStepper'
+import Promos from '../components/promos/promos'
+import PromosStepper from '../components/promos/promosStepper'
 import Typography from '@material-ui/core/Typography'
 import UserContext from '../components/UserContext'
 
@@ -14,7 +14,6 @@ const { API_URL } = publicRuntimeConfig
 const dev = API_URL === 'dev'
 export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh'
 
-const loadingElement = <div><p style={{ textAlign: 'center' }}> Loading process ! </p></div>
 const styles = {
     slideGlobal: {
         display: 'flex',
@@ -72,16 +71,14 @@ const styles = {
 // TODO USE COLOR CODE AND STYLE WITH USERCONTEXT
 function StartPage (props) {
     const [activeStep, setActiveStep] = useState(0)
-    const [isLoading, setLoading] = useState(true)
+    const [promos, setPromos] = useState([])
+    const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
 
     useEffect(() => {
-        console.log('StartPage - useEffect getAllData', dataProvider.getAllData())
-        console.log('StartPage - useEffect  dataProvider', dataProvider)
-        console.log('StartPage - useEffect getGift', dataProvider.getGift())
-        console.log('StartPage - useEffect  getPromos', dataProvider.getPromos())
+        setPromos(dataProvider.getPromos())
+        setTranslation(dataProvider.getTranslation())
         setActiveStep(0)
-        setLoading(true)
     }, [])
 
     function slideIndexCallBack (index) {
@@ -90,19 +87,16 @@ function StartPage (props) {
 
     return (
         <EventLayout>
-            { isLoading
-                ? loadingElement
-                : <Box style={styles.slideGlobal}>
-                    <Container style={styles.containerOverlay} >
-                        <GiftsStepper steps={dataProvider.data.gifts} activeStep={activeStep}/>
-                        <Button variant="contained" color="secondary" style={styles.button}>
-                            Commencer
-                        </Button>
-                        <Typography variant="caption" style={styles.cg}>{props.data.cg}</Typography>
-                    </Container>
-                    <Gifts data={dataProvider.data.gifts} indexCallBack={slideIndexCallBack}/>
-                </Box>
-            }
+            <Box style={styles.slideGlobal}>
+                <Container style={styles.containerOverlay} >
+                    <PromosStepper steps={promos} activeStep={activeStep}/>
+                    <Button variant="contained" color="secondary" style={styles.button}>
+                        {translation.startPageButtonText}
+                    </Button>
+                    <Typography variant="caption" style={styles.cg}>{translation.lireCGUText}</Typography>
+                </Container>
+                <Promos data={promos} indexCallBack={slideIndexCallBack}/>
+            </Box>
         </EventLayout>
     )
 }

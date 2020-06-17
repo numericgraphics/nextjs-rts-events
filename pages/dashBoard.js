@@ -5,10 +5,11 @@ import UserContext from '../components/UserContext'
 
 function DashBoard (props) {
     const { dataProvider } = useContext(UserContext)
+
     useEffect(() => {
         console.log('DashBoard - useEffect getAllData', dataProvider.getAllData())
         console.log('DashBoard - useEffect  dataProvider', dataProvider)
-        console.log('DashBoard - useEffect getGift', dataProvider.getGift())
+        console.log('DashBoard - useEffect getGift', dataProvider.getGifts())
         console.log('DashBoard - useEffect  getPromos', dataProvider.getPromos())
     }, [])
 
