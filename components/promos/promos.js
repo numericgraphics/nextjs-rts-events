@@ -5,13 +5,14 @@ import PromoNoLogo from './promoNoLogo'
 import PromoImage from './promoImage'
 
 function getPromoTemplate (item, index, activeStep) {
+    const dynamicProps = { key: index, data: item, selected: (activeStep === index) }
     switch (item.type) {
     case 'Logo':
-        return <PromoLogo key={index} data={item} selected={activeStep === index}/>
+        return <PromoLogo {...dynamicProps} />
     case 'NoLogo':
-        return <PromoNoLogo key={index} data={item} selected={activeStep === index}/>
+        return <PromoNoLogo {...dynamicProps}/>
     case 'Image':
-        return <PromoImage key={index} data={item} selected={activeStep === index}/>
+        return <PromoImage {...dynamicProps}/>
     }
 }
 
