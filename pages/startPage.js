@@ -8,13 +8,14 @@ import Promos from '../components/promos/promos'
 import PromosStepper from '../components/promos/promosStepper'
 import Typography from '@material-ui/core/Typography'
 import UserContext from '../components/UserContext'
+import { makeStyles } from '@material-ui/core/styles'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
 const dev = API_URL === 'dev'
 export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh'
 
-const styles = {
+const useStyles = makeStyles({
     slideGlobal: {
         display: 'flex',
         flexDirection: 'column'
@@ -66,10 +67,11 @@ const styles = {
         color: 'white',
         marginBottom: 10
     }
-}
+})
 
 // TODO USE COLOR CODE AND STYLE WITH USERCONTEXT
 function StartPage (props) {
+    const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])
     const [translation, setTranslation] = useState([])
@@ -88,13 +90,13 @@ function StartPage (props) {
 
     return (
         <EventLayout>
-            <Box style={styles.slideGlobal}>
-                <Container style={styles.containerOverlay} >
+            <Box className={classes.slideGlobal}>
+                <Container className={classes.containerOverlay} >
                     <PromosStepper steps={promos} activeStep={activeStep}/>
-                    <Button variant="contained" color="secondary" style={styles.button}>
+                    <Button variant="contained" color="secondary" className={classes.button}>
                         {translation.startPageButtonText}
                     </Button>
-                    <Typography variant="caption" style={styles.cg}>{translation.lireCGUText}</Typography>
+                    <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
                 </Container>
                 <Promos data={promos} indexCallBack={slideIndexCallBack}/>
             </Box>

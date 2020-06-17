@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded'
 
 const ColorLibConnector = withStyles({
     line: {
@@ -19,15 +19,19 @@ const styles = makeStyles({
         width: '30vw',
         alignSelf: 'center',
         backgroundColor: 'transparent',
+        justifyContent: 'center',
         padding: 5
     }
 })
 
+// TODO - ADD GOOD SVG FORM DESIGNER WITH --> vPromoSvgIcon
+// <PromoSvgIcon style={{ color: active ? '#409AD3' : 'white', fontSize: 15 }} />
+// <RemoveIcon style={{ color: active ? '#409AD3' : 'white', fontSize: '5rem' }} />
 function ColorLibStepIcon (props) {
     const { active } = props
     return (
         <div>
-            <FiberManualRecordIcon style={{ color: active ? '#409AD3' : 'white', fontSize: 15 }} />
+            <RemoveRoundedIcon style={{ color: active ? '#409AD3' : 'white', fontSize: '3rem' }} />
         </div>
     )
 }
