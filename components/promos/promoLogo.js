@@ -36,6 +36,12 @@ const useStyles = makeStyles({
     text: {
         padding: 10
     },
+    title: {
+        fontFamily: 'srgssr-type-Bd'
+    },
+    description: {
+        fontFamily: 'srgssr-type-Bd'
+    },
     image: {
         alignSelf: 'center',
         padding: 20,
@@ -64,8 +70,8 @@ export default function PromoLogo (props) {
                     />
                 </Box>
                 <Box className={classes.text}>
-                    <Typography variant="h3" align={'center'}>{title}</Typography>
-                    <Typography variant="subtitle1" align={'center'}>{description}</Typography>
+                    <Typography className={classes.title} variant="h3" align={'center'}>{title}</Typography>
+                    <Typography className={classes.description} variant="subtitle1" align={'center'}>{description}</Typography>
                 </Box>
             </Box>
         </Box>
