@@ -31,7 +31,7 @@ function ColorLibStepIcon (props) {
     const { active } = props
     return (
         <div>
-            <RemoveRoundedIcon style={{ color: active ? '#409AD3' : 'white', fontSize: '3rem' }} />
+            <RemoveRoundedIcon style={{ color: active ? 'gray' : 'white', fontSize: '3rem' }} />
         </div>
     )
 }

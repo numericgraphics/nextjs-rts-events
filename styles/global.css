@@ -40,3 +40,5 @@ img {
     max-width: 100%;
     display: block;
 }
+
+button:focus {outline:0;}

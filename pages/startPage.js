@@ -9,6 +9,7 @@ import PromosStepper from '../components/promos/promosStepper'
 import Typography from '@material-ui/core/Typography'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
+import Link from '@material-ui/core/Link'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
@@ -67,13 +68,15 @@ const useStyles = makeStyles({
         width: '80vw',
         bottom: 10,
         borderRadius: 20,
-        alignSelf: 'center',
-        backgroundColor: '#AF001E'
+        alignSelf: 'center'
     },
     cg: {
         alignSelf: 'center',
         color: 'white',
         marginBottom: 10
+    },
+    cgLink: {
+        textAlign: 'center'
     }
 })
 
@@ -103,11 +106,12 @@ function StartPage (props) {
                     <PromosStepper steps={promos} activeStep={activeStep}/>
                 </Container>
                 <Container className={classes.containerOverlayFooter} >
-
-                    <Button variant="contained" color="secondary" className={classes.button}>
+                    <Button variant="contained" className={classes.button}>
                         {translation.startPageButtonText}
                     </Button>
-                    <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
+                    <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink} target="_blank">
+                        <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
+                    </Link>
                 </Container>
                 <Promos data={promos} indexCallBack={slideIndexCallBack}/>
             </Box>
