@@ -27,7 +27,7 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100vw',
-        minHeight: '85vh',
+        minHeight: '80vh',
         zIndex: 2
     },
     gradient: {
