@@ -38,7 +38,7 @@ export async function getStaticProps () {
             data = mockData
         } else {
             try {
-                const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/NIFFF')
+                const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF')
                 data = await response.json()
             } catch (err) {
                 data = { message: 'no-data' }

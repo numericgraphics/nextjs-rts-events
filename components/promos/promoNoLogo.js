@@ -9,6 +9,9 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
         width: '100vw',
         minHeight: '100vh',
         backgroundColor: 'gray'
@@ -44,7 +47,7 @@ export default function PromoNoLogo (props) {
     return (
         <Box className={classes.containerGlobal}>
             <Box className={classes.gradient}/>
-            <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})`, backgroundPosition: 'center' }} >
+            <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})` }} >
                 <Box className={classes.text}>
                     <Typography variant="h5" align={'center'}>{title}</Typography>
                     <Typography variant="body1" align={'center'}>{description}</Typography>
