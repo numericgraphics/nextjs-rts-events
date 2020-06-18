@@ -65,7 +65,7 @@ export default function PromoLogo (props) {
                 </Box>
                 <Box className={classes.text}>
                     <Typography variant="h3" align={'center'}>{title}</Typography>
-                    <Typography variant="body1" align={'center'}>{description}</Typography>
+                    <Typography variant="subtitle1" align={'center'}>{description}</Typography>
                 </Box>
             </Box>
         </Box>
