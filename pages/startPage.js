@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
 import Link from '@material-ui/core/Link'
+import hasLoginModal from '../hoc/hasLoginModal'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
@@ -89,10 +90,11 @@ function StartPage (props) {
     const { dataProvider } = useContext(UserContext)
 
     useEffect(() => {
-        console.log('StartPage - dataProvider', dataProvider)
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         setActiveStep(0)
+        // eslint-disable-next-line no-undef
+        props.openModal()
     }, [])
 
     function slideIndexCallBack (index) {
@@ -119,4 +121,4 @@ function StartPage (props) {
     )
 }
 
-export default StartPage
+export default hasLoginModal(StartPage)
