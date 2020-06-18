@@ -37,7 +37,9 @@ const useStyles = makeStyles({
         padding: 10
     },
     title: {
-        fontFamily: 'srgssr-type-Bd'
+        fontFamily: 'srgssr-type-Bd',
+        lineHeight: '1em',
+        marginBottom: 12
     },
     description: {
         fontFamily: 'srgssr-type-Bd'

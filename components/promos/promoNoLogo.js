@@ -4,11 +4,8 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
 const styles = {
-    containerOverlay: {
+    containerImage: {
         position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
@@ -24,6 +21,15 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         backgroundColor: 'gray'
     },
+    containerOverlay: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        width: '100vw',
+        minHeight: '85vh',
+        zIndex: 2
+    },
     gradient: {
         position: 'absolute',
         width: '100vw',
@@ -36,7 +42,9 @@ const useStyles = makeStyles({
         padding: 10
     },
     title: {
-        fontFamily: 'srgssr-type-Bd'
+        fontFamily: 'srgssr-type-Bd',
+        lineHeight: '1em',
+        marginBottom: 12
     },
     description: {
         fontFamily: 'srgssr-type-Bd'
@@ -52,13 +60,14 @@ export default function PromoNoLogo (props) {
 
     return (
         <Box className={classes.containerGlobal}>
-            <Box className={classes.gradient}/>
-            <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})` }} >
+            <Box className={classes.containerOverlay} >
                 <Box className={classes.text}>
                     <Typography className={classes.title} variant="h3" align={'center'}>{title}</Typography>
                     <Typography className={classes.description} variant="subtitle1" align={'center'}>{description}</Typography>
                 </Box>
             </Box>
+            <Box className={classes.gradient}/>
+            <Box style={{ ...styles.containerImage, backgroundImage: `url(${backgroundImageURL})` }} />
         </Box>
 
     )
