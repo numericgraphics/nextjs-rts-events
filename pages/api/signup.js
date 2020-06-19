@@ -5,7 +5,6 @@ let userData = {}
 
 export default async (req, res) => {
     const { phone } = await req.body
-    console.log('signup phone', phone)
     try {
         if (!phone) {
             throw new Error('phone must be provided.')

@@ -18,14 +18,12 @@ export default async (req, res) => {
                 code: code
             }
 
-            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${userData.userID}/getData`, {
+            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userData.userID}/getData`, {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: userData.code })
             })
-
-            console.log('api number - response status', response.status)
 
             if (response.status === 401) {
             // kill cookie
@@ -41,7 +39,7 @@ export default async (req, res) => {
             }
 
             if (response.status !== 200) {
-                throw new Error('There is a issue with the createOrSync request')
+                throw new Error('There is a issue with the getData request')
             }
         } else {
             throw new Error('There is a issue with the cookie RTS-Events')
