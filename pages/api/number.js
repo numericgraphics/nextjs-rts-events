@@ -25,6 +25,8 @@ export default async (req, res) => {
                 body: JSON.stringify({ code: userData.code })
             })
 
+            console.log('response', response)
+
             if (response.status === 401) {
             // kill cookie
                 const cookieSerialized = cookie.serialize('RTS-Events', '', {

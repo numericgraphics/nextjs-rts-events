@@ -1,12 +1,10 @@
-// import cookie from 'cookie'
-// import fetch from 'node-fetch'
+import cookie from 'cookie'
+import fetch from 'node-fetch'
 
 export default async (req, res) => {
-    // let rtsEventCookie = null
-    // let cookies = null
+    let rtsEventCookie = null
+    let cookies = null
 
-    res.status(303).end()
-    /*
     // Check if rts-event cookie is available
     if (req.headers.cookie) {
         cookies = cookie.parse(req.headers.cookie ?? '')
@@ -17,7 +15,7 @@ export default async (req, res) => {
             if (cookieValue.code) {
                 // getData to get timeline
                 const code = cookieValue.code
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {
+                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${cookieValue.userID}/getData`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -43,5 +41,4 @@ export default async (req, res) => {
         }
     }
     res.status(303).end()
-    */
 }

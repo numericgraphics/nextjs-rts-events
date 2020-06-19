@@ -93,8 +93,6 @@ function StartPage (props) {
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         setActiveStep(0)
-        // eslint-disable-next-line no-undef
-        props.openModal()
     }, [])
 
     function onStart () {
