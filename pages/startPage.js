@@ -97,6 +97,10 @@ function StartPage (props) {
         props.openModal()
     }, [])
 
+    function onStart () {
+        props.openModal()
+    }
+
     function slideIndexCallBack (index) {
         setActiveStep(index)
     }
@@ -108,7 +112,7 @@ function StartPage (props) {
                     <PromosStepper steps={promos} activeStep={activeStep}/>
                 </Container>
                 <Container className={classes.containerOverlayFooter} >
-                    <Button variant="contained" className={classes.button}>
+                    <Button variant="contained" className={classes.button} onClick={onStart}>
                         {translation.startPageButtonText}
                     </Button>
                     <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink} target="_blank">

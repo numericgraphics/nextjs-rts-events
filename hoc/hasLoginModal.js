@@ -91,7 +91,7 @@ const hasLoginModal = WrappedComponent => {
                     }}
                 >
                     <Fade in={open}>
-                        <div className={classes.modalContent}>
+                        <Box className={classes.modalContent}>
                             <Box className={classes.containerTitle}>
                                 <Typography className={classes.title} variant="h6" align={'center'}>Afin de pouvoir jouer merci d’inscrire votre numéro de mobile</Typography>
                             </Box>
@@ -101,7 +101,7 @@ const hasLoginModal = WrappedComponent => {
                             <Button variant="contained" className={classes.button}>
                                 Envoyer
                             </Button>
-                        </div>
+                        </Box>
                     </Fade>
                 </Modal>
             </Box>
