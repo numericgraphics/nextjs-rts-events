@@ -71,20 +71,9 @@ const hasLoginModal = WrappedComponent => {
         }
 
         const handleClose = () => {
+            setLoginState(ModalStates.PHONE_NUMBER)
+            setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
-        }
-        // eslint-disable-next-line no-unused-vars
-        async function handleVerify () {
-            try {
-                const response = await fetch('/api/verify')
-                if (response.status === 200) {
-                    console.log('openModal 200')
-                } else {
-                    console.log('openModal 303')
-                }
-            } catch (error) {
-                throw new Error(error.message)
-            }
         }
 
         function OpenModal () {
@@ -95,8 +84,6 @@ const hasLoginModal = WrappedComponent => {
             setLoginState(ModalStates.ERROR)
             setUserData({ phone: '', code: '', error: message })
             setTimeout(() => {
-                setLoginState(ModalStates.PHONE_NUMBER)
-                setUserData({ phone: '', code: '', error: '' })
                 handleClose()
             }, 5000)
         }
@@ -105,7 +92,6 @@ const hasLoginModal = WrappedComponent => {
             event.preventDefault()
             setUserData({ ...userData, error: '' })
             setLoginState(ModalStates.LOADING)
-
             const phone = userData.phone
 
             try {
@@ -139,7 +125,6 @@ const hasLoginModal = WrappedComponent => {
             event.preventDefault()
             setUserData({ ...userData, error: '' })
             const code = userData.code
-            console.log('code', code)
             try {
                 const response = await fetch('/api/number', {
                     method: 'POST',
