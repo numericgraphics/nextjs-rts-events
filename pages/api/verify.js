@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 export default async (req, res) => {
     let rtsEventCookie = null
     let cookies = null
-
+    console.log('verify', req)
     // Check if rts-event cookie is available
     if (req.headers.cookie) {
         cookies = cookie.parse(req.headers.cookie ?? '')
