@@ -47,7 +47,7 @@ function DashBoard (props) {
                 const content = await response.json()
                 DataProvider.setData(content)
                 initDashPage()
-                console.log('DashBoard - useEffect  Page Verified')
+                console.log('DashBoard - useEffect  Page Verified !')
             } else {
                 await Router.push('/')
             }
