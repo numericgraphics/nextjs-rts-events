@@ -7,7 +7,7 @@ let userData = {}
 export default async (req, res) => {
     const { serverRuntimeConfig } = getConfig()
     const { EVENT_NAME } = serverRuntimeConfig
-    const cookieName = `RTS-Events-${EVENT_NAME}`
+    const cookieName = `rtsevents-${EVENT_NAME}`
 
     try {
         const { code } = await req.body

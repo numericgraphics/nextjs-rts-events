@@ -8,7 +8,7 @@ export default async (req, res) => {
     const { phone } = await req.body
     const { serverRuntimeConfig } = getConfig()
     const { EVENT_NAME } = serverRuntimeConfig
-    const cookieName = `RTS-Events-${EVENT_NAME}`
+    const cookieName = `rtsevents-${EVENT_NAME}`
 
     try {
         if (!phone) {
