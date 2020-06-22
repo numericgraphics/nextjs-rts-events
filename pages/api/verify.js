@@ -10,7 +10,7 @@ export default async (req, res) => {
     const { serverRuntimeConfig } = getConfig()
     const { EVENT_NAME } = serverRuntimeConfig
     const cookieName = `rtsevents-${EVENT_NAME}`
-    console.log(`request : ${req}`)
+    console.log('request', req)
     // Check if rts-event cookie is available
     if (req.headers.cookie) {
         cookies = cookie.parse(req.headers.cookie ?? '')
