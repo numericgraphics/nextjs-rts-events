@@ -1,17 +1,23 @@
 import cookie from 'cookie'
 import fetch from 'node-fetch'
+import getConfig from 'next/config'
 
 export default async (req, res) => {
     let rtsEventCookie = null
     let cookies = null
-    console.log('verify', req)
+
+    // TODO : get event name from request (shortname)
+    const { serverRuntimeConfig } = getConfig()
+    const { EVENT_NAME } = serverRuntimeConfig
+    const cookieName = `RTS-Events-${EVENT_NAME}`
+    alert(`request : ${req}`)
     // Check if rts-event cookie is available
     if (req.headers.cookie) {
         cookies = cookie.parse(req.headers.cookie ?? '')
-        rtsEventCookie = cookies['RTS-Events']
+        rtsEventCookie = cookies[cookieName]
 
         if (rtsEventCookie) {
-            const cookieValue = JSON.parse(cookies['RTS-Events'])
+            const cookieValue = JSON.parse(cookies[cookieName])
             if (cookieValue.code) {
                 // getData to get timeline
                 const code = cookieValue.code
@@ -27,7 +33,7 @@ export default async (req, res) => {
                     res.status(200).end()
                 } else {
                     // kill cookie
-                    const cookieSerialized = cookie.serialize('RTS-Events', '', {
+                    const cookieSerialized = cookie.serialize(cookieName, '', {
                         sameSite: 'lax',
                         secure: false,
                         maxAge: -1,

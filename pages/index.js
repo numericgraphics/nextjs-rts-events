@@ -135,7 +135,7 @@ function Index (props) {
                         <Button variant="contained" className={classes.button} onClick={onStart}>
                             {translation.startPageButtonText}
                         </Button>
-                        <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink} target="_blank">
+                        <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
                             <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
                         </Link>
                     </Container>

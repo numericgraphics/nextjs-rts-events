@@ -1,10 +1,15 @@
 import cookie, { serialize } from 'cookie'
 import fetch from 'node-fetch'
+import getConfig from 'next/config'
 
 let userData = {}
 
 export default async (req, res) => {
     const { phone } = await req.body
+    const { serverRuntimeConfig } = getConfig()
+    const { EVENT_NAME } = serverRuntimeConfig
+    const cookieName = `RTS-Events-${EVENT_NAME}`
+
     try {
         if (!phone) {
             throw new Error('phone must be provided.')
@@ -15,12 +20,12 @@ export default async (req, res) => {
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
-            rtsEventCookie = cookies['RTS-Events']
+            rtsEventCookie = cookies[cookieName]
         }
 
         // if rts-event cookie is available
         if (rtsEventCookie) {
-            const cookieValue = JSON.parse(cookies['RTS-Events'])
+            const cookieValue = JSON.parse(cookies[cookieName])
             // Cookie contain userID and code
             if (cookieValue.code) {
                 // getData to get timeline
@@ -37,7 +42,7 @@ export default async (req, res) => {
                     res.status(200).end()
                 } else {
                     // kill cookie
-                    const cookieSerialized = cookie.serialize('RTS-Events', '', {
+                    const cookieSerialized = cookie.serialize(cookieName, '', {
                         sameSite: 'lax',
                         secure: false,
                         maxAge: -1,
@@ -83,7 +88,7 @@ export default async (req, res) => {
             if (response.status !== 200) {
                 throw new Error('There is a probleme with your phone')
             }
-            res.setHeader('Set-Cookie', serialize('RTS-Events', JSON.stringify({ userID: userData.userID }), { path: '/' }))
+            res.setHeader('Set-Cookie', serialize(cookieName, JSON.stringify({ userID: userData.userID }), { path: '/' }))
             res.status(302).end()
         }
     } catch (error) {

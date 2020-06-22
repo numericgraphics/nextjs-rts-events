@@ -1,8 +1,14 @@
 import cookie, { serialize } from 'cookie'
 import fetch from 'node-fetch'
+import getConfig from 'next/config'
 
 let userData = {}
+
 export default async (req, res) => {
+    const { serverRuntimeConfig } = getConfig()
+    const { EVENT_NAME } = serverRuntimeConfig
+    const cookieName = `RTS-Events-${EVENT_NAME}`
+
     try {
         const { code } = await req.body
         if (!code) {
@@ -10,9 +16,9 @@ export default async (req, res) => {
         }
 
         const cookies = cookie.parse(req.headers.cookie ?? '')
-        const rtsEventCookie = cookies['RTS-Events']
+        const rtsEventCookie = cookies[cookieName]
         if (rtsEventCookie) {
-            const cookieValue = JSON.parse(cookies['RTS-Events'])
+            const cookieValue = JSON.parse(cookies[cookieName])
             userData = {
                 userID: cookieValue.userID,
                 code: code
@@ -29,7 +35,7 @@ export default async (req, res) => {
 
             if (response.status === 401) {
             // kill cookie
-                const cookieSerialized = cookie.serialize('RTS-Events', '', {
+                const cookieSerialized = cookie.serialize(cookieName, '', {
                     sameSite: 'lax',
                     secure: false,
                     maxAge: -1,
@@ -47,7 +53,7 @@ export default async (req, res) => {
             throw new Error('There is a issue with the cookie RTS-Events')
         }
 
-        res.setHeader('Set-Cookie', serialize('RTS-Events', JSON.stringify({
+        res.setHeader('Set-Cookie', serialize(cookieName, JSON.stringify({
             userID: userData.userID,
             code: userData.code
         }), { path: '/', maxAge: 60 * 60 * 24 * 14 }))

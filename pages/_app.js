@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import App from 'next/app'
 import '../styles/global.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
@@ -35,9 +34,9 @@ function MyApp ({ Component, pageProps }) {
     )
 }
 
-MyApp.getInitialProps = async (appContext) => {
-    const appProps = await App.getInitialProps(appContext)
-    return { ...appProps }
-}
+// MyApp.getInitialProps = async (appContext) => {
+//     const appProps = await App.getInitialProps(appContext)
+//     return { ...appProps }
+// }
 
 export default MyApp
