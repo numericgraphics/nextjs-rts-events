@@ -30,7 +30,7 @@ export default async (req, res) => {
             if (cookieValue.code) {
                 // getData to get timeline
                 const code = cookieValue.code
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/${cookieValue.userID}/getData`, {
+                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${cookieValue.userID}/getData`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
