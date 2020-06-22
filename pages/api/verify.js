@@ -10,7 +10,7 @@ export default async (req, res) => {
     const { serverRuntimeConfig } = getConfig()
     const { EVENT_NAME } = serverRuntimeConfig
     const cookieName = `rtsevents-${EVENT_NAME}`
-    console.log('request', req)
+
     // Check if rts-event cookie is available
     if (req.headers.cookie) {
         cookies = cookie.parse(req.headers.cookie ?? '')
@@ -30,7 +30,8 @@ export default async (req, res) => {
 
                 // validated request
                 if (response.status === 200) {
-                    res.status(200).end()
+                    const { code, userID, nickname, avatarURL } = cookieValue
+                    res.status(200).send(JSON.stringify({ user: { code, userID, nickname, avatarURL } }))
                 } else {
                     // kill cookie
                     const cookieSerialized = cookie.serialize(cookieName, '', {

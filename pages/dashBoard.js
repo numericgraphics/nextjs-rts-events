@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from '@material-ui/core/Container'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
@@ -7,8 +7,16 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
+import DataProvider from '../data/dataProvider'
+import Progress from '../components/progress'
+import EventLayout from '../components/eventLayout'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles({
+    slideGlobal: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
     root: {
         minWidth: 275,
         minHeight: 300,
@@ -26,42 +34,56 @@ const useStyles = makeStyles({
 })
 
 function DashBoard (props) {
+    const [user, setUser] = useState({})
+    const [isLoading, setLoading] = useState(true)
     const classes = useStyles()
     const { dataProvider } = useContext(UserContext)
 
     async function handleVerify () {
         try {
             const response = await fetch('/api/verify')
-            if (response.status !== 200) {
-                await Router.push('/')
-            } else {
+
+            if (response.status === 200) {
+                const content = await response.json()
+                DataProvider.setData(content)
+                initDashPage()
                 console.log('DashBoard - useEffect  Page Verified')
+            } else {
+                await Router.push('/')
             }
         } catch (error) {
             throw new Error(error.message)
         }
     }
 
+    function initDashPage () {
+        // setTranslation(dataProvider.getTranslation())
+        setUser(dataProvider.getUser())
+        setLoading(false)
+    }
+
     useEffect(() => {
-        console.log('DashBoard - useEffect getAllData', dataProvider.getAllData())
-        console.log('DashBoard - useEffect  dataProvider', dataProvider)
-        console.log('DashBoard - useEffect getGift', dataProvider.getGifts())
-        console.log('DashBoard - useEffect  getPromos', dataProvider.getPromos())
         handleVerify().then()
     }, [])
 
     return (
-        <Container maxWidth="sm">
-            <Card className={classes.root}>
-                <CardContent className={classes.content}>
-                    <Avatar>H</Avatar>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        DashBoard
-                    </Typography>
-                </CardContent>
-            </Card>
-
-        </Container>
+        <EventLayout>
+            {isLoading
+                ? <Progress/>
+                : <Box className={classes.slideGlobal}>
+                    <Container maxWidth="sm">
+                        <Card className={classes.root}>
+                            <CardContent className={classes.content}>
+                                <Avatar src={user.avatarURL}/>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    {user.nickname}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Container>
+                </Box>
+            }
+        </EventLayout>
     )
 }
 

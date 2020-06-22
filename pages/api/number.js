@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import getConfig from 'next/config'
 
 let userData = {}
+let content = {}
 
 export default async (req, res) => {
     const { serverRuntimeConfig } = getConfig()
@@ -31,7 +32,10 @@ export default async (req, res) => {
                 body: JSON.stringify({ code: userData.code })
             })
 
-            console.log('response', response)
+            // Get body data to set the useID in the cookie
+            content = await response.json()
+
+            console.log('api number - user', content.user)
 
             if (response.status === 401) {
             // kill cookie
@@ -55,7 +59,9 @@ export default async (req, res) => {
 
         res.setHeader('Set-Cookie', serialize(cookieName, JSON.stringify({
             userID: userData.userID,
-            code: userData.code
+            code: userData.code,
+            nickname: content.user.nickname,
+            avatarURL: content.user.avatarURL
         }), { path: '/', maxAge: 60 * 60 * 24 * 14 }))
 
         res.status(200).end()

@@ -4,7 +4,7 @@ class DataProvider {
     }
 
     setData (data) {
-        this.data = data
+        Object.assign(this.data, data)
     }
 
     getAllData () {
@@ -29,6 +29,10 @@ class DataProvider {
 
     getTranslation () {
         return this.data.translation
+    }
+
+    getUser () {
+        return this.data.user
     }
 }
 
