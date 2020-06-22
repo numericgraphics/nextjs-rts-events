@@ -35,7 +35,7 @@ export default async (req, res) => {
             // Get body data to set the useID in the cookie
             content = await response.json()
 
-            console.log('api number - user', content.user)
+            console.log('api number - user -->', content.user)
 
             if (response.status === 401) {
             // kill cookie
