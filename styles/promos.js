@@ -38,7 +38,7 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100vw',
-        minHeight: '80vh',
+        minHeight: '75vh',
         zIndex: 2
     },
     text: {
