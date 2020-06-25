@@ -10,6 +10,17 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { ColorButton } from '../components/ui/ColorButton'
 
+const styles = {
+    textField: {
+        fontFamily: 'srgssr-type-Bd',
+        color: '#a6a6a6',
+        border: 'none',
+        width: '50vw',
+        backgroundColor: 'white',
+        textAlign: 'center'
+    }
+}
+
 const useStyles = makeStyles(() => ({
     modal: {
         display: 'flex',
@@ -43,6 +54,11 @@ const useStyles = makeStyles(() => ({
         fontSize: '1.25rem',
         padding: '6px 20px',
         marginTop: 30
+    },
+    root: {
+        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+            border: 'none'
+        }
     },
     textFieldContainer: {
         padding: 20,
@@ -157,6 +173,8 @@ const hasLoginModal = WrappedComponent => {
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
                         <TextField
+                            className={classes.root}
+                            inputProps={{ style: styles.textField }}
                             id="numberReceive"
                             variant="outlined"
                             type="number"
@@ -183,6 +201,8 @@ const hasLoginModal = WrappedComponent => {
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <TextField
+                            className={classes.root}
+                            inputProps={{ style: styles.textField }}
                             id="phoneNumber"
                             variant="outlined"
                             type="number"
