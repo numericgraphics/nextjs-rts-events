@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import PromosStepper from '../components/promos/promosStepper'
-import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import Promos from '../components/promos/promos'
@@ -14,7 +13,7 @@ import UserContext from '../components/UserContext'
 import hasLoginModal from '../hoc/hasLoginModal'
 import Progress from '../components/progress'
 import Router from 'next/router'
-import withStyles from '@material-ui/core/styles/withStyles'
+import { ColorButton } from '../components/ui/ColorButton'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL, USE_MOCK } = publicRuntimeConfig
@@ -88,16 +87,6 @@ const useStyles = makeStyles({
         textAlign: 'center'
     }
 })
-
-const ColorButton = withStyles((theme) => ({
-    root: {
-        color: theme.palette.getContrastText('#707070'),
-        backgroundColor: '#707070',
-        '&:hover': {
-            backgroundColor: '#505050'
-        }
-    }
-}))(Button)
 
 function Index (props) {
     const classes = useStyles()

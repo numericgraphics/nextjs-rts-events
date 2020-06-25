@@ -5,10 +5,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
+import { ColorButton } from '../components/ui/ColorButton'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -19,13 +19,13 @@ const useStyles = makeStyles(() => ({
     modalContent: {
         display: 'flex',
         flexDirection: 'column',
-        width: '70vw',
+        width: '90vw',
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#EAEAEA',
-        boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.75)',
-        padding: 15
+        boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
+        padding: 30
     },
     containerTitle: {
         position: 'relative',
@@ -33,15 +33,16 @@ const useStyles = makeStyles(() => ({
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
-        lineHeight: '1em'
+        fontSize: '1.25em',
+        letterSpacing: '0em'
     },
     button: {
         position: 'relative',
-        borderRadius: 20,
-        alignSelf: 'center'
-    },
-    textField: {
-        paddingBottom: 12
+        borderRadius: 30,
+        alignSelf: 'center',
+        fontSize: '1.25rem',
+        padding: '6px 20px',
+        marginTop: 30
     },
     textFieldContainer: {
         padding: 20,
@@ -152,11 +153,10 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.NUMBER_RECEIVE:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h6" align={'center'}>Veuillez compléter par le numéro reçu par sms.</Typography>
+                        <Typography className={classes.title} variant="h4" align={'center'}>Veuillez compléter par le numéro reçu par sms.</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
                         <TextField
-                            className={classes.textField}
                             id="numberReceive"
                             variant="outlined"
                             type="number"
@@ -167,9 +167,9 @@ const hasLoginModal = WrappedComponent => {
                                 )
                             }/>
 
-                        <Button variant="contained" className={classes.button} type="submit">
+                        <ColorButton variant="contained" className={classes.button} type="submit">
                             Envoyer
-                        </Button>
+                        </ColorButton>
                     </form>
                 </Box>
             case ModalStates.LOADING:
@@ -179,11 +179,10 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h6" align={'center'}>Afin de pouvoir jouer merci d’inscrire votre numéro de mobile</Typography>
+                        <Typography className={classes.title} variant="h4" align={'center'}>Afin de pouvoir jouer merci d’inscrire votre numéro de mobile</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <TextField
-                            className={classes.textField}
                             id="phoneNumber"
                             variant="outlined"
                             type="number"
@@ -193,14 +192,14 @@ const hasLoginModal = WrappedComponent => {
                                     Object.assign({}, userData, { phone: event.target.value })
                                 )
                             }/>
-                        <Button variant="contained" className={classes.button} type="submit" >
+                        <ColorButton variant="contained" className={classes.button} type="submit" >
                             Envoyer
-                        </Button>
+                        </ColorButton>
                     </form>
                 </Box>
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
-                    <Typography className={classes.title} variant="h6" align={'center'}>Erreur</Typography>
+                    <Typography className={classes.title} variant="h4" align={'center'}>Erreur</Typography>
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </Box>
             }
