@@ -14,6 +14,7 @@ import UserContext from '../components/UserContext'
 import hasLoginModal from '../hoc/hasLoginModal'
 import Progress from '../components/progress'
 import Router from 'next/router'
+import withStyles from '@material-ui/core/styles/withStyles'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL, USE_MOCK } = publicRuntimeConfig
@@ -64,24 +65,39 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        bottom: 0,
-        zIndex: 1
+        zIndex: 1,
+        bottom: 30,
+        paddingLeft: 30,
+        paddingRight: 30
     },
     button: {
         width: '80vw',
-        bottom: 10,
-        borderRadius: 20,
-        alignSelf: 'center'
+        bottom: 20,
+        borderRadius: 30,
+        alignSelf: 'center',
+        fontSize: '1.25rem',
+        padding: '6px 20px'
     },
     cg: {
         alignSelf: 'center',
         color: 'white',
-        marginBottom: 10
+        marginBottom: 10,
+        fontsize: '0.8125rem'
     },
     cgLink: {
         textAlign: 'center'
     }
 })
+
+const ColorButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText('#707070'),
+        backgroundColor: '#707070',
+        '&:hover': {
+            backgroundColor: '#505050'
+        }
+    }
+}))(Button)
 
 function Index (props) {
     const classes = useStyles()
@@ -132,9 +148,9 @@ function Index (props) {
                         <PromosStepper steps={promos} activeStep={activeStep}/>
                     </Container>
                     <Container className={classes.containerOverlayFooter} >
-                        <Button variant="contained" className={classes.button} onClick={onStart}>
+                        <ColorButton variant="contained" className={classes.button} onClick={onStart}>
                             {translation.startPageButtonText}
-                        </Button>
+                        </ColorButton>
                         <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
                             <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
                         </Link>
