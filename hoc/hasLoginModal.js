@@ -72,8 +72,8 @@ const hasLoginModal = WrappedComponent => {
         const [open, setOpen] = React.useState(false)
         const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
-        const [translation, setTranslation] = useState([])
         const { dataProvider } = useContext(UserContext)
+        const [translation] = useState(dataProvider.getTranslation())
 
         const handleOpen = () => {
             setOpen(true)
@@ -85,8 +85,7 @@ const hasLoginModal = WrappedComponent => {
             setOpen(false)
         }
 
-        function OpenModal (data) {
-            setTranslation(data)
+        function OpenModal () {
             handleOpen()
         }
 
@@ -230,4 +229,3 @@ const hasLoginModal = WrappedComponent => {
 }
 
 export default hasLoginModal
-

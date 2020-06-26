@@ -3,11 +3,18 @@ import '../styles/global.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
+import Progress from '../components/progress'
 
 // TODO - Check Scratches _app.jsx to get data and fetch without cors issue
 
+async function fetchGlobalEventData () {
+    const response = await fetch('/api/fetchGlobal')
+    return await response.json()
+}
+
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
+    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
         console.log('MyApp - useEffect init')
         // REMOVE SERVER SIDE INJECTED CSS
@@ -20,18 +27,23 @@ function MyApp ({ Component, pageProps }) {
         } catch (error) {
             throw new Error(error.message)
         }
-    }, [])
 
-    useEffect(() => {
-        if (pageProps.eventData) {
-            setEventData(pageProps.eventData)
-            DataProvider.setData(pageProps.eventData)
+        try {
+            fetchGlobalEventData().then((result) => {
+                setEventData(result)
+                DataProvider.setData(result)
+                setLoading(false)
+            })
+        } catch (error) {
+            throw new Error(error.message)
         }
-    }, [pageProps])
+    }, [])
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData }}>
-            <Component {...pageProps} />
+            {isLoading
+                ? <Progress/>
+                : <Component {...pageProps} />}
         </UserContext.Provider>
     )
 }

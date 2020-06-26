@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { withRouter } from 'next/router'
 import getConfig from 'next/config'
-import mockData from '../mock/config'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
@@ -16,7 +15,7 @@ import Progress from '../components/progress'
 import { ColorButton } from '../components/ui/ColorButton'
 
 const { publicRuntimeConfig } = getConfig()
-const { API_URL, USE_MOCK } = publicRuntimeConfig
+const { API_URL } = publicRuntimeConfig
 const dev = API_URL === 'dev'
 export const server = dev ? 'http://localhost:3000' : 'https://web-front-v3-git-feature-first-view.rtsch.now.sh'
 const useStyles = makeStyles({
@@ -127,16 +126,15 @@ function Index (props) {
         setLoading(false)
     }
 
-    // TODO - Check to send translation to HOC (login)
     function handleUrlQuery () {
         const { query } = props.router
         if (query && query.modal === 'true') {
-            props.openModal(translation)
+            props.openModal()
         }
     }
 
     function onStart () {
-        props.openModal(translation)
+        props.openModal()
     }
 
     function slideIndexCallBack (index) {
@@ -164,30 +162,6 @@ function Index (props) {
             }
         </EventLayout>
     )
-}
-
-export async function getStaticProps () {
-    try {
-        let data
-        if (USE_MOCK) {
-            data = mockData
-        } else {
-            try {
-                const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF')
-                data = await response.json()
-            } catch (err) {
-                data = { message: 'no-data' }
-            }
-        }
-
-        return {
-            props: {
-                eventData: data
-            }
-        }
-    } catch (error) {
-        throw new Error(error.message)
-    }
 }
 
 export default withRouter(hasLoginModal(Index))
