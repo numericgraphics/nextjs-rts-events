@@ -7,7 +7,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
-import DataProvider from '../data/dataProvider'
 import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
@@ -39,17 +38,19 @@ function DashBoard (props) {
     const classes = useStyles()
     const { dataProvider } = useContext(UserContext)
 
-    async function handleVerify () {
+    async function fetchData () {
         try {
-            const response = await fetch('/api/verify')
+            const response = await fetch('/api/fetchGame')
 
             if (response.status === 200) {
                 const content = await response.json()
-                DataProvider.setData(content)
+                dataProvider.setData(content)
                 initDashPage()
-                console.log('DashBoard - useEffect  Page Verified !')
             } else {
-                await Router.push('/')
+                await Router.push({
+                    pathname: '/',
+                    query: { modal: true }
+                })
             }
         } catch (error) {
             throw new Error(error.message)
@@ -63,7 +64,7 @@ function DashBoard (props) {
     }
 
     useEffect(() => {
-        handleVerify().then()
+        fetchData().then()
     }, [])
 
     return (

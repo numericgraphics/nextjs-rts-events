@@ -1,25 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { ColorButton } from '../components/ui/ColorButton'
-
-const styles = {
-    textField: {
-        fontFamily: 'srgssr-type-Bd',
-        color: '#a6a6a6',
-        border: 'none',
-        width: '50vw',
-        backgroundColor: 'white',
-        textAlign: 'center'
-    }
-}
+import UserContext from '../components/UserContext'
+import LoginTextField from '../components/ui/LoginTextField'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -82,6 +72,8 @@ const hasLoginModal = WrappedComponent => {
         const [open, setOpen] = React.useState(false)
         const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
+        const [translation, setTranslation] = useState([])
+        const { dataProvider } = useContext(UserContext)
 
         const handleOpen = () => {
             setOpen(true)
@@ -93,7 +85,8 @@ const hasLoginModal = WrappedComponent => {
             setOpen(false)
         }
 
-        function OpenModal () {
+        function OpenModal (data) {
+            setTranslation(data)
             handleOpen()
         }
 
@@ -129,7 +122,7 @@ const hasLoginModal = WrappedComponent => {
                 }
 
                 if (response.status !== 200) {
-                    onError("Nous n'arrivons pas a trouver votre telephone")
+                    onError(translation.modalLoginPhoneErrorText)
                 }
             } catch (error) {
                 console.error(error)
@@ -149,14 +142,16 @@ const hasLoginModal = WrappedComponent => {
                     body: JSON.stringify({ code })
                 })
 
-                console.log('response', response)
                 if (response.status === 200) {
+                    const content = await response.json()
+                    const { nickname, avatarURL } = content
+                    dataProvider.setData({ user: { nickname, avatarURL } })
                     await Router.push('/dashBoard')
                     return
                 }
 
                 if (response.status !== 200) {
-                    onError("le code n'est pas le bon")
+                    onError(translation.modalLoginNumberErrorText)
                 }
             } catch (error) {
                 console.error(error)
@@ -169,22 +164,14 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.NUMBER_RECEIVE:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>Veuillez compléter par le numéro reçu par sms.</Typography>
+                        <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <TextField
-                            className={classes.root}
-                            inputProps={{ style: styles.textField }}
-                            id="numberReceive"
-                            variant="outlined"
-                            type="number"
-                            value={userData.code}
-                            onChange={event =>
-                                setUserData(
-                                    Object.assign({}, userData, { code: event.target.value })
-                                )
-                            }/>
-
+                        <LoginTextField id="numberReceive" value={userData.code} onChange={(data) =>
+                            setUserData(
+                                Object.assign({}, userData, { code: data })
+                            )
+                        }/>
                         <ColorButton variant="contained" className={classes.button} type="submit">
                             Envoyer
                         </ColorButton>
@@ -197,21 +184,14 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>Afin de pouvoir jouer merci d’inscrire votre numéro de mobile</Typography>
+                        <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <TextField
-                            className={classes.root}
-                            inputProps={{ style: styles.textField }}
-                            id="phoneNumber"
-                            variant="outlined"
-                            type="number"
-                            value={userData.phone}
-                            onChange={event =>
-                                setUserData(
-                                    Object.assign({}, userData, { phone: event.target.value })
-                                )
-                            }/>
+                        <LoginTextField id="phoneNumber" value={userData.phone} onChange={(data) =>
+                            setUserData(
+                                Object.assign({}, userData, { phone: data })
+                            )
+                        }/>
                         <ColorButton variant="contained" className={classes.button} type="submit" >
                             Envoyer
                         </ColorButton>
@@ -250,3 +230,4 @@ const hasLoginModal = WrappedComponent => {
 }
 
 export default hasLoginModal
+

@@ -4,6 +4,8 @@ import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 
+// TODO - Check Scratches _app.jsx to get data and fetch without cors issue
+
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
     useEffect(() => {

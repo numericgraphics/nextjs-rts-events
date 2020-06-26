@@ -3,7 +3,6 @@ import fetch from 'node-fetch'
 import getConfig from 'next/config'
 
 let userData = {}
-let content = {}
 
 export default async (req, res) => {
     const { serverRuntimeConfig } = getConfig()
@@ -25,19 +24,25 @@ export default async (req, res) => {
                 code: code
             }
 
-            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userData.userID}/getData`, {
+            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userData.userID}/getUser`, {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: userData.code })
             })
 
-            // Get body data to set the useID in the cookie
-            content = await response.json()
+            if (response.status === 200) {
+                // Get body data to set the useID in the cookie
+                const content = await response.json()
+                res.setHeader('Set-Cookie', serialize(cookieName, JSON.stringify({
+                    userID: userData.userID,
+                    code: userData.code
+                }), { path: '/', maxAge: 60 * 60 * 24 * 14 }))
 
-            console.log('api number - user -->', content.user)
+                res.status(200).send(JSON.stringify(content))
+            }
 
-            if (response.status === 401) {
+            if (response.status !== 200) {
             // kill cookie
                 const cookieSerialized = cookie.serialize(cookieName, '', {
                     sameSite: 'lax',
@@ -49,22 +54,9 @@ export default async (req, res) => {
                 res.setHeader('Set-Cookie', cookieSerialized)
                 throw new Error('The code used is not the right one')
             }
-
-            if (response.status !== 200) {
-                throw new Error('There is a issue with the getData request')
-            }
         } else {
             throw new Error('There is a issue with the cookie RTS-Events')
         }
-
-        res.setHeader('Set-Cookie', serialize(cookieName, JSON.stringify({
-            userID: userData.userID,
-            code: userData.code,
-            nickname: content.user.nickname,
-            avatarURL: content.user.avatarURL
-        }), { path: '/', maxAge: 60 * 60 * 24 * 14 }))
-
-        res.status(200).end()
     } catch (error) {
         res.status(400).send(error.message)
     }

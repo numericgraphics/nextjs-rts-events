@@ -21,7 +21,7 @@ export default async (req, res) => {
             if (cookieValue.code) {
                 // getData to get timeline
                 const code = cookieValue.code
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${cookieValue.userID}/getData`, {
+                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${cookieValue.userID}/getUser`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -30,8 +30,9 @@ export default async (req, res) => {
 
                 // validated request
                 if (response.status === 200) {
-                    const { code, userID, nickname, avatarURL } = cookieValue
-                    res.status(200).send(JSON.stringify({ user: { code, userID, nickname, avatarURL } }))
+                    const content = await response.json()
+                    const { nickname, avatarURL } = content
+                    res.status(200).send(JSON.stringify({ user: { nickname, avatarURL } }))
                 } else {
                     // kill cookie
                     const cookieSerialized = cookie.serialize(cookieName, '', {

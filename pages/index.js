@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import Router, { withRouter } from 'next/router'
 import getConfig from 'next/config'
 import mockData from '../mock/config'
 import { makeStyles } from '@material-ui/core/styles'
@@ -12,7 +13,6 @@ import EventLayout from '../components/eventLayout'
 import UserContext from '../components/UserContext'
 import hasLoginModal from '../hoc/hasLoginModal'
 import Progress from '../components/progress'
-import Router from 'next/router'
 import { ColorButton } from '../components/ui/ColorButton'
 
 const { publicRuntimeConfig } = getConfig()
@@ -100,6 +100,8 @@ function Index (props) {
         try {
             const response = await fetch('/api/verify')
             if (response.status === 200) {
+                const content = await response.json()
+                dataProvider.setData(content)
                 await Router.push('/dashBoard')
             } else {
                 initStartPage()
@@ -110,18 +112,31 @@ function Index (props) {
     }
 
     useEffect(() => {
+        handleUrlQuery()
+    }, [translation])
+
+    useEffect(() => {
         handleVerify().then()
     }, [])
 
     function initStartPage () {
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
+        handleUrlQuery()
         setActiveStep(0)
         setLoading(false)
     }
 
+    // TODO - Check to send translation to HOC (login)
+    function handleUrlQuery () {
+        const { query } = props.router
+        if (query && query.modal === 'true') {
+            props.openModal(translation)
+        }
+    }
+
     function onStart () {
-        props.openModal()
+        props.openModal(translation)
     }
 
     function slideIndexCallBack (index) {
@@ -175,4 +190,4 @@ export async function getStaticProps () {
     }
 }
 
-export default hasLoginModal(Index)
+export default withRouter(hasLoginModal(Index))
