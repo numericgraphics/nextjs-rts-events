@@ -16,7 +16,6 @@ function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        console.log('MyApp - useEffect init')
         // REMOVE SERVER SIDE INJECTED CSS
         // source : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
         try {
@@ -43,7 +42,8 @@ function MyApp ({ Component, pageProps }) {
         <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData }}>
             {isLoading
                 ? <Progress/>
-                : <Component {...pageProps} />}
+                : <Component {...pageProps} />
+            }
         </UserContext.Provider>
     )
 }
