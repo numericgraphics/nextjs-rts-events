@@ -69,6 +69,7 @@ const useStyles = makeStyles({
         width: '80vw',
         bottom: 10,
         borderRadius: 20,
+        fontFamily: 'srgssr-type-Rg',
         alignSelf: 'center'
     },
     cg: {

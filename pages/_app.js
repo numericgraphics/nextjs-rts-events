@@ -5,8 +5,6 @@ import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import Progress from '../components/progress'
 
-// TODO - Check Scratches _app.jsx to get data and fetch without cors issue
-
 async function fetchGlobalEventData () {
     const response = await fetch('/api/fetchGlobal')
     return await response.json()

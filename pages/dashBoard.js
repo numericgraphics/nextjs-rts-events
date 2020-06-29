@@ -10,16 +10,50 @@ import Router from 'next/router'
 import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles({
-    slideGlobal: {
+    containerGlobal: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '100vw',
+        height: '100vh'
     },
-    root: {
+    header: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        height: '15vh',
+        padding: '10px 30px',
+        textAlign: 'center'
+    },
+    footer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        flex: 2,
+        textAlign: 'center',
+        bottom: 30
+    },
+    avatar: {
+        width: 100,
+        height: 100,
+        border: 'solid',
+        borderColor: 'gray'
+    },
+    card: {
         minWidth: 275,
         minHeight: 300,
         margin: 20
+    },
+    HeaderTitle: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.25rem'
+    },
+    HeaderText: {
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1rem'
     },
     content: {
         display: 'flex',
@@ -28,7 +62,15 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         minWidth: 275,
         minHeight: 300
-
+    },
+    button: {
+        bottom: 50,
+        width: '80vw',
+        padding: '6px 20px',
+        borderRadius: 30,
+        alignSelf: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1.25rem'
     }
 })
 
@@ -36,6 +78,7 @@ function DashBoard (props) {
     const [user, setUser] = useState({})
     const [isLoading, setLoading] = useState(true)
     const classes = useStyles()
+    const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
 
     async function fetchData () {
@@ -58,7 +101,7 @@ function DashBoard (props) {
     }
 
     function initDashPage () {
-        // setTranslation(dataProvider.getTranslation())
+        setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setLoading(false)
     }
@@ -71,18 +114,29 @@ function DashBoard (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <Box className={classes.slideGlobal}>
-                    <Container maxWidth="sm">
-                        <Card className={classes.root}>
-                            <CardContent className={classes.content}>
-                                <Avatar src={user.avatarURL}/>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    {user.nickname}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Container>
-                </Box>
+                : <Container className={classes.containerGlobal}>
+                    <Box className={classes.header}>
+                        <Typography className={classes.HeaderTitle} align={'center'}>
+                            {translation.dashBoardHeadTitle}
+                        </Typography>
+                        <Typography className={classes.HeaderText} align={'center'}>
+                            {translation.dashBoardHeadText}
+                        </Typography>
+                    </Box>
+                    <Card className={classes.card}>
+                        <CardContent className={classes.content}>
+                            <Avatar className={classes.avatar} src={user.avatarURL}/>
+                            <Typography className={classes.title}>
+                                {user.nickname}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    <Box className={classes.footer}>
+                        <Button variant="contained" className={classes.button}>
+                            {translation.dashBoardChallengesButton}
+                        </Button>
+                    </Box>
+                </Container>
             }
         </EventLayout>
     )
