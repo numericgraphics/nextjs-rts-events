@@ -70,11 +70,12 @@ const useStyles = makeStyles({
         borderRadius: 30,
         alignSelf: 'center',
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25rem'
+        fontSize: '1.25rem',
+        marginTop: 10
     }
 })
 
-function DashBoard (props) {
+function ChallengeResult (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [isLoading, setLoading] = useState(true)
@@ -82,22 +83,23 @@ function DashBoard (props) {
     const { dataProvider } = useContext(UserContext)
 
     async function fetchData () {
-        try {
-            const response = await fetch('/api/fetchGame')
-
-            if (response.status === 200) {
-                const content = await response.json()
-                dataProvider.setData(content)
-                initPage()
-            } else {
-                await Router.push({
-                    pathname: '/',
-                    query: { modal: true }
-                })
-            }
-        } catch (error) {
-            throw new Error(error.message)
-        }
+        initPage()
+        // try {
+        //     const response = await fetch('/api/fetchGame')
+        //
+        //     if (response.status === 200) {
+        //         const content = await response.json()
+        //         dataProvider.setData(content)
+        //         initPage()
+        //     } else {
+        //         await Router.push({
+        //             pathname: '/',
+        //             query: { modal: true }
+        //         })
+        //     }
+        // } catch (error) {
+        //     throw new Error(error.message)
+        // }
     }
 
     function initPage () {
@@ -106,8 +108,12 @@ function DashBoard (props) {
         setLoading(false)
     }
 
-    async function startGame () {
+    async function continueGame () {
         await Router.push('/challengeQuestion')
+    }
+
+    async function gotoDashBoard () {
+        await Router.push('/dashBoard')
     }
 
     useEffect(() => {
@@ -119,25 +125,20 @@ function DashBoard (props) {
             {isLoading
                 ? <Progress/>
                 : <Container className={classes.containerGlobal}>
-                    <Box className={classes.header}>
-                        <Typography className={classes.HeaderTitle} align={'center'}>
-                            {translation.dashBoardHeadTitle}
-                        </Typography>
-                        <Typography className={classes.HeaderText} align={'center'}>
-                            {translation.dashBoardHeadText}
-                        </Typography>
-                    </Box>
                     <Card className={classes.card}>
                         <CardContent className={classes.content}>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <Typography className={classes.title}>
-                                {user.nickname}
+                                {translation.challengeResultTitle}
                             </Typography>
                         </CardContent>
                     </Card>
                     <Box className={classes.footer}>
-                        <ColorButton variant="contained" className={classes.button} onClick={startGame}>
-                            {translation.dashBoardChallengesButton}
+                        $<ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                            {translation.challengeResultButtonDashBoard}
+                        </ColorButton>
+                        <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
+                            {translation.challengeResultButtonContinue}
                         </ColorButton>
                     </Box>
                 </Container>
@@ -146,4 +147,4 @@ function DashBoard (props) {
     )
 }
 
-export default DashBoard
+export default ChallengeResult
