@@ -39,7 +39,6 @@ function GameCountDown (props) {
     }, [])
 
     function displayCountDownText () {
-        console.log('progress', progress)
         if (Math.round(progress) > 0 && Math.round(progress) < 30) {
             return '1'
         } else if (Math.round(progress) > 30 && Math.round(progress) < 60) {
