@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 // import Avatar from '@material-ui/core/Avatar'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
+import hasCountDownModal from '../hoc/hasCountDownModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -108,6 +109,7 @@ function ChallengeQuestion (props) {
     function initPage () {
         setTranslation(dataProvider.getTranslation())
         setLoading(false)
+        props.openModal()
     }
 
     function onAnswer (index) {
@@ -150,4 +152,4 @@ function ChallengeQuestion (props) {
     )
 }
 
-export default ChallengeQuestion
+export default hasCountDownModal(ChallengeQuestion)
