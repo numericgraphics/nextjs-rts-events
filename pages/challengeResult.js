@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Container from '@material-ui/core/Container'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
@@ -11,22 +10,11 @@ import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorButton } from '../components/ui/ColorButton'
+import InnerHeightLayout from '../components/innerHeightLayout'
 
 const useStyles = makeStyles({
     containerGlobal: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        height: '100vh'
-    },
-    header: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        height: '15vh',
-        padding: '10px 30px',
-        textAlign: 'center'
+        justifyContent: 'flex-start'
     },
     footer: {
         display: 'flex',
@@ -124,7 +112,7 @@ function ChallengeResult (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <Container className={classes.containerGlobal}>
+                : <InnerHeightLayout class={classes.containerGlobal} >
                     <Card className={classes.card}>
                         <CardContent className={classes.content}>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
@@ -141,7 +129,7 @@ function ChallengeResult (props) {
                             {translation.challengeResultButtonContinue}
                         </ColorButton>
                     </Box>
-                </Container>
+                </InnerHeightLayout>
             }
         </EventLayout>
     )

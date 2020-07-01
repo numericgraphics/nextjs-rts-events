@@ -4,28 +4,24 @@ import Router from 'next/router'
 import UserContext from '../components/UserContext'
 import EventLayout from '../components/eventLayout'
 import Progress from '../components/progress'
-import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 // import Card from '@material-ui/core/Card/Card'
 // import CardContent from '@material-ui/core/CardContent'
 // import Avatar from '@material-ui/core/Avatar'
 import { ColorButton } from '../components/ui/ColorButton'
+import InnerHeightLayout from '../components/innerHeightLayout'
 
 const useStyles = makeStyles({
     containerGlobal: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        height: '100vh'
+        justifyContent: 'flex-start'
     },
     header: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        height: '15vh',
         padding: '10px 30px',
+        paddingTop: '10%',
         textAlign: 'center'
     },
     footer: {
@@ -127,7 +123,7 @@ function ChallengeQuestion (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <Container className={classes.containerGlobal}>
+                : <InnerHeightLayout class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'left'}>
                             Question 1
@@ -148,7 +144,7 @@ function ChallengeQuestion (props) {
                         }
                         )}
                     </Box>
-                </Container>
+                </InnerHeightLayout>
             }
         </EventLayout>
     )

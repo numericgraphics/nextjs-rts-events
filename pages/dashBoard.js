@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Container from '@material-ui/core/Container'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
@@ -11,14 +10,11 @@ import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorButton } from '../components/ui/ColorButton'
+import InnerHeightLayout from '../components/innerHeightLayout'
 
 const useStyles = makeStyles({
     containerGlobal: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        height: '100vh'
+        justifyContent: 'flex-start'
     },
     header: {
         display: 'flex',
@@ -111,6 +107,7 @@ function DashBoard (props) {
     }
 
     useEffect(() => {
+        console.log('dataProvider', dataProvider)
         fetchData().then()
     }, [])
 
@@ -118,7 +115,7 @@ function DashBoard (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <Container className={classes.containerGlobal}>
+                : <InnerHeightLayout class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'center'}>
                             {translation.dashBoardHeadTitle}
@@ -140,7 +137,7 @@ function DashBoard (props) {
                             {translation.dashBoardChallengesButton}
                         </ColorButton>
                     </Box>
-                </Container>
+                </InnerHeightLayout>
             }
         </EventLayout>
     )

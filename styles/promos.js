@@ -28,8 +28,11 @@ export const styles = {
 // eslint-disable-next-line no-unused-vars
 export const useStyles = makeStyles({
     containerGlobal: {
-        width: '100vw',
-        minHeight: '100vh',
+        justifyContent: 'center',
+        backgroundColor: 'gray'
+    },
+    containerGlobalNoLogo: {
+        justifyContent: 'flex-end',
         backgroundColor: 'gray'
     },
     containerOverlay: {
@@ -38,7 +41,16 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100vw',
-        minHeight: '75vh',
+        zIndex: 2
+    },
+    containerOverlayNoLogo: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        width: '100vw',
+        bottom: 140,
         zIndex: 2
     },
     text: {

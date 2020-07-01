@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { styles, useStyles } from '../../styles/promos'
+import InnerHeightLayout from '../innerHeightLayout'
 
 export default function PromoNoLogo (props) {
     const classes = useStyles()
@@ -11,8 +12,8 @@ export default function PromoNoLogo (props) {
     }, [props.selected])
 
     return (
-        <Box className={classes.containerGlobal}>
-            <Box className={classes.containerOverlay} >
+        <InnerHeightLayout class={classes.containerGlobalNoLogo} >
+            <Box className={classes.containerOverlayNoLogo} >
                 <Box className={classes.text}>
                     <Typography className={classes.title} variant="h1" align={'center'}>{title}</Typography>
                     <Typography className={classes.subTitle} variant="h3" align={'center'}>{description}</Typography>
@@ -20,7 +21,7 @@ export default function PromoNoLogo (props) {
             </Box>
             <Box className={classes.gradient}/>
             <Box style={{ ...styles.containerImage, backgroundImage: `url(${backgroundImageURL})` }} />
-        </Box>
+        </InnerHeightLayout>
 
     )
 }
