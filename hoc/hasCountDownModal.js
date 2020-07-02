@@ -47,7 +47,7 @@ const hasCountDownModal = WrappedComponent => {
                         timeout: 500
                     }}
                 >
-                    <Fade in={open}>
+                    <Fade in={open} out={!open}>
                         <GameCountDown finishedCallBack={handleClose}/>
                     </Fade>
                 </Modal>

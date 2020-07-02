@@ -16,6 +16,13 @@ const useStyles = makeStyles({
         color: 'white',
         fontFamily: 'srgssr-type-Bd',
         fontSize: '6rem'
+    },
+    bottomCircle: {
+        color: 'white'
+    },
+    topCircle: {
+        position: 'absolute',
+        left: 0
     }
 })
 
@@ -54,7 +61,8 @@ function GameCountDown (props) {
     return (
         <InnerHeightLayout class={classes.containerProgress} >
             <Box position="relative" display="inline-flex">
-                <CircularProgress variant="static" size={300} thickness={1} value={progress} />
+                <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={1} value={100} />
+                <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={1} value={progress} />
                 <Box
                     top={0}
                     left={0}
