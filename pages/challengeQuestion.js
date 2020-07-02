@@ -3,12 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 import UserContext from '../components/UserContext'
 import EventLayout from '../components/eventLayout'
-import Progress from '../components/progress'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-// import Card from '@material-ui/core/Card/Card'
-// import CardContent from '@material-ui/core/CardContent'
-// import Avatar from '@material-ui/core/Avatar'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
@@ -78,8 +74,9 @@ function ChallengeQuestion (props) {
     const [isLoading, setLoading] = useState(true)
     // eslint-disable-next-line no-unused-vars
     const [translation, setTranslation] = useState([])
+    const [title, setTitle] = useState('')
     const [question, setQuestion] = useState('')
-    const [result, setResult] = useState([])
+    const [answers, setAnswers] = useState([])
     const { dataProvider } = useContext(UserContext)
 
     async function fetchData () {
@@ -87,9 +84,11 @@ function ChallengeQuestion (props) {
             const response = await fetch('/api/fetchQuestion')
             if (response.status === 200) {
                 const content = await response.json()
-                const { question, reponses } = content
+                const { quiz, title } = content
+                const { question, answers } = quiz
+                setTitle(title)
                 setQuestion(question)
-                setResult(reponses)
+                setAnswers(answers)
                 initPage()
             } else {
                 await Router.push({
@@ -103,13 +102,16 @@ function ChallengeQuestion (props) {
     }
 
     async function fetchResult (index) {
-        await Router.push('/challengeResult')
+        await Router.push({
+            pathname: '/challengeResult',
+            query: { answer: index }
+        })
     }
 
     function initPage () {
         setTranslation(dataProvider.getTranslation())
+        props.startTimer()
         setLoading(false)
-        props.openModal()
     }
 
     function onAnswer (index) {
@@ -118,24 +120,25 @@ function ChallengeQuestion (props) {
     }
 
     useEffect(() => {
+        props.openModal()
         fetchData().then()
     }, [])
 
     return (
         <EventLayout>
             {isLoading
-                ? <Progress/>
+                ? <InnerHeightLayout style={{ backgroundColor: 'gray' }}/>
                 : <InnerHeightLayout class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'left'}>
-                            Question 1
+                            {title}
                         </Typography>
                         <Typography className={classes.HeaderText} align={'left'}>
                             {question}
                         </Typography>
                     </Box>
                     <Box className={classes.footer}>
-                        {result.map((item, index) => {
+                        {answers.map((item, index) => {
                             return (
                                 <ColorButton key={index} variant="contained" className={classes.button} onClick={() => {
                                     onAnswer(index)

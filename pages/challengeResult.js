@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
@@ -64,11 +64,18 @@ const useStyles = makeStyles({
 })
 
 function ChallengeResult (props) {
+    const router = useRouter()
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [isLoading, setLoading] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
+
+    useEffect(() => {
+        if (router) {
+            console.log('query', router.query.answer)
+        }
+    }, [router])
 
     async function fetchData () {
         initPage()
