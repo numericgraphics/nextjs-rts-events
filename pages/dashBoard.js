@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
@@ -76,6 +76,7 @@ function DashBoard (props) {
     const [isLoading, setLoading] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
+    const layoutRef = createRef()
 
     async function fetchData () {
         try {
@@ -115,7 +116,7 @@ function DashBoard (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <InnerHeightLayout class={classes.containerGlobal} >
+                : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'center'}>
                             {translation.dashBoardHeadTitle}

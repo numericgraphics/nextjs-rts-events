@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { createRef } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -8,12 +8,10 @@ import InnerHeightLayout from '../innerHeightLayout'
 export default function PromoLogo (props) {
     const classes = useStyles()
     const { description, title, backgroundImageURL, logoURL } = props.data
-    useEffect(() => {
-
-    }, [props.selected])
+    const layoutRef = createRef()
 
     return (
-        <InnerHeightLayout class={classes.containerGlobal} >
+        <InnerHeightLayout class={classes.containerGlobal} ref={layoutRef} >
             <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})` }} >
 
                 <Box className={classes.image}>

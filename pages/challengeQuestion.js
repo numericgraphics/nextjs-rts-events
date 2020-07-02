@@ -1,10 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 import UserContext from '../components/UserContext'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+// import Card from '@material-ui/core/Card/Card'
+// import CardContent from '@material-ui/core/CardContent'
+// import Avatar from '@material-ui/core/Avatar'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
@@ -78,6 +81,7 @@ function ChallengeQuestion (props) {
     const [question, setQuestion] = useState('')
     const [answers, setAnswers] = useState([])
     const { dataProvider } = useContext(UserContext)
+    const layoutRef = createRef()
 
     async function fetchData () {
         try {
@@ -127,8 +131,8 @@ function ChallengeQuestion (props) {
     return (
         <EventLayout>
             {isLoading
-                ? <InnerHeightLayout style={{ backgroundColor: 'gray' }}/>
-                : <InnerHeightLayout class={classes.containerGlobal} >
+                ? <Box/>
+                : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'left'}>
                             {title}

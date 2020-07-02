@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import Router, { withRouter } from 'next/router'
 import getConfig from 'next/config'
 import { makeStyles } from '@material-ui/core/styles'
@@ -64,6 +64,7 @@ function Index (props) {
     const [translation, setTranslation] = useState([])
     const [isLoading, setLoading] = useState(true)
     const { dataProvider } = useContext(UserContext)
+    const layoutRef = createRef()
 
     async function handleVerify () {
         try {
@@ -115,7 +116,7 @@ function Index (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <InnerHeightLayout>
+                : <InnerHeightLayout ref={layoutRef}>
                     <Box className={classes.containerOverlayHeader} >
                         <PromosStepper steps={promos} activeStep={activeStep}/>
                     </Box>

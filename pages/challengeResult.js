@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
@@ -70,6 +70,7 @@ function ChallengeResult (props) {
     const [isLoading, setLoading] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
+    const layoutRef = createRef()
 
     useEffect(() => {
         if (router) {
@@ -119,7 +120,7 @@ function ChallengeResult (props) {
         <EventLayout>
             {isLoading
                 ? <Progress/>
-                : <InnerHeightLayout class={classes.containerGlobal} >
+                : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Card className={classes.card}>
                         <CardContent className={classes.content}>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>

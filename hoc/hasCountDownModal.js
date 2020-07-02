@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -37,7 +37,6 @@ const useStyles = makeStyles(() => ({
 const hasCountDownModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
-        const wrappedRef = createRef()
         const classes = useStyles()
         const [open, setOpen] = useState(false)
         const [progress, setProgress] = useState(0)
@@ -80,7 +79,7 @@ const hasCountDownModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent ref={wrappedRef} openModal={openModal} startTimer={startTimer} {...props} />
+                <WrappedComponent openModal={openModal} startTimer={startTimer} {...props} />
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
