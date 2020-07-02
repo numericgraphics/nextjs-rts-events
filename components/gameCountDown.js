@@ -61,8 +61,8 @@ function GameCountDown (props) {
     return (
         <InnerHeightLayout class={classes.containerProgress} >
             <Box position="relative" display="inline-flex">
-                <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={1} value={100} />
-                <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={1} value={progress} />
+                <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={0.5} value={100} />
+                <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} />
                 <Box
                     top={0}
                     left={0}
