@@ -137,7 +137,6 @@ function DashBoard (props) {
                         </CardContent>
                     </Card>
                     <Box className={classes.footer}>
-                        {console.log('availableChallenges', availableChallenges)}
                         {availableChallenges
                             ? <ColorButton variant="contained" className={classes.button} onClick={startGame}>
                                 {translation.dashBoardChallengesButton}
