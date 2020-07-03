@@ -74,6 +74,7 @@ function DashBoard (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [isLoading, setLoading] = useState(true)
+    const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
     const layoutRef = createRef()
@@ -100,6 +101,7 @@ function DashBoard (props) {
     function initPage () {
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
+        setAvailableChallenges(dataProvider.hasAvailableChallenges())
         setLoading(false)
     }
 
@@ -134,9 +136,12 @@ function DashBoard (props) {
                         </CardContent>
                     </Card>
                     <Box className={classes.footer}>
-                        <ColorButton variant="contained" className={classes.button} onClick={startGame}>
-                            {translation.dashBoardChallengesButton}
-                        </ColorButton>
+                        {availableChallenges
+                            ? <ColorButton variant="contained" className={classes.button} onClick={startGame}>
+                                {translation.dashBoardChallengesButton}
+                            </ColorButton>
+                            : null
+                        }
                     </Box>
                 </InnerHeightLayout>
             }

@@ -5,9 +5,6 @@ import UserContext from '../components/UserContext'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-// import Card from '@material-ui/core/Card/Card'
-// import CardContent from '@material-ui/core/CardContent'
-// import Avatar from '@material-ui/core/Avatar'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
@@ -85,9 +82,10 @@ function ChallengeQuestion (props) {
 
     async function fetchData () {
         try {
-            const response = await fetch('/api/fetchQuestion')
+            const response = await fetch('/api/fetchQuiz')
             if (response.status === 200) {
                 const content = await response.json()
+                dataProvider.setData({ quiz: content })
                 const { quiz, title } = content
                 const { question, answers } = quiz
                 setTitle(title)
@@ -95,9 +93,10 @@ function ChallengeQuestion (props) {
                 setAnswers(answers)
                 initPage()
             } else {
+                // TODO : manage response !== 200
                 await Router.push({
-                    pathname: '/',
-                    query: { modal: true }
+                    pathname: '/dashBoard',
+                    query: { quiz: false }
                 })
             }
         } catch (error) {

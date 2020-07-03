@@ -1,6 +1,15 @@
 class DataProvider {
     constructor () {
-        this.data = {}
+        this.data = {
+            user: {},
+            quiz: {},
+            gifts: {},
+            promos: {},
+            theme: {},
+            timeControl: {},
+            translation: {},
+            hasAvailableChallenges: true
+        }
     }
 
     setData (data) {
@@ -33,6 +42,14 @@ class DataProvider {
 
     getUser () {
         return this.data.user
+    }
+
+    getQuiz () {
+        return this.data.quiz
+    }
+
+    hasAvailableChallenges () {
+        return this.data.hasAvailableChallenges
     }
 }
 

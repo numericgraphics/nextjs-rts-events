@@ -35,11 +35,11 @@ const useStyles = makeStyles({
         minHeight: 300,
         margin: 20
     },
-    HeaderTitle: {
+    title: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.25rem'
     },
-    HeaderText: {
+    subTitle: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1rem'
     },
@@ -67,35 +67,53 @@ function ChallengeResult (props) {
     const router = useRouter()
     const classes = useStyles()
     const [user, setUser] = useState({})
+    const [answer, setAnswer] = useState({})
+    const [result, setResult] = useState({})
     const [isLoading, setLoading] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
     const layoutRef = createRef()
 
     useEffect(() => {
-        if (router) {
-            console.log('query', router.query.answer)
+        console.log('router useEffect')
+        if (router && Object.entries(router.query).length > 0) {
+            // TODO : manage answer is null or doesnt exist
+            setAnswer(router.query.answer)
         }
     }, [router])
 
     async function fetchData () {
-        initPage()
-        // try {
-        //     const response = await fetch('/api/fetchGame')
-        //
-        //     if (response.status === 200) {
-        //         const content = await response.json()
-        //         dataProvider.setData(content)
-        //         initPage()
-        //     } else {
-        //         await Router.push({
-        //             pathname: '/',
-        //             query: { modal: true }
-        //         })
-        //     }
-        // } catch (error) {
-        //     throw new Error(error.message)
-        // }
+        try {
+            const { challengeID } = dataProvider.getQuiz()
+            const response = await fetch('/api/fetchQuizResult', {
+                credentials: 'include',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answer, challengeID })
+            })
+
+            if (response.status === 200) {
+                /*
+                ////// MODEL END
+                hasAvailableChallenges: false
+                message: "La bonne réponse était: Réponse3"
+                nextAvailableChallengeID: null
+                points: 0
+                success: false
+                 */
+                const content = await response.json()
+                setResult(content)
+                initPage()
+            } else {
+                // TODO : manage response !== 200
+                await Router.push({
+                    pathname: '/dashBoard',
+                    query: { quiz: false }
+                })
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
 
     function initPage () {
@@ -113,6 +131,7 @@ function ChallengeResult (props) {
     }
 
     useEffect(() => {
+        console.log('init useEffect')
         fetchData().then()
     }, [])
 
@@ -125,17 +144,23 @@ function ChallengeResult (props) {
                         <CardContent className={classes.content}>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <Typography className={classes.title}>
-                                {translation.challengeResultTitle}
+                                {`${translation.challengeResultTitle} ${user.nickname}`}
+                            </Typography>
+                            <Typography className={classes.subTitle}>
+                                {result.message}
                             </Typography>
                         </CardContent>
                     </Card>
                     <Box className={classes.footer}>
-                        $<ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                        <ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
                             {translation.challengeResultButtonDashBoard}
                         </ColorButton>
-                        <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
-                            {translation.challengeResultButtonContinue}
-                        </ColorButton>
+                        {result.hasAvailableChallenges
+                            ? <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
+                                {translation.challengeResultButtonContinue}
+                            </ColorButton>
+                            : null
+                        }
                     </Box>
                 </InnerHeightLayout>
             }
