@@ -8,7 +8,9 @@ class DataProvider {
             theme: {},
             timeControl: {},
             translation: {},
-            hasAvailableChallenges: true
+            challengesStates: [],
+            hasAvailableChallenges: true,
+            score: null
         }
     }
 
@@ -46,6 +48,10 @@ class DataProvider {
 
     getQuiz () {
         return this.data.quiz
+    }
+
+    getChallengesStates () {
+        return this.data.challengesStates
     }
 
     hasAvailableChallenges () {

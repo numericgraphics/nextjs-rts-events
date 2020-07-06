@@ -29,8 +29,7 @@ export default async (req, res) => {
 
                 if (response.status === 200) {
                     const content = await response.json()
-                    const { hasAvailableChallenges, nextChallengeAvailabilityDate, results, rewards, user } = content
-                    res.status(200).send(JSON.stringify({ hasAvailableChallenges, nextChallengeAvailabilityDate, results, rewards, user }))
+                    res.status(200).send(JSON.stringify(content))
                 } else {
                     throw new Error('There is a probleme with the getData fetch')
                 }

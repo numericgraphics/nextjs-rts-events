@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import Router, { useRouter } from 'next/router'
+import Router, { withRouter } from 'next/router'
 import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
@@ -37,11 +37,33 @@ const useStyles = makeStyles({
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem'
+        fontSize: '1.75rem',
+        textAlign: 'center'
     },
     subTitle: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1rem'
+    },
+    secondCardTitle: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.5rem'
+    },
+    secondCardSubTitle: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1,125rem'
+    },
+    secondCardText: {
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1,125rem'
+    },
+    secondCardButton: {
+        width: '80vw',
+        padding: '6px 20px',
+        borderRadius: 30,
+        alignSelf: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1.25rem',
+        marginTop: 10
     },
     content: {
         display: 'flex',
@@ -64,27 +86,22 @@ const useStyles = makeStyles({
 })
 
 function ChallengeResult (props) {
-    const router = useRouter()
     const classes = useStyles()
     const [user, setUser] = useState({})
-    const [answer, setAnswer] = useState({})
     const [result, setResult] = useState({})
     const [isLoading, setLoading] = useState(true)
+    // const [userSuccess, setUserSuccess] = useState(0)
+    // const [userErrors, setUserErrors] = useState(0)
+    const [userScore, setUserScore] = useState(0)
+    const [gameBestScore, setGameBestScore] = useState(0)
     const [translation, setTranslation] = useState([])
-    const { dataProvider } = useContext(UserContext)
+    const { dataProvider, scoreService } = useContext(UserContext)
     const layoutRef = createRef()
-
-    useEffect(() => {
-        console.log('router useEffect')
-        if (router && Object.entries(router.query).length > 0) {
-            // TODO : manage answer is null or doesnt exist
-            setAnswer(router.query.answer)
-        }
-    }, [router])
 
     async function fetchData () {
         try {
             const { challengeID } = dataProvider.getQuiz()
+            const { answer } = props.router.query
             const response = await fetch('/api/fetchQuizResult', {
                 credentials: 'include',
                 method: 'POST',
@@ -120,6 +137,10 @@ function ChallengeResult (props) {
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setLoading(false)
+
+        // TODO : Manage user result
+        setUserScore(scoreService.getUserPoints())
+        setGameBestScore(210)
     }
 
     async function continueGame () {
@@ -131,7 +152,6 @@ function ChallengeResult (props) {
     }
 
     useEffect(() => {
-        console.log('init useEffect')
         fetchData().then()
     }, [])
 
@@ -152,14 +172,34 @@ function ChallengeResult (props) {
                         </CardContent>
                     </Card>
                     <Box className={classes.footer}>
-                        <ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
-                            {translation.challengeResultButtonDashBoard}
-                        </ColorButton>
                         {result.hasAvailableChallenges
-                            ? <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
-                                {translation.challengeResultButtonContinue}
-                            </ColorButton>
-                            : null
+                            ? <Box>
+                                <ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                                    {translation.challengeResultButtonDashBoard}
+                                </ColorButton>
+                                <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
+                                    {translation.challengeResultButtonContinue}
+                                </ColorButton>
+                            </Box>
+                            : <Card className={classes.card}>
+                                <CardContent className={classes.content}>
+                                    <Typography className={classes.secondCardTitle}>
+                                        {translation.challengeResultInfoTitle}
+                                    </Typography>
+                                    <Typography className={classes.secondCardSubTitle}>
+                                        {translation.challengeResultInfoText}
+                                    </Typography>
+                                    <Typography className={classes.secondCardText}>
+                                        {`${translation.score} ${userScore}`}
+                                    </Typography>
+                                    <Typography className={classes.secondCardText}>
+                                        {`${translation.bestScore} ${gameBestScore}`}
+                                    </Typography>
+                                    <ColorButton variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
+                                        {translation.challengeResultButtonDashBoard}
+                                    </ColorButton>
+                                </CardContent>
+                            </Card>
                         }
                     </Box>
                 </InnerHeightLayout>
@@ -168,4 +208,4 @@ function ChallengeResult (props) {
     )
 }
 
-export default ChallengeResult
+export default withRouter(ChallengeResult)

@@ -76,16 +76,16 @@ function DashBoard (props) {
     const [isLoading, setLoading] = useState(true)
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const { dataProvider } = useContext(UserContext)
+    const { dataProvider, scoreService } = useContext(UserContext)
     const layoutRef = createRef()
 
     async function fetchData () {
         try {
             const response = await fetch('/api/fetchGame')
-
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
+                scoreService.init(dataProvider)
                 initPage()
             } else {
                 await Router.push({
@@ -99,10 +99,16 @@ function DashBoard (props) {
     }
 
     function initPage () {
+        try {
+            console.log('test scoreService getUserPoints', scoreService.getUserPoints())
+            console.log('test scoreService getUserSuccess', scoreService.getUserSuccess())
+        } catch (error) {
+            console.log('test scoreService ERROR', error)
+        }
+
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
-        console.log('----', dataProvider.hasAvailableChallenges())
         setLoading(false)
     }
 

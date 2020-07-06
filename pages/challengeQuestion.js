@@ -11,7 +11,8 @@ import hasCountDownModal from '../hoc/hasCountDownModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        backgroundColor: 'pink'
     },
     header: {
         display: 'flex',

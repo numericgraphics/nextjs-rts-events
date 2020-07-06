@@ -3,7 +3,6 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import InnerHeightLayout from '../components/innerHeightLayout'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
@@ -12,7 +11,8 @@ const useStyles = makeStyles(() => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        outline: 'none'
     },
     containerProgress: {
         alignItems: 'center',
@@ -81,6 +81,8 @@ const hasCountDownModal = WrappedComponent => {
             <Box>
                 <WrappedComponent openModal={openModal} startTimer={startTimer} {...props} />
                 <Modal
+                    disableAutoFocus={true}
+                    disableEnforceFocus
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
@@ -89,29 +91,29 @@ const hasCountDownModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                        timeout: 0
+                        timeout: 500,
+                        style: { backgroundColor: 'gray' }
                     }}
+                    tabIndex={-1}
                 >
                     <Fade in={open}>
-                        <Box>
-                            <InnerHeightLayout class={classes.containerProgress} >
-                                <Box position="relative" display="inline-flex">
-                                    <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={0.5} value={100} />
-                                    <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} />
-                                    <Box
-                                        top={0}
-                                        left={0}
-                                        bottom={0}
-                                        right={0}
-                                        position="absolute"
-                                        display="flex"
-                                        alignItems="center"
-                                        justifyContent="center"
-                                    >
-                                        <Typography className={classes.textProgress}>{displayCountDownText()}</Typography>
-                                    </Box>
+                        <Box className={classes.containerProgress} >
+                            <Box position="relative" display="inline-flex">
+                                <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={0.5} value={100} />
+                                <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} />
+                                <Box
+                                    top={0}
+                                    left={0}
+                                    bottom={0}
+                                    right={0}
+                                    position="absolute"
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <Typography className={classes.textProgress}>{displayCountDownText()}</Typography>
                                 </Box>
-                            </InnerHeightLayout>
+                            </Box>
                         </Box>
                     </Fade>
                 </Modal>

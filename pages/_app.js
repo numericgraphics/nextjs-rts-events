@@ -3,6 +3,7 @@ import '../styles/global.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
+import ScoreService from '../data/scoreServices'
 import Progress from '../components/progress'
 
 async function fetchGlobalEventData () {
@@ -37,7 +38,7 @@ function MyApp ({ Component, pageProps }) {
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService }}>
             {isLoading
                 ? <Progress/>
                 : <Component {...pageProps} />
