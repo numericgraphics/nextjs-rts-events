@@ -13,7 +13,11 @@ async function fetchGlobalEventData () {
 
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
+    const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
+    const store = { error, setError, isLoading, setLoading }
+
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
         // source : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
@@ -27,10 +31,11 @@ function MyApp ({ Component, pageProps }) {
         }
 
         try {
+            // Fetch global game data
             fetchGlobalEventData().then((result) => {
                 setEventData(result)
                 DataProvider.setData(result)
-                setLoading(false)
+                setGlobalLoading(false)
             })
         } catch (error) {
             throw new Error(error.message)
@@ -38,8 +43,12 @@ function MyApp ({ Component, pageProps }) {
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService, store }}>
             {isLoading
+                ? <Progress/>
+                : null
+            }
+            {isGlobalLoading
                 ? <Progress/>
                 : <Component {...pageProps} />
             }

@@ -6,7 +6,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router, { withRouter } from 'next/router'
-import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorButton } from '../components/ui/ColorButton'
@@ -24,12 +23,7 @@ const useStyles = makeStyles({
         textAlign: 'center',
         bottom: 30
     },
-    avatar: {
-        width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
-    },
+
     card: {
         minWidth: 275,
         minHeight: 300,
@@ -82,6 +76,24 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1.25rem',
         marginTop: 10
+    },
+    cardHeader: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    cardHeaderSuccess: {
+        alignSelf: 'center'
+    },
+    cardHeaderWrong: {
+        alignSelf: 'center'
+    },
+    avatar: {
+        width: 100,
+        height: 100,
+        border: 'solid',
+        borderColor: 'gray'
     }
 })
 
@@ -89,13 +101,13 @@ function ChallengeResult (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [result, setResult] = useState({})
-    const [isLoading, setLoading] = useState(true)
     // const [userSuccess, setUserSuccess] = useState(0)
     // const [userErrors, setUserErrors] = useState(0)
     const [userScore, setUserScore] = useState(0)
     const [gameBestScore, setGameBestScore] = useState(0)
     const [translation, setTranslation] = useState([])
-    const { dataProvider, scoreService } = useContext(UserContext)
+    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const { isLoading, setLoading } = store
     const layoutRef = createRef()
 
     async function fetchData () {
@@ -119,10 +131,12 @@ function ChallengeResult (props) {
                 success: false
                  */
                 const content = await response.json()
+                console.log('ChallengeResult  fetchdata', content)
                 setResult(content)
                 initPage()
             } else {
                 // TODO : manage response !== 200
+                setLoading(true)
                 await Router.push({
                     pathname: '/dashBoard',
                     query: { quiz: false }
@@ -144,10 +158,12 @@ function ChallengeResult (props) {
     }
 
     async function continueGame () {
+        setLoading(true)
         await Router.push('/challengeQuestion')
     }
 
     async function gotoDashBoard () {
+        setLoading(true)
         await Router.push('/dashBoard')
     }
 
@@ -158,11 +174,19 @@ function ChallengeResult (props) {
     return (
         <EventLayout>
             {isLoading
-                ? <Progress/>
+                ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Card className={classes.card}>
                         <CardContent className={classes.content}>
-                            <Avatar className={classes.avatar} src={user.avatarURL}/>
+                            <Box className={classes.cardHeader}>
+                                <Typography className={classes.cardHeaderSuccess}>
+                                    {`${result.score._success} ${translation.good}`}
+                                </Typography>
+                                <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                <Typography className={classes.cardHeaderWrong}>
+                                    {`${result.score._failure} ${translation.wrong}`}
+                                </Typography>
+                            </Box>
                             <Typography className={classes.title}>
                                 {`${translation.challengeResultTitle} ${user.nickname}`}
                             </Typography>

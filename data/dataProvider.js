@@ -2,9 +2,9 @@ class DataProvider {
     constructor () {
         this.data = {
             user: {},
-            quiz: {},
-            gifts: {},
-            promos: {},
+            quiz: [],
+            gifts: [],
+            promos: [],
             theme: {},
             timeControl: {},
             translation: {},
@@ -16,6 +16,7 @@ class DataProvider {
 
     setData (data) {
         Object.assign(this.data, data)
+        console.log('setData', this.data)
     }
 
     getAllData () {

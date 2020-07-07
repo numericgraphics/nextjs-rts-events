@@ -72,13 +72,13 @@ const useStyles = makeStyles({
 
 function ChallengeQuestion (props) {
     const classes = useStyles()
-    const [isLoading, setLoading] = useState(true)
     // eslint-disable-next-line no-unused-vars
     const [translation, setTranslation] = useState([])
     const [title, setTitle] = useState('')
     const [question, setQuestion] = useState('')
     const [answers, setAnswers] = useState([])
-    const { dataProvider } = useContext(UserContext)
+    const { dataProvider, store } = useContext(UserContext)
+    const { isLoading, setLoading } = store
     const layoutRef = createRef()
 
     async function fetchData () {
@@ -106,6 +106,7 @@ function ChallengeQuestion (props) {
     }
 
     async function fetchResult (index) {
+        setLoading(true)
         await Router.push({
             pathname: '/challengeResult',
             query: { answer: index }
@@ -131,7 +132,7 @@ function ChallengeQuestion (props) {
     return (
         <EventLayout>
             {isLoading
-                ? <Box/>
+                ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'left'}>

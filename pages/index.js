@@ -10,7 +10,6 @@ import Promos from '../components/promos/promos'
 import EventLayout from '../components/eventLayout'
 import UserContext from '../components/UserContext'
 import hasLoginModal from '../hoc/hasLoginModal'
-import Progress from '../components/progress'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 
@@ -62,8 +61,8 @@ function Index (props) {
     const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])
     const [translation, setTranslation] = useState([])
-    const [isLoading, setLoading] = useState(true)
-    const { dataProvider } = useContext(UserContext)
+    const { dataProvider, store } = useContext(UserContext)
+    const { isLoading, setLoading } = store
     const layoutRef = createRef()
 
     async function handleVerify () {
@@ -72,24 +71,25 @@ function Index (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
+                setLoading(true)
                 await Router.push('/dashBoard')
             } else {
-                initStartPage()
+                initPage()
             }
         } catch (error) {
             throw new Error(error.message)
         }
     }
 
-    useEffect(() => {
-        handleUrlQuery()
-    }, [translation])
+    // useEffect(() => {
+    //     handleUrlQuery()
+    // }, [translation])
 
     useEffect(() => {
         handleVerify().then()
     }, [])
 
-    function initStartPage () {
+    function initPage () {
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         handleUrlQuery()
@@ -115,7 +115,7 @@ function Index (props) {
     return (
         <EventLayout>
             {isLoading
-                ? <Progress/>
+                ? null
                 : <InnerHeightLayout ref={layoutRef}>
                     <Box className={classes.containerOverlayHeader} >
                         <PromosStepper steps={promos} activeStep={activeStep}/>

@@ -6,7 +6,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
-import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorButton } from '../components/ui/ColorButton'
@@ -73,10 +72,10 @@ const useStyles = makeStyles({
 function DashBoard (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
-    const [isLoading, setLoading] = useState(true)
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const { dataProvider, scoreService } = useContext(UserContext)
+    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const { isLoading, setLoading } = store
     const layoutRef = createRef()
 
     async function fetchData () {
@@ -87,6 +86,7 @@ function DashBoard (props) {
                 dataProvider.setData(content)
                 scoreService.init(dataProvider)
                 initPage()
+                console.log('DashBoard initPage')
             } else {
                 await Router.push({
                     pathname: '/',
@@ -117,14 +117,14 @@ function DashBoard (props) {
     }
 
     useEffect(() => {
-        console.log('dataProvider', dataProvider)
+        console.log('dataProvider', props)
         fetchData().then()
     }, [])
 
     return (
         <EventLayout>
             {isLoading
-                ? <Progress/>
+                ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'center'}>

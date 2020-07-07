@@ -13,12 +13,13 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
         outline: 'none'
+
     },
     containerProgress: {
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: 'gray'
+        backgroundColor: 'none'
     },
     textProgress: {
         color: 'white',

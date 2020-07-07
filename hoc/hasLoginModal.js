@@ -72,7 +72,8 @@ const hasLoginModal = WrappedComponent => {
         const [open, setOpen] = React.useState(false)
         const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
-        const { dataProvider } = useContext(UserContext)
+        const { dataProvider, store } = useContext(UserContext)
+        const { setLoading } = store
         const [translation] = useState(dataProvider.getTranslation())
 
         const handleOpen = () => {
@@ -145,6 +146,7 @@ const hasLoginModal = WrappedComponent => {
                     const content = await response.json()
                     const { nickname, avatarURL } = content
                     dataProvider.setData({ user: { nickname, avatarURL } })
+                    setLoading(true)
                     await Router.push('/dashBoard')
                     return
                 }
