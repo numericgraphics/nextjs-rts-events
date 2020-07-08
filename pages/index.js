@@ -71,7 +71,6 @@ function Index (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                setLoading(true)
                 await Router.push('/dashBoard')
             } else {
                 initPage()
@@ -80,10 +79,6 @@ function Index (props) {
             throw new Error(error.message)
         }
     }
-
-    // useEffect(() => {
-    //     handleUrlQuery()
-    // }, [translation])
 
     useEffect(() => {
         handleVerify().then()

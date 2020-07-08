@@ -10,6 +10,9 @@ import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
+import { ColorCard } from '../components/ui/ColorCard'
+import { ColorCardContent } from '../components/ui/ColorCardContent'
+import { ColorCardActions } from '../components/ui/ColorCardAction'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -33,13 +36,15 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.75rem',
         textAlign: 'center',
-        lineHeight: 1
+        lineHeight: 1,
+        marginBottom: 10
     },
     subTitle: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1rem',
-        lineHeight: 1,
-        marginBottom: 10
+        textAlign: 'center',
+        lineHeight: 1
+
     },
     secondCardTitle: {
         fontFamily: 'srgssr-type-Bd',
@@ -50,7 +55,8 @@ const useStyles = makeStyles({
     secondCardSubTitle: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1,125rem',
-        lineHeight: 1
+        lineHeight: 1,
+        marginBottom: 10
     },
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
@@ -89,17 +95,31 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
+    cardFooter: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     cardHeaderSuccess: {
-        alignSelf: 'center'
+        alignSelf: 'center',
+        textAlign: 'center'
     },
     cardHeaderWrong: {
-        alignSelf: 'center'
+        alignSelf: 'center',
+        textAlign: 'center'
     },
     avatar: {
         width: 100,
         height: 100,
         border: 'solid',
         borderColor: 'gray'
+    },
+    winPointText: {
+        fontFamily: 'srgssr-type-Bd',
+        color: 'black',
+        fontSize: '2.5rem',
+        padding: '6px 20px'
     }
 })
 
@@ -107,8 +127,6 @@ function ChallengeResult (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [result, setResult] = useState({})
-    // const [userSuccess, setUserSuccess] = useState(0)
-    // const [userErrors, setUserErrors] = useState(0)
     const [userScore, setUserScore] = useState(0)
     const [gameBestScore, setGameBestScore] = useState(0)
     const [translation, setTranslation] = useState([])
@@ -164,12 +182,10 @@ function ChallengeResult (props) {
     }
 
     async function continueGame () {
-        setLoading(true)
         await Router.push('/challengeQuestion')
     }
 
     async function gotoDashBoard () {
-        setLoading(true)
         await Router.push('/dashBoard')
     }
 
@@ -182,8 +198,8 @@ function ChallengeResult (props) {
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
-                    <Card className={classes.card}>
-                        <CardContent className={classes.content}>
+                    <ColorCard className={classes.card}>
+                        <ColorCardContent className={classes.content}>
                             <Box className={classes.cardHeader}>
                                 <Typography className={classes.cardHeaderSuccess}>
                                     {`${result.score._success} ${translation.good}`}
@@ -199,8 +215,16 @@ function ChallengeResult (props) {
                             <Typography className={classes.subTitle}>
                                 {result.message}
                             </Typography>
-                        </CardContent>
-                    </Card>
+                        </ColorCardContent>
+                        <ColorCardActions className={classes.cardFooter}>
+                            <Typography className={classes.winPointText}>
+                                { result.success
+                                    ? `+ ${result.points} pts`
+                                    : `${result.points} pts`
+                                }
+                            </Typography>
+                        </ColorCardActions>
+                    </ColorCard>
                     <Box className={classes.footer}>
                         {result.hasAvailableChallenges
                             ? <Box>

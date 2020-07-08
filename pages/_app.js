@@ -5,6 +5,7 @@ import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import ScoreService from '../data/scoreServices'
 import Progress from '../components/progress'
+import Router from 'next/router'
 
 async function fetchGlobalEventData () {
     const response = await fetch('/api/fetchGlobal')
@@ -40,6 +41,13 @@ function MyApp ({ Component, pageProps }) {
         } catch (error) {
             throw new Error(error.message)
         }
+
+        // Route change listener for trigger loading state
+        // Each page should trigger loading false after his initizialisation throught the store.setLoading
+        const handleRouteChange = (url) => {
+            setLoading(true)
+        }
+        Router.events.on('routeChangeStart', handleRouteChange)
     }, [])
 
     return (

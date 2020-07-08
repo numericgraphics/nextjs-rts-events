@@ -106,7 +106,6 @@ function ChallengeQuestion (props) {
     }
 
     async function fetchResult (index) {
-        setLoading(true)
         await Router.push({
             pathname: '/challengeResult',
             query: { answer: index }
