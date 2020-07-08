@@ -8,16 +8,25 @@ import Typography from '@material-ui/core/Typography'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
+import QuestionTimer from '../components/questionTimer'
 
 const useStyles = makeStyles({
     containerGlobal: {
         justifyContent: 'flex-start',
         backgroundColor: 'pink'
     },
+    counter: {
+        display: 'flex',
+        alignItems: 'flex-end',
+        width: '100%',
+        flex: 1,
+        padding: 10
+    },
     header: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         padding: '10px 30px',
         paddingTop: '10%',
         textAlign: 'center'
@@ -74,6 +83,7 @@ function ChallengeQuestion (props) {
     const classes = useStyles()
     // eslint-disable-next-line no-unused-vars
     const [translation, setTranslation] = useState([])
+    const [duration, setDuration] = useState(0)
     const [title, setTitle] = useState('')
     const [question, setQuestion] = useState('')
     const [answers, setAnswers] = useState([])
@@ -86,12 +96,13 @@ function ChallengeQuestion (props) {
             const response = await fetch('/api/fetchQuiz')
             if (response.status === 200) {
                 const content = await response.json()
-                dataProvider.setData({ quiz: content })
-                const { quiz, title } = content
+                dataProvider.setData({ challenge: content })
+                const { quiz, title, duration } = content
                 const { question, answers } = quiz
                 setTitle(title)
                 setQuestion(question)
                 setAnswers(answers)
+                setDuration(duration)
                 initPage()
             } else {
                 // TODO : manage response !== 200
@@ -128,11 +139,18 @@ function ChallengeQuestion (props) {
         fetchData().then()
     }, [])
 
+    function endTimer () {
+        console.log('endTimer')
+    }
+
     return (
         <EventLayout>
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
+                    <Box className={classes.counter}>
+                        <QuestionTimer finishedCallBack={endTimer} duration={duration}/>
+                    </Box>
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'left'}>
                             {title}

@@ -2,7 +2,7 @@ class DataProvider {
     constructor () {
         this.data = {
             user: {},
-            quiz: [],
+            challenge: [],
             gifts: [],
             promos: [],
             theme: {},
@@ -15,6 +15,7 @@ class DataProvider {
     }
 
     setData (data) {
+        console.log('setData before', data)
         Object.assign(this.data, data)
         console.log('setData', this.data)
     }
@@ -47,8 +48,8 @@ class DataProvider {
         return this.data.user
     }
 
-    getQuiz () {
-        return this.data.quiz
+    getChallenge () {
+        return this.data.challenge
     }
 
     getChallengesStates () {

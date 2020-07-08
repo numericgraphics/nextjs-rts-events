@@ -127,16 +127,15 @@ function ChallengeResult (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [result, setResult] = useState({})
-    const [userScore, setUserScore] = useState(0)
     const [gameBestScore, setGameBestScore] = useState(0)
     const [translation, setTranslation] = useState([])
-    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const { dataProvider, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
     const layoutRef = createRef()
 
     async function fetchData () {
         try {
-            const { challengeID } = dataProvider.getQuiz()
+            const { challengeID } = dataProvider.getChallenge()
             const { answer } = props.router.query
             const response = await fetch('/api/fetchQuizResult', {
                 credentials: 'include',
@@ -177,7 +176,6 @@ function ChallengeResult (props) {
         setLoading(false)
 
         // TODO : Manage user result
-        setUserScore(scoreService.getUserPoints())
         setGameBestScore(210)
     }
 
@@ -202,11 +200,11 @@ function ChallengeResult (props) {
                         <ColorCardContent className={classes.content}>
                             <Box className={classes.cardHeader}>
                                 <Typography className={classes.cardHeaderSuccess}>
-                                    {`${result.score._success} ${translation.good}`}
+                                    {`${result.score.success} ${translation.good}`}
                                 </Typography>
                                 <Avatar className={classes.avatar} src={user.avatarURL}/>
                                 <Typography className={classes.cardHeaderWrong}>
-                                    {`${result.score._failure} ${translation.wrong}`}
+                                    {`${result.score.failure} ${translation.wrong}`}
                                 </Typography>
                             </Box>
                             <Typography className={classes.title}>
@@ -218,10 +216,14 @@ function ChallengeResult (props) {
                         </ColorCardContent>
                         <ColorCardActions className={classes.cardFooter}>
                             <Typography className={classes.winPointText}>
-                                { result.success
-                                    ? `+ ${result.points} pts`
-                                    : `${result.points} pts`
+
+                                {result.hasAvailableChallenges
+                                    ? result.success
+                                        ? `+ ${result.points} pts`
+                                        : `${result.points} pts`
+                                    : `+ ${result.score.totalPoints} pts`
                                 }
+
                             </Typography>
                         </ColorCardActions>
                     </ColorCard>
@@ -244,7 +246,7 @@ function ChallengeResult (props) {
                                         {translation.challengeResultInfoText}
                                     </Typography>
                                     <Typography className={classes.secondCardText}>
-                                        {`${translation.score} ${userScore}`}
+                                        {`${translation.score} ${result.score.totalPoints}`}
                                     </Typography>
                                     <Typography className={classes.secondCardText}>
                                         {`${translation.bestScore} ${gameBestScore}`}
