@@ -16,10 +16,10 @@ const useStyles = makeStyles({
         justifyContent: 'flex-start'
     },
     header: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        height: '15vh',
         padding: '10px 30px',
         textAlign: 'center'
     },
@@ -51,6 +51,7 @@ const useStyles = makeStyles({
         fontSize: '1rem'
     },
     content: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
