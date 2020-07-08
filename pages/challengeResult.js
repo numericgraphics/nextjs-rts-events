@@ -26,25 +26,31 @@ const useStyles = makeStyles({
 
     card: {
         minWidth: 275,
-        minHeight: 300,
+        minHeight: 200,
         margin: 20
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.75rem',
-        textAlign: 'center'
+        textAlign: 'center',
+        lineHeight: 1
     },
     subTitle: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem'
+        fontSize: '1rem',
+        lineHeight: 1,
+        marginBottom: 10
     },
     secondCardTitle: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.5rem'
+        fontSize: '1.5rem',
+        lineHeight: 1,
+        marginBottom: 10
     },
     secondCardSubTitle: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1,125rem'
+        fontSize: '1,125rem',
+        lineHeight: 1
     },
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
