@@ -135,11 +135,15 @@ function ChallengeQuestion (props) {
     }
 
     function onAnswer (index) {
-        console.log('onAnswer', index)
         setAnswer(index)
         clearInterval(intervalId.current)
-        fetchResult().then()
     }
+
+    useEffect(() => {
+        if (progress > 0) {
+            fetchResult().then()
+        }
+    }, [answer])
 
     useEffect(() => {
         props.openCountDownModal()
