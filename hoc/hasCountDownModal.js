@@ -41,6 +41,7 @@ const hasCountDownModal = WrappedComponent => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
         const [progress, setProgress] = useState(0)
+        const [status, setStatus] = useState(false)
 
         const handleOpen = () => {
             setOpen(true)
@@ -50,12 +51,13 @@ const hasCountDownModal = WrappedComponent => {
             setOpen(false)
         }
 
-        function startTimer () {
+        function startCountDown() {
             const timer = setInterval(() => {
                 setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
             }, 100)
             function stopTimer () {
                 setProgress(100)
+                setStatus(true)
                 handleClose()
                 clearInterval(timer)
             }
@@ -80,7 +82,7 @@ const hasCountDownModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={openModal} startTimer={startTimer} {...props} />
+                <WrappedComponent openCountDownModal={openModal} startCountDown={startCountDown} {...props} status={status} />
                 <Modal
                     disableAutoFocus={true}
                     disableEnforceFocus

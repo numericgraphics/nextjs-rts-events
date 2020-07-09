@@ -12,25 +12,7 @@ const useStyles = makeStyles({
 
 function QuestionTimer (props) {
     const classes = useStyles()
-    const { duration } = props
-    const [progress, setProgress] = React.useState(0)
-    const [timeLeft, setTimeLeft] = React.useState(duration)
-    let count = duration
-
-    React.useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeLeft(Math.round(count--))
-            setProgress(prevProgress =>
-                prevProgress >= 100 ? stopTimer() : prevProgress + 100 / duration
-            )
-        }, 1000)
-        function stopTimer () {
-            setProgress(100)
-            setTimeLeft(0)
-            clearInterval(timer)
-            props.finishedCallBack()
-        }
-    }, [count])
+    const { timeLeft, progress } = props
 
     return (
         <Box className={classes.container}>

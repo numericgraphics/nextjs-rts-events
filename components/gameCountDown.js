@@ -32,20 +32,22 @@ const useStyles = makeStyles({
         left: 0
     }
 })
+let timer
 
 const GameCountDown = (props, ref) => {
     const [progress, setProgress] = useState(0)
     const classes = useStyles()
 
     function startTimer () {
-        const timer = setInterval(() => {
+        timer = setInterval(() => {
             setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
         }, 100)
-        function stopTimer () {
-            setProgress(100)
-            clearInterval(timer)
-            props.finishedCallBack()
-        }
+    }
+
+    function stopTimer () {
+        setProgress(100)
+        clearInterval(timer)
+        props.finishedCallBack()
     }
 
     useEffect(() => {

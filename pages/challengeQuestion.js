@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 import UserContext from '../components/UserContext'
@@ -87,9 +87,13 @@ function ChallengeQuestion (props) {
     const [title, setTitle] = useState('')
     const [question, setQuestion] = useState('')
     const [answers, setAnswers] = useState([])
+    const [answer, setAnswer] = useState(-1)
+    const [progress, setProgress] = React.useState(0)
+    const [timeLeft, setTimeLeft] = React.useState(duration)
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
     const layoutRef = createRef()
+    const intervalId = useRef()
 
     async function fetchData () {
         try {
@@ -103,6 +107,7 @@ function ChallengeQuestion (props) {
                 setQuestion(question)
                 setAnswers(answers)
                 setDuration(duration)
+                setTimeLeft(duration)
                 initPage()
             } else {
                 // TODO : manage response !== 200
@@ -116,32 +121,49 @@ function ChallengeQuestion (props) {
         }
     }
 
-    async function fetchResult (index) {
+    async function fetchResult () {
         await Router.push({
             pathname: '/challengeResult',
-            query: { answer: index }
+            query: { answer }
         })
     }
 
     function initPage () {
         setTranslation(dataProvider.getTranslation())
-        props.startTimer()
+        props.startCountDown()
         setLoading(false)
     }
 
     function onAnswer (index) {
         console.log('onAnswer', index)
-        fetchResult(index).then()
+        setAnswer(index)
+        clearInterval(intervalId.current)
+        fetchResult().then()
     }
 
     useEffect(() => {
-        props.openModal()
+        props.openCountDownModal()
         fetchData().then()
+        return () => clearInterval(intervalId.current)
     }, [])
 
-    function endTimer () {
-        console.log('endTimer')
-    }
+    useEffect(() => {
+        if (props.status) {
+            let count = duration
+            intervalId.current = setInterval(() => {
+                setTimeLeft(Math.round(count--))
+                setProgress(prevProgress => prevProgress + 100 / duration)
+            }, 1000)
+        }
+    }, [props.status])
+
+    useEffect(() => {
+        if (progress >= 100) {
+            setTimeLeft(0)
+            setProgress(0)
+            fetchResult().then()
+        }
+    }, [progress])
 
     return (
         <EventLayout>
@@ -149,7 +171,7 @@ function ChallengeQuestion (props) {
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Box className={classes.counter}>
-                        <QuestionTimer finishedCallBack={endTimer} duration={duration}/>
+                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
                     </Box>
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'left'}>
