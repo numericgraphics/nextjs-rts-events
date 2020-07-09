@@ -16,10 +16,8 @@ const ColorLibConnector = withStyles({
 
 const styles = makeStyles({
     stepper: {
-        width: '100vw',
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        justifyContent: 'center',
         padding: 5
     }
 })
@@ -31,7 +29,7 @@ function ColorLibStepIcon (props) {
     const { active } = props
     return (
         <div>
-            <RemoveRoundedIcon style={{ color: active ? 'gray' : 'white', fontSize: '3rem' }} />
+            <RemoveRoundedIcon style={{ color: active ? 'gray' : 'white', fontSize: '2.3rem' }} />
         </div>
     )
 }

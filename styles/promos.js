@@ -39,7 +39,7 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100vw',
-        bottom: 140,
+        bottom: 140
     },
     containerOverlayNoLogo: {
         position: 'absolute',
