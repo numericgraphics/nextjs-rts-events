@@ -3,7 +3,7 @@ import Router, { withRouter } from 'next/router'
 import getConfig from 'next/config'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import PromosStepper from '../components/promos/promosStepper'
+// import PromosStepper from '../components/promos/promosStepper'
 import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import Promos from '../components/promos/promos'
@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 
 function Index (props) {
     const classes = useStyles()
-    const [activeStep, setActiveStep] = useState(0)
+    // const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])
     const [translation, setTranslation] = useState([])
     const { dataProvider, store } = useContext(UserContext)
@@ -88,7 +88,7 @@ function Index (props) {
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         handleUrlQuery()
-        setActiveStep(0)
+        // setActiveStep(0)
         setLoading(false)
     }
 
@@ -104,7 +104,7 @@ function Index (props) {
     }
 
     function slideIndexCallBack (index) {
-        setActiveStep(index)
+        // setActiveStep(index)
     }
 
     return (
@@ -112,9 +112,6 @@ function Index (props) {
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef}>
-                    <Box className={classes.containerOverlayHeader} >
-                        <PromosStepper steps={promos} activeStep={activeStep}/>
-                    </Box>
                     <Box className={classes.containerOverlayFooter} >
                         <ColorButton variant="contained" className={classes.button} onClick={onStart}>
                             {translation.startPageButtonText}
@@ -131,3 +128,9 @@ function Index (props) {
 }
 
 export default withRouter(hasLoginModal(Index))
+
+/*
+<Box className={classes.containerOverlayHeader} >
+   <PromosStepper steps={promos} activeStep={activeStep}/>
+ </Box>
+ */

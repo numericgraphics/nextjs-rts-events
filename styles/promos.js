@@ -11,8 +11,7 @@ export const styles = {
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
         width: '100vw',
-        minHeight: '100vh',
-        backgroundColor: 'gray'
+        zIndex: 1
     },
     containerImage: {
         position: 'absolute',
@@ -20,7 +19,6 @@ export const styles = {
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
         width: '100vw',
-        minHeight: '100vh',
         backgroundColor: 'gray'
     }
 }
@@ -41,7 +39,7 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100vw',
-        zIndex: 2
+        bottom: 140,
     },
     containerOverlayNoLogo: {
         position: 'absolute',
