@@ -10,8 +10,8 @@ import Promos from '../components/promos/promos'
 import EventLayout from '../components/eventLayout'
 import UserContext from '../components/UserContext'
 import hasLoginModal from '../hoc/hasLoginModal'
-import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
+import Button from '@material-ui/core/Button'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
@@ -118,9 +118,9 @@ function Index (props) {
                         <PromosStepper steps={promos} activeStep={activeStep}/>
                     </Box>
                     <Box className={classes.containerOverlayFooter} >
-                        <ColorButton variant="contained" className={classes.button} onClick={onStart}>
+                        <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
                             {translation.startPageButtonText}
-                        </ColorButton>
+                        </Button>
                         <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
                             <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
                         </Link>

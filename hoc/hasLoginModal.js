@@ -7,9 +7,10 @@ import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import { ColorButton } from '../components/ui/ColorButton'
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
+import Button from '@material-ui/core/Button'
+import { useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -75,6 +76,14 @@ const hasLoginModal = WrappedComponent => {
         const { dataProvider, store } = useContext(UserContext)
         const { setLoading } = store
         const [translation] = useState(dataProvider.getTranslation())
+
+        // TODO : fix bg flickering where using keyboard
+        // const theme = useTheme()
+        // const ColorBackdrop = withStyles({
+        //     root: {
+        //         background: theme.palette.background.default
+        //     }
+        // })(Backdrop)
 
         const handleOpen = () => {
             setOpen(true)
@@ -173,9 +182,9 @@ const hasLoginModal = WrappedComponent => {
                                 Object.assign({}, userData, { code: data })
                             )
                         }/>
-                        <ColorButton variant="contained" className={classes.button} type="submit">
+                        <Button color="primary" variant="contained" className={classes.button} type="submit">
                             Envoyer
-                        </ColorButton>
+                        </Button>
                     </form>
                 </Box>
             case ModalStates.LOADING:
@@ -193,9 +202,9 @@ const hasLoginModal = WrappedComponent => {
                                 Object.assign({}, userData, { phone: data })
                             )
                         }/>
-                        <ColorButton variant="contained" className={classes.button} type="submit" >
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" >
                             Envoyer
-                        </ColorButton>
+                        </Button>
                     </form>
                 </Box>
             case ModalStates.ERROR:

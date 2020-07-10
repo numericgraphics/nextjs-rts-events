@@ -6,6 +6,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded'
+import { useTheme } from '@material-ui/core/styles'
 
 const ColorLibConnector = withStyles({
     line: {
@@ -26,10 +27,11 @@ const styles = makeStyles({
 // <PromoSvgIcon style={{ color: active ? '#409AD3' : 'white', fontSize: 15 }} />
 // <RemoveIcon style={{ color: active ? '#409AD3' : 'white', fontSize: '5rem' }} />
 function ColorLibStepIcon (props) {
+    const theme = useTheme()
     const { active } = props
     return (
         <div>
-            <RemoveRoundedIcon style={{ color: active ? 'gray' : 'white', fontSize: '2.3rem' }} />
+            <RemoveRoundedIcon style={{ color: active ? theme.palette.secondary.main : theme.palette.secondary.light, fontSize: '2.3rem' }} />
         </div>
     )
 }

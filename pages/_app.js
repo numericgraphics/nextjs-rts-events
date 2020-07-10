@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { ThemeProvider } from '@material-ui/core/styles'
 import '../styles/global.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
@@ -6,6 +7,7 @@ import DataProvider from '../data/dataProvider'
 import ScoreService from '../data/scoreServices'
 import Progress from '../components/progress'
 import Router from 'next/router'
+import ThemeFactory from '../data/themeFactory'
 
 async function fetchGlobalEventData () {
     const response = await fetch('/api/fetchGlobal')
@@ -17,6 +19,7 @@ function MyApp ({ Component, pageProps }) {
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const [theme, setTheme] = useState()
     const store = { error, setError, isLoading, setLoading }
 
     useEffect(() => {
@@ -36,6 +39,7 @@ function MyApp ({ Component, pageProps }) {
             fetchGlobalEventData().then((result) => {
                 setEventData(result)
                 DataProvider.setData(result)
+                setTheme(ThemeFactory.createTheme(DataProvider.getTheme()))
                 setGlobalLoading(false)
             })
         } catch (error) {
@@ -58,7 +62,9 @@ function MyApp ({ Component, pageProps }) {
             }
             {isGlobalLoading
                 ? <Progress/>
-                : <Component {...pageProps} />
+                : <ThemeProvider theme={theme}>
+                    <Component {...pageProps} />
+                </ThemeProvider>
             }
         </UserContext.Provider>
     )
