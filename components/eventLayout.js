@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import UserContext from './UserContext'
+import { useHeight } from '../hooks/useHeight'
 
 export const siteTitle = 'TODO:SiteTitle'
 
@@ -45,12 +46,11 @@ const styles = {
 
 export default function EventLayout ({ children, home }) {
     const [isLandscape, setOrientation] = useState(false)
-    const [viewportHeight, setViewportHeight] = useState(false)
     const classes = useStyles()
     const { dataProvider } = useContext(UserContext)
+    const height = useHeight()
 
     function setGlobalInnerHeight () {
-        setViewportHeight(window.innerHeight)
         dataProvider.innerHeight = window.innerHeight
     }
 
@@ -61,6 +61,10 @@ export default function EventLayout ({ children, home }) {
             setGlobalInnerHeight()
         })
     }, [])
+
+    useEffect(() => {
+        console.log('useHeight debbug', height)
+    }, [height])
 
     return (
         <div className={classes.root} >
@@ -76,7 +80,7 @@ export default function EventLayout ({ children, home }) {
                     ? <Box style={styles.alerte}>
                         <Typography variant="body1" style={styles.alerteTypo}>Pour une meilleur utilisation veuillez utiliser le mode portrait, merci</Typography>
                     </Box>
-                    : <main style={{ minHeight: viewportHeight }}>{children}</main>
+                    : <main style={{ minHeight: height }}>{children}</main>
             }
         </div>
     )

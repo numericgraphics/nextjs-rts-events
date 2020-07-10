@@ -1,6 +1,6 @@
-import React, { forwardRef, useContext } from 'react'
-import UserContext from './UserContext'
+import React, { forwardRef } from 'react'
 import Box from '@material-ui/core/Box'
+import { useHeight } from '../hooks/useHeight'
 
 const styles = {
     containerGlobal: {
@@ -10,8 +10,8 @@ const styles = {
     }
 }
 const InnerHeightLayout = (props, ref) => {
-    const { dataProvider } = useContext(UserContext)
-    return <Box ref={ref} style={{ ...styles.containerGlobal, minHeight: dataProvider.innerHeight }} className={props.class}>{props.children}</Box>
+    const height = useHeight()
+    return <Box ref={ref} style={{ ...styles.containerGlobal, minHeight: height }} className={props.class}>{props.children}</Box>
 }
 
 export default forwardRef(InnerHeightLayout)

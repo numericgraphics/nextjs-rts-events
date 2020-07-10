@@ -1,19 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import Box from '@material-ui/core/Box'
 import { styles, useStyles } from '../../styles/promos'
-import UserContext from '../UserContext'
+import { useHeight } from '../../hooks/useHeight'
 
 export default function PromoImage (props) {
     const classes = useStyles()
-    const { dataProvider } = useContext(UserContext)
+    const height = useHeight()
     const { backgroundImageURL } = props.data
-    useEffect(() => {
-
-    }, [props.selected])
 
     return (
         <Box className={classes.containerGlobal}>
-            <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})`, minHeight: dataProvider.innerHeight }} />
+            <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})`, minHeight: height }} />
         </Box>
     )
 }
