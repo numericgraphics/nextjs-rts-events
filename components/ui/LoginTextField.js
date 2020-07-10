@@ -22,15 +22,17 @@ const styles = {
 }
 
 export default function LoginTextField (props) {
+    const { id, value, placeHolder } = props
     const classes = useStyles()
     return (
         <TextField
             className={classes.root}
             inputProps={{ style: styles.textField }}
-            id={props.id}
+            id={id}
+            placeholder={placeHolder}
             variant="outlined"
             type="number"
-            value={props.value}
+            value={value}
             onChange={event =>
                 props.onChange(event.target.value)
             }/>

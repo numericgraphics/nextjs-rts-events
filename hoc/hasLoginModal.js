@@ -177,7 +177,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <LoginTextField id="numberReceive" value={userData.code} onChange={(data) =>
+                        <LoginTextField id="numberReceive" placeHolder={'- - - -'} value={userData.code} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { code: data })
                             )
@@ -197,7 +197,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <LoginTextField id="phoneNumber" value={userData.phone} onChange={(data) =>
+                        <LoginTextField id="phoneNumber" placeHolder={'041 58 236 36 36'} value={userData.phone} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { phone: data })
                             )

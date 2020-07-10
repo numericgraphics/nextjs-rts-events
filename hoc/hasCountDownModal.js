@@ -51,7 +51,7 @@ const hasCountDownModal = WrappedComponent => {
             setOpen(false)
         }
 
-        function startCountDown() {
+        function startCountDown () {
             const timer = setInterval(() => {
                 setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
             }, 100)
