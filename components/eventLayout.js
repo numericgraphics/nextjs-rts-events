@@ -62,10 +62,6 @@ export default function EventLayout ({ children, home }) {
         })
     }, [])
 
-    useEffect(() => {
-        console.log('useHeight debbug', height)
-    }, [height])
-
     return (
         <div className={classes.root} >
             <Head>
