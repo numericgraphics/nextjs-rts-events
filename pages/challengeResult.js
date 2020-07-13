@@ -2,8 +2,6 @@ import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router, { withRouter } from 'next/router'
 import EventLayout from '../components/eventLayout'
@@ -237,8 +235,8 @@ function ChallengeResult (props) {
                                     {translation.challengeResultButtonContinue}
                                 </ColorButton>
                             </Box>
-                            : <Card className={classes.card}>
-                                <CardContent className={classes.content}>
+                            : <ColorCard className={classes.card}>
+                                <ColorCardContent className={classes.content}>
                                     <Typography className={classes.secondCardTitle}>
                                         {translation.challengeResultInfoTitle}
                                     </Typography>
@@ -254,8 +252,8 @@ function ChallengeResult (props) {
                                     <ColorButton variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
                                         {translation.challengeResultButtonDashBoard}
                                     </ColorButton>
-                                </CardContent>
-                            </Card>
+                                </ColorCardContent>
+                            </ColorCard>
                         }
                     </Box>
                 </InnerHeightLayout>

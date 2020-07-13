@@ -2,14 +2,14 @@ import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
+import { ColorCardContent } from '../components/ui/ColorCardContent'
+import { ColorCard } from '../components/ui/ColorCard'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -87,7 +87,6 @@ function DashBoard (props) {
                 dataProvider.setData(content)
                 scoreService.init(dataProvider)
                 initPage()
-                console.log('DashBoard initPage')
             } else {
                 await Router.push({
                     pathname: '/',
@@ -135,14 +134,14 @@ function DashBoard (props) {
                             {translation.dashBoardHeadText}
                         </Typography>
                     </Box>
-                    <Card className={classes.card}>
-                        <CardContent className={classes.content}>
+                    <ColorCard className={classes.card}>
+                        <ColorCardContent className={classes.content}>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <Typography className={classes.title}>
                                 {user.nickname}
                             </Typography>
-                        </CardContent>
-                    </Card>
+                        </ColorCardContent>
+                    </ColorCard>
                     <Box className={classes.footer}>
                         {availableChallenges
                             ? <ColorButton variant="contained" className={classes.button} onClick={startGame}>

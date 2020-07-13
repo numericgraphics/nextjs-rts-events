@@ -98,8 +98,8 @@ const hasCountDownModal = WrappedComponent => {
                     }}
                     tabIndex={-1}
                 >
-                    <Fade in={open}>
-                        <Box className={classes.containerProgress} >
+                    <Box className={classes.containerProgress} >
+                        <Fade in={open}>
                             <Box position="relative" display="inline-flex">
                                 <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={0.5} value={100} />
                                 <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} />
@@ -116,8 +116,8 @@ const hasCountDownModal = WrappedComponent => {
                                     <Typography className={classes.textProgress}>{displayCountDownText()}</Typography>
                                 </Box>
                             </Box>
-                        </Box>
-                    </Fade>
+                        </Fade>
+                    </Box>
                 </Modal>
             </Box>
         )
