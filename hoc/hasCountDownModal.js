@@ -40,7 +40,7 @@ const hasCountDownModal = WrappedComponent => {
     return (props) => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
-        const [progress, setProgress] = useState(0)
+        const [progress, setProgress] = useState(-1)
         const [status, setStatus] = useState(false)
 
         const handleOpen = () => {
@@ -64,7 +64,9 @@ const hasCountDownModal = WrappedComponent => {
         }
 
         function displayCountDownText () {
-            if (Math.round(progress) >= 0 && Math.round(progress) < 30) {
+            if (Math.round(progress) < 0) {
+                return '0'
+            } else if (Math.round(progress) >= 0 && Math.round(progress) < 30) {
                 return '3'
             } else if (Math.round(progress) > 30 && Math.round(progress) < 60) {
                 return '2'

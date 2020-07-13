@@ -131,7 +131,6 @@ function ChallengeQuestion (props) {
     function initPage () {
         setTranslation(dataProvider.getTranslation())
         props.startCountDown()
-        setLoading(false)
     }
 
     function onAnswer (index) {
@@ -148,6 +147,7 @@ function ChallengeQuestion (props) {
     }, [answer])
 
     useEffect(() => {
+        setLoading(false)
         props.openCountDownModal()
         fetchData().then()
         return () => clearInterval(intervalId.current)

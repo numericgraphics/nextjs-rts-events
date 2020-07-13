@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
+import AutorenewIcon from '@material-ui/icons/Autorenew'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import UserContext from './UserContext'
 import { useHeight } from '../hooks/useHeight'
@@ -74,7 +74,7 @@ export default function EventLayout ({ children, home }) {
             {
                 isLandscape
                     ? <Box style={styles.alerte}>
-                        <Typography variant="body1" style={styles.alerteTypo}>Pour une meilleur utilisation veuillez utiliser le mode portrait, merci</Typography>
+                        <AutorenewIcon style={{ fontSize: 80 }} />
                     </Box>
                     : <main style={{ minHeight: height }}>{children}</main>
             }
