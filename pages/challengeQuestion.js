@@ -135,13 +135,15 @@ function ChallengeQuestion (props) {
     }
 
     function onAnswer (index) {
-        setAnswer(index)
-        clearInterval(intervalId.current)
+        if (progress > 0) {
+            setAnswer(index)
+        }
     }
 
     useEffect(() => {
         if (progress > 0) {
             fetchResult().then()
+            clearInterval(intervalId.current)
         }
     }, [answer])
 
