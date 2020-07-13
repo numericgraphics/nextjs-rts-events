@@ -22,7 +22,6 @@ const useStyles = makeStyles(() => ({
         backgroundColor: 'none'
     },
     textProgress: {
-        color: 'white',
         fontFamily: 'srgssr-type-Bd',
         fontSize: '6rem'
     },
@@ -42,6 +41,7 @@ const hasCountDownModal = WrappedComponent => {
         const [open, setOpen] = useState(false)
         const [progress, setProgress] = useState(-1)
         const [status, setStatus] = useState(false)
+        const [timerStarted, setTimer] = useState(false)
 
         const handleOpen = () => {
             setOpen(true)
@@ -52,6 +52,7 @@ const hasCountDownModal = WrappedComponent => {
         }
 
         function startCountDown () {
+            setTimer(true)
             const timer = setInterval(() => {
                 setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
             }, 100)
@@ -64,7 +65,7 @@ const hasCountDownModal = WrappedComponent => {
         }
 
         function displayCountDownText () {
-            if (Math.round(progress) < 0) {
+            if (Math.round(progress) < 0 && !timerStarted) {
                 return '0'
             } else if (Math.round(progress) >= 0 && Math.round(progress) < 30) {
                 return '3'
@@ -104,7 +105,7 @@ const hasCountDownModal = WrappedComponent => {
                         <Fade in={open}>
                             <Box position="relative" display="inline-flex">
                                 <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={0.5} value={100} />
-                                <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} />
+                                { timerStarted ? <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} /> : null}
                                 <Box
                                     top={0}
                                     left={0}
@@ -115,7 +116,7 @@ const hasCountDownModal = WrappedComponent => {
                                     alignItems="center"
                                     justifyContent="center"
                                 >
-                                    <Typography className={classes.textProgress}>{displayCountDownText()}</Typography>
+                                    <Typography className={classes.textProgress} style={{color: timerStarted ? 'white' : 'DimGray' }}>{displayCountDownText()}</Typography>
                                 </Box>
                             </Box>
                         </Fade>

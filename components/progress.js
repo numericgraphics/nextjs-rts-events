@@ -6,7 +6,7 @@ import InnerHeightLayout from './innerHeightLayout'
 const useStyles = makeStyles({
     containerProgress: {
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
