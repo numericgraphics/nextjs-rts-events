@@ -206,7 +206,9 @@ function ChallengeResult (props) {
                                 </Typography>
                             </Box>
                             <Typography className={classes.title}>
-                                {`${translation.challengeResultTitle} ${user.nickname}`}
+                                {result.success
+                                    ? `${translation.challengeResultTitleGood} ${user.nickname}`
+                                    : `${translation.challengeResultTitleWrong} ${user.nickname}`}
                             </Typography>
                             <Typography className={classes.subTitle}>
                                 {result.message}
