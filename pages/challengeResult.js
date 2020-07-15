@@ -11,6 +11,7 @@ import InnerHeightLayout from '../components/innerHeightLayout'
 import { ColorCard } from '../components/ui/ColorCard'
 import { ColorCardContent } from '../components/ui/ColorCardContent'
 import { ColorCardActions } from '../components/ui/ColorCardAction'
+import { useHeight } from '../hooks/useHeight'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -120,6 +121,25 @@ const useStyles = makeStyles({
         padding: '6px 20px'
     }
 })
+const styles = {
+    containerOverlay: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '100vw',
+        zIndex: 3
+    },
+    containerImage: {
+        position: 'absolute',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
+        width: '100vw',
+        backgroundColor: 'gray',
+        filter: 'blur(4px)'
+    }
+}
 
 function ChallengeResult (props) {
     const classes = useStyles()
@@ -130,6 +150,7 @@ function ChallengeResult (props) {
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
     const layoutRef = createRef()
+    const height = useHeight()
 
     async function fetchData () {
         try {
@@ -194,70 +215,73 @@ function ChallengeResult (props) {
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
-                    <ColorCard className={classes.card}>
-                        <ColorCardContent className={classes.content}>
-                            <Box className={classes.cardHeader}>
-                                <Typography className={classes.cardHeaderSuccess}>
-                                    {`${result.score.success} ${translation.good}`}
+                    <Box style={{ ...styles.containerOverlay, minHeight: height }} >
+                        <ColorCard className={classes.card}>
+                            <ColorCardContent className={classes.content}>
+                                <Box className={classes.cardHeader}>
+                                    <Typography className={classes.cardHeaderSuccess}>
+                                        {`${result.score.success} ${translation.good}`}
+                                    </Typography>
+                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                    <Typography className={classes.cardHeaderWrong}>
+                                        {`${result.score.failure} ${translation.wrong}`}
+                                    </Typography>
+                                </Box>
+                                <Typography className={classes.title}>
+                                    {result.success
+                                        ? `${translation.challengeResultTitleGood} ${user.nickname}`
+                                        : `${translation.challengeResultTitleWrong} ${user.nickname}`}
                                 </Typography>
-                                <Avatar className={classes.avatar} src={user.avatarURL}/>
-                                <Typography className={classes.cardHeaderWrong}>
-                                    {`${result.score.failure} ${translation.wrong}`}
+                                <Typography className={classes.subTitle}>
+                                    {result.message}
                                 </Typography>
-                            </Box>
-                            <Typography className={classes.title}>
-                                {result.success
-                                    ? `${translation.challengeResultTitleGood} ${user.nickname}`
-                                    : `${translation.challengeResultTitleWrong} ${user.nickname}`}
-                            </Typography>
-                            <Typography className={classes.subTitle}>
-                                {result.message}
-                            </Typography>
-                        </ColorCardContent>
-                        <ColorCardActions className={classes.cardFooter}>
-                            <Typography className={classes.winPointText}>
+                            </ColorCardContent>
+                            <ColorCardActions className={classes.cardFooter}>
+                                <Typography className={classes.winPointText}>
 
-                                {result.hasAvailableChallenges
-                                    ? result.success
-                                        ? `+ ${result.points} pts`
-                                        : `${result.points} pts`
-                                    : `+ ${result.score.totalPoints} pts`
-                                }
+                                    {result.hasAvailableChallenges
+                                        ? result.success
+                                            ? `+ ${result.points} pts`
+                                            : `${result.points} pts`
+                                        : `+ ${result.score.totalPoints} pts`
+                                    }
 
-                            </Typography>
-                        </ColorCardActions>
-                    </ColorCard>
-                    <Box className={classes.footer}>
-                        {result.hasAvailableChallenges
-                            ? <Box>
-                                <ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
-                                    {translation.challengeResultButtonDashBoard}
-                                </ColorButton>
-                                <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
-                                    {translation.challengeResultButtonContinue}
-                                </ColorButton>
-                            </Box>
-                            : <ColorCard className={classes.card}>
-                                <ColorCardContent className={classes.content}>
-                                    <Typography className={classes.secondCardTitle}>
-                                        {translation.challengeResultInfoTitle}
-                                    </Typography>
-                                    <Typography className={classes.secondCardSubTitle}>
-                                        {translation.challengeResultInfoText}
-                                    </Typography>
-                                    <Typography className={classes.secondCardText}>
-                                        {`${translation.score} ${result.score.totalPoints}`}
-                                    </Typography>
-                                    <Typography className={classes.secondCardText}>
-                                        {`${translation.bestScore} ${gameBestScore}`}
-                                    </Typography>
-                                    <ColorButton variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
+                                </Typography>
+                            </ColorCardActions>
+                        </ColorCard>
+                        <Box className={classes.footer}>
+                            {result.hasAvailableChallenges
+                                ? <Box>
+                                    <ColorButton variant="contained" className={classes.button} onClick={gotoDashBoard}>
                                         {translation.challengeResultButtonDashBoard}
                                     </ColorButton>
-                                </ColorCardContent>
-                            </ColorCard>
-                        }
+                                    <ColorButton variant="contained" className={classes.button} onClick={continueGame}>
+                                        {translation.challengeResultButtonContinue}
+                                    </ColorButton>
+                                </Box>
+                                : <ColorCard className={classes.card}>
+                                    <ColorCardContent className={classes.content}>
+                                        <Typography className={classes.secondCardTitle}>
+                                            {translation.challengeResultInfoTitle}
+                                        </Typography>
+                                        <Typography className={classes.secondCardSubTitle}>
+                                            {translation.challengeResultInfoText}
+                                        </Typography>
+                                        <Typography className={classes.secondCardText}>
+                                            {`${translation.score} ${result.score.totalPoints}`}
+                                        </Typography>
+                                        <Typography className={classes.secondCardText}>
+                                            {`${translation.bestScore} ${gameBestScore}`}
+                                        </Typography>
+                                        <ColorButton variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
+                                            {translation.challengeResultButtonDashBoard}
+                                        </ColorButton>
+                                    </ColorCardContent>
+                                </ColorCard>
+                            }
+                        </Box>
                     </Box>
+                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${result.imageURL})`, minHeight: height }} />
                 </InnerHeightLayout>
             }
         </EventLayout>
