@@ -1,14 +1,12 @@
-import Container from '@material-ui/core/Container'
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import React from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
+import InnerHeightLayout from './innerHeightLayout'
 
 const useStyles = makeStyles({
     containerProgress: {
-        display: 'flex',
-        flexDirection: 'column',
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
@@ -19,9 +17,9 @@ const useStyles = makeStyles({
 function Progress () {
     const classes = useStyles()
     return (
-        <Container className={classes.containerProgress}>
+        <InnerHeightLayout class={classes.containerProgress} >
             <CircularProgress />
-        </Container>
+        </InnerHeightLayout>
     )
 }
 

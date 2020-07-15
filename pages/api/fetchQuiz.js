@@ -1,6 +1,7 @@
 import cookie from 'cookie'
 import getConfig from 'next/config'
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
+// import Typography from '@material-ui/core/Typography'
 
 export default async (req, res) => {
     let rtsEventCookie = null
@@ -20,7 +21,7 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userID}/getGame`, {
+                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userID}/challenges/startNextAvailableChallenge`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

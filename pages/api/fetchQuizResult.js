@@ -1,8 +1,10 @@
 import cookie from 'cookie'
 import getConfig from 'next/config'
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
+// import Typography from '@material-ui/core/Typography'
 
 export default async (req, res) => {
+    const { answer, challengeID } = await req.body
     let rtsEventCookie = null
     let cookies = null
 
@@ -19,19 +21,23 @@ export default async (req, res) => {
             const cookieValue = JSON.parse(cookies[cookieName])
             const { userID, code } = cookieValue
 
+            if (!challengeID || !answer) {
+                throw new Error('challengeID or answer must be provided.')
+            }
+
             if (rtsEventCookie) {
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userID}/getGame`, {
+                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userID}/challenges/${challengeID}/end`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: code })
+                    body: JSON.stringify({ code, answer })
                 })
 
                 if (response.status === 200) {
                     const content = await response.json()
                     res.status(200).send(JSON.stringify(content))
                 } else {
-                    throw new Error('There is a probleme with the getData fetch')
+                    throw new Error('There is a probleme with end fetch')
                 }
             } else {
                 throw new Error('There is a no events cookie')

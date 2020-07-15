@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
+import AutorenewIcon from '@material-ui/icons/Autorenew'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import UserContext from './UserContext'
+import { useHeight } from '../hooks/useHeight'
 
 export const siteTitle = 'TODO:SiteTitle'
 
@@ -12,8 +14,8 @@ const useStyles = makeStyles({
         border: 0,
         color: '#fff',
         width: '100vw',
-        margin: '0 auto 0',
-        minHeight: '100vh'
+        margin: '0 auto 0'
+        // minHeight: '100vh'
     },
     header: {
         display: 'flex',
@@ -45,15 +47,23 @@ const styles = {
 export default function EventLayout ({ children, home }) {
     const [isLandscape, setOrientation] = useState(false)
     const classes = useStyles()
+    const { dataProvider } = useContext(UserContext)
+    const height = useHeight()
+
+    function setGlobalInnerHeight () {
+        dataProvider.innerHeight = window.innerHeight
+    }
 
     useEffect(() => {
+        setGlobalInnerHeight()
         window.addEventListener('orientationchange', () => {
             setOrientation(window.innerWidth < window.innerHeight)
+            setGlobalInnerHeight()
         })
     }, [])
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} >
             <Head>
                 <link rel="icon" href="/favicon.ico" />
                 <meta
@@ -64,9 +74,9 @@ export default function EventLayout ({ children, home }) {
             {
                 isLandscape
                     ? <Box style={styles.alerte}>
-                        <Typography variant="body1" style={styles.alerteTypo}>Pour une meilleur utilisation veuillez utiliser le mode portrait, merci</Typography>
+                        <AutorenewIcon style={{ fontSize: 80 }} />
                     </Box>
-                    : <main>{children}</main>
+                    : <main style={{ minHeight: height }}>{children}</main>
             }
         </div>
     )

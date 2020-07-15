@@ -11,8 +11,7 @@ export const styles = {
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
         width: '100vw',
-        minHeight: '100vh',
-        backgroundColor: 'gray'
+        zIndex: 1
     },
     containerImage: {
         position: 'absolute',
@@ -20,7 +19,6 @@ export const styles = {
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
         width: '100vw',
-        minHeight: '100vh',
         backgroundColor: 'gray'
     }
 }
@@ -28,8 +26,11 @@ export const styles = {
 // eslint-disable-next-line no-unused-vars
 export const useStyles = makeStyles({
     containerGlobal: {
-        width: '100vw',
-        minHeight: '100vh',
+        justifyContent: 'center',
+        backgroundColor: 'gray'
+    },
+    containerGlobalNoLogo: {
+        justifyContent: 'flex-end',
         backgroundColor: 'gray'
     },
     containerOverlay: {
@@ -38,7 +39,16 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100vw',
-        minHeight: '75vh',
+        bottom: 140
+    },
+    containerOverlayNoLogo: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        width: '100vw',
+        bottom: 140,
         zIndex: 2
     },
     text: {

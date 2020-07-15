@@ -1,30 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Container from '@material-ui/core/Container'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
-import Progress from '../components/progress'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
+import { ColorButton } from '../components/ui/ColorButton'
+import InnerHeightLayout from '../components/innerHeightLayout'
+import { ColorCardContent } from '../components/ui/ColorCardContent'
+import { ColorCard } from '../components/ui/ColorCard'
 
 const useStyles = makeStyles({
     containerGlobal: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        height: '100vh'
+        justifyContent: 'flex-start'
     },
     header: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        height: '15vh',
         padding: '10px 30px',
         textAlign: 'center'
     },
@@ -56,6 +51,7 @@ const useStyles = makeStyles({
         fontSize: '1rem'
     },
     content: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -75,20 +71,22 @@ const useStyles = makeStyles({
 })
 
 function DashBoard (props) {
-    const [user, setUser] = useState({})
-    const [isLoading, setLoading] = useState(true)
     const classes = useStyles()
+    const [user, setUser] = useState({})
+    const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const { dataProvider } = useContext(UserContext)
+    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const { isLoading, setLoading } = store
+    const layoutRef = createRef()
 
     async function fetchData () {
         try {
             const response = await fetch('/api/fetchGame')
-
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                initDashPage()
+                scoreService.init(dataProvider)
+                initPage()
             } else {
                 await Router.push({
                     pathname: '/',
@@ -100,21 +98,34 @@ function DashBoard (props) {
         }
     }
 
-    function initDashPage () {
+    function initPage () {
+        try {
+            console.log('test scoreService getUserPoints', scoreService.getUserPoints())
+            console.log('test scoreService getUserSuccess', scoreService.getUserSuccess())
+        } catch (error) {
+            console.log('test scoreService ERROR', error)
+        }
+
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
+        setAvailableChallenges(dataProvider.hasAvailableChallenges())
         setLoading(false)
     }
 
+    async function startGame () {
+        await Router.push('/challengeQuestion')
+    }
+
     useEffect(() => {
+        console.log('dataProvider', props)
         fetchData().then()
     }, [])
 
     return (
         <EventLayout>
             {isLoading
-                ? <Progress/>
-                : <Container className={classes.containerGlobal}>
+                ? null
+                : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
                     <Box className={classes.header}>
                         <Typography className={classes.HeaderTitle} align={'center'}>
                             {translation.dashBoardHeadTitle}
@@ -123,20 +134,23 @@ function DashBoard (props) {
                             {translation.dashBoardHeadText}
                         </Typography>
                     </Box>
-                    <Card className={classes.card}>
-                        <CardContent className={classes.content}>
+                    <ColorCard className={classes.card}>
+                        <ColorCardContent className={classes.content}>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <Typography className={classes.title}>
                                 {user.nickname}
                             </Typography>
-                        </CardContent>
-                    </Card>
+                        </ColorCardContent>
+                    </ColorCard>
                     <Box className={classes.footer}>
-                        <Button variant="contained" className={classes.button}>
-                            {translation.dashBoardChallengesButton}
-                        </Button>
+                        {availableChallenges
+                            ? <ColorButton variant="contained" className={classes.button} onClick={startGame}>
+                                {translation.dashBoardChallengesButton}
+                            </ColorButton>
+                            : null
+                        }
                     </Box>
-                </Container>
+                </InnerHeightLayout>
             }
         </EventLayout>
     )

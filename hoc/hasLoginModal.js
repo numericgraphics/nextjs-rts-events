@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -7,9 +7,10 @@ import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import { ColorButton } from '../components/ui/ColorButton'
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
+import Button from '@material-ui/core/Button'
+import { useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -72,8 +73,17 @@ const hasLoginModal = WrappedComponent => {
         const [open, setOpen] = React.useState(false)
         const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
-        const { dataProvider } = useContext(UserContext)
+        const { dataProvider, store } = useContext(UserContext)
+        const { setLoading } = store
         const [translation] = useState(dataProvider.getTranslation())
+
+        // TODO : fix bg flickering where using keyboard
+        // const theme = useTheme()
+        // const ColorBackdrop = withStyles({
+        //     root: {
+        //         background: theme.palette.background.default
+        //     }
+        // })(Backdrop)
 
         const handleOpen = () => {
             setOpen(true)
@@ -145,6 +155,7 @@ const hasLoginModal = WrappedComponent => {
                     const content = await response.json()
                     const { nickname, avatarURL } = content
                     dataProvider.setData({ user: { nickname, avatarURL } })
+                    setLoading(true)
                     await Router.push('/dashBoard')
                     return
                 }
@@ -166,14 +177,14 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <LoginTextField id="numberReceive" value={userData.code} onChange={(data) =>
+                        <LoginTextField id="numberReceive" placeHolder={'- - - -'} value={userData.code} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { code: data })
                             )
                         }/>
-                        <ColorButton variant="contained" className={classes.button} type="submit">
+                        <Button color="primary" variant="contained" className={classes.button} type="submit">
                             Envoyer
-                        </ColorButton>
+                        </Button>
                     </form>
                 </Box>
             case ModalStates.LOADING:
@@ -186,14 +197,14 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <LoginTextField id="phoneNumber" value={userData.phone} onChange={(data) =>
+                        <LoginTextField id="phoneNumber" placeHolder={'0041 79 123 45 67'} value={userData.phone} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { phone: data })
                             )
                         }/>
-                        <ColorButton variant="contained" className={classes.button} type="submit" >
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" >
                             Envoyer
-                        </ColorButton>
+                        </Button>
                     </form>
                 </Box>
             case ModalStates.ERROR:
