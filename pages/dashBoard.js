@@ -99,12 +99,12 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        try {
-            console.log('test scoreService getUserPoints', scoreService.getUserPoints())
-            console.log('test scoreService getUserSuccess', scoreService.getUserSuccess())
-        } catch (error) {
-            console.log('test scoreService ERROR', error)
-        }
+        // try {
+        //     console.log('test scoreService getUserPoints', scoreService.getUserPoints())
+        //     console.log('test scoreService getUserSuccess', scoreService.getUserSuccess())
+        // } catch (error) {
+        //     console.log('test scoreService ERROR', error)
+        // }
 
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
@@ -113,11 +113,11 @@ function DashBoard (props) {
     }
 
     async function startGame () {
-        await Router.push('/challengeQuestion')
+        await Router.push('/challenge')
     }
 
     useEffect(() => {
-        console.log('dataProvider', props)
+        // console.log('dataProvider', props)
         fetchData().then()
     }, [])
 

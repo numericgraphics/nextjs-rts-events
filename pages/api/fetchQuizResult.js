@@ -21,7 +21,8 @@ export default async (req, res) => {
             const cookieValue = JSON.parse(cookies[cookieName])
             const { userID, code } = cookieValue
 
-            if (!challengeID || !answer) {
+            // TODO verify the validity of this data
+            if (challengeID === undefined || answer === undefined) {
                 throw new Error('challengeID or answer must be provided.')
             }
 
