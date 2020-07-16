@@ -9,6 +9,7 @@ import hasCountDownModal from '../hoc/hasCountDownModal'
 import Question from '../components/challenges/questions'
 import Result from '../components/challenges/result'
 import { useHeight } from '../hooks/useHeight'
+import LazyImage from '../components/ui/LazyImage'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -250,7 +251,7 @@ function Challenge (props) {
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }} />
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                 </InnerHeightLayout>
             }
         </EventLayout>

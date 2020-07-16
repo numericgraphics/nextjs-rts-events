@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 import '../styles/global.css'
+import '../styles/fadeIn.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
