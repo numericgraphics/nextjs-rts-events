@@ -8,6 +8,7 @@ import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
 import Question from '../components/challenges/questions'
 import Result from '../components/challenges/result'
+import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
 // import Progress from '../components/challenges/progress'
 
@@ -261,7 +262,7 @@ function Challenge (props) {
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }} />
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
                 </InnerHeightLayout>
             }
         </EventLayout>
