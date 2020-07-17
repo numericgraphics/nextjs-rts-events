@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import QuestionTimer from '../questionTimer'
 import { useHeight } from '../../hooks/useHeight'
+import Fade from '@material-ui/core/Fade/Fade'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -107,13 +108,15 @@ function Question (props) {
     const classes = useStyles()
     const { quiz, title, duration } = props.content
     const { question, answers } = quiz
-    const [progress, setProgress] = React.useState(0)
-    const [timeLeft, setTimeLeft] = React.useState(duration)
+    const [progress, setProgress] = useState(0)
+    const [timeLeft, setTimeLeft] = useState(duration)
+    const [showComponent, setShowComponent] = useState(false)
     const intervalId = useRef()
     const height = useHeight()
 
     function onAnswer (index) {
         if (progress > 0) {
+            setShowComponent(false)
             props.answerCallBack(index)
         }
     }
@@ -127,6 +130,7 @@ function Question (props) {
     }
 
     useEffect(() => {
+        setShowComponent(true)
         startTimer()
         return () => clearInterval(intervalId.current)
     }, [])
@@ -136,35 +140,38 @@ function Question (props) {
             setTimeLeft(0)
             setProgress(0)
             props.answerCallBack(-1)
+            setShowComponent(false)
         }
     }, [progress])
 
     return (
-        <Box style={{ ...styles.containerOverlay, minHeight: height }} >
-            <Box className={classes.counter}>
-                <QuestionTimer timeLeft={timeLeft} progress={progress} />
+        <Fade in={showComponent} timeout={500}>
+            <Box style={{ ...styles.containerOverlay, minHeight: height }} >
+                <Box className={classes.counter}>
+                    <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                </Box>
+                <Box className={classes.header}>
+                    <Typography className={classes.HeaderTitle} align={'left'}>
+                        {title}
+                    </Typography>
+                    <Typography className={classes.HeaderText} align={'left'}>
+                        {question}
+                    </Typography>
+                </Box>
+                <Box className={classes.footer}>
+                    {answers.map((item, index) => {
+                        return (
+                            <Button color="primary" variant="contained" key={index} className={classes.button} onClick={() => {
+                                onAnswer(index)
+                            }}>
+                                {item}
+                            </Button>
+                        )
+                    }
+                    )}
+                </Box>
             </Box>
-            <Box className={classes.header}>
-                <Typography className={classes.HeaderTitle} align={'left'}>
-                    {title}
-                </Typography>
-                <Typography className={classes.HeaderText} align={'left'}>
-                    {question}
-                </Typography>
-            </Box>
-            <Box className={classes.footer}>
-                {answers.map((item, index) => {
-                    return (
-                        <Button color="primary" variant="contained" key={index} className={classes.button} onClick={() => {
-                            onAnswer(index)
-                        }}>
-                            {item}
-                        </Button>
-                    )
-                }
-                )}
-            </Box>
-        </Box>
+        </Fade>
     )
 }
 

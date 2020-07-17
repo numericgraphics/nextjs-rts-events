@@ -261,7 +261,7 @@ function Challenge (props) {
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.RESULT ? 'blur(4px)' : 'none' }} />
+                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }} />
                 </InnerHeightLayout>
             }
         </EventLayout>
