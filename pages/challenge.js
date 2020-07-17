@@ -9,6 +9,7 @@ import hasCountDownModal from '../hoc/hasCountDownModal'
 import Question from '../components/challenges/questions'
 import Result from '../components/challenges/result'
 import { useHeight } from '../hooks/useHeight'
+// import Progress from '../components/challenges/progress'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -103,10 +104,11 @@ const styles = {
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
         width: '100vw',
-        backgroundColor: 'gray'
+        backgroundColor: 'white'
     }
 }
 const ChallengeStates = Object.freeze({
+    COUNTDOWN: 'countDown',
     QUESTIONS: 'questions',
     RESULT: 'result',
     LOADING: 'loading',
@@ -193,6 +195,7 @@ function Challenge (props) {
     }
 
     // Get the good component by challenge state
+    // return <Progress />
     function getChallengeContent (state) {
         switch (state) {
         case ChallengeStates.QUESTIONS:
@@ -200,16 +203,16 @@ function Challenge (props) {
         case ChallengeStates.RESULT:
             return <Result content={resultContent} playGameCallBack={playGame}/>
         case ChallengeStates.LOADING:
+        case ChallengeStates.COUNTDOWN:
             return null
         }
     }
 
-    // Call directly form question through question component callBack
+    // Call through question component callBack
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
             setChallengeState(ChallengeStates.LOADING)
             fetchResult().then()
-        //     clearInterval(intervalId.current)
         }
     }, [answer])
 
@@ -218,7 +221,7 @@ function Challenge (props) {
         fetchQuestions().then()
     }, [])
 
-    // Back from fetchQuizz
+    // Back from fetchQuizz call
     useEffect(() => {
         if (Object.keys(questionsContent).length !== 0) {
             if (isLoading) {
@@ -226,9 +229,17 @@ function Challenge (props) {
             }
             const { imageURL } = questionsContent
             setImageURL(imageURL)
-            setChallengeState(ChallengeStates.QUESTIONS)
+            setChallengeState(ChallengeStates.COUNTDOWN)
+            props.openCountDownModal()
+            props.startCountDown()
         }
     }, [questionsContent])
+
+    useEffect(() => {
+        if (props.status) {
+            setChallengeState(ChallengeStates.QUESTIONS)
+        }
+    }, [props.status])
 
     // Back from fetchQuizzResult
     useEffect(() => {
@@ -250,7 +261,7 @@ function Challenge (props) {
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }} />
+                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.RESULT ? 'blur(4px)' : 'none' }} />
                 </InnerHeightLayout>
             }
         </EventLayout>
