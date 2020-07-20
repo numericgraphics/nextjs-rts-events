@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import QuestionTimer from '../questionTimer'
 import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
+import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -111,13 +111,16 @@ function Question (props) {
     const [progress, setProgress] = useState(0)
     const [timeLeft, setTimeLeft] = useState(duration)
     const [showComponent, setShowComponent] = useState(false)
+    const [disabled, setDisabled] = useState(false)
     const intervalId = useRef()
     const height = useHeight()
 
     function onAnswer (index) {
         if (progress > 0) {
-            setShowComponent(false)
+            // setShowComponent(false)
             props.answerCallBack(index)
+            clearInterval(intervalId.current)
+            setDisabled(true)
         }
     }
 
@@ -130,6 +133,7 @@ function Question (props) {
     }
 
     useEffect(() => {
+        setDisabled(false)
         setShowComponent(true)
         startTimer()
         return () => clearInterval(intervalId.current)
@@ -161,11 +165,11 @@ function Question (props) {
                 <Box className={classes.footer}>
                     {answers.map((item, index) => {
                         return (
-                            <Button color="primary" variant="contained" key={index} className={classes.button} onClick={() => {
+                            <CustomDisabledButton color="primary" variant="contained" key={index} className={classes.button} disabled={disabled} onClick={() => {
                                 onAnswer(index)
                             }}>
                                 {item}
-                            </Button>
+                            </CustomDisabledButton>
                         )
                     }
                     )}

@@ -10,6 +10,7 @@ import Question from '../components/challenges/questions'
 import Result from '../components/challenges/result'
 import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
+import CustomBackDrop from '../components/challenges/CustomBackDrop'
 // import Progress from '../components/challenges/progress'
 
 const useStyles = makeStyles({
@@ -121,7 +122,7 @@ function Challenge (props) {
     const layoutRef = createRef()
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
-    const [challengeState, setChallengeState] = useState(ChallengeStates.LOADING)
+    const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
@@ -169,7 +170,6 @@ function Challenge (props) {
                 success: false
                  */
                 const content = await response.json()
-                initGame()
                 setResultContent(content)
             } else {
                 // TODO : manage response !== 200
@@ -199,11 +199,11 @@ function Challenge (props) {
     // return <Progress />
     function getChallengeContent (state) {
         switch (state) {
+        case ChallengeStates.LOADING:
         case ChallengeStates.QUESTIONS:
             return <Question content={questionsContent} answerCallBack={setAnswer}/>
         case ChallengeStates.RESULT:
             return <Result content={resultContent} playGameCallBack={playGame}/>
-        case ChallengeStates.LOADING:
         case ChallengeStates.COUNTDOWN:
             return null
         }
@@ -246,6 +246,7 @@ function Challenge (props) {
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
             setChallengeState(ChallengeStates.RESULT)
+            initGame()
         }
     }, [resultContent])
 
@@ -258,6 +259,7 @@ function Challenge (props) {
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
+                    <CustomBackDrop open={challengeState === ChallengeStates.LOADING} />
                     {getChallengeContent(challengeState)}
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
