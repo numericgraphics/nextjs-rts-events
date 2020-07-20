@@ -76,7 +76,7 @@ function DashBoard (props) {
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider, scoreService, store } = useContext(UserContext)
-    const { isLoading, setLoading } = store
+    const { isLoading, setLoading, eventName } = store
     const layoutRef = createRef()
 
     async function fetchData () {
@@ -89,7 +89,7 @@ function DashBoard (props) {
                 initPage()
             } else {
                 await Router.push({
-                    pathname: '/',
+                    pathname: `/${eventName}`,
                     query: { modal: true }
                 })
             }
@@ -100,12 +100,15 @@ function DashBoard (props) {
 
     function initPage () {
         try {
-            console.log('test scoreService getUserPoints', scoreService.getUserPoints())
-            console.log('test scoreService getUserSuccess', scoreService.getUserSuccess())
+            console.log('test dataProvider', dataProvider)
         } catch (error) {
-            console.log('test scoreService ERROR', error)
+            console.log('test dataProvider ERROR', error)
         }
 
+        // TODO find a way to get the global  event  call
+        return
+
+        // eslint-disable-next-line no-unreachable
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())

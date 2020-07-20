@@ -7,20 +7,14 @@ import DataProvider from '../data/dataProvider'
 import ScoreService from '../data/scoreServices'
 import Progress from '../components/progress'
 import Router from 'next/router'
-import ThemeFactory from '../data/themeFactory'
-
-async function fetchGlobalEventData () {
-    const response = await fetch('/api/fetchGlobal')
-    return await response.json()
-}
 
 function MyApp ({ Component, pageProps }) {
-    const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-    const [theme, setTheme] = useState()
-    const store = { error, setError, isLoading, setLoading }
+    const [eventName, setEventName] = useState('/')
+    const [theme, setTheme] = useState({})
+    const store = { error, setError, isLoading, setLoading, setTheme, eventName, setEventName }
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
@@ -34,28 +28,19 @@ function MyApp ({ Component, pageProps }) {
             throw new Error(error.message)
         }
 
-        try {
-            // Fetch global game data
-            fetchGlobalEventData().then((result) => {
-                setEventData(result)
-                DataProvider.setData(result)
-                setTheme(ThemeFactory.createTheme(DataProvider.getTheme()))
-                setGlobalLoading(false)
-            })
-        } catch (error) {
-            throw new Error(error.message)
-        }
+        setGlobalLoading(false)
 
         // Route change listener for trigger loading state
         // Each page should trigger loading false after his initizialisation throught the store.setLoading
         const handleRouteChange = (url) => {
+            console.log('handleRouteChange', url)
             setLoading(true)
         }
         Router.events.on('routeChangeStart', handleRouteChange)
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService, store }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
             {isLoading
                 ? <Progress/>
                 : null
