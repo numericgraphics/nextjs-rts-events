@@ -144,7 +144,7 @@ function Question (props) {
             setTimeLeft(0)
             setProgress(0)
             props.answerCallBack(-1)
-            setShowComponent(false)
+            setDisabled(true)
         }
     }, [progress])
 
