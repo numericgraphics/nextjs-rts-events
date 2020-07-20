@@ -22,7 +22,7 @@ function CustomBackDrop (props) {
     const classes = useStyles()
     return (
         <Backdrop className={classes.backdrop} open={open} >
-            <CircularProgress color="inherit" />
+            <CircularProgress />
         </Backdrop>
 
     )
