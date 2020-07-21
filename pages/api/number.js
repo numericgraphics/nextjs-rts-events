@@ -1,16 +1,13 @@
 import cookie, { serialize } from 'cookie'
 import fetch from 'node-fetch'
-import getConfig from 'next/config'
 
 let userData = {}
 
 export default async (req, res) => {
-    const { serverRuntimeConfig } = getConfig()
-    const { EVENT_NAME } = serverRuntimeConfig
-    const cookieName = `rtsevents-${EVENT_NAME}`
-
     try {
-        const { code } = await req.body
+        const { code, eventName } = await req.body
+        const cookieName = `rtsevents-${eventName}`
+
         if (!code) {
             throw new Error('Your code must be provided.')
         }
@@ -24,7 +21,7 @@ export default async (req, res) => {
                 code: code
             }
 
-            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userData.userID}/getUser`, {
+            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/${eventName}/${userData.userID}/getUser`, {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

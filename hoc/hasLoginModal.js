@@ -74,7 +74,7 @@ const hasLoginModal = WrappedComponent => {
         const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
-        const { setLoading } = store
+        const { setLoading, eventName } = store
         const [translation] = useState(dataProvider.getTranslation())
 
         // TODO : fix bg flickering where using keyboard
@@ -117,7 +117,7 @@ const hasLoginModal = WrappedComponent => {
                 const response = await fetch('/api/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone })
+                    body: JSON.stringify({ phone, eventName })
                 })
 
                 if (response.status === 200) {
@@ -148,7 +148,7 @@ const hasLoginModal = WrappedComponent => {
                 const response = await fetch('/api/number', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code })
+                    body: JSON.stringify({ code, eventName })
                 })
 
                 if (response.status === 200) {

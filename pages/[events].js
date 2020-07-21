@@ -69,11 +69,7 @@ function Events (props) {
 
     async function handleVerify () {
         try {
-            const response = await fetch('/api/verify', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ eventName: events })
-            })
+            const response = await fetch(`api/verify/${events}`)
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)

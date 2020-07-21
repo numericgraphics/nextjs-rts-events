@@ -1,20 +1,17 @@
 import { serialize } from 'cookie'
 import fetch from 'node-fetch'
-import getConfig from 'next/config'
 
 let userData = {}
 
 export default async (req, res) => {
-    const { phone } = await req.body
-    const { serverRuntimeConfig } = getConfig()
-    const { EVENT_NAME } = serverRuntimeConfig
-    const cookieName = `rtsevents-${EVENT_NAME}`
-
     try {
+        const { phone, eventName } = await req.body
+        const cookieName = `rtsevents-${eventName}`
+
         if (!phone) {
             throw new Error('phone must be provided.')
         }
-        const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/createOrSync', {
+        const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/${eventName}/createOrSync`, {
             credentials: 'include',
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

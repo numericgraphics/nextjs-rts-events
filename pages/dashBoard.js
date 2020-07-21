@@ -81,7 +81,11 @@ function DashBoard (props) {
 
     async function fetchData () {
         try {
-            const response = await fetch('/api/fetchGame')
+            const response = await fetch('/api/fetchGame', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ eventName })
+            })
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
@@ -100,12 +104,15 @@ function DashBoard (props) {
 
     function initPage () {
         try {
-            console.log('test dataProvider', dataProvider)
+            console.log('-------------------------------')
+            console.log('DashBoard WIP - initPage BREAK POINT ')
+            console.log('wip, currently in development mode for better game integration')
+            console.log('-------------------------------')
         } catch (error) {
             console.log('test dataProvider ERROR', error)
         }
 
-        // TODO find a way to get the global  event  call
+        // TODO find a way to get the global event call
         return
 
         // eslint-disable-next-line no-unreachable
@@ -120,7 +127,6 @@ function DashBoard (props) {
     }
 
     useEffect(() => {
-        console.log('dataProvider', props)
         fetchData().then()
     }, [])
 
