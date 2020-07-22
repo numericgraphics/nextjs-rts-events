@@ -6,12 +6,13 @@ import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
-import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import { ColorCardContent } from '../components/ui/ColorCardContent'
 import { ColorCard } from '../components/ui/ColorCard'
 import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
+import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        bottom: 30,
+        marginBottom: 40,
         zIndex: 2,
         textAlign: 'center'
     },
@@ -101,9 +102,9 @@ const useStyles = makeStyles({
         minHeight: 300
     },
     button: {
-        bottom: 50,
         width: '80vw',
         padding: '6px 20px',
+        margin: 10,
         borderRadius: 30,
         alignSelf: 'center',
         fontFamily: 'srgssr-type-Rg',
@@ -231,12 +232,12 @@ function DashBoard (props) {
                         </ColorCardContent>
                     </ColorCard>
                     <Box className={classes.footer}>
-                        {availableChallenges
-                            ? <ColorButton variant="contained" className={classes.button} onClick={startGame}>
-                                {translation.dashBoardChallengesButton}
-                            </ColorButton>
-                            : null
-                        }
+                        <Button variant="outlined" className={classes.button}>
+                            {translation.dashBoardSharingButton}
+                        </Button>
+                        <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
+                            {translation.dashBoardChallengesButton}
+                        </CustomDisabledButton>
                     </Box>
                     <Box className={classes.gradient}/>
                     <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
