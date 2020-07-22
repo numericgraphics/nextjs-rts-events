@@ -33,7 +33,7 @@ const useStyles = makeStyles({
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        marginBottom: 40,
+        marginBottom: 50,
         zIndex: 2,
         textAlign: 'center'
     },
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
         borderColor: 'gray'
     },
     cardHeader: {
-        width: '80%',
+        width: '90%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly'
@@ -104,7 +104,7 @@ const useStyles = makeStyles({
     button: {
         width: '80vw',
         padding: '6px 20px',
-        margin: 10,
+        marginTop: 10,
         borderRadius: 30,
         alignSelf: 'center',
         fontFamily: 'srgssr-type-Rg',
@@ -131,6 +131,7 @@ const styles = {
     containerImage: {
         position: 'absolute',
         width: '100vw',
+        height: '100vh',
         zIndex: 0,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
@@ -248,3 +249,25 @@ function DashBoard (props) {
 }
 
 export default DashBoard
+
+/*
+DEBUG --> implementation from result page when game is finish
+
+<ColorCardContent className={classes.content}>
+                                <Typography className={classes.secondCardTitle}>
+                                    {translation.challengeResultInfoTitle}
+                                </Typography>
+                                <Typography className={classes.secondCardSubTitle}>
+                                    {translation.challengeResultInfoText}
+                                </Typography>
+                                <Typography className={classes.secondCardText}>
+                                    {`${translation.score} ${score.totalPoints}`}
+                                </Typography>
+                                <Typography className={classes.secondCardText}>
+                                    {`${translation.bestScore} ${topScore}`}
+                                </Typography>
+                                <Button color="primary" variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
+                                    {`${translation.challengeResultButtonDashBoard}`}
+                                </Button>
+                            </ColorCardContent>
+ */

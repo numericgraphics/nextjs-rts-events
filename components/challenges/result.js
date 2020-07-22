@@ -22,7 +22,7 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         flex: 2,
         textAlign: 'center',
-        bottom: 30
+        marginBottom: 50
     },
 
     card: {
@@ -48,7 +48,8 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
         lineHeight: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 20
     },
     secondCardSubTitle: {
         fontFamily: 'srgssr-type-Bd',
@@ -78,7 +79,6 @@ const useStyles = makeStyles({
         minHeight: 300
     },
     button: {
-        bottom: 50,
         width: '80vw',
         padding: '6px 20px',
         borderRadius: 30,
@@ -141,7 +141,7 @@ const styles = {
 }
 
 function Result (props) {
-    const { points, score, message, success, topScore, hasAvailableChallenges } = props.content
+    const { points, score, message, success, hasAvailableChallenges } = props.content
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
@@ -162,8 +162,14 @@ function Result (props) {
     useEffect(() => {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
+        translation.challengeResultButtonEnded = 'Voir vos scores du jour'
         setUser(dataProvider.getUser())
     }, [])
+
+    // TODO : remove this local translation
+    useEffect(() => {
+        translation.challengeResultButtonEnded = 'Voir vos scores du jour'
+    }, [translation])
 
     return (
         <Fade in={showComponent} timeout={500}>
@@ -187,6 +193,9 @@ function Result (props) {
                         <Typography className={classes.subTitle}>
                             {message}
                         </Typography>
+                        {!hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
+                            {translation.challengeResultInfoTitle}
+                        </Typography> }
                     </ColorCardContent>
                     <ColorCardActions className={classes.cardFooter}>
                         <Typography className={classes.winPointText}>
@@ -211,25 +220,9 @@ function Result (props) {
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </Box>
-                        : <ColorCard className={classes.card}>
-                            <ColorCardContent className={classes.content}>
-                                <Typography className={classes.secondCardTitle}>
-                                    {translation.challengeResultInfoTitle}
-                                </Typography>
-                                <Typography className={classes.secondCardSubTitle}>
-                                    {translation.challengeResultInfoText}
-                                </Typography>
-                                <Typography className={classes.secondCardText}>
-                                    {`${translation.score} ${score.totalPoints}`}
-                                </Typography>
-                                <Typography className={classes.secondCardText}>
-                                    {`${translation.bestScore} ${topScore}`}
-                                </Typography>
-                                <Button color="primary" variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
-                                    {`${translation.challengeResultButtonDashBoard}`}
-                                </Button>
-                            </ColorCardContent>
-                        </ColorCard>
+                        : <Button color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                            {`${translation.challengeResultButtonEnded}`}
+                        </Button>
                     }
                 </Box>
             </Box>
