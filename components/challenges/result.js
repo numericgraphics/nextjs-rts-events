@@ -47,6 +47,7 @@ const useStyles = makeStyles({
     secondCardTitle: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
+        textAlign: 'center',
         lineHeight: 1,
         marginBottom: 10,
         marginTop: 20
