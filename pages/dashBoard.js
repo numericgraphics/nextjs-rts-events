@@ -10,6 +10,8 @@ import { ColorButton } from '../components/ui/ColorButton'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import { ColorCardContent } from '../components/ui/ColorCardContent'
 import { ColorCard } from '../components/ui/ColorCard'
+import LazyImage from '../components/ui/LazyImage'
+import { useHeight } from '../hooks/useHeight'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -21,15 +23,25 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         padding: '10px 30px',
+        maxHeight: 200,
+        zIndex: 2,
         textAlign: 'center'
     },
     footer: {
         display: 'flex',
+        flex: 2,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        flex: 2,
+        bottom: 30,
+        zIndex: 2,
+        textAlign: 'center'
+    },
+    title: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.75rem',
         textAlign: 'center',
-        bottom: 30
+        lineHeight: 1,
+        marginBottom: 10
     },
     avatar: {
         width: 100,
@@ -37,7 +49,37 @@ const useStyles = makeStyles({
         border: 'solid',
         borderColor: 'gray'
     },
+    cardHeader: {
+        width: '80%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    cardFooter: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    cardHeaderSide: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    cardHeaderLeftSideText: {
+        alignSelf: 'left',
+        textAlign: 'left',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '0.8rem'
+    },
+    cardHeaderRightSideText: {
+        alignSelf: 'flex-end',
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.5rem'
+    },
     card: {
+        zIndex: 2,
         minWidth: 275,
         minHeight: 300,
         margin: 20
@@ -51,7 +93,6 @@ const useStyles = makeStyles({
         fontSize: '1rem'
     },
     content: {
-        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -67,17 +108,47 @@ const useStyles = makeStyles({
         alignSelf: 'center',
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1.25rem'
+    },
+    gradient: {
+        position: 'absolute',
+        width: '100vw',
+        height: '100vh',
+        flexGrow: 1,
+        zIndex: 1,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.7) 100%)'
     }
 })
+const styles = {
+    containerOverlay: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '100vw',
+        zIndex: 3
+    },
+    containerImage: {
+        position: 'absolute',
+        width: '100vw',
+        zIndex: 0,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
+        backgroundColor: 'white'
+    }
+}
 
 function DashBoard (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
+    const [imageURL, setImageURL] = useState()
+    const [score, setScore] = useState({})
     const { dataProvider, scoreService, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
     const layoutRef = createRef()
+    const height = useHeight()
 
     async function fetchData () {
         try {
@@ -105,7 +176,9 @@ function DashBoard (props) {
         // } catch (error) {
         //     console.log('test scoreService ERROR', error)
         // }
-
+        console.log('DashBoard - dataProvider', dataProvider)
+        setScore(dataProvider.getScore())
+        setImageURL(dataProvider.getTheme().backgroundImageURL)
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
@@ -136,7 +209,22 @@ function DashBoard (props) {
                     </Box>
                     <ColorCard className={classes.card}>
                         <ColorCardContent className={classes.content}>
-                            <Avatar className={classes.avatar} src={user.avatarURL}/>
+                            <Box className={classes.cardHeader}>
+                                <Box className={classes.cardHeaderSide}>
+                                    <Typography className={classes.cardHeaderLeftSideText}>
+                                        {`${score.success} ${translation.good}`}
+                                    </Typography>
+                                    <Typography className={classes.cardHeaderLeftSideText}>
+                                        {`${score.failure} ${translation.wrong}`}
+                                    </Typography>
+                                </Box>
+                                <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                <Box className={classes.cardHeaderSide}>
+                                    <Typography className={classes.cardHeaderRightSideText}>
+                                        {`${score.totalPoints} pts`}
+                                    </Typography>
+                                </Box>
+                            </Box>
                             <Typography className={classes.title}>
                                 {user.nickname}
                             </Typography>
@@ -150,6 +238,8 @@ function DashBoard (props) {
                             : null
                         }
                     </Box>
+                    <Box className={classes.gradient}/>
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                 </InnerHeightLayout>
             }
         </EventLayout>

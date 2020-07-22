@@ -130,7 +130,6 @@ function Question (props) {
 
     function onAnswer (index) {
         if (progress > 0) {
-            // setShowComponent(false)
             setAnswer(index)
             props.answerCallBack(index)
             clearInterval(intervalId.current)

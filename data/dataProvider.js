@@ -10,18 +10,20 @@ class DataProvider {
             translation: {},
             challengesStates: [],
             hasAvailableChallenges: true,
-            score: null
+            score: {}
         }
     }
 
     setData (data) {
-        console.log('setData before', data)
         Object.assign(this.data, data)
-        console.log('setData', this.data)
     }
 
     getAllData () {
         return this.data
+    }
+
+    getScore () {
+        return this.data.score
     }
 
     getTheme () {
