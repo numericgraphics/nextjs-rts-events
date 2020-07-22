@@ -10,8 +10,6 @@ import Question from '../components/challenges/questions'
 import Result from '../components/challenges/result'
 import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
-import CustomBackDrop from '../components/challenges/CustomBackDrop'
-// import Progress from '../components/challenges/progress'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -259,7 +257,6 @@ function Challenge (props) {
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
-                    <CustomBackDrop open={challengeState === ChallengeStates.LOADING} />
                     {getChallengeContent(challengeState)}
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>

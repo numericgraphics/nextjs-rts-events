@@ -6,6 +6,7 @@ import QuestionTimer from '../questionTimer'
 import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -65,17 +66,6 @@ const useStyles = makeStyles({
         minWidth: 275,
         minHeight: 300
     },
-    button: {
-        bottom: 50,
-        width: '80vw',
-        padding: '6px 20px',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        marginTop: 10,
-        textTransform: 'none'
-    },
     gradient: {
         position: 'absolute',
         width: '100vw',
@@ -83,6 +73,28 @@ const useStyles = makeStyles({
         flexGrow: 1,
         zIndex: 2,
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
+    },
+    button: {
+        width: '80vw',
+        borderRadius: 30,
+        alignSelf: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1rem',
+        textTransform: 'none'
+    },
+    buttonWrapper: {
+        position: 'relative',
+        bottom: 50,
+
+        padding: '6px 20px',
+        marginTop: 10
+    },
+    buttonProgress: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12
     }
 })
 const styles = {
@@ -112,12 +124,14 @@ function Question (props) {
     const [timeLeft, setTimeLeft] = useState(duration)
     const [showComponent, setShowComponent] = useState(false)
     const [disabled, setDisabled] = useState(false)
+    const [answer, setAnswer] = useState(null)
     const intervalId = useRef()
     const height = useHeight()
 
     function onAnswer (index) {
         if (progress > 0) {
             // setShowComponent(false)
+            setAnswer(index)
             props.answerCallBack(index)
             clearInterval(intervalId.current)
             setDisabled(true)
@@ -165,11 +179,14 @@ function Question (props) {
                 <Box className={classes.footer}>
                     {answers.map((item, index) => {
                         return (
-                            <CustomDisabledButton color="primary" variant="contained" key={index} className={classes.button} disabled={disabled} onClick={() => {
-                                onAnswer(index)
-                            }}>
-                                {item}
-                            </CustomDisabledButton>
+                            <Box key={index} className={classes.buttonWrapper}>
+                                <CustomDisabledButton color="primary" variant="contained" className={classes.button} disabled={disabled} onClick={() => {
+                                    onAnswer(index)
+                                }}>
+                                    {item}
+                                </CustomDisabledButton>
+                                {(disabled && (answer === index)) && <CircularProgress size={24} className={classes.buttonProgress} />}
+                            </Box>
                         )
                     }
                     )}
