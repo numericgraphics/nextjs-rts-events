@@ -13,6 +13,7 @@ import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
 import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 import Button from '@material-ui/core/Button'
+import ColorLinearProgress from '../components/ui/ColorLinearProgress'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -78,6 +79,11 @@ const useStyles = makeStyles({
         alignSelf: 'flex-end',
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem'
+    },
+    cardHeaderRemainingChallenges: {
+        textAlign: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1.1rem'
     },
     card: {
         zIndex: 2,
@@ -147,6 +153,8 @@ function DashBoard (props) {
     const [translation, setTranslation] = useState([])
     const [imageURL, setImageURL] = useState()
     const [score, setScore] = useState({})
+    const [challenges, setChallenges] = useState([])
+    const [remainingChallenges, setRemainingChallenges] = useState(0)
     const { dataProvider, scoreService, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
     const layoutRef = createRef()
@@ -172,13 +180,8 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        // try {
-        //     console.log('test scoreService getUserPoints', scoreService.getUserPoints())
-        //     console.log('test scoreService getUserSuccess', scoreService.getUserSuccess())
-        // } catch (error) {
-        //     console.log('test scoreService ERROR', error)
-        // }
-        console.log('DashBoard - dataProvider', dataProvider)
+        setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
+        setChallenges(scoreService.getChallenges().length)
         setScore(dataProvider.getScore())
         setImageURL(dataProvider.getTheme().backgroundImageURL)
         setTranslation(dataProvider.getTranslation())
@@ -230,6 +233,14 @@ function DashBoard (props) {
                             <Typography className={classes.title}>
                                 {user.nickname}
                             </Typography>
+                            {availableChallenges && <Box>
+                                <Typography className={classes.cardHeaderRemainingChallenges}>
+                                    {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
+                                </Typography>
+
+                                <ColorLinearProgress variant="determinate" color={'secondary'} progress={remainingChallenges} />
+                            </Box>}
+
                         </ColorCardContent>
                     </ColorCard>
                     <Box className={classes.footer}>

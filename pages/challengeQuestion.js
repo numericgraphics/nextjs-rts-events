@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
-import QuestionTimer from '../components/questionTimer'
+import QuestionTimer from '../components/challenges/questionTimer'
 import { useHeight } from '../hooks/useHeight'
 
 const useStyles = makeStyles({

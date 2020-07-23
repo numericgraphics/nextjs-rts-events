@@ -14,6 +14,5 @@ export const useHeight = () => {
             window.removeEventListener('onload', handleOnload)
         }
     }, [handleResize])
-    console.log('useHeight', height)
     return height
 }

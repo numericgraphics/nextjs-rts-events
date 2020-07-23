@@ -2,7 +2,8 @@ class DataProvider {
     constructor () {
         this.data = {
             user: {},
-            challenge: [],
+            challenge: {},
+            challenges: [],
             gifts: [],
             promos: [],
             theme: {},
@@ -52,6 +53,10 @@ class DataProvider {
 
     getChallenge () {
         return this.data.challenge
+    }
+
+    getChallenges () {
+        return this.data.challenges
     }
 
     getChallengesStates () {

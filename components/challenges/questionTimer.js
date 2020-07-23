@@ -18,14 +18,12 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1rem',
         color: '#A9A9A9',
-        textShadow: '0px 3px 3px #00000040',
         paddingLeft: 5
     }
 })
 const styles = {
     icon: {
-        color: '#A9A9A9',
-        textShadow: '0px 3px 3px #00000040'
+        color: '#A9A9A9'
     }
 }
 
