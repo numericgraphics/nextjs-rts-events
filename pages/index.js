@@ -113,7 +113,7 @@ function Index (props) {
         <EventLayout>
             {isLoading
                 ? null
-                : <InnerHeightLayout ref={layoutRef}>
+                : <InnerHeightLayout ref={layoutRef} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
                     <Box className={classes.containerOverlayHeader} >
                         <PromosStepper steps={promos} activeStep={activeStep}/>
                     </Box>

@@ -217,7 +217,7 @@ const hasLoginModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={OpenModal} {...props} />
+                <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
