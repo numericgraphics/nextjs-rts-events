@@ -12,8 +12,8 @@ import { ColorCard } from '../components/ui/ColorCard'
 import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
 import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
-import Button from '@material-ui/core/Button'
 import ColorLinearProgress from '../components/ui/ColorLinearProgress'
+import { ColorBorderButton } from '../components/ui/ColorBorderButton'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -244,9 +244,9 @@ function DashBoard (props) {
                         </ColorCardContent>
                     </ColorCard>
                     <Box className={classes.footer}>
-                        <Button variant="outlined" className={classes.button}>
+                        <ColorBorderButton variant="outlined" className={classes.button}>
                             {translation.dashBoardSharingButton}
-                        </Button>
+                        </ColorBorderButton>
                         <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
                             {translation.dashBoardChallengesButton}
                         </CustomDisabledButton>
