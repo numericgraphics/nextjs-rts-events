@@ -16,14 +16,19 @@ const useStyles = makeStyles({
     },
     text: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        color: '#A9A9A9',
+        fontSize: '0.75rem',
+        color: '#FFFFFF',
         paddingLeft: 5
+    },
+    linearProgress: {
+        backgroundColor: 'white'
     }
 })
 const styles = {
     icon: {
-        color: '#A9A9A9'
+        color: '#FFFFFF',
+        fontSize: '0.75rem',
+        marginTop: 3
     }
 }
 
@@ -33,7 +38,7 @@ function QuestionTimer (props) {
 
     return (
         <Box className={classes.container}>
-            <LinearProgress variant="determinate" value={progress} />
+            <LinearProgress variant="determinate" color='primary' value={progress} className={classes.linearProgress}/>
             <Box className={classes.content}>
                 <TimerIcon style={styles.icon}/>
                 <Typography className={classes.text} >

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
         alignItems: 'flex-end',
         width: '100%',
         flex: 1,
-        maxHeight: 120,
+        maxHeight: 100,
         padding: 10
     },
     header: {
@@ -26,7 +26,6 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         padding: '10px 30px',
-        paddingTop: '10%',
         textAlign: 'center'
     },
     footer: {
@@ -50,12 +49,12 @@ const useStyles = makeStyles({
     },
     HeaderText: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem',
+        fontSize: '1.5rem',
         textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
+        fontSize: '1.25rem',
         textShadow: '0px 3px 6px #00000040'
     },
     content: {
