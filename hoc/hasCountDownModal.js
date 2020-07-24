@@ -19,7 +19,8 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: 'none'
+        backgroundColor: 'none',
+        pointerEvents: 'none'
     },
     textProgress: {
         fontFamily: 'srgssr-type-Bd',
