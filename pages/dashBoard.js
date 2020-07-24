@@ -14,6 +14,8 @@ import { useHeight } from '../hooks/useHeight'
 import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../components/DashBoardChallengesProgress'
 import { ColorBorderButton } from '../components/ui/ColorBorderButton'
+import CloseIcon from '@material-ui/icons/Close'
+import CheckIcon from '@material-ui/icons/Check'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -51,11 +53,18 @@ const useStyles = makeStyles({
         border: 'solid',
         borderColor: 'gray'
     },
+    rateIcon: {
+        display: 'inline'
+    },
     cardHeader: {
-        width: '90%',
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        backgroundColor: '#56C8D8',
+        borderRadius: '10px',
+        paddingLeft: '10px',
+        paddingRight: '10px'
     },
     cardFooter: {
         display: 'flex',
@@ -222,9 +231,11 @@ function DashBoard (props) {
                             <Box className={classes.cardHeader}>
                                 <Box className={classes.cardHeaderSide}>
                                     <Typography className={classes.cardHeaderLeftSideText}>
+                                        <CheckIcon fontSize="small" className={classes.rateIcon}></CheckIcon>
                                         {`${score.success} ${translation.good}`}
                                     </Typography>
                                     <Typography className={classes.cardHeaderLeftSideText}>
+                                        <CloseIcon fontSize="small" className={classes.rateIcon}></CloseIcon>
                                         {`${score.failure} ${translation.wrong}`}
                                     </Typography>
                                 </Box>
