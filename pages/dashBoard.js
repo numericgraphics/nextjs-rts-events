@@ -12,7 +12,7 @@ import { ColorCard } from '../components/ui/ColorCard'
 import LazyImage from '../components/ui/LazyImage'
 import { useHeight } from '../hooks/useHeight'
 import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
-import ColorLinearProgress from '../components/ui/ColorLinearProgress'
+import DashBoardChallengesProgress from '../components/DashBoardChallengesProgress'
 import { ColorBorderButton } from '../components/ui/ColorBorderButton'
 
 const useStyles = makeStyles({
@@ -195,7 +195,6 @@ function DashBoard (props) {
     }
 
     useEffect(() => {
-        // console.log('dataProvider', props)
         fetchData().then()
     }, [])
 
@@ -238,7 +237,7 @@ function DashBoard (props) {
                                     {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
                                 </Typography>
 
-                                <ColorLinearProgress variant="determinate" color={'secondary'} progress={remainingChallenges} />
+                                <DashBoardChallengesProgress variant="determinate" progress={remainingChallenges} />
                             </Box>}
 
                         </ColorCardContent>
