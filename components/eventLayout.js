@@ -10,12 +10,10 @@ export const siteTitle = 'TODO:SiteTitle'
 
 const useStyles = makeStyles({
     root: {
-        backgroundColor: 'gray',
         border: 0,
         color: '#fff',
         width: '100vw',
         margin: '0 auto 0'
-        // minHeight: '100vh'
     },
     header: {
         display: 'flex',

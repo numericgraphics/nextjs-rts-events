@@ -104,14 +104,6 @@ const styles = {
         justifyContent: 'flex-start',
         width: '100vw',
         zIndex: 3
-    },
-    containerImage: {
-        position: 'absolute',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'gray'
     }
 }
 

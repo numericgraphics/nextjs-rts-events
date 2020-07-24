@@ -13,6 +13,6 @@ export const useHeight = () => {
             window.removeEventListener('resize', handleResize)
             window.removeEventListener('onload', handleOnload)
         }
-    }, [handleResize])
+    }, [handleResize, handleOnload])
     return height
 }

@@ -163,8 +163,6 @@ function Result (props) {
     useEffect(() => {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
-        // TODO : remove this local translation
-        translation.challengeResultButtonEnded = 'Voir vos scores du jour'
         setUser(dataProvider.getUser())
     }, [])
 

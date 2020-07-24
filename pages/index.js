@@ -34,7 +34,7 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         alignItems: 'center',
         alignContent: 'center',
-        zIndex: 1,
+        zIndex: 2,
         bottom: 30,
         paddingLeft: 30,
         paddingRight: 30
@@ -83,6 +83,7 @@ function Index (props) {
     }
 
     useEffect(() => {
+        setLoading(true)
         handleVerify().then()
     }, [])
 

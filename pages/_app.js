@@ -9,6 +9,8 @@ import ScoreService from '../data/scoreServices'
 import Progress from '../components/progress'
 import Router from 'next/router'
 import ThemeFactory from '../data/themeFactory'
+import SplashScreen from '../components/splashScreen'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 async function fetchGlobalEventData () {
     const response = await fetch('/api/fetchGlobal')
@@ -57,13 +59,11 @@ function MyApp ({ Component, pageProps }) {
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService, store }}>
-            {isLoading
-                ? <Progress/>
-                : null
-            }
+            {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading
-                ? <Progress/>
+                ? <SplashScreen/>
                 : <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     <Component {...pageProps} />
                 </ThemeProvider>
             }
