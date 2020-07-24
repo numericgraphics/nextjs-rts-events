@@ -80,7 +80,7 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem'
     },
-    cardHeaderRemainingChallenges: {
+    textRegularCenter: {
         textAlign: 'center',
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1.1rem'
@@ -198,6 +198,12 @@ function DashBoard (props) {
         fetchData().then()
     }, [])
 
+    // TODO : remove this local translation
+    useEffect(() => {
+        translation.bestScore = 'Meilleur score:'
+        score.bestScore = 2000
+    }, [translation, score])
+
     return (
         <EventLayout>
             {isLoading
@@ -232,13 +238,22 @@ function DashBoard (props) {
                             <Typography className={classes.title}>
                                 {user.nickname}
                             </Typography>
-                            {availableChallenges && <Box>
-                                <Typography className={classes.cardHeaderRemainingChallenges}>
+                            <Box>
+                                <Typography className={classes.textRegularCenter}>
                                     {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
                                 </Typography>
-
-                                <DashBoardChallengesProgress variant="determinate" progress={remainingChallenges} />
-                            </Box>}
+                                {availableChallenges
+                                    ? <DashBoardChallengesProgress variant="determinate" progress={remainingChallenges} />
+                                    : <Box>
+                                        <Typography className={classes.textRegularCenter}>
+                                            {`${translation.score} ${score.totalPoints}`}
+                                        </Typography>
+                                        <Typography className={classes.textRegularCenter}>
+                                            {`${translation.bestScore} ${score.bestScore}`}
+                                        </Typography>
+                                    </Box>
+                                }
+                            </Box>
 
                         </ColorCardContent>
                     </ColorCard>
@@ -259,25 +274,3 @@ function DashBoard (props) {
 }
 
 export default DashBoard
-
-/*
-DEBUG --> implementation from result page when game is finish
-
-<ColorCardContent className={classes.content}>
-                                <Typography className={classes.secondCardTitle}>
-                                    {translation.challengeResultInfoTitle}
-                                </Typography>
-                                <Typography className={classes.secondCardSubTitle}>
-                                    {translation.challengeResultInfoText}
-                                </Typography>
-                                <Typography className={classes.secondCardText}>
-                                    {`${translation.score} ${score.totalPoints}`}
-                                </Typography>
-                                <Typography className={classes.secondCardText}>
-                                    {`${translation.bestScore} ${topScore}`}
-                                </Typography>
-                                <Button color="primary" variant="contained" className={classes.secondCardButton} onClick={gotoDashBoard}>
-                                    {`${translation.challengeResultButtonDashBoard}`}
-                                </Button>
-                            </ColorCardContent>
- */

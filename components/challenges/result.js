@@ -11,7 +11,6 @@ import { ColorCardActions } from '../ui/ColorCardAction'
 import { useHeight } from '../../hooks/useHeight'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
-import { ColorBorderButton } from '../ui/ColorBorderButton'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -216,9 +215,9 @@ function Result (props) {
                 <Box className={classes.footer}>
                     {hasAvailableChallenges
                         ? <Box>
-                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={classes.button} onClick={gotoDashBoard}>
+                            <Button key={'gotoDashBoard'} color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
-                            </ColorBorderButton>
+                            </Button>
                             <Button key={'continueGame'} color="primary" variant="contained" className={classes.button} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
