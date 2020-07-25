@@ -82,7 +82,9 @@ const useStyles = makeStyles({
         alignSelf: 'left',
         textAlign: 'left',
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '0.8rem'
+        fontSize: '0.8rem',
+        display: 'flex',
+        flexWrap: 'wrap'
     },
     cardHeaderRightSideText: {
         alignSelf: 'flex-end',
