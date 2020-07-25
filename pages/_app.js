@@ -25,6 +25,10 @@ function MyApp ({ Component, pageProps }) {
     const [theme, setTheme] = useState()
     const store = { error, setError, isLoading, setLoading }
 
+    function animationCallBack () {
+        setGlobalLoading(false)
+    }
+
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
         // source : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
@@ -43,7 +47,6 @@ function MyApp ({ Component, pageProps }) {
                 setEventData(result)
                 DataProvider.setData(result)
                 setTheme(ThemeFactory.createTheme(DataProvider.getTheme()))
-                setGlobalLoading(false)
             })
         } catch (error) {
             throw new Error(error.message)
@@ -61,7 +64,7 @@ function MyApp ({ Component, pageProps }) {
         <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading
-                ? <SplashScreen/>
+                ? <SplashScreen callBack={animationCallBack}/>
                 : <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <Component {...pageProps} />

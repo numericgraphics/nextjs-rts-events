@@ -30,7 +30,6 @@ class ThemeFactory {
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: 'auto 100%',
-                        height: '100vh',
                         opacity: 1
                     }
                 }
