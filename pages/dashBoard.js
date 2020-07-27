@@ -13,6 +13,8 @@ import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../components/DashBoardChallengesProgress'
 import { ColorBorderButton } from '../components/ui/ColorBorderButton'
 import Fade from '@material-ui/core/Fade/Fade'
+import CloseIcon from '@material-ui/icons/Close'
+import CheckIcon from '@material-ui/icons/Check'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -48,13 +50,25 @@ const useStyles = makeStyles({
         width: 100,
         height: 100,
         border: 'solid',
-        borderColor: 'gray'
+        borderColor: 'gray',
+        position: 'absolute',
+        marginTop: '-25px'
+    },
+    rateIcon: {
+        display: 'inline'
     },
     cardHeader: {
-        width: '90%',
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        backgroundColor: '#56C8D8',
+        borderRadius: '10px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        marginBottom: '30px',
+        paddingTop: '10px',
+        paddingBottom: '10px'
     },
     cardFooter: {
         display: 'flex',
@@ -72,7 +86,9 @@ const useStyles = makeStyles({
         alignSelf: 'left',
         textAlign: 'left',
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '0.8rem'
+        fontSize: '0.8rem',
+        display: 'flex',
+        flexWrap: 'wrap'
     },
     cardHeaderRightSideText: {
         alignSelf: 'flex-end',
@@ -124,6 +140,13 @@ const useStyles = makeStyles({
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.7) 100%)'
     }
 })
+
+function getTranslations (string, score) {
+    if (score <= 1 && string) {
+        string = string.substr(0, string.length - 1)
+    }
+    return string
+}
 
 function DashBoard (props) {
     const classes = useStyles()
@@ -178,7 +201,7 @@ function DashBoard (props) {
     useEffect(() => {
         translation.bestScore = 'Meilleur score:'
         score.bestScore = 2000
-    }, [translation, score])
+    }, [score, translation])
 
     return (
         <EventLayout>
@@ -201,10 +224,12 @@ function DashBoard (props) {
                                 <Box className={classes.cardHeader}>
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            {`${score.success} ${translation.good}`}
+                                            <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                            {`${score.success} ${getTranslations(translation.good, score.success)}`}
                                         </Typography>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            {`${score.failure} ${translation.wrong}`}
+                                            <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                            {`${score.failure} ${getTranslations(translation.wrong, score.failure)}`}
                                         </Typography>
                                     </Box>
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>

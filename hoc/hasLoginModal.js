@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
+import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
@@ -10,7 +11,6 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
-import { useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -70,20 +70,13 @@ const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
         const classes = useStyles()
-        const [open, setOpen] = React.useState(false)
-        const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
+        const [open, setOpen] = useState(false)
+        const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
         const { setLoading } = store
         const [translation] = useState(dataProvider.getTranslation())
-
-        // TODO : fix bg flickering where using keyboard
-        // const theme = useTheme()
-        // const ColorBackdrop = withStyles({
-        //     root: {
-        //         background: theme.palette.background.default
-        //     }
-        // })(Backdrop)
+        const theme = useTheme()
 
         const handleOpen = () => {
             setOpen(true)
@@ -227,7 +220,9 @@ const hasLoginModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        style: { backgroundColor: theme.palette.secondary.main,
+                            opacity: '0.8' }
                     }}
                 >
                     <Fade in={open}>
