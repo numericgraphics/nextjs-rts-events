@@ -22,6 +22,7 @@ class ThemeFactory {
                 contrastText: onError
             }
         }
+        // eslint-disable-next-line no-unused-vars
         const overrides = {
             MuiCssBaseline: {
                 '@global': {
@@ -36,7 +37,7 @@ class ThemeFactory {
             }
         }
 
-        return createMuiTheme({ palette, overrides })
+        return createMuiTheme({ palette })
     }
 }
 

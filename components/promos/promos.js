@@ -23,7 +23,7 @@ const useStyles = makeStyles({
         WebkitAnimationName: 'fadeIn',
         WebkitAnimationDuration: '1s',
         WebkitAnimationTimingFunction: 'ease-in',
-        WebkitAnimationDelay: 1,
+        WebkitAnimationDelay: '1s',
         WebkitAnimationFillMode: 'forwards'
     }
 })
