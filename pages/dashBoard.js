@@ -51,7 +51,9 @@ const useStyles = makeStyles({
         width: 100,
         height: 100,
         border: 'solid',
-        borderColor: 'gray'
+        borderColor: 'gray',
+        position: 'absolute',
+        marginTop: '-25px'
     },
     rateIcon: {
         display: 'inline'
@@ -64,7 +66,10 @@ const useStyles = makeStyles({
         backgroundColor: '#56C8D8',
         borderRadius: '10px',
         paddingLeft: '10px',
-        paddingRight: '10px'
+        paddingRight: '10px',
+        marginBottom: '30px',
+        paddingTop: '10px',
+        paddingBottom: '10px'
     },
     cardFooter: {
         display: 'flex',
@@ -213,7 +218,19 @@ function DashBoard (props) {
     useEffect(() => {
         translation.bestScore = 'Meilleur score:'
         score.bestScore = 2000
-    }, [translation, score])
+        // Modification de l'orthographe pour le pluriel
+    }, [score, translation])
+
+    function getTranslations (string, score) {
+        if (score <= 1 && string) {
+            string = string.substr(0, string.length - 1)
+            console.log('ici : ', string)
+            // setTranslation(copy)
+        // translation.good = translation.good.substr(0, 7)
+        // setTranslation.good(translation.good.substr(0, 7))
+        }
+        return string
+    }
 
     return (
         <EventLayout>
@@ -234,11 +251,11 @@ function DashBoard (props) {
                                 <Box className={classes.cardHeaderSide}>
                                     <Typography className={classes.cardHeaderLeftSideText}>
                                         <CheckIcon fontSize="small" className={classes.rateIcon}></CheckIcon>
-                                        {`${score.success} ${translation.good}`}
+                                        {`${score.success} ${getTranslations(translation.good, score.success)}`}
                                     </Typography>
                                     <Typography className={classes.cardHeaderLeftSideText}>
                                         <CloseIcon fontSize="small" className={classes.rateIcon}></CloseIcon>
-                                        {`${score.failure} ${translation.wrong}`}
+                                        {`${score.failure} ${getTranslations(translation.wrong, score.failure)}`}
                                     </Typography>
                                 </Box>
                                 <Avatar className={classes.avatar} src={user.avatarURL}/>
