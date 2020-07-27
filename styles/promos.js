@@ -18,20 +18,17 @@ export const styles = {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'gray'
+        width: '100vw'
     }
 }
 
 // eslint-disable-next-line no-unused-vars
 export const useStyles = makeStyles({
     containerGlobal: {
-        justifyContent: 'center',
-        backgroundColor: 'gray'
+        justifyContent: 'center'
     },
     containerGlobalNoLogo: {
-        justifyContent: 'flex-end',
-        backgroundColor: 'gray'
+        justifyContent: 'flex-end'
     },
     containerOverlay: {
         position: 'absolute',

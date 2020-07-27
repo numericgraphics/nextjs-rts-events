@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react'
 import { TweenMax } from 'gsap'
 
 export function useTweenMax (duration, config, onMount = false) {

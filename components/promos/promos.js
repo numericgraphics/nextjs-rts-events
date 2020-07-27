@@ -3,6 +3,7 @@ import SwipeableViews from 'react-swipeable-views'
 import PromoLogo from './promoLogo'
 import PromoNoLogo from './promoNoLogo'
 import PromoImage from './promoImage'
+import { makeStyles } from '@material-ui/core/styles'
 
 function getPromoTemplate (item, index, activeStep) {
     const dynamicProps = { key: index, data: item, selected: (activeStep === index) }
@@ -16,8 +17,20 @@ function getPromoTemplate (item, index, activeStep) {
     }
 }
 
-export default function Promos (props) {
+const useStyles = makeStyles({
+    promos: {
+        opacity: 0,
+        WebkitAnimationName: 'fadeIn',
+        WebkitAnimationDuration: '1s',
+        WebkitAnimationTimingFunction: 'ease-in',
+        WebkitAnimationDelay: 1,
+        WebkitAnimationFillMode: 'forwards'
+    }
+})
+
+function Promos (props) {
     const [activeStep, setActiveStep] = useState(0)
+    const classes = useStyles()
 
     useEffect(() => {
         setActiveStep(0)
@@ -25,6 +38,7 @@ export default function Promos (props) {
 
     return (
         <SwipeableViews
+            className={classes.promos}
             enableMouseEvents
             onChangeIndex={(index) => {
                 setActiveStep(index)
@@ -36,3 +50,5 @@ export default function Promos (props) {
         </SwipeableViews>
     )
 }
+
+export default Promos

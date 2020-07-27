@@ -11,6 +11,7 @@ import Router from 'next/router'
 import ThemeFactory from '../data/themeFactory'
 import SplashScreen from '../components/splashScreen'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { useImagesServices } from '../hooks/useImagesServices'
 
 async function fetchGlobalEventData () {
     const response = await fetch('/api/fetchGlobal')
@@ -21,13 +22,21 @@ function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
+    const [isSplashScreenAnimEnded, setSplashScreenAnim] = useState(false)
+    const isImagesPreLoaded = useImagesServices(eventData)
     const [error, setError] = useState(false)
     const [theme, setTheme] = useState()
     const store = { error, setError, isLoading, setLoading }
 
     function animationCallBack () {
-        setGlobalLoading(false)
+        setSplashScreenAnim(true)
     }
+
+    useEffect(() => {
+        if (isImagesPreLoaded && isSplashScreenAnimEnded) {
+            setGlobalLoading(false)
+        }
+    }, [isImagesPreLoaded, isSplashScreenAnimEnded])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS

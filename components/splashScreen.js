@@ -10,8 +10,8 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#0097A7'
+        justifyContent: 'center'
+        // backgroundColor: '#0097A7'
     },
     textRegularCenter: {
         color: 'white',
@@ -28,10 +28,10 @@ function SplashScreen (props) {
         props.callBack()
     }
 
-    const [anim, animHandler] = useTweenMax(1.2, {
+    const [anim, animHandler] = useTweenMax(3, {
         y: -250,
         opacity: 1,
-        delay: 1,
+        delay: 0.5,
         transformOrigin: 'center',
         onComplete: animCallback
     })
