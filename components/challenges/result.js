@@ -11,6 +11,8 @@ import { ColorCardActions } from '../ui/ColorCardAction'
 import { useHeight } from '../../hooks/useHeight'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
+import CloseIcon from '@material-ui/icons/Close'
+import CheckIcon from '@material-ui/icons/Check'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -78,6 +80,12 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         minWidth: 275,
         minHeight: 300
+    },
+    rateIcon: {
+        display: 'flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginLeft: '35%'
     },
     button: {
         width: '80vw',
@@ -168,6 +176,17 @@ function Result (props) {
         setUser(dataProvider.getUser())
     }, [])
 
+    function getTranslations (string, score) {
+        if (score <= 1 && string) {
+            string = string.substr(0, string.length - 1)
+            console.log('ici : ', string)
+            // setTranslation(copy)
+        // translation.good = translation.good.substr(0, 7)
+        // setTranslation.good(translation.good.substr(0, 7))
+        }
+        return string
+    }
+
     // TODO : remove this local translation
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
@@ -180,11 +199,13 @@ function Result (props) {
                     <ColorCardContent className={classes.content}>
                         <Box className={classes.cardHeader}>
                             <Typography className={classes.cardHeaderSuccess}>
-                                {`${score.success} ${translation.good}`}
+                                <CheckIcon fontSize="medium" className={classes.rateIcon}></CheckIcon>
+                                {`${score.success} ${getTranslations(translation.good, score.success)}`}
                             </Typography>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <Typography className={classes.cardHeaderWrong}>
-                                {`${score.failure} ${translation.wrong}`}
+                                <CloseIcon fontSize="medium" className={classes.rateIcon}></CloseIcon>
+                                {`${score.failure} ${getTranslations(translation.wrong, score.failure)}`}
                             </Typography>
                         </Box>
                         <Typography className={classes.title}>
