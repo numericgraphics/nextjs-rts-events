@@ -22,21 +22,27 @@ function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
-    const [isSplashScreenAnimEnded, setSplashScreenAnim] = useState(false)
+    const [isStartAnimationEnded, setIsStartAnimationEnded] = useState(false)
+    const [isEndedAnimationStart, setIsEndedAnimationStart] = useState(false)
     const isImagesPreLoaded = useImagesServices(eventData)
     const [error, setError] = useState(false)
     const [theme, setTheme] = useState()
     const store = { error, setError, isLoading, setLoading }
 
-    function animationCallBack () {
-        setSplashScreenAnim(true)
+    function startedCallBack () {
+        setIsStartAnimationEnded(true)
     }
 
+    function endedCallBack () {
+        setGlobalLoading(false)
+    }
+
+    // wait for preloading service and animated splashscreen
     useEffect(() => {
-        if (isImagesPreLoaded && isSplashScreenAnimEnded) {
-            setGlobalLoading(false)
+        if (isImagesPreLoaded && isStartAnimationEnded) {
+            setIsEndedAnimationStart(true)
         }
-    }, [isImagesPreLoaded, isSplashScreenAnimEnded])
+    }, [isImagesPreLoaded, isStartAnimationEnded])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
@@ -73,7 +79,7 @@ function MyApp ({ Component, pageProps }) {
         <UserContext.Provider value={{ dataProvider: DataProvider, data: eventData, scoreService: ScoreService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading
-                ? <SplashScreen callBack={animationCallBack}/>
+                ? <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>
                 : <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <Component {...pageProps} />

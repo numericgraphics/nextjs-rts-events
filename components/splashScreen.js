@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import { useTweenMax } from '../hooks/useTweenMax'
+import { useTweenMaxWithRef } from '../hooks/useTweenMax'
 
 const useStyles = makeStyles({
     containerProgress: {
@@ -23,15 +23,27 @@ const useStyles = makeStyles({
 
 function SplashScreen (props) {
     const [height, setHeight] = useState()
+    const animRef = useRef()
 
     function animCallback () {
-        props.callBack()
+        if (props.animationState) {
+            props.endedCallBack()
+        } else {
+            props.startedCallBack()
+        }
     }
 
-    const [anim, animHandler] = useTweenMax(2, {
+    const [startAnimHandler] = useTweenMaxWithRef(animRef, 2, {
         y: -250,
         opacity: 1,
         delay: 0.5,
+        transformOrigin: 'center',
+        onComplete: animCallback
+    })
+
+    const [endAnimHandler] = useTweenMaxWithRef(animRef, 0.5, {
+        opacity: 0,
+        scale: 1.4,
         transformOrigin: 'center',
         onComplete: animCallback
     })
@@ -41,15 +53,19 @@ function SplashScreen (props) {
     }, [])
 
     useEffect(() => {
-        animHandler()
-    }, [animHandler])
+        if (props.animationState) {
+            endAnimHandler()
+        } else {
+            startAnimHandler()
+        }
+    }, [props.animationState, startAnimHandler, endAnimHandler])
 
     const classes = useStyles()
     return (
         <Box className={classes.containerProgress} style={{ minHeight: height }}>
             <Box>
                 <svg width="300" height="300" x="0px" y="0px" viewBox="0 0 841.89 595.28">
-                    <g ref={anim} opacity="0">
+                    <g ref={animRef} opacity="0">
                         <g>
                             <path className="st0" d="M468.41,288.68l-2.35,15.11c-0.39,2.94,0.98,4.12,3.54,4.51c5.69,0.78,20.01,1.76,33.95,1.76
                             c31.2,0,53.96-10.2,53.96-39.24c0-17.07-7.46-29.82-33.36-36.5l-14.52-3.73c-9.81-2.55-14.33-5.69-14.33-12.95

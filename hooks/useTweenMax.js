@@ -12,3 +12,14 @@ export function useTweenMax (duration, config, onMount = false) {
     const fn = () => TweenMax.to(ref.current, duration, config)
     return [ref, fn]
 }
+
+export function useTweenMaxWithRef (ref, duration, config, onMount = false) {
+    useEffect(
+        () => {
+            if (onMount) fn()
+        },
+        [ref]
+    )
+    const fn = () => TweenMax.to(ref.current, duration, config)
+    return [fn]
+}
