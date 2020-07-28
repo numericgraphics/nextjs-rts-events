@@ -59,6 +59,7 @@ const useStyles = makeStyles({
 })
 
 function Index (props) {
+    console.log('Index', props)
     const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])

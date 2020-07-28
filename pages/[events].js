@@ -73,7 +73,7 @@ function Events (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                await Router.push('/dashBoard')
+                await Router.push(`/${events}/dashBoard`)
             } else {
                 initPage()
             }
@@ -82,21 +82,12 @@ function Events (props) {
         }
     }
 
-    // eslint-disable-next-line no-undef
     useEffect(() => {
         setEventName(events)
         dataProvider.setData(content)
         setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         handleVerify().then()
-        Router.prefetch('/dashboard').then()
-    }, [])
-
-    useEffect(() => {
-        setEventName(events)
-        dataProvider.setData(eventData.content)
-        setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
-        handleVerify().then()
-        Router.prefetch('/dashboard').then()
+        // Router.prefetch('/dashboard').then()
     }, [])
 
     function initPage () {

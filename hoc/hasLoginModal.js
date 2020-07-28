@@ -121,7 +121,7 @@ const hasLoginModal = WrappedComponent => {
                 })
 
                 if (response.status === 200) {
-                    await Router.push('/dashBoard')
+                    await Router.push(`/${eventName}/dashBoard`)
                     return
                 }
 
@@ -156,7 +156,7 @@ const hasLoginModal = WrappedComponent => {
                     const { nickname, avatarURL } = content
                     dataProvider.setData({ user: { nickname, avatarURL } })
                     setLoading(true)
-                    await Router.push('/dashBoard')
+                    await Router.push(`/${eventName}/dashBoard`)
                     return
                 }
 

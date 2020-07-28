@@ -1,15 +1,15 @@
 import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
-import UserContext from '../components/UserContext'
+import UserContext from '../../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import Router from 'next/router'
-import EventLayout from '../components/eventLayout'
+import { useRouter } from 'next/router'
+import EventLayout from '../../components/eventLayout'
 import Box from '@material-ui/core/Box'
-import { ColorButton } from '../components/ui/ColorButton'
-import InnerHeightLayout from '../components/innerHeightLayout'
-import { ColorCardContent } from '../components/ui/ColorCardContent'
-import { ColorCard } from '../components/ui/ColorCard'
+import { ColorButton } from '../../components/ui/ColorButton'
+import InnerHeightLayout from '../../components/innerHeightLayout'
+import { ColorCardContent } from '../../components/ui/ColorCardContent'
+import { ColorCard } from '../../components/ui/ColorCard'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -71,12 +71,15 @@ const useStyles = makeStyles({
 })
 
 function DashBoard (props) {
+    console.log('DashBoard', props)
+    const router = useRouter()
+    const { events } = router.query
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
     const { dataProvider, scoreService, store } = useContext(UserContext)
-    const { isLoading, setLoading, eventName } = store
+    const { isLoading, setLoading } = store
     const layoutRef = createRef()
 
     async function fetchData () {
@@ -84,7 +87,7 @@ function DashBoard (props) {
             const response = await fetch('/api/fetchGame', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ eventName })
+                body: JSON.stringify({ eventName: events })
             })
             if (response.status === 200) {
                 const content = await response.json()
@@ -92,10 +95,7 @@ function DashBoard (props) {
                 scoreService.init(dataProvider)
                 initPage()
             } else {
-                await Router.push({
-                    pathname: `/${eventName}`,
-                    query: { modal: true }
-                })
+                // await router.push(`/${eventName}`)
             }
         } catch (error) {
             throw new Error(error.message)
@@ -123,10 +123,11 @@ function DashBoard (props) {
     }
 
     async function startGame () {
-        await Router.push('/challengeQuestion')
+        await router.push('/challengeQuestion')
     }
 
     useEffect(() => {
+        console.log('DashBoard - useEffect  events', events)
         fetchData().then()
     }, [])
 

@@ -6,7 +6,7 @@ import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import ScoreService from '../data/scoreServices'
 import Progress from '../components/progress'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 function MyApp ({ Component, pageProps }) {
     const [isGlobalLoading, setGlobalLoading] = useState(true)
@@ -15,6 +15,7 @@ function MyApp ({ Component, pageProps }) {
     const [eventName, setEventName] = useState('/')
     const [theme, setTheme] = useState({})
     const store = { error, setError, isLoading, setLoading, setTheme, eventName, setEventName }
+    const router = useRouter()
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
@@ -30,13 +31,21 @@ function MyApp ({ Component, pageProps }) {
 
         setGlobalLoading(false)
 
+        try {
+            console.log('_app - router.query', router.query)
+            const params = (new URL(document.location))
+            console.log('_app - pathname', params.pathname)
+        } catch (e) {
+            console.log('_app - ERROR', e)
+        }
+
         // Route change listener for trigger loading state
         // Each page should trigger loading false after his initizialisation throught the store.setLoading
         const handleRouteChange = (url) => {
             console.log('handleRouteChange', url)
             setLoading(true)
         }
-        Router.events.on('routeChangeStart', handleRouteChange)
+        router.events.on('routeChangeStart', handleRouteChange)
     }, [])
 
     return (
