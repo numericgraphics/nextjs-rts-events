@@ -16,6 +16,7 @@ import DashBoardChallengesProgress from '../components/DashBoardChallengesProgre
 import { ColorBorderButton } from '../components/ui/ColorBorderButton'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
+import { getTranslations } from '../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -216,22 +217,20 @@ function DashBoard (props) {
 
     // TODO : remove this local translation
     useEffect(() => {
-        translation.bestScore = 'Meilleur score:'
+        // = 'Meilleur score:'
         score.bestScore = 2000
         // Modification de l'orthographe pour le pluriel
     }, [score, translation])
 
-    function getTranslations (string, score) {
+    /* function getTranslations (string, score) {
         if (score <= 1 && string) {
             string = string.substr(0, string.length - 1)
-            console.log('ici : ', string)
             // setTranslation(copy)
         // translation.good = translation.good.substr(0, 7)
         // setTranslation.good(translation.good.substr(0, 7))
         }
         return string
-    }
-
+    } */
     return (
         <EventLayout>
             {isLoading
@@ -251,11 +250,11 @@ function DashBoard (props) {
                                 <Box className={classes.cardHeaderSide}>
                                     <Typography className={classes.cardHeaderLeftSideText}>
                                         <CheckIcon fontSize="small" className={classes.rateIcon}></CheckIcon>
-                                        {`${score.success} ${getTranslations(translation.good, score.success)}`}
+                                        {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
                                     </Typography>
                                     <Typography className={classes.cardHeaderLeftSideText}>
                                         <CloseIcon fontSize="small" className={classes.rateIcon}></CloseIcon>
-                                        {`${score.failure} ${getTranslations(translation.wrong, score.failure)}`}
+                                        {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
                                     </Typography>
                                 </Box>
                                 <Avatar className={classes.avatar} src={user.avatarURL}/>
@@ -302,5 +301,4 @@ function DashBoard (props) {
         </EventLayout>
     )
 }
-
 export default DashBoard
