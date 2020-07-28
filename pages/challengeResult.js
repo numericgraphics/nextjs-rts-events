@@ -12,7 +12,7 @@ import { ColorCard } from '../components/ui/ColorCard'
 import { ColorCardContent } from '../components/ui/ColorCardContent'
 import { ColorCardActions } from '../components/ui/ColorCardAction'
 import { useHeight } from '../hooks/useHeight'
-import { getTranslations } from './dashBoard'
+import { getTranslations } from '../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
