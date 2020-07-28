@@ -1,7 +1,8 @@
 import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
-import InnerHeightLayout from './innerHeightLayout'
+import Box from '@material-ui/core/Box'
+import { useHeight } from '../../hooks/useHeight'
 
 const useStyles = makeStyles({
     containerProgress: {
@@ -15,10 +16,11 @@ const useStyles = makeStyles({
 
 function Progress () {
     const classes = useStyles()
+    const height = useHeight()
     return (
-        <InnerHeightLayout class={classes.containerProgress} >
+        <Box class={classes.containerProgress} style={{ minHeight: height }}>
             <CircularProgress />
-        </InnerHeightLayout>
+        </Box>
     )
 }
 

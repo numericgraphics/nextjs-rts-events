@@ -11,7 +11,7 @@ const styles = {
 }
 const InnerHeightLayout = (props, ref) => {
     const height = useHeight()
-    return <Box ref={ref} style={{ ...styles.containerGlobal, minHeight: height }} className={props.class}>{props.children}</Box>
+    return <Box ref={ref} style={{ ...props.style, ...styles.containerGlobal, minHeight: height }} className={props.class}>{props.children}</Box>
 }
 
 export default forwardRef(InnerHeightLayout)

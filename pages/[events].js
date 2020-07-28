@@ -13,6 +13,7 @@ import InnerHeightLayout from '../components/innerHeightLayout'
 import PromosStepper from '../components/promos/promosStepper'
 import Promos from '../components/promos/promos'
 import EventLayout from '../components/eventLayout'
+import Fade from '@material-ui/core/Fade/Fade'
 
 const useStyles = makeStyles({
     containerOverlayHeader: {
@@ -56,7 +57,6 @@ const useStyles = makeStyles({
 })
 
 function Events (props) {
-    console.log('Events', props)
     const { eventData, router } = props
     const { content, events } = eventData
     const classes = useStyles()
@@ -64,7 +64,7 @@ function Events (props) {
     const [promos, setPromos] = useState([])
     const [translation, setTranslation] = useState([])
     const { dataProvider, store } = useContext(UserContext)
-    const { setTheme, isLoading, setLoading, setEventName } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
 
     async function handleVerify () {
@@ -83,6 +83,7 @@ function Events (props) {
     }
 
     useEffect(() => {
+        setEventData(content)
         setEventName(events)
         dataProvider.setData(content)
         setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
@@ -90,12 +91,17 @@ function Events (props) {
         // Router.prefetch('/dashboard').then()
     }, [])
 
+    useEffect(() => {
+        if (!isGlobalLoading) {
+            setLoading(false)
+        }
+    }, [isGlobalLoading])
+
     function initPage () {
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         handleUrlQuery()
         setActiveStep(0)
-        setLoading(false)
     }
 
     function handleUrlQuery () {
@@ -117,18 +123,22 @@ function Events (props) {
         <EventLayout>
             {isLoading
                 ? null
-                : <InnerHeightLayout ref={layoutRef}>
-                    <Box className={classes.containerOverlayHeader} >
-                        <PromosStepper steps={promos} activeStep={activeStep}/>
-                    </Box>
-                    <Box className={classes.containerOverlayFooter} >
-                        <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
-                            {translation.startPageButtonText}
-                        </Button>
-                        <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
-                            <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
-                        </Link>
-                    </Box>
+                : <InnerHeightLayout ref={layoutRef} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={classes.containerOverlayHeader} >
+                            <PromosStepper steps={promos} activeStep={activeStep}/>
+                        </Box>
+                    </Fade>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={classes.containerOverlayFooter} >
+                            <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
+                                {translation.startPageButtonText}
+                            </Button>
+                            <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
+                                <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
+                            </Link>
+                        </Box>
+                    </Fade>
                     <Promos data={promos} indexCallBack={slideIndexCallBack}/>
                 </InnerHeightLayout>
             }

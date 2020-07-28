@@ -2,10 +2,19 @@ class ScoreServices {
     init (dataProvider) {
         this.dataProvider = dataProvider
         this.getChallengesStates = this.getChallengesStates.bind(this)
+        this.getChallenges = this.getChallenges.bind(this)
+    }
+
+    getChallenges () {
+        return this.dataProvider.getChallenges()
     }
 
     getChallengesStates () {
         return this.dataProvider.getChallengesStates()
+    }
+
+    getRemainingChallengesByPercent () {
+        return (this.getChallengesStates().length / this.getChallenges().length) * 100
     }
 
     getUserPoints () {
@@ -14,9 +23,7 @@ class ScoreServices {
             return 0
         }
         // TODO : Get points from  user -- bug some points are null
-        console.log('getUserPoints challenges', challenges)
-        const result = challenges.reduce((a, b) => a + b.points)
-        console.log('getUserPoints result', result)
+        // const result = challenges.reduce((a, b) => a + b.points)
         return 0
     }
 

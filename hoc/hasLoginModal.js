@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
+import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
@@ -10,7 +11,6 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
-import { useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -70,24 +70,26 @@ const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
         const classes = useStyles()
-        const [open, setOpen] = React.useState(false)
-        const [loginState, setLoginState] = React.useState(ModalStates.PHONE_NUMBER)
+        const [open, setOpen] = useState(false)
+        const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
         const { setLoading, eventName } = store
-        const [translation] = useState(dataProvider.getTranslation())
-
-        // TODO : fix bg flickering where using keyboard
-        // const theme = useTheme()
-        // const ColorBackdrop = withStyles({
-        //     root: {
-        //         background: theme.palette.background.default
-        //     }
-        // })(Backdrop)
+        const [translation, setTranslation] = useState([])
+        const theme = useTheme()
 
         const handleOpen = () => {
             setOpen(true)
         }
+
+        useEffect(() => {
+            console.log('hasLoginModal - useEffect')
+            setTranslation(dataProvider.getTranslation())
+        }, [])
+
+        useEffect(() => {
+            console.log('translation', translation)
+        }, [translation])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -156,7 +158,7 @@ const hasLoginModal = WrappedComponent => {
                     const { nickname, avatarURL } = content
                     dataProvider.setData({ user: { nickname, avatarURL } })
                     setLoading(true)
-                    await Router.push(`/${eventName}/dashBoard`)
+                    await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
                     return
                 }
 
@@ -217,7 +219,7 @@ const hasLoginModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={OpenModal} {...props} />
+                <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -227,7 +229,11 @@ const hasLoginModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        style: {
+                            backgroundColor: theme.palette.secondary.main,
+                            opacity: '0.8'
+                        }
                     }}
                 >
                     <Fade in={open}>

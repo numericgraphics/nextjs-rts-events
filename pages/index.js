@@ -12,6 +12,7 @@ import UserContext from '../components/UserContext'
 import hasLoginModal from '../hoc/hasLoginModal'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import Button from '@material-ui/core/Button'
+import Fade from '@material-ui/core/Fade/Fade'
 
 const { publicRuntimeConfig } = getConfig()
 const { API_URL } = publicRuntimeConfig
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         alignItems: 'center',
         alignContent: 'center',
-        zIndex: 1,
+        zIndex: 2,
         bottom: 30,
         paddingLeft: 30,
         paddingRight: 30
@@ -84,6 +85,7 @@ function Index (props) {
     }
 
     useEffect(() => {
+        setLoading(true)
         handleVerify().then()
     }, [])
 
@@ -114,18 +116,22 @@ function Index (props) {
         <EventLayout>
             {isLoading
                 ? null
-                : <InnerHeightLayout ref={layoutRef}>
-                    <Box className={classes.containerOverlayHeader} >
-                        <PromosStepper steps={promos} activeStep={activeStep}/>
-                    </Box>
-                    <Box className={classes.containerOverlayFooter} >
-                        <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
-                            {translation.startPageButtonText}
-                        </Button>
-                        <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
-                            <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
-                        </Link>
-                    </Box>
+                : <InnerHeightLayout ref={layoutRef} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={classes.containerOverlayHeader} >
+                            <PromosStepper steps={promos} activeStep={activeStep}/>
+                        </Box>
+                    </Fade>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={classes.containerOverlayFooter} >
+                            <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
+                                {translation.startPageButtonText}
+                            </Button>
+                            <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
+                                <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
+                            </Link>
+                        </Box>
+                    </Fade>
                     <Promos data={promos} indexCallBack={slideIndexCallBack}/>
                 </InnerHeightLayout>
             }

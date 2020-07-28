@@ -2,7 +2,8 @@ class DataProvider {
     constructor () {
         this.data = {
             user: {},
-            challenge: [],
+            challenge: {},
+            challenges: [],
             gifts: [],
             promos: [],
             theme: {},
@@ -10,18 +11,20 @@ class DataProvider {
             translation: {},
             challengesStates: [],
             hasAvailableChallenges: true,
-            score: null
+            score: {}
         }
     }
 
     setData (data) {
-        console.log('setData before', data)
         Object.assign(this.data, data)
-        console.log('setData', this.data)
     }
 
     getAllData () {
         return this.data
+    }
+
+    getScore () {
+        return this.data.score
     }
 
     getTheme () {
@@ -50,6 +53,10 @@ class DataProvider {
 
     getChallenge () {
         return this.data.challenge
+    }
+
+    getChallenges () {
+        return this.data.challenges
     }
 
     getChallengesStates () {

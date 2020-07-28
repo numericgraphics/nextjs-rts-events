@@ -1,21 +1,51 @@
 import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 import '../styles/global.css'
+import '../styles/fadeIn.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import ScoreService from '../data/scoreServices'
-import Progress from '../components/progress'
+// import Progress from '../components/progress'
 import { useRouter } from 'next/router'
+import SplashScreen from '../components/splashScreen'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { useImagesServices } from '../hooks/useImagesServices'
+import ThemeFactory from '../data/themeFactory'
 
 function MyApp ({ Component, pageProps }) {
+    const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
+    const [isStartAnimationEnded, setIsStartAnimationEnded] = useState(false)
+    const [isEndedAnimationStart, setIsEndedAnimationStart] = useState(false)
+    const isImagesPreLoaded = useImagesServices(eventData)
     const [error, setError] = useState(false)
     const [eventName, setEventName] = useState('/')
-    const [theme, setTheme] = useState({})
-    const store = { error, setError, isLoading, setLoading, setTheme, eventName, setEventName }
+    const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData }
     const router = useRouter()
+
+    function startedCallBack () {
+        setIsStartAnimationEnded(true)
+    }
+
+    function endedCallBack () {
+        // setGlobalLoading(false)
+        setGlobalLoading(false)
+        console.log('_app - ANIMATION ENDED')
+    }
+
+    useEffect(() => {
+        console.log('_app - useEffect eventData', eventData)
+    }, [eventData])
+
+    // wait for preloading service and animated splashscreen
+    useEffect(() => {
+        if (isImagesPreLoaded && isStartAnimationEnded) {
+            setIsEndedAnimationStart(true)
+        }
+    }, [isImagesPreLoaded, isStartAnimationEnded])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
@@ -29,14 +59,12 @@ function MyApp ({ Component, pageProps }) {
             throw new Error(error.message)
         }
 
-        setGlobalLoading(false)
-
         try {
             console.log('_app - router.query', router.query)
             const params = (new URL(document.location))
             console.log('_app - pathname', params.pathname)
-        } catch (e) {
-            console.log('_app - ERROR', e)
+        } catch (error) {
+            throw new Error(error.message)
         }
 
         // Route change listener for trigger loading state
@@ -50,18 +78,26 @@ function MyApp ({ Component, pageProps }) {
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
-            {isLoading
-                ? <Progress/>
-                : null
-            }
-            {isGlobalLoading
-                ? <Progress/>
-                : <ThemeProvider theme={theme}>
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            }
+            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
+            { <ThemeProvider theme={ theme }>
+                <CssBaseline />
+                <Component {...pageProps} />
+            </ThemeProvider>}
         </UserContext.Provider>
     )
 }
 
 export default MyApp
+
+/*
+<UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
+            {(isLoading && !isGlobalLoading) && <Progress/> }
+            {isGlobalLoading
+                ? <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>
+                : <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            }
+        </UserContext.Provider>
+ */

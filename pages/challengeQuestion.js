@@ -5,21 +5,22 @@ import UserContext from '../components/UserContext'
 import EventLayout from '../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import { ColorButton } from '../components/ui/ColorButton'
+import Button from '@material-ui/core/Button'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import hasCountDownModal from '../hoc/hasCountDownModal'
-import QuestionTimer from '../components/questionTimer'
+import QuestionTimer from '../components/challenges/questionTimer'
+import { useHeight } from '../hooks/useHeight'
 
 const useStyles = makeStyles({
     containerGlobal: {
-        justifyContent: 'flex-start',
-        backgroundColor: 'pink'
+        justifyContent: 'flex-start'
     },
     counter: {
         display: 'flex',
         alignItems: 'flex-end',
         width: '100%',
         flex: 1,
+        maxHeight: 120,
         padding: 10
     },
     header: {
@@ -52,11 +53,13 @@ const useStyles = makeStyles({
     },
     HeaderText: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem'
+        fontSize: '1.25rem',
+        textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem'
+        fontSize: '1rem',
+        textShadow: '0px 3px 6px #00000040'
     },
     content: {
         display: 'flex',
@@ -76,8 +79,34 @@ const useStyles = makeStyles({
         fontSize: '1rem',
         marginTop: 10,
         textTransform: 'none'
+    },
+    gradient: {
+        position: 'absolute',
+        width: '100vw',
+        height: '100vh',
+        flexGrow: 1,
+        zIndex: 2,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
     }
 })
+const styles = {
+    containerOverlay: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '100vw',
+        zIndex: 3
+    },
+    containerImage: {
+        position: 'absolute',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
+        width: '100vw',
+        backgroundColor: 'gray'
+    }
+}
 
 function ChallengeQuestion (props) {
     const classes = useStyles()
@@ -90,10 +119,12 @@ function ChallengeQuestion (props) {
     const [answer, setAnswer] = useState(-1)
     const [progress, setProgress] = React.useState(0)
     const [timeLeft, setTimeLeft] = React.useState(duration)
+    const [imageURL, setImageURL] = React.useState()
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading, setLoading } = store
     const layoutRef = createRef()
     const intervalId = useRef()
+    const height = useHeight()
 
     async function fetchData () {
         try {
@@ -101,12 +132,13 @@ function ChallengeQuestion (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData({ challenge: content })
-                const { quiz, title, duration } = content
+                const { quiz, title, duration, imageURL } = content
                 const { question, answers } = quiz
                 setTitle(title)
                 setQuestion(question)
                 setAnswers(answers)
                 setDuration(duration)
+                setImageURL(imageURL)
                 setTimeLeft(duration)
                 initPage()
             } else {
@@ -173,32 +205,36 @@ function ChallengeQuestion (props) {
 
     return (
         <EventLayout>
-            {isLoading
+            {isLoading && props.status
                 ? null
-                : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
-                    <Box className={classes.counter}>
-                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
+                    <Box style={{ ...styles.containerOverlay, minHeight: height }} >
+                        <Box className={classes.counter}>
+                            <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                        </Box>
+                        <Box className={classes.header}>
+                            <Typography className={classes.HeaderTitle} align={'left'}>
+                                {title}
+                            </Typography>
+                            <Typography className={classes.HeaderText} align={'left'}>
+                                {question}
+                            </Typography>
+                        </Box>
+                        <Box className={classes.footer}>
+                            {answers.map((item, index) => {
+                                return (
+                                    <Button color="primary" variant="contained" key={index} className={classes.button} onClick={() => {
+                                        onAnswer(index)
+                                    }}>
+                                        {item}
+                                    </Button>
+                                )
+                            }
+                            )}
+                        </Box>
                     </Box>
-                    <Box className={classes.header}>
-                        <Typography className={classes.HeaderTitle} align={'left'}>
-                            {title}
-                        </Typography>
-                        <Typography className={classes.HeaderText} align={'left'}>
-                            {question}
-                        </Typography>
-                    </Box>
-                    <Box className={classes.footer}>
-                        {answers.map((item, index) => {
-                            return (
-                                <ColorButton key={index} variant="contained" className={classes.button} onClick={() => {
-                                    onAnswer(index)
-                                }}>
-                                    {item}
-                                </ColorButton>
-                            )
-                        }
-                        )}
-                    </Box>
+                    <Box className={classes.gradient}/>
+                    <Box style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }} />
                 </InnerHeightLayout>
             }
         </EventLayout>
