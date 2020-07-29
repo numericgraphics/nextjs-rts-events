@@ -127,7 +127,8 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontSize: '40px'
     }
 })
 const styles = {
@@ -200,14 +201,14 @@ function Result (props) {
                     <ColorCardContent className={classes.content}>
                         <Box className={classes.cardHeader}>
                             <div className={classes.iconTyp}>
-                                <CheckIcon fontSize="medium" className={classes.rateIcon}></CheckIcon>
+                                <CheckIcon fontSize="inherit" className={classes.rateIcon}></CheckIcon>
                                 <Typography className={classes.cardHeaderSuccess}>
                                     {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
                                 </Typography>
                             </div>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <div className={classes.iconTyp}>
-                                <CloseIcon fontSize="medium" className={classes.rateIcon}></CloseIcon>
+                                <CloseIcon fontSize="inherit" className={classes.rateIcon}></CloseIcon>
                                 <Typography className={classes.cardHeaderWrong}>
                                     {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
                                 </Typography>
