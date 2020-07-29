@@ -11,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
+import ReactCodeInput from 'react-code-input'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -170,7 +171,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <LoginTextField id="numberReceive" placeHolder={'- - - -'} value={userData.code} onChange={(data) =>
+                        <ReactCodeInput type='number' fields={4} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { code: data })
                             )
@@ -195,7 +196,7 @@ const hasLoginModal = WrappedComponent => {
                                 Object.assign({}, userData, { phone: data })
                             )
                         }/>
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" >
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" {...props} >
                             Envoyer
                         </Button>
                     </form>
