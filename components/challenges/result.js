@@ -155,7 +155,8 @@ function Result (props) {
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
     const [showComponent, setShowComponent] = useState(false)
-    const { dataProvider } = useContext(UserContext)
+    const { dataProvider, store } = useContext(UserContext)
+    const { eventName } = store
     const height = useHeight()
 
     async function continueGame () {
@@ -165,7 +166,7 @@ function Result (props) {
 
     async function gotoDashBoard () {
         setShowComponent(false)
-        await Router.push('/dashBoard')
+        await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
     }
 
     useEffect(() => {

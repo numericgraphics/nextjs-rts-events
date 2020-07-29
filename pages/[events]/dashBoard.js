@@ -199,7 +199,7 @@ function DashBoard (props) {
     }
 
     async function startGame () {
-        await router.push('/challenge')
+        await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
     // check if the page was reloaded and  fetchData

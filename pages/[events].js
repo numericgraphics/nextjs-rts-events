@@ -73,7 +73,7 @@ function Events (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                await router.push(`/${events}/dashBoard`)
+                await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
             } else {
                 initPage()
             }

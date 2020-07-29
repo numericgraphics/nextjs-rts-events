@@ -1,19 +1,14 @@
 import cookie from 'cookie'
-import getConfig from 'next/config'
-// import fetch from 'node-fetch'
-// import Typography from '@material-ui/core/Typography'
 
 export default async (req, res) => {
     let rtsEventCookie = null
     let cookies = null
 
-    // TODO : get event name from request (shortname)
-    const { serverRuntimeConfig } = getConfig()
-    const { EVENT_NAME } = serverRuntimeConfig
-    const cookieName = `rtsevents-${EVENT_NAME}`
-
     // Check if rts-event cookie is available
     try {
+        const { eventName } = await req.body
+        const cookieName = `rtsevents-${eventName}`
+
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
             rtsEventCookie = cookies[cookieName]
@@ -21,7 +16,7 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF/${userID}/challenges/startNextAvailableChallenge`, {
+                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/${eventName}/${userID}/challenges/startNextAvailableChallenge`, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

@@ -123,7 +123,7 @@ const hasLoginModal = WrappedComponent => {
                 })
 
                 if (response.status === 200) {
-                    await Router.push(`/${eventName}/dashBoard`)
+                    await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
                     return
                 }
 

@@ -1,15 +1,16 @@
 import React, { createRef, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Router from 'next/router'
-import UserContext from '../components/UserContext'
-import EventLayout from '../components/eventLayout'
+import Router, { useRouter } from 'next/router'
+import UserContext from '../../components/UserContext'
+import EventLayout from '../../components/eventLayout'
 import Box from '@material-ui/core/Box'
-import InnerHeightLayout from '../components/innerHeightLayout'
-import hasCountDownModal from '../hoc/hasCountDownModal'
-import Question from '../components/challenges/questions'
-import Result from '../components/challenges/result'
-import LazyImage from '../components/ui/LazyImage'
-import { useHeight } from '../hooks/useHeight'
+import InnerHeightLayout from '../../components/innerHeightLayout'
+import hasCountDownModal from '../../hoc/hasCountDownModal'
+import Question from '../../components/challenges/questions'
+import Result from '../../components/challenges/result'
+import LazyImage from '../../components/ui/LazyImage'
+import { useHeight } from '../../hooks/useHeight'
+import { getAllEvents } from '../../lib/events'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -116,6 +117,8 @@ const ChallengeStates = Object.freeze({
 })
 
 function Challenge (props) {
+    const router = useRouter()
+    const { events } = router.query
     const classes = useStyles()
     const layoutRef = createRef()
     const { dataProvider, store } = useContext(UserContext)
@@ -129,15 +132,19 @@ function Challenge (props) {
 
     async function fetchQuestions () {
         try {
-            const response = await fetch('/api/fetchQuiz')
+            const response = await fetch('/api/fetchQuiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ eventName: events })
+            })
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData({ challenge: content })
                 setQuestionsContent(content)
             } else {
                 // TODO : manage response !== 200
-                await Router.push({
-                    pathname: '/dashBoard',
+                await Router.push('/[events]/dashBoard', {
+                    pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
                 })
             }
@@ -155,7 +162,7 @@ function Challenge (props) {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ answer: answerToString, challengeID })
+                body: JSON.stringify({ answer: answerToString, challengeID, eventName: events })
             })
 
             if (response.status === 200) {
@@ -171,8 +178,8 @@ function Challenge (props) {
                 setResultContent(content)
             } else {
                 // TODO : manage response !== 200
-                await Router.push({
-                    pathname: '/dashBoard',
+                await Router.push('/[events]/dashBoard', {
+                    pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
                 })
             }
@@ -269,3 +276,20 @@ function Challenge (props) {
 }
 
 export default hasCountDownModal(Challenge)
+
+export async function getStaticPaths () {
+    const paths = await getAllEvents()
+    return {
+        paths,
+        fallback: false
+    }
+}
+
+export async function getStaticProps ({ params }) {
+    const events = params.events
+    return {
+        props: {
+            eventData: { events }
+        }
+    }
+}
