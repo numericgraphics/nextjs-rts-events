@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useState } from 'react'
-import Router, { withRouter } from 'next/router'
+import { withRouter } from 'next/router'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import Box from '@material-ui/core/Box'
@@ -73,7 +73,7 @@ function Events (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                await Router.push(`/${events}/dashBoard`)
+                await router.push(`/${events}/dashBoard`)
             } else {
                 initPage()
             }
@@ -88,26 +88,27 @@ function Events (props) {
         dataProvider.setData(content)
         setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         handleVerify().then()
-        // Router.prefetch('/dashboard').then()
     }, [])
 
     useEffect(() => {
         if (!isGlobalLoading) {
             setLoading(false)
+            handleUrlQuery()
         }
     }, [isGlobalLoading])
 
     function initPage () {
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
-        handleUrlQuery()
         setActiveStep(0)
     }
 
     function handleUrlQuery () {
-        const { query } = router
-        if (query && query.modal === 'true') {
-            props.openModal()
+        const params = (new URL(document.location)).searchParams
+        if (params.get('modal')) {
+            setTimeout(() => {
+                props.openModal()
+            }, 1000)
         }
     }
 

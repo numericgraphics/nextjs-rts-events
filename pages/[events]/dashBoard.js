@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import InnerHeightLayout from '../../components/innerHeightLayout'
@@ -15,6 +15,8 @@ import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
+import { getAllEvents, getEventsData } from '../../lib/events'
+import ThemeFactory from '../../data/themeFactory'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -149,8 +151,8 @@ function getTranslations (string, score) {
 }
 
 function DashBoard (props) {
-    console.log('DashBoard', props)
     const router = useRouter()
+    const { eventData } = props
     const { events } = router.query
     const classes = useStyles()
     const [user, setUser] = useState({})
@@ -160,7 +162,7 @@ function DashBoard (props) {
     const [challenges, setChallenges] = useState([])
     const [remainingChallenges, setRemainingChallenges] = useState(0)
     const { dataProvider, scoreService, store } = useContext(UserContext)
-    const { isLoading, setLoading } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
 
     async function fetchData () {
@@ -176,7 +178,10 @@ function DashBoard (props) {
                 scoreService.init(dataProvider)
                 initPage()
             } else {
-                // await router.push(`/${eventName}`)
+                await Router.push('/[events]', {
+                    pathname: `/${events}`,
+                    query: { modal: true }
+                })
             }
         } catch (error) {
             throw new Error(error.message)
@@ -184,18 +189,6 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        try {
-            console.log('-------------------------------')
-            console.log('DashBoard WIP - initPage BREAK POINT ')
-            console.log('wip, currently in development mode for better game integration')
-            console.log('-------------------------------')
-        } catch (error) {
-            console.log('test dataProvider ERROR', error)
-        }
-
-        // TODO find a way to get the global event call
-        return
-        // eslint-disable-next-line no-unreachable
         setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
         setChallenges(scoreService.getChallenges().length)
         setScore(dataProvider.getScore())
@@ -209,7 +202,14 @@ function DashBoard (props) {
         await router.push('/challenge')
     }
 
+    // check if the page was reloaded and  fetchData
     useEffect(() => {
+        if (isGlobalLoading) {
+            setEventData(eventData.content)
+            setEventName(events)
+            dataProvider.setData(eventData.content)
+            setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
+        }
         fetchData().then()
     }, [])
 
@@ -221,10 +221,10 @@ function DashBoard (props) {
 
     return (
         <EventLayout>
-            {isLoading
+            {isLoading && isGlobalLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
-                    <Fade in={!isLoading} timeout={1200}>
+                    <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
                         <Box className={classes.header}>
                             <Typography className={classes.HeaderTitle} align={'center'}>
                                 {translation.dashBoardHeadTitle}
@@ -234,7 +234,7 @@ function DashBoard (props) {
                             </Typography>
                         </Box>
                     </Fade>
-                    <Fade in={!isLoading} timeout={1000}>
+                    <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
                         <ColorCard className={classes.card}>
                             <ColorCardContent className={classes.content}>
                                 <Box className={classes.cardHeader}>
@@ -278,7 +278,7 @@ function DashBoard (props) {
                             </ColorCardContent>
                         </ColorCard>
                     </Fade>
-                    <Fade in={!isLoading} timeout={500}>
+                    <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                         <Box className={classes.footer}>
                             <ColorBorderButton variant="outlined" className={classes.button}>
                                 {translation.dashBoardSharingButton}
@@ -296,3 +296,20 @@ function DashBoard (props) {
 }
 
 export default DashBoard
+
+export async function getStaticPaths () {
+    const paths = await getAllEvents()
+    return {
+        paths,
+        fallback: false
+    }
+}
+
+export async function getStaticProps ({ params }) {
+    const eventData = await getEventsData(params.events)
+    return {
+        props: {
+            eventData
+        }
+    }
+}
