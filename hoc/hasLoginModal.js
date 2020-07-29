@@ -67,6 +67,13 @@ const ModalStates = Object.freeze({
     ERROR: 'error'
 })
 
+const styleCode = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+}
+
 const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
@@ -78,6 +85,13 @@ const hasLoginModal = WrappedComponent => {
         const { setLoading } = store
         const [translation] = useState(dataProvider.getTranslation())
         const theme = useTheme()
+        const caseStyle = {
+            margin: '4px',
+            height: '48px',
+            width: '42px',
+            fontSize: '26px',
+            paddingLeft: '12px'
+        }
 
         const handleOpen = () => {
             setOpen(true)
@@ -162,7 +176,6 @@ const hasLoginModal = WrappedComponent => {
                 setUserData({ ...userData, error: error.message })
             }
         }
-
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.NUMBER_RECEIVE:
@@ -171,7 +184,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <ReactCodeInput type='number' fields={4} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) =>
+                        <ReactCodeInput type='number' fields={4} inputStyle={caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { code: data })
                             )
