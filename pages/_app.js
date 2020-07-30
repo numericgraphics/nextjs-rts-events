@@ -71,9 +71,9 @@ function MyApp ({ Component, pageProps }) {
         try {
             // eslint-disable-next-line no-undef
             RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
-            console.log('DashBoard - Stats sent !')
+            console.log('_app first load - Stats sent !')
         } catch (e) {
-            console.log('DashBoard - Stats - ERROR', e)
+            console.log('_app first load - Stats - ERROR', e)
         }
 
         // Route change listener for trigger loading state
@@ -82,11 +82,13 @@ function MyApp ({ Component, pageProps }) {
         const handleRouteChange = (url) => {
             setLoading(true)
             try {
-                // eslint-disable-next-line no-undef
+                /* eslint-disable */
+                RTS.Stats.options.initialized = false
                 RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
-                console.log('DashBoard - Stats sent !')
+                /* eslint-enable */
+                console.log('_app - Stats sent !')
             } catch (e) {
-                console.log('DashBoard - Stats - ERROR', e)
+                console.log('_app - Stats - ERROR', e)
             }
         }
         Router.events.on('routeChangeStart', handleRouteChange)
