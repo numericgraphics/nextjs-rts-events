@@ -90,7 +90,8 @@ const hasLoginModal = WrappedComponent => {
             height: '48px',
             width: '42px',
             fontSize: '26px',
-            paddingLeft: '12px'
+            paddingLeft: '12px',
+            fontFamily: 'srgssr-type-Bd'
         }
 
         const handleOpen = () => {
