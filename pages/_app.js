@@ -83,7 +83,7 @@ function MyApp ({ Component, pageProps }) {
             setLoading(true)
             try {
                 /* eslint-disable */
-                RTS.Stats.options.initialized = false
+                RTS.stats.options.initialized = false
                 RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
                 /* eslint-enable */
                 console.log('_app - Stats sent !')
