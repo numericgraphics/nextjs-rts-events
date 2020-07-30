@@ -122,7 +122,7 @@ function Challenge (props) {
     const classes = useStyles()
     const layoutRef = createRef()
     const { dataProvider, store } = useContext(UserContext)
-    const { isLoading, setLoading } = store
+    const { isLoading, setLoading, setEventName, eventName } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
@@ -224,6 +224,9 @@ function Challenge (props) {
 
     // init Challenge
     useEffect(() => {
+        console.log('challenge init events', events)
+        console.log('challenge init eventName', eventName)
+        setEventName(events)
         fetchQuestions().then()
     }, [])
 

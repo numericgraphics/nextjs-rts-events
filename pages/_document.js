@@ -4,14 +4,15 @@ import { ServerStyleSheets } from '@material-ui/core/styles'
 
 /*
  SOURCE : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
-
  */
 
 export default class MyDocument extends Document {
     render () {
         return (
             <Html>
-                <Head />
+                <Head>
+                    <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
+                </Head>
                 <body>
                     <Main />
                     <NextScript />

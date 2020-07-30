@@ -6,7 +6,7 @@ import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import ScoreService from '../data/scoreServices'
-// import Progress from '../components/progress'
+import Progress from '../components/progress'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -19,9 +19,10 @@ function MyApp ({ Component, pageProps }) {
     const [isLoading, setLoading] = useState(true)
     const [isStartAnimationEnded, setIsStartAnimationEnded] = useState(false)
     const [isEndedAnimationStart, setIsEndedAnimationStart] = useState(false)
+    const [routeChange, setRouteChange] = useState(false)
     const isImagesPreLoaded = useImagesServices(eventData)
     const [error, setError] = useState(false)
-    const [eventName, setEventName] = useState('/')
+    const [eventName, setEventName] = useState('')
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData }
     const router = useRouter()
@@ -31,14 +32,31 @@ function MyApp ({ Component, pageProps }) {
     }
 
     function endedCallBack () {
-        // setGlobalLoading(false)
         setGlobalLoading(false)
-        console.log('_app - ANIMATION ENDED')
     }
 
+    function sendStats (needToBeInitialized, shortName) {
+        try {
+            /* eslint-disable */
+            if (RTS === undefined ) {
+                return
+            }
+            if (needToBeInitialized) {
+                RTS.stats.options.initialized = false
+            }
+            RTS.stats.send({ remp: { prefix: `rtsEvents/${shortName}` }, comscore: { prefix: `rtsEvents/${shortName}` } })
+            /* eslint-enable */
+        } catch (e) {
+            console.log('_app - Stats - ERROR', e)
+        }
+    }
+
+    // First load a stats event is sent if GlobalLoading is true
     useEffect(() => {
-        console.log('_app - useEffect eventData', eventData)
-    }, [eventData])
+        if (isGlobalLoading && eventName.length > 0) {
+            sendStats(false, eventName)
+        }
+    }, [eventName])
 
     // wait for preloading service and animated splashscreen
     useEffect(() => {
@@ -46,6 +64,15 @@ function MyApp ({ Component, pageProps }) {
             setIsEndedAnimationStart(true)
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])
+
+    // Each page should trigger loading false after his initizialisation throught the store.setLoading
+    useEffect(() => {
+        if (routeChange) {
+            setLoading(true)
+            sendStats(true, eventName)
+            setRouteChange(false)
+        }
+    }, [routeChange])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
@@ -59,25 +86,16 @@ function MyApp ({ Component, pageProps }) {
             throw new Error(error.message)
         }
 
-        try {
-            console.log('_app - router.query', router.query)
-            const params = (new URL(document.location))
-            console.log('_app - pathname', params.pathname)
-        } catch (error) {
-            throw new Error(error.message)
-        }
-
         // Route change listener for trigger loading state
-        // Each page should trigger loading false after his initizialisation throught the store.setLoading
         const handleRouteChange = (url) => {
-            console.log('handleRouteChange', url)
-            setLoading(true)
+            setRouteChange(true)
         }
         router.events.on('routeChangeStart', handleRouteChange)
     }, [])
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
+            {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
