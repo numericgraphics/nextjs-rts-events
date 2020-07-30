@@ -136,6 +136,7 @@ const hasLoginModal = WrappedComponent => {
         async function handleSubmitNumberReceive (event) {
             event.preventDefault()
             setUserData({ ...userData, error: '' })
+            setLoginState(ModalStates.LOADING)
             const code = userData.code
             try {
                 const response = await fetch('/api/number', {
