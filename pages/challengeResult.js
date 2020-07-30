@@ -210,7 +210,6 @@ function ChallengeResult (props) {
     useEffect(() => {
         fetchData().then()
     }, [])
-    console.log('miadasedfeswf')
     return (
         <EventLayout>
             {isLoading
@@ -226,7 +225,6 @@ function ChallengeResult (props) {
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>
                                     <Typography className={classes.cardHeaderWrong}>
                                         {`${result.score.failure} ${getTranslations(result.score.failure, translation, 'wrong')}`}
-                                        {console.log(result.score)}
                                     </Typography>
                                 </Box>
                                 <Typography className={classes.title}>

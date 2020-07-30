@@ -123,7 +123,7 @@ const useStyles = makeStyles({
         fontSize: '2.5rem',
         padding: '6px 20px'
     },
-    iconTyp: {
+    iconType: {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
@@ -199,14 +199,14 @@ function Result (props) {
                 <ColorCard className={classes.card}>
                     <ColorCardContent className={classes.content}>
                         <Box className={classes.cardHeader}>
-                            <div className={classes.iconTyp}>
+                            <div className={classes.iconType}>
                                 <CheckIcon fontSize="medium" className={classes.rateIcon}></CheckIcon>
                                 <Typography className={classes.cardHeaderSuccess}>
                                     {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
                                 </Typography>
                             </div>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
-                            <div className={classes.iconTyp}>
+                            <div className={classes.iconType}>
                                 <CloseIcon fontSize="medium" className={classes.rateIcon}></CloseIcon>
                                 <Typography className={classes.cardHeaderWrong}>
                                     {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}

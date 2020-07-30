@@ -222,15 +222,6 @@ function DashBoard (props) {
         // Modification de l'orthographe pour le pluriel
     }, [score, translation])
 
-    /* function getTranslations (string, score) {
-        if (score <= 1 && string) {
-            string = string.substr(0, string.length - 1)
-            // setTranslation(copy)
-        // translation.good = translation.good.substr(0, 7)
-        // setTranslation.good(translation.good.substr(0, 7))
-        }
-        return string
-    } */
     return (
         <EventLayout>
             {isLoading
