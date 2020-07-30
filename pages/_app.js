@@ -37,6 +37,22 @@ function MyApp ({ Component, pageProps }) {
         setGlobalLoading(false)
     }
 
+    function sendStats (needToBeInitialized) {
+        try {
+            /* eslint-disable */
+            if (RTS === undefined ) {
+                return
+            }
+           if (needToBeInitialized) {
+               RTS.stats.options.initialized = false
+           }
+            RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
+            /* eslint-enable */
+        } catch (e) {
+            console.log('_app - Stats - ERROR', e)
+        }
+    }
+
     // wait for preloading service and animated splashscreen
     useEffect(() => {
         if (isImagesPreLoaded && isStartAnimationEnded) {
@@ -68,28 +84,14 @@ function MyApp ({ Component, pageProps }) {
         }
 
         // First load a stats event is sent
-        try {
-            // eslint-disable-next-line no-undef
-            RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
-            console.log('_app first load - Stats sent !')
-        } catch (e) {
-            console.log('_app first load - Stats - ERROR', e)
-        }
+        sendStats(false)
 
         // Route change listener for trigger loading state
         // Each page should trigger loading false after his initizialisation throught the store.setLoading
         // Each time a stats event is sent
         const handleRouteChange = (url) => {
             setLoading(true)
-            try {
-                /* eslint-disable */
-                RTS.stats.options.initialized = false
-                RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
-                /* eslint-enable */
-                console.log('_app - Stats sent !')
-            } catch (e) {
-                console.log('_app - Stats - ERROR', e)
-            }
+            sendStats(true)
         }
         Router.events.on('routeChangeStart', handleRouteChange)
     }, [])

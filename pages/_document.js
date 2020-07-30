@@ -11,11 +11,12 @@ export default class MyDocument extends Document {
     render () {
         return (
             <Html>
-                <Head ><title></title></Head>
+                <Head>
+                    <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
+                </Head>
                 <body>
                     <Main />
                     <NextScript />
-                    <script src="https://www.rts.ch/js/tools/stats-external.js"/>
                 </body>
             </Html>
         )
