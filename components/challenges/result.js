@@ -188,14 +188,14 @@ function Result (props) {
                     <ColorCardContent className={classes.content}>
                         <Box className={classes.cardHeader}>
                             <div className={classes.iconType}>
-                                <CheckIcon fontSize="medium" className={classes.rateIcon}/>
+                                <CheckIcon fontSize="small" className={classes.rateIcon}/>
                                 <Typography className={classes.cardHeaderSuccess}>
                                     {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
                                 </Typography>
                             </div>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <div className={classes.iconType}>
-                                <CloseIcon fontSize="medium" className={classes.rateIcon}/>
+                                <CloseIcon fontSize="small" className={classes.rateIcon}/>
                                 <Typography className={classes.cardHeaderWrong}>
                                     {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
                                 </Typography>
