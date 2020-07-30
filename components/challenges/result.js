@@ -177,17 +177,6 @@ function Result (props) {
         setUser(dataProvider.getUser())
     }, [])
 
-    /*  function getTranslations (string, score) {
-        if (score <= 1 && string) {
-            string = string.substr(0, string.length - 1)
-            console.log('ici : ', string)
-            // setTranslation(copy)
-        // translation.good = translation.good.substr(0, 7)
-        // setTranslation.good(translation.good.substr(0, 7))
-        }
-        return string
-    } */
-
     // TODO : remove this local translation
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
@@ -200,14 +189,14 @@ function Result (props) {
                     <ColorCardContent className={classes.content}>
                         <Box className={classes.cardHeader}>
                             <div className={classes.iconType}>
-                                <CheckIcon fontSize="medium" className={classes.rateIcon}></CheckIcon>
+                                <CheckIcon fontSize="medium" className={classes.rateIcon}/>
                                 <Typography className={classes.cardHeaderSuccess}>
                                     {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
                                 </Typography>
                             </div>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <div className={classes.iconType}>
-                                <CloseIcon fontSize="medium" className={classes.rateIcon}></CloseIcon>
+                                <CloseIcon fontSize="medium" className={classes.rateIcon}/>
                                 <Typography className={classes.cardHeaderWrong}>
                                     {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
                                 </Typography>
