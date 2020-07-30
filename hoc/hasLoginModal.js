@@ -11,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
+import ReactCodeInput from 'react-code-input'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -65,6 +66,18 @@ const ModalStates = Object.freeze({
     LOADING: 'loading',
     ERROR: 'error'
 })
+
+const styles = {
+    caseStyle: {
+        width: '42px',
+        height: '48px',
+        margin: '4px',
+        paddingLeft: '12px',
+        fontFamily: 'srgssr-type-Bd',
+        color: '#020202',
+        fontSize: '1.125rem'
+    }
+}
 
 const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
@@ -162,7 +175,6 @@ const hasLoginModal = WrappedComponent => {
                 setUserData({ ...userData, error: error.message })
             }
         }
-
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.NUMBER_RECEIVE:
@@ -171,7 +183,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <LoginTextField id="numberReceive" placeHolder={'- - - -'} value={userData.code} onChange={(data) =>
+                        <ReactCodeInput type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { code: data })
                             )
@@ -196,7 +208,7 @@ const hasLoginModal = WrappedComponent => {
                                 Object.assign({}, userData, { phone: data })
                             )
                         }/>
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" >
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" {...props} >
                             Envoyer
                         </Button>
                     </form>
@@ -222,8 +234,10 @@ const hasLoginModal = WrappedComponent => {
                     BackdropComponent={Backdrop}
                     BackdropProps={{
                         timeout: 500,
-                        style: { backgroundColor: theme.palette.secondary.main,
-                            opacity: '0.8' }
+                        style: {
+                            backgroundColor: theme.palette.secondary.main,
+                            opacity: '0.8'
+                        }
                     }}
                 >
                     <Fade in={open}>

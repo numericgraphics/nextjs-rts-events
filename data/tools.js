@@ -1,8 +1,4 @@
 export function getTranslations (value, translation, type) {
-    // setTranslation(copy)
-    // translation.good = translation.good.substr(0, 7)
-    // setTranslation.good(translation.good.substr(0, 7))
-    console.log(value)
     switch (value) {
     case 0:
         if (type === 'wrong') {

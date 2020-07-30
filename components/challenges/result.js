@@ -127,7 +127,8 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontSize: '40px'
     }
 })
 const styles = {
