@@ -175,7 +175,7 @@ function Question (props) {
                                 }}>
                                     {item}
                                 </CustomDisabledButton>
-                                {(disabled && (answer === index)) && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                {(disabled && (answer === index + 1)) && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </Box>
                         )
                     }
