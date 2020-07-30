@@ -15,6 +15,7 @@ import { ColorBorderButton } from '../components/ui/ColorBorderButton'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
+import { getTranslations } from '../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -141,13 +142,6 @@ const useStyles = makeStyles({
     }
 })
 
-function getTranslations (string, score) {
-    if (score <= 1 && string) {
-        string = string.substr(0, string.length - 1)
-    }
-    return string
-}
-
 function DashBoard (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
@@ -180,6 +174,7 @@ function DashBoard (props) {
     }
 
     function initPage () {
+        console.log(dataProvider)
         setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
         setChallenges(scoreService.getChallenges().length)
         setScore(dataProvider.getScore())
@@ -199,7 +194,6 @@ function DashBoard (props) {
 
     // TODO : remove this local translation
     useEffect(() => {
-        translation.bestScore = 'Meilleur score:'
         score.bestScore = 2000
     }, [score, translation])
 
@@ -278,5 +272,4 @@ function DashBoard (props) {
         </EventLayout>
     )
 }
-
 export default DashBoard

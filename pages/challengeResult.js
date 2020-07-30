@@ -12,6 +12,7 @@ import { ColorCard } from '../components/ui/ColorCard'
 import { ColorCardContent } from '../components/ui/ColorCardContent'
 import { ColorCardActions } from '../components/ui/ColorCardAction'
 import { useHeight } from '../hooks/useHeight'
+import { getTranslations } from '../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -209,7 +210,6 @@ function ChallengeResult (props) {
     useEffect(() => {
         fetchData().then()
     }, [])
-
     return (
         <EventLayout>
             {isLoading
@@ -220,11 +220,11 @@ function ChallengeResult (props) {
                             <ColorCardContent className={classes.content}>
                                 <Box className={classes.cardHeader}>
                                     <Typography className={classes.cardHeaderSuccess}>
-                                        {`${result.score.success} ${translation.good}`}
+                                        {`${result.score.success} ${getTranslations(result.score.success, translation, 'good')}`}
                                     </Typography>
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>
                                     <Typography className={classes.cardHeaderWrong}>
-                                        {`${result.score.failure} ${translation.wrong}`}
+                                        {`${result.score.failure} ${getTranslations(result.score.failure, translation, 'wrong')}`}
                                     </Typography>
                                 </Box>
                                 <Typography className={classes.title}>

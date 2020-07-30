@@ -13,7 +13,8 @@ const useStyles = makeStyles(() => ({
 const styles = {
     textField: {
         fontFamily: 'srgssr-type-Bd',
-        color: '#a6a6a6',
+        fontSize: '1.125rem',
+        color: '#020202',
         border: 'none',
         width: '50vw',
         backgroundColor: 'white',
