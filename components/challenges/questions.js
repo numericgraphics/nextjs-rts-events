@@ -171,7 +171,7 @@ function Question (props) {
                         return (
                             <Box key={index} className={classes.buttonWrapper}>
                                 <CustomDisabledButton color="primary" variant="contained" className={classes.button} disabled={disabled} onClick={() => {
-                                    onAnswer(index)
+                                    onAnswer(index + 1)
                                 }}>
                                     {item}
                                 </CustomDisabledButton>
