@@ -71,6 +71,13 @@ function MyApp ({ Component, pageProps }) {
         // Each page should trigger loading false after his initizialisation throught the store.setLoading
         const handleRouteChange = (url) => {
             setLoading(true)
+            try {
+                // eslint-disable-next-line no-undef
+                RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
+                console.log('DashBoard - Stats sent !')
+            } catch (e) {
+                console.log('DashBoard - Stats - ERROR', e)
+            }
         }
         Router.events.on('routeChangeStart', handleRouteChange)
     }, [])
