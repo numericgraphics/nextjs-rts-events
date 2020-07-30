@@ -67,8 +67,18 @@ function MyApp ({ Component, pageProps }) {
             throw new Error(error.message)
         }
 
+        // First load a stats event is sent
+        try {
+            // eslint-disable-next-line no-undef
+            RTS.stats.send({ remp: { prefix: 'rtsEvents/WF' }, comscore: { prefix: 'rtsEvents/WF' } })
+            console.log('DashBoard - Stats sent !')
+        } catch (e) {
+            console.log('DashBoard - Stats - ERROR', e)
+        }
+
         // Route change listener for trigger loading state
         // Each page should trigger loading false after his initizialisation throught the store.setLoading
+        // Each time a stats event is sent
         const handleRouteChange = (url) => {
             setLoading(true)
             try {

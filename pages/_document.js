@@ -11,7 +11,9 @@ export default class MyDocument extends Document {
     render () {
         return (
             <Html>
-                <Head />
+                <Head>
+                    <script src="https://www.rts.ch/js/tools/stats-external.js"/>
+                </Head>
                 <body>
                     <Main />
                     <NextScript />
