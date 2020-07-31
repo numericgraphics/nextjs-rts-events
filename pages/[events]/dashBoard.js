@@ -183,7 +183,6 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        console.log(dataProvider)
         setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
         setChallenges(scoreService.getChallenges().length)
         setScore(dataProvider.getScore())
@@ -235,11 +234,11 @@ function DashBoard (props) {
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderLeftSideText}>
                                             <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.success} ${getTranslations(translation.good, score.success)}`}
+                                            {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
                                         </Typography>
                                         <Typography className={classes.cardHeaderLeftSideText}>
                                             <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.failure} ${getTranslations(translation.wrong, score.failure)}`}
+                                            {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
                                         </Typography>
                                     </Box>
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>

@@ -122,7 +122,7 @@ function Challenge (props) {
     const classes = useStyles()
     const layoutRef = createRef()
     const { dataProvider, store } = useContext(UserContext)
-    const { isLoading, setLoading, setEventName, eventName } = store
+    const { isGlobalLoading, isLoading, setLoading, setEventName } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
@@ -166,14 +166,6 @@ function Challenge (props) {
             })
 
             if (response.status === 200) {
-                /*
-                ////// MODEL END
-                hasAvailableChallenges: false
-                message: "La bonne réponse était: Réponse3"
-                nextAvailableChallengeID: null
-                points: 0
-                success: false
-                 */
                 const content = await response.json()
                 setResultContent(content)
             } else {
@@ -214,6 +206,10 @@ function Challenge (props) {
         }
     }
 
+    async function gotoDashBoard () {
+        await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
+    }
+
     // Call through question component callBack
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
@@ -222,12 +218,14 @@ function Challenge (props) {
         }
     }, [answer])
 
-    // init Challenge
+    // init Challenge or redirect to dashboard if page is reloaded (isGlobalLoading)
     useEffect(() => {
-        console.log('challenge init events', events)
-        console.log('challenge init eventName', eventName)
-        setEventName(events)
-        fetchQuestions().then()
+        if (isGlobalLoading) {
+            gotoDashBoard().then()
+        } else {
+            setEventName(events)
+            fetchQuestions().then()
+        }
     }, [])
 
     // Back from fetchQuizz call
@@ -257,10 +255,6 @@ function Challenge (props) {
             initGame()
         }
     }, [resultContent])
-
-    useEffect(() => {
-        console.log('Challenge -  DEBUG - challengeState', challengeState)
-    }, [challengeState])
 
     return (
         <EventLayout>
