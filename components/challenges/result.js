@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
+import { getTranslations } from '../../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -81,12 +82,6 @@ const useStyles = makeStyles({
         minWidth: 275,
         minHeight: 300
     },
-    rateIcon: {
-        display: 'flex',
-        justifyContent: 'center',
-        textAlign: 'center',
-        marginLeft: '35%'
-    },
     button: {
         width: '80vw',
         padding: '6px 20px',
@@ -127,6 +122,13 @@ const useStyles = makeStyles({
         color: 'black',
         fontSize: '2.5rem',
         padding: '6px 20px'
+    },
+    iconType: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        alignSelf: 'center',
+        fontSize: '40px'
     }
 })
 const styles = {
@@ -175,13 +177,6 @@ function Result (props) {
         setUser(dataProvider.getUser())
     }, [])
 
-    function getTranslations (string, score) {
-        if (score <= 1 && string) {
-            string = string.substr(0, string.length - 1)
-        }
-        return string
-    }
-
     // TODO : remove this local translation
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
@@ -193,15 +188,19 @@ function Result (props) {
                 <ColorCard className={classes.card}>
                     <ColorCardContent className={classes.content}>
                         <Box className={classes.cardHeader}>
-                            <Typography className={classes.cardHeaderSuccess}>
-                                <CheckIcon fontSize="medium" className={classes.rateIcon}/>
-                                {`${score.success} ${getTranslations(translation.good, score.success)}`}
-                            </Typography>
+                            <div className={classes.iconType}>
+                                <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                <Typography className={classes.cardHeaderSuccess}>
+                                    {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
+                                </Typography>
+                            </div>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
-                            <Typography className={classes.cardHeaderWrong}>
-                                <CloseIcon fontSize="medium" className={classes.rateIcon}/>
-                                {`${score.failure} ${getTranslations(translation.wrong, score.failure)}`}
-                            </Typography>
+                            <div className={classes.iconType}>
+                                <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                <Typography className={classes.cardHeaderWrong}>
+                                    {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
+                                </Typography>
+                            </div>
                         </Box>
                         <Typography className={classes.title}>
                             {success

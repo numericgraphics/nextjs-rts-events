@@ -15,9 +15,9 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: srgssr-type-Rg;
+    font-family: srgssr-type-Rg, sans-serif;
     line-height: 1.6;
-    font-size: 18px;
+    font-size: 1.125rem;
     background-color: #006978;
     /*height: 100%;*/
     overflow: hidden;

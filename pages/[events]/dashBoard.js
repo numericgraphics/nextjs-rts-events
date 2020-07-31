@@ -17,6 +17,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
+import { getTranslations } from '../../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -143,13 +144,6 @@ const useStyles = makeStyles({
     }
 })
 
-function getTranslations (string, score) {
-    if (score <= 1 && string) {
-        string = string.substr(0, string.length - 1)
-    }
-    return string
-}
-
 function DashBoard (props) {
     const router = useRouter()
     const { eventData } = props
@@ -189,6 +183,7 @@ function DashBoard (props) {
     }
 
     function initPage () {
+        console.log(dataProvider)
         setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
         setChallenges(scoreService.getChallenges().length)
         setScore(dataProvider.getScore())
@@ -215,7 +210,6 @@ function DashBoard (props) {
 
     // TODO : remove this local translation
     useEffect(() => {
-        translation.bestScore = 'Meilleur score:'
         score.bestScore = 2000
     }, [score, translation])
 
@@ -281,10 +275,10 @@ function DashBoard (props) {
                     <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                         <Box className={classes.footer}>
                             <ColorBorderButton variant="outlined" className={classes.button}>
-                                {translation.dashBoardSharingButton}
+                                {`${translation.dashBoardSharingButton}`}
                             </ColorBorderButton>
                             <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
-                                {translation.dashBoardChallengesButton}
+                                {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Box>
                     </Fade>
@@ -294,7 +288,6 @@ function DashBoard (props) {
         </EventLayout>
     )
 }
-
 export default DashBoard
 
 export async function getStaticPaths () {

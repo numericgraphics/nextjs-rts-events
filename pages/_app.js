@@ -106,16 +106,3 @@ function MyApp ({ Component, pageProps }) {
 }
 
 export default MyApp
-
-/*
-<UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
-            {(isLoading && !isGlobalLoading) && <Progress/> }
-            {isGlobalLoading
-                ? <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>
-                : <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            }
-        </UserContext.Provider>
- */

@@ -108,7 +108,7 @@ function Events (props) {
         if (params.get('modal')) {
             setTimeout(() => {
                 props.openModal()
-            }, 1000)
+            }, 2000)
         }
     }
 

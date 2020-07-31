@@ -11,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
+import ReactCodeInput from 'react-code-input'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -66,6 +67,18 @@ const ModalStates = Object.freeze({
     ERROR: 'error'
 })
 
+const styles = {
+    caseStyle: {
+        width: '42px',
+        height: '48px',
+        margin: '4px',
+        paddingLeft: '12px',
+        fontFamily: 'srgssr-type-Bd',
+        color: '#020202',
+        fontSize: '1.125rem'
+    }
+}
+
 const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
@@ -83,13 +96,8 @@ const hasLoginModal = WrappedComponent => {
         }
 
         useEffect(() => {
-            console.log('hasLoginModal - useEffect')
             setTranslation(dataProvider.getTranslation())
         }, [])
-
-        useEffect(() => {
-            console.log('translation', translation)
-        }, [translation])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -145,6 +153,7 @@ const hasLoginModal = WrappedComponent => {
         async function handleSubmitNumberReceive (event) {
             event.preventDefault()
             setUserData({ ...userData, error: '' })
+            setLoginState(ModalStates.LOADING)
             const code = userData.code
             try {
                 const response = await fetch('/api/number', {
@@ -170,7 +179,8 @@ const hasLoginModal = WrappedComponent => {
                 setUserData({ ...userData, error: error.message })
             }
         }
-
+        // TODO :  add translation for envoyer
+        // TODO :  add error message centered and with right design
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.NUMBER_RECEIVE:
@@ -179,11 +189,11 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <LoginTextField id="numberReceive" placeHolder={'- - - -'} value={userData.code} onChange={(data) =>
+                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) =>
                             setUserData(
                                 Object.assign({}, userData, { code: data })
                             )
-                        }/>
+                        } name={'login'}/>
                         <Button color="primary" variant="contained" className={classes.button} type="submit">
                             Envoyer
                         </Button>
