@@ -90,6 +90,15 @@ const hasLoginModal = WrappedComponent => {
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
+        const [disabled, setDisabled] = useState(true)
+
+        function checkFieldData (string) {
+            if (string === '') {
+                setDisabled(true)
+            } else {
+                setDisabled(false)
+            }
+        }
 
         const handleOpen = () => {
             setOpen(true)
@@ -106,6 +115,7 @@ const hasLoginModal = WrappedComponent => {
         }
 
         function OpenModal () {
+            setDisabled(true)
             handleOpen()
         }
 
@@ -209,12 +219,15 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <LoginTextField id="phoneNumber" placeHolder={'0041 79 123 45 67'} value={userData.phone} onChange={(data) =>
-                            setUserData(
-                                Object.assign({}, userData, { phone: data })
-                            )
+                        <LoginTextField id="phoneNumber" placeHolder={'0041 79 123 45 67'} value={userData.phone} onChange={
+                            function checkField (data) {
+                                checkFieldData(data)
+                                setUserData(
+                                    Object.assign({}, userData, { phone: data })
+                                )
+                            }
                         }/>
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" >
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
                         </Button>
                     </form>
