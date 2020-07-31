@@ -54,8 +54,6 @@ export function useImagesServices (eventData) {
     useEffect(() => {
         if (Object.keys(eventData).length !== 0) {
             preloadImages(getAllImagesFromJSON(eventData))
-        } else {
-            console.log('no data')
         }
     }, [eventData])
     return isImagesPreLoaded
