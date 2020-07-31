@@ -129,6 +129,7 @@ const hasLoginModal = WrappedComponent => {
 
         async function handleSubmitPhoneNumber (event) {
             event.preventDefault()
+            setDisabled(true)
             setUserData({ ...userData, error: '' })
             setLoginState(ModalStates.LOADING)
             const phone = userData.phone
@@ -199,12 +200,15 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) =>
-                            setUserData(
-                                Object.assign({}, userData, { code: data })
-                            )
+                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={
+                            function checkField (data) {
+                                checkFieldData(data)
+                                setUserData(
+                                    Object.assign({}, userData, { code: data })
+                                )
+                            }
                         } name={'login'}/>
-                        <Button color="primary" variant="contained" className={classes.button} type="submit">
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
                             Envoyer
                         </Button>
                     </form>
