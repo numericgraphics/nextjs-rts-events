@@ -92,14 +92,6 @@ const hasLoginModal = WrappedComponent => {
         const theme = useTheme()
         const [disabled, setDisabled] = useState(true)
 
-        function checkFieldData (string) {
-            if (string === '') {
-                setDisabled(true)
-            } else {
-                setDisabled(false)
-            }
-        }
-
         const handleOpen = () => {
             setOpen(true)
         }
@@ -108,6 +100,14 @@ const hasLoginModal = WrappedComponent => {
             setTranslation(dataProvider.getTranslation())
         }, [])
 
+        useEffect(() => {
+            setDisabled(userData.phone.length === 0)
+        }, [userData.phone])
+
+        useEffect(() => {
+            setDisabled(userData.code.length === 0)
+        }, [userData.code])
+
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
             setUserData({ phone: '', code: '', error: '' })
@@ -115,7 +115,6 @@ const hasLoginModal = WrappedComponent => {
         }
 
         function OpenModal () {
-            setDisabled(true)
             handleOpen()
         }
 
@@ -200,13 +199,11 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={
-                            function checkField (data) {
-                                checkFieldData(data)
-                                setUserData(
-                                    Object.assign({}, userData, { code: data })
-                                )
-                            }
+                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) => {
+                            setUserData(
+                                Object.assign({}, userData, { code: data })
+                            )
+                        }
                         } name={'login'}/>
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
                             Envoyer
@@ -223,13 +220,11 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <LoginTextField id="phoneNumber" placeHolder={'0041 79 123 45 67'} value={userData.phone} onChange={
-                            function checkField (data) {
-                                checkFieldData(data)
-                                setUserData(
-                                    Object.assign({}, userData, { phone: data })
-                                )
-                            }
+                        <LoginTextField id="phoneNumber" placeHolder={'0041 79 123 45 67'} value={userData.phone} onChange={(data) => {
+                            setUserData(
+                                Object.assign({}, userData, { phone: data })
+                            )
+                        }
                         }/>
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
