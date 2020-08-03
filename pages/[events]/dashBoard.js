@@ -11,7 +11,7 @@ import { ColorCardContent } from '../../components/ui/ColorCardContent'
 import { ColorCard } from '../../components/ui/ColorCard'
 import { CustomDisabledButton } from '../../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/DashBoardChallengesProgress'
-// import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
+import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
@@ -274,9 +274,9 @@ function DashBoard (props) {
                     </Fade>
                     <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                         <Box className={classes.footer}>
-                            {/* <ColorBorderButton variant="outlined" className={classes.button}>
+                            <ColorBorderButton variant="outlined" className={classes.button}>
                                 {`${translation.dashBoardSharingButton}`}
-                                </ColorBorderButton> */}
+                            </ColorBorderButton>
                             <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
