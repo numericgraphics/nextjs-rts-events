@@ -158,6 +158,7 @@ function DashBoard (props) {
     const { dataProvider, scoreService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
+    console.log(translation)
 
     async function fetchData () {
         try {
@@ -273,9 +274,9 @@ function DashBoard (props) {
                     </Fade>
                     <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                         <Box className={classes.footer}>
-                            <ColorBorderButton variant="outlined" className={classes.button}>
+                            {/* <ColorBorderButton variant="outlined" className={classes.button}>
                                 {`${translation.dashBoardSharingButton}`}
-                            </ColorBorderButton>
+                                </ColorBorderButton> */}
                             <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
