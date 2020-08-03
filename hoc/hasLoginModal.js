@@ -58,6 +58,7 @@ const useStyles = makeStyles(() => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
+
     }
 }))
 const ModalStates = Object.freeze({
@@ -124,6 +125,10 @@ const hasLoginModal = WrappedComponent => {
             setTimeout(() => {
                 handleClose()
             }, 5000)
+        }
+
+        function resetPlaceHolder() {
+            setNum('0')
         }
 
         async function handleSubmitPhoneNumber (event) {
@@ -220,7 +225,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <LoginTextField id="phoneNumber" placeHolder={'0041 79 123 45 67'} value={userData.phone} onChange={(data) => {
+                        <LoginTextField id="phoneNumber" placeHolder={'0041791234567'} value={userData.phone} onChange={(data) => {
                             setUserData(
                                 Object.assign({}, userData, { phone: data })
                             )
