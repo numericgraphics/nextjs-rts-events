@@ -238,6 +238,8 @@ const hasLoginModal = WrappedComponent => {
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
+                            countryCodeEditable={false}
+                            placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
                                 setUserData(
