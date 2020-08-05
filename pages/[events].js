@@ -71,11 +71,14 @@ function Events (props) {
         try {
             const response = await fetch(`api/verify/${events}`)
             if (response.status === 200) {
+                initPage()
                 const content = await response.json()
                 dataProvider.setData(content)
                 await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
+                console.log('status 200')
             } else {
                 initPage()
+                console.log('Not status 200')
             }
         } catch (error) {
             throw new Error(error.message)
@@ -98,6 +101,7 @@ function Events (props) {
     }, [isGlobalLoading])
 
     function initPage () {
+        console.log(initPage)
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         setActiveStep(0)
