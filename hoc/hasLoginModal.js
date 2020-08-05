@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
         position: 'relative',
         borderRadius: 30,
         alignSelf: 'center',
-        fontSize: '1.25rem',
+        fontSize: '1rem',
         padding: '6px 20px',
         marginTop: 30
     },
