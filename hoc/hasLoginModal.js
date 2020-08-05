@@ -12,6 +12,8 @@ import UserContext from '../components/UserContext'
 import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
 import ReactCodeInput from 'react-code-input'
+import ReactPhoneInput from 'react-phone-input-2'
+
 // test 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -127,10 +129,6 @@ const hasLoginModal = WrappedComponent => {
             }, 5000)
         }
 
-        function resetPlaceHolder() {
-            setNum('0')
-        }
-
         async function handleSubmitPhoneNumber (event) {
             event.preventDefault()
             setDisabled(true)
@@ -225,12 +223,28 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <LoginTextField id="phoneNumber" placeHolder={'0041791234567'} value={userData.phone} onChange={(data) => {
+                        {/* <LoginTextField id="phoneNumber" placeHolder={'0041791234567'} value={userData.phone} onChange={(data) => {
                             setUserData(
                                 Object.assign({}, userData, { phone: data })
                             )
                         }
-                        }/>
+                        }/> */}
+                        <ReactPhoneInput
+                            inputExtraProps={{
+                                name: 'phone',
+                                required: true,
+                                autoFocus: true,
+                                enableSearch: true
+                            }}
+                            country='ch'
+                            onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
+                            value={userData.phone}
+                            onChange={(data) => {
+                                setUserData(
+                                    Object.assign({}, userData, { phone: data })
+                                )
+                            } }
+                        />
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
                         </Button>
