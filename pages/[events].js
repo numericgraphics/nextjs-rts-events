@@ -74,8 +74,10 @@ function Events (props) {
                 const content = await response.json()
                 dataProvider.setData(content)
                 await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
+                console.log('status Page')
             } else {
                 initPage()
+                console.log('init page')
             }
         } catch (error) {
             throw new Error(error.message)
