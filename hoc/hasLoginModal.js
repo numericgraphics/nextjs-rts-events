@@ -9,12 +9,10 @@ import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import UserContext from '../components/UserContext'
-import LoginTextField from '../components/ui/LoginTextField'
 import Button from '@material-ui/core/Button'
 import ReactCodeInput from 'react-code-input'
 import ReactPhoneInput from 'react-phone-input-2'
 
-// test 
 const useStyles = makeStyles(() => ({
     modal: {
         display: 'flex',
@@ -79,6 +77,14 @@ const styles = {
         fontFamily: 'srgssr-type-Bd',
         color: '#020202',
         fontSize: '1.125rem'
+    },
+    textField: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.125rem',
+        color: '#020202',
+        border: 'none',
+        width: '100%',
+        backgroundColor: 'white'
     }
 }
 
@@ -223,18 +229,14 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        {/* <LoginTextField id="phoneNumber" placeHolder={'0041791234567'} value={userData.phone} onChange={(data) => {
-                            setUserData(
-                                Object.assign({}, userData, { phone: data })
-                            )
-                        }
-                        }/> */}
                         <ReactPhoneInput
+                            inputProps={ { style: styles.textField } }
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
                                 autoFocus: true,
-                                enableSearch: true
+                                enableSearch: true,
+                                style: styles.textField
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
