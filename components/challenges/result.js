@@ -14,7 +14,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getTranslations } from '../../data/tools'
-
+// Delete me
 const useStyles = makeStyles({
     containerGlobal: {
         justifyContent: 'flex-start'
