@@ -36,6 +36,7 @@ class DataProvider {
     }
 
     getPromos () {
+        console.log('getPromo')
         return this.data.promos
     }
 
