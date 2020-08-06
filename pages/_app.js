@@ -13,7 +13,6 @@ import SplashScreen from '../components/splashScreen'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
-import 'video-react/dist/video-react.css'
 
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
