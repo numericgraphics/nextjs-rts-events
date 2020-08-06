@@ -214,7 +214,7 @@ function DashBoard (props) {
     }, [score, translation])
 
     return (
-        <EventLayout>
+        <EventLayout onClick={console.log('hello')}>
             {isLoading && isGlobalLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >

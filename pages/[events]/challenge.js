@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useState } from 'react'
+import React, { useRef, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../components/UserContext'
@@ -11,6 +11,8 @@ import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
+import { Player, ControlBar, BigPlayButton } from 'video-react'
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -120,7 +122,8 @@ function Challenge (props) {
     const router = useRouter()
     const { events } = router.query
     const classes = useStyles()
-    const layoutRef = createRef()
+    const layoutRef = useRef()
+    let playerRef = null
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
@@ -129,6 +132,8 @@ function Challenge (props) {
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = React.useState()
     const height = useHeight()
+    const [backgroundType, setBackgroundType] = useState('video')
+    const [mute, setMute] = useState(true)
 
     async function fetchQuestions () {
         try {
@@ -236,6 +241,7 @@ function Challenge (props) {
             }
             const { imageURL } = questionsContent
             setImageURL(imageURL)
+            console.log(imageURL)
             setChallengeState(ChallengeStates.COUNTDOWN)
             props.openCountDownModal()
             props.startCountDown()
@@ -251,21 +257,26 @@ function Challenge (props) {
     // Back from fetchQuizzResult
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
+            playerRef.pause()
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
     }, [resultContent])
-
+    console.log(Question.mute)
     return (
         <EventLayout>
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
+                    <Button onClick={() => { setMute(false) }}>Unmute</Button>
                     {getChallengeContent(challengeState)}
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
+                    {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
+                        : <Player videoWidth="auto" videoHeight="100%" ref={(player) => { playerRef = player }} muted={mute} loop playsInline className={classes.video} src='https://cdn.rts.ch/rtschallengeassets/challenges/sport-paques-20/videos/I_Musy_Q1_1.mp4' >
+                            <ControlBar disableCompletely={true} />
+                        </Player> }
                 </InnerHeightLayout>
             }
         </EventLayout>
