@@ -251,6 +251,8 @@ function Challenge (props) {
     useEffect(() => {
         if (props.status) {
             setChallengeState(ChallengeStates.QUESTIONS)
+            playerRef.play()
+            // playerRef.start()
         }
     }, [props.status])
 
@@ -262,13 +264,12 @@ function Challenge (props) {
             initGame()
         }
     }, [resultContent])
-    console.log(Question.mute)
     return (
         <EventLayout>
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
-                    <Button onClick={() => { setMute(false) }}>Unmute</Button>
+                    <Button style={{ zIndex: '10' }} onClick={() => { setMute(false) }}>Unmute</Button>
                     {getChallengeContent(challengeState)}
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>

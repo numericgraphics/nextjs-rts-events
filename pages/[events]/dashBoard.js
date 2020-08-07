@@ -158,7 +158,6 @@ function DashBoard (props) {
     const { dataProvider, scoreService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
-    console.log(translation)
 
     async function fetchData () {
         try {
@@ -214,7 +213,7 @@ function DashBoard (props) {
     }, [score, translation])
 
     return (
-        <EventLayout onClick={console.log('hello')}>
+        <EventLayout >
             {isLoading && isGlobalLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >
