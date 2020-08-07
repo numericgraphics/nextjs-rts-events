@@ -90,6 +90,10 @@ const useStyles = makeStyles({
         flexGrow: 1,
         zIndex: 2,
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
+    },
+    playBtn: {
+        display: 'none',
+        opacity: 0
     }
 })
 const styles = {
@@ -123,6 +127,7 @@ function Challenge (props) {
     const { events } = router.query
     const classes = useStyles()
     const layoutRef = useRef()
+    // TODO Meilleur temps d'utiliser un useRef ?
     let playerRef = null
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName } = store
@@ -131,8 +136,9 @@ function Challenge (props) {
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = React.useState()
+    const [videoURL, setVideoURL] = useState()
     const height = useHeight()
-    const [backgroundType, setBackgroundType] = useState('video')
+    const [backgroundType, setBackgroundType] = useState('')
     const [mute, setMute] = useState(true)
 
     async function fetchQuestions () {
@@ -240,8 +246,15 @@ function Challenge (props) {
                 setLoading(false)
             }
             const { imageURL } = questionsContent
-            setImageURL(imageURL)
-            console.log(imageURL)
+            const { videoURL } = questionsContent
+            console.log(videoURL)
+            if (videoURL !== null) {
+                setVideoURL(videoURL)
+                setBackgroundType('video')
+            } else {
+                setImageURL(imageURL)
+                setBackgroundType('image')
+            }
             setChallengeState(ChallengeStates.COUNTDOWN)
             props.openCountDownModal()
             props.startCountDown()
@@ -251,19 +264,22 @@ function Challenge (props) {
     useEffect(() => {
         if (props.status) {
             setChallengeState(ChallengeStates.QUESTIONS)
-            playerRef.play()
-            // playerRef.start()
+            // eslint-disable-next-line no-unused-expressions
+            backgroundType === 'video' ? playerRef.play() : null
         }
     }, [props.status])
 
     // Back from fetchQuizzResult
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
-            playerRef.pause()
+            // eslint-disable-next-line no-unused-expressions
+            backgroundType === 'video' ? playerRef.pause() : null
+            setMute(true)
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
     }, [resultContent])
+    console.log(questionsContent)
     return (
         <EventLayout>
             {isLoading
@@ -275,7 +291,8 @@ function Challenge (props) {
                         ? <Box className={classes.gradient}/>
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                        : <Player videoWidth="auto" videoHeight="100%" ref={(player) => { playerRef = player }} muted={mute} loop playsInline className={classes.video} src='https://cdn.rts.ch/rtschallengeassets/challenges/sport-paques-20/videos/I_Musy_Q1_1.mp4' >
+                        : <Player videoWidth="auto" videoHeight="100%" ref={(player) => { playerRef = player }} muted={mute} loop playsInline className={classes.video} src={videoURL} >
+                            <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                             <ControlBar disableCompletely={true} />
                         </Player> }
                 </InnerHeightLayout>
