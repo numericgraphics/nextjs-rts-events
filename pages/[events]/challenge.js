@@ -94,7 +94,12 @@ const useStyles = makeStyles({
     playBtn: {
         display: 'none',
         opacity: 0
+    },
+    video: {
+        display: 'flex',
+        alignSelf: 'center'
     }
+
 })
 const styles = {
     containerOverlay: {
@@ -291,7 +296,7 @@ function Challenge (props) {
                         ? <Box className={classes.gradient}/>
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                        : <Player videoWidth="auto" videoHeight="100%" ref={(player) => { playerRef = player }} muted={mute} loop playsInline className={classes.video} src={videoURL} >
+                        : <Player videoWidth="auto" videoHeight="100%" ref={(player) => { playerRef = player }} muted={mute} loop playsInline fluid={false} height={height} className={classes.video} src={videoURL} >
                             <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                             <ControlBar disableCompletely={true} />
                         </Player> }
