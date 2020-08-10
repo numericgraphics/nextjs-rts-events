@@ -270,6 +270,8 @@ function Challenge (props) {
         if (props.status) {
             setChallengeState(ChallengeStates.QUESTIONS)
             // eslint-disable-next-line no-unused-expressions
+            // backgroundType === 'video' ? playerRef.load(videoURL) : null
+            // eslint-disable-next-line no-unused-expressions
             backgroundType === 'video' ? playerRef.play() : null
         }
     }, [props.status])
