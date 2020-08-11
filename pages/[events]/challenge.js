@@ -252,8 +252,7 @@ function Challenge (props) {
             }
             const { imageURL } = questionsContent
             const { videoURL } = questionsContent
-            console.log(videoURL)
-            if (videoURL !== null) {
+            if (videoURL) {
                 setVideoURL(videoURL)
                 setBackgroundType('video')
             } else {
