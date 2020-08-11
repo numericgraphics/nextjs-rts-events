@@ -1,6 +1,7 @@
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import React, { forwardRef } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import VideoControler from './VideoControler'
 
 const useStyles = makeStyles({
     playBtn: {
@@ -10,6 +11,11 @@ const useStyles = makeStyles({
     video: {
         display: 'flex',
         alignSelf: 'center'
+    },
+    ContainerVideo: {
+        display: 'flex',
+        alignSelf: 'center',
+        flexDirection: 'column'
     }
 })
 
@@ -17,10 +23,13 @@ function Video (props, ref) {
     const classes = useStyles()
 
     return (
-        <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={false} className={classes.video} >
-            <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
-            <ControlBar disableCompletely={true} />
-        </Player>
+        <div className={classes.ContainerVideo}>
+            <VideoControler />
+            <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={false} className={classes.video} >
+                <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
+                <ControlBar disableCompletely={true} />
+            </Player>
+        </div>
     )
 }
 
