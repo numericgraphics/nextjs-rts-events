@@ -11,7 +11,7 @@ import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
-import { Player, ControlBar, BigPlayButton } from 'video-react'
+import Video from '../../components/ui/Player'
 import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles({
@@ -90,14 +90,6 @@ const useStyles = makeStyles({
         flexGrow: 1,
         zIndex: 2,
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
-    },
-    playBtn: {
-        display: 'none',
-        opacity: 0
-    },
-    video: {
-        display: 'flex',
-        alignSelf: 'center'
     }
 
 })
@@ -133,7 +125,6 @@ function Challenge (props) {
     const classes = useStyles()
     const layoutRef = useRef()
     // TODO Meilleur temps d'utiliser un useRef ?
-    let playerRef = null
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
@@ -145,6 +136,7 @@ function Challenge (props) {
     const height = useHeight()
     const [backgroundType, setBackgroundType] = useState('')
     const [mute, setMute] = useState(true)
+    const playerRef = useRef()
 
     async function fetchQuestions () {
         try {
@@ -271,7 +263,7 @@ function Challenge (props) {
             // eslint-disable-next-line no-unused-expressions
             // backgroundType === 'video' ? playerRef.load(videoURL) : null
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? playerRef.play() : null
+            backgroundType === 'video' ? playerRef.current.actions.play() : null
         }
     }, [props.status])
 
@@ -279,13 +271,12 @@ function Challenge (props) {
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? playerRef.pause() : null
+            backgroundType === 'video' ? playerRef.current.actions.pause() : null
             setMute(true)
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
     }, [resultContent])
-    console.log(questionsContent)
     return (
         <EventLayout>
             {isLoading
@@ -297,10 +288,8 @@ function Challenge (props) {
                         ? <Box className={classes.gradient}/>
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                        : <Player videoWidth="auto" videoHeight="100%" ref={(player) => { playerRef = player }} muted={mute} loop playsInline fluid={false} height={height} className={classes.video} src={videoURL} >
-                            <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
-                            <ControlBar disableCompletely={true} />
-                        </Player> }
+                        // eslint-disable-next-line no-const-assign
+                        : <Video ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>
