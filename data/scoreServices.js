@@ -3,6 +3,11 @@ class ScoreServices {
         this.dataProvider = dataProvider
         this.getChallengesStates = this.getChallengesStates.bind(this)
         this.getChallenges = this.getChallenges.bind(this)
+        this.gameStats = this.getGameStats.bind(this)
+    }
+
+    getGameStats () {
+        return this.dataProvider.getGameStats()
     }
 
     getChallenges () {
@@ -13,8 +18,10 @@ class ScoreServices {
         return this.dataProvider.getChallengesStates()
     }
 
-    getRemainingChallengesByPercent () {
-        return (this.getChallengesStates().length / this.getChallenges().length) * 100
+    getProgress () {
+        const total = this.gameStats().totalChallengesCount
+        const available = this.gameStats().availableChallengesCount
+        return 100 * (total - available) / total
     }
 
     getUserPoints () {

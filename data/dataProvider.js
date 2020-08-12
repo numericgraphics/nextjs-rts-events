@@ -11,7 +11,8 @@ class DataProvider {
             translation: {},
             challengesStates: [],
             hasAvailableChallenges: true,
-            score: {}
+            score: {}, //DEPRECATED
+            gameStats: {} 
         }
     }
 
@@ -25,6 +26,10 @@ class DataProvider {
 
     getScore () {
         return this.data.score
+    }
+
+    getGameStats () {
+        return this.data.gameStats
     }
 
     getTheme () {

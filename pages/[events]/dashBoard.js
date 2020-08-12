@@ -152,13 +152,13 @@ function DashBoard (props) {
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const [score, setScore] = useState({})
+    const [score, setScore] = useState({}) // DEPRECATED
+    const [gameStats, setGameStats] = useState({})
     const [challenges, setChallenges] = useState([])
-    const [remainingChallenges, setRemainingChallenges] = useState(0)
+    const [progress, setProgress] = useState(0)
     const { dataProvider, scoreService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
-    console.log(translation)
 
     async function fetchData () {
         try {
@@ -184,9 +184,11 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
+        setProgress(scoreService.getProgress())
         setChallenges(scoreService.getChallenges().length)
-        setScore(dataProvider.getScore())
+        setScore(dataProvider.getScore()) // DEPRECATED
+        setGameStats(dataProvider.getGameStats())
+        console.log(gameStats)
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
@@ -257,7 +259,7 @@ function DashBoard (props) {
                                         {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
                                     </Typography>
                                     {availableChallenges
-                                        ? <DashBoardChallengesProgress variant="determinate" progress={remainingChallenges} />
+                                        ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                         : <Box>
                                             <Typography className={classes.textRegularCenter}>
                                                 {`${translation.score} ${score.totalPoints}`}
