@@ -137,6 +137,7 @@ function Challenge (props) {
     const [backgroundType, setBackgroundType] = useState('')
     const [mute, setMute] = useState(true)
     const playerRef = useRef()
+    const videoCtrl = useRef()
 
     async function fetchQuestions () {
         try {
@@ -264,6 +265,8 @@ function Challenge (props) {
             // backgroundType === 'video' ? playerRef.load(videoURL) : null
             // eslint-disable-next-line no-unused-expressions
             backgroundType === 'video' ? playerRef.current.actions.play() : null
+            // eslint-disable-next-line no-unused-expressions
+            backgroundType === 'video' ? videoCtrl.current.onclick = () => { setMute(false) } : null
         }
     }, [props.status])
 
@@ -282,14 +285,13 @@ function Challenge (props) {
             {isLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
-                    <Button style={{ zIndex: '10' }} onClick={() => { setMute(false) }}>Unmute</Button>
                     {getChallengeContent(challengeState)}
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
                         // eslint-disable-next-line no-const-assign
-                        : <Video ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                        : <Video refCtrl={videoCtrl} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>

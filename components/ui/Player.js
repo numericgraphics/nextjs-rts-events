@@ -24,7 +24,7 @@ function Video (props, ref) {
 
     return (
         <div className={classes.ContainerVideo}>
-            <VideoControler />
+            <VideoControler ref={props.refCtrl} />
             <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={false} className={classes.video} >
                 <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                 <ControlBar disableCompletely={true} />
