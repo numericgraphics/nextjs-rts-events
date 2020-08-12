@@ -12,6 +12,6 @@ module.exports = {
     serverRuntimeConfig: {
         EVENT_NAME: 'NIFF',
         API_BASE_URL: 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/',
-        API_STAGE: 'latest'
+        API_STAGE: 'prod'
     }
 }
