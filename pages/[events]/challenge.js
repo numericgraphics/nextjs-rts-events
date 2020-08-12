@@ -300,7 +300,6 @@ function Challenge (props) {
             initGame()
         }
     }, [resultContent])
-    console.log(playerRef)
     return (
         <EventLayout>
             {isLoading

@@ -23,11 +23,6 @@ const useStyles = makeStyles({
 const hide = { display: 'none' }
 function VideoControler (props, ref) {
     const classes = useStyles()
-
-    /* const toggleVolume = () => {
-        volume === false ? setVolume(true) : setVolume(false)
-    } */
-    console.log(props.curPlaying)
     return (
         <div className={classes.controlContainer} >
             <div className={classes.volumeBtn} >
