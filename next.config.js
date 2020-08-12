@@ -10,6 +10,8 @@ module.exports = {
         USE_MOCK: false
     },
     serverRuntimeConfig: {
-        EVENT_NAME: 'NIFF'
+        EVENT_NAME: 'NIFF',
+        API_BASE_URL: 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/',
+        API_STAGE: 'latest'
     }
 }
