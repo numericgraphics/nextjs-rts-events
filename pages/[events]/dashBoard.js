@@ -155,7 +155,7 @@ function DashBoard (props) {
     const [gameStats, setGameStats] = useState({})
     const [challenges, setChallenges] = useState([])
     const [progress, setProgress] = useState(0)
-    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
 
@@ -169,7 +169,7 @@ function DashBoard (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                scoreService.init(dataProvider)
+                gameStatsService.init(dataProvider)
                 initPage()
             } else {
                 await Router.push('/[events]', {
@@ -183,8 +183,8 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        setProgress(scoreService.getProgress())
-        setChallenges(scoreService.getChallenges().length)
+        setProgress(gameStatsService.getProgress())
+        setChallenges(gameStatsService.getChallenges().length)
         setGameStats(dataProvider.getGameStats())
         console.log(gameStats)
         setTranslation(dataProvider.getTranslation())

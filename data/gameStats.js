@@ -1,4 +1,4 @@
-class ScoreServices {
+class GameStatsServices {
     init (dataProvider) {
         this.dataProvider = dataProvider
         this.getChallengesStates = this.getChallengesStates.bind(this)
@@ -55,5 +55,5 @@ class ScoreServices {
     }
 }
 
-const ScoreServicesInstance = new ScoreServices()
-export default ScoreServicesInstance
+const GameStatsInstance = new GameStatsServices()
+export default GameStatsInstance
