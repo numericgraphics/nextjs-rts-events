@@ -1,5 +1,7 @@
 import cookie from 'cookie'
 import fetch from 'node-fetch'
+import getConfig from 'next/config'
+const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
     const { query: { events } } = req
@@ -17,7 +19,10 @@ export default async (req, res) => {
             if (cookieValue.code) {
                 // getData to get timeline
                 const code = cookieValue.code
-                const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/${events}/${cookieValue.userID}/getUser`, {
+
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${events}/${cookieValue.userID}/getUser`
+
+                const response = await fetch(url, {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
