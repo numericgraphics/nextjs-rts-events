@@ -152,7 +152,6 @@ function DashBoard (props) {
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const [score, setScore] = useState({}) // DEPRECATED
     const [gameStats, setGameStats] = useState({})
     const [challenges, setChallenges] = useState([])
     const [progress, setProgress] = useState(0)
@@ -186,7 +185,6 @@ function DashBoard (props) {
     function initPage () {
         setProgress(scoreService.getProgress())
         setChallenges(scoreService.getChallenges().length)
-        setScore(dataProvider.getScore()) // DEPRECATED
         setGameStats(dataProvider.getGameStats())
         console.log(gameStats)
         setTranslation(dataProvider.getTranslation())
@@ -210,11 +208,7 @@ function DashBoard (props) {
         fetchData().then()
     }, [])
 
-    // TODO : remove this local translation
-    useEffect(() => {
-        score.bestScore = 2000
-    }, [score, translation])
-
+    // TODO : translation "pts"
     return (
         <EventLayout>
             {isLoading && isGlobalLoading
@@ -236,18 +230,18 @@ function DashBoard (props) {
                                 <Box className={classes.cardHeader}>
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
+                                            <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                            {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
                                         </Typography>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
+                                            <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                            {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
                                         </Typography>
                                     </Box>
-                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                    <Avatar className={classes.avatar} src={user.avatarURL} />
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderRightSideText}>
-                                            {`${score.totalPoints} pts`}
+                                            {`${gameStats.currentScore} pts`}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -262,10 +256,10 @@ function DashBoard (props) {
                                         ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                         : <Box>
                                             <Typography className={classes.textRegularCenter}>
-                                                {`${translation.score} ${score.totalPoints}`}
+                                                {`${translation.score} ${gameStats.currentScore}`}
                                             </Typography>
                                             <Typography className={classes.textRegularCenter}>
-                                                {`${translation.bestScore} ${score.bestScore}`}
+                                                {`${translation.bestScore} ${gameStats.topScore}`}
                                             </Typography>
                                         </Box>
                                     }
@@ -284,7 +278,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Box>
                     </Fade>
-                    <Box className={classes.gradient}/>
+                    <Box className={classes.gradient} />
                 </InnerHeightLayout>
             }
         </EventLayout>
