@@ -138,6 +138,9 @@ function Challenge (props) {
     const playerRef = useRef()
     const videoMute = useRef()
     const videoUnmute = useRef()
+    const videoPlay = useRef()
+    const videoPause = useRef()
+    const [curPlaying, setCurPlaying] = useState(true)
 
     async function fetchQuestions () {
         try {
@@ -269,6 +272,20 @@ function Challenge (props) {
             backgroundType === 'video' ? videoMute.current.onclick = () => { setMute(false) } : null
             // eslint-disable-next-line no-unused-expressions
             backgroundType === 'video' ? videoUnmute.current.onclick = () => { setMute(true) } : null
+            // eslint-disable-next-line no-unused-expressions
+            // backgroundType === 'video' ? () => { playerRef.current.actions.handlePlay(setCurPlaying(true)) } : null
+            // eslint-disable-next-line no-unused-expressions
+            // backgroundType === 'video' ? () => { playerRef.current.actions.handlePause(setCurPlaying(false)) } : null
+            // eslint-disable-next-line no-unused-expressions
+            backgroundType === 'video' ? videoPause.current.onclick = function () {
+                playerRef.current.actions.pause()
+                setCurPlaying(false)
+            } : null
+            // eslint-disable-next-line no-unused-expressions
+            backgroundType === 'video' ? videoPlay.current.onclick = function () {
+                playerRef.current.actions.play()
+                setCurPlaying(true)
+            } : null
         }
     }, [props.status])
 
@@ -278,10 +295,12 @@ function Challenge (props) {
             // eslint-disable-next-line no-unused-expressions
             backgroundType === 'video' ? playerRef.current.actions.pause() : null
             setMute(true)
+            setCurPlaying(false)
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
     }, [resultContent])
+    console.log(playerRef)
     return (
         <EventLayout>
             {isLoading
@@ -293,7 +312,7 @@ function Challenge (props) {
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
                         // eslint-disable-next-line no-const-assign
-                        : <Video refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                        : <Video curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>
