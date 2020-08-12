@@ -11,8 +11,7 @@ class DataProvider {
             translation: {},
             challengesStates: [],
             hasAvailableChallenges: true,
-            score: {}, //DEPRECATED
-            gameStats: {} 
+            gameStats: {}
         }
     }
 
@@ -22,10 +21,6 @@ class DataProvider {
 
     getAllData () {
         return this.data
-    }
-
-    getScore () {
-        return this.data.score
     }
 
     getGameStats () {
