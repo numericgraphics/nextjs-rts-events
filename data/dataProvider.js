@@ -3,13 +3,11 @@ class DataProvider {
         this.data = {
             user: {},
             challenge: {},
-            challenges: [],
             gifts: [],
             promos: [],
             theme: {},
             timeControl: {},
             translation: {},
-            challengesStates: [],
             hasAvailableChallenges: true,
             gameStats: {}
         }
