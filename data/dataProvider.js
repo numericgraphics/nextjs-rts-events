@@ -64,7 +64,7 @@ class DataProvider {
     }
 
     hasAvailableChallenges () {
-        return this.data.hasAvailableChallenges
+        return this.data.gameStats.hasAvailableChallenges
     }
 }
 

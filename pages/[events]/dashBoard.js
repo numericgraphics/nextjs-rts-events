@@ -153,7 +153,6 @@ function DashBoard (props) {
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
     const [gameStats, setGameStats] = useState({})
-    const [challenges, setChallenges] = useState([])
     const [progress, setProgress] = useState(0)
     const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
@@ -184,9 +183,7 @@ function DashBoard (props) {
 
     function initPage () {
         setProgress(gameStatsService.getProgress())
-        setChallenges(gameStatsService.getChallenges().length)
         setGameStats(dataProvider.getGameStats())
-        console.log(gameStats)
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
@@ -250,7 +247,7 @@ function DashBoard (props) {
                                 </Typography>
                                 <Box>
                                     <Typography className={classes.textRegularCenter}>
-                                        {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
+                                        {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
                                     </Typography>
                                     {availableChallenges
                                         ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
