@@ -24,16 +24,16 @@ const displayPlay = { display: 'none' }
 
 function VideoControler (props, ref) {
     const classes = useStyles()
-    const [volume, setVolume] = useState(false)
+    // const [volume, setVolume] = useState(false)
 
-    const toggleVolume = () => {
+    /* const toggleVolume = () => {
         volume === false ? setVolume(true) : setVolume(false)
-    }
+    } */
 
     return (
         <div className={classes.controlContainer} >
-            <div className={classes.volumeBtn} onClick={() => toggleVolume() } >
-                <VolumeUpIcon style={ !volume ? displayPlay : null } fontSize="small" className={classes.unmuteBtn} ref={props.refUnmute} /> <VolumeOffIcon style={ volume ? displayPlay : null } fontSize="small" className={classes.muteBtn} ref={props.refMute} />
+            <div className={classes.volumeBtn} >
+                <VolumeUpIcon style={ props.mute ? displayPlay : null } fontSize="small" className={classes.unmuteBtn} ref={props.refUnmute} /> <VolumeOffIcon style={ !props.mute ? displayPlay : null } fontSize="small" className={classes.muteBtn} ref={props.refMute} />
             </div>
             <PlayCircleOutlineIcon fontSize="small" className={classes.playBtn}/>
         </div>
