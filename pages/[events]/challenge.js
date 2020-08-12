@@ -12,7 +12,6 @@ import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
 import Video from '../../components/ui/Player'
-import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -137,7 +136,8 @@ function Challenge (props) {
     const [backgroundType, setBackgroundType] = useState('')
     const [mute, setMute] = useState(true)
     const playerRef = useRef()
-    const videoCtrl = useRef()
+    const videoMute = useRef()
+    const videoUnmute = useRef()
 
     async function fetchQuestions () {
         try {
@@ -266,7 +266,9 @@ function Challenge (props) {
             // eslint-disable-next-line no-unused-expressions
             backgroundType === 'video' ? playerRef.current.actions.play() : null
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoCtrl.current.onclick = () => { setMute(false) } : null
+            backgroundType === 'video' ? videoMute.current.onclick = () => { setMute(false) } : null
+            // eslint-disable-next-line no-unused-expressions
+            backgroundType === 'video' ? videoUnmute.current.onclick = () => { setMute(true) } : null
         }
     }, [props.status])
 
@@ -291,7 +293,7 @@ function Challenge (props) {
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
                         // eslint-disable-next-line no-const-assign
-                        : <Video refCtrl={videoCtrl} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                        : <Video refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>
