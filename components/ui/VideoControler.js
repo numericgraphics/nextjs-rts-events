@@ -11,8 +11,8 @@ const useStyles = makeStyles({
         zIndex: '10',
         display: 'flex',
         flexDirection: 'row',
-        right: '0',
-        top: '43.5px'
+        right: '15px',
+        top: '46px'
     },
     playBtn: {
         zIndex: '10'

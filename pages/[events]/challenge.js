@@ -253,6 +253,7 @@ function Challenge (props) {
                 setVideoURL(videoURL)
                 setBackgroundType('video')
                 setEndChallenge(false)
+                setCurPlaying(true)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
