@@ -16,7 +16,7 @@ function Question (props) {
         counter: {
             display: 'flex',
             alignItems: 'flex-end',
-            width: props.content.videoURL ? '73%' : '100%',
+            width: props.content.videoURL ? '75%' : '100%',
             flex: 1,
             maxHeight: 100,
             padding: 10
@@ -150,6 +150,7 @@ function Question (props) {
             setDisabled(true)
         }
     }, [progress])
+    console.log(props.sizer)
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
