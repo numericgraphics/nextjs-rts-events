@@ -141,6 +141,7 @@ function Challenge (props) {
     const videoPlay = useRef()
     const videoPause = useRef()
     const [curPlaying, setCurPlaying] = useState(true)
+    const [endChallenge, setEndChallenge] = useState(false)
 
     async function fetchQuestions () {
         try {
@@ -296,6 +297,7 @@ function Challenge (props) {
             backgroundType === 'video' ? playerRef.current.actions.pause() : null
             setMute(true)
             setCurPlaying(false)
+            setEndChallenge(true)
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
@@ -311,7 +313,7 @@ function Challenge (props) {
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
                         // eslint-disable-next-line no-const-assign
-                        : <Video curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                        : <Video endChallenge={endChallenge} curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>

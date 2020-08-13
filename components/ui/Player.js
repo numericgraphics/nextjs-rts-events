@@ -24,7 +24,7 @@ function Video (props, ref) {
 
     return (
         <div className={classes.ContainerVideo}>
-            <VideoControler curPlaying={props.curPlaying} refPlay={props.refPlay} refPause={props.refPause} mute={props.muted} refUnmute={props.refUnmute} refMute={props.refMute} />
+            <VideoControler endChallenge={props.endChallenge} curPlaying={props.curPlaying} refPlay={props.refPlay} refPause={props.refPause} mute={props.muted} refUnmute={props.refUnmute} refMute={props.refMute} />
             <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={false} className={classes.video} >
                 <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                 <ControlBar disableCompletely={true} />

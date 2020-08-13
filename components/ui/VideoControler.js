@@ -24,11 +24,11 @@ const hide = { display: 'none' }
 function VideoControler (props, ref) {
     const classes = useStyles()
     return (
-        <div className={classes.controlContainer} >
+        <div className={classes.controlContainer} style={props.endChallenge ? hide : null } >
             <div className={classes.volumeBtn} >
-                <VolumeUpIcon style={ props.mute ? hide : null } fontSize="small" className={classes.unmuteBtn} ref={props.refUnmute} /> <VolumeOffIcon style={ !props.mute ? hide : null } fontSize="small" className={classes.muteBtn} ref={props.refMute} />
+                <VolumeUpIcon fontSize="large" style={ props.mute ? hide : null } className={classes.unmuteBtn} ref={props.refUnmute} /> <VolumeOffIcon style={ !props.mute ? hide : null } fontSize="large" className={classes.muteBtn} ref={props.refMute} />
             </div>
-            <PauseCircleOutlineIcon style={ !props.curPlaying ? hide : null } fontSize="small" className={classes.pauseBtn} ref={props.refPause} /> <PlayCircleOutlineIcon style={ props.curPlaying ? hide : null } fontSize="small" className={classes.playBtn} ref={props.refPlay}/>
+            <PauseCircleOutlineIcon fontSize="large" style={ !props.curPlaying ? hide : null } className={classes.pauseBtn} ref={props.refPause} /> <PlayCircleOutlineIcon style={ props.curPlaying ? hide : null } fontSize="large" className={classes.playBtn} ref={props.refPlay}/>
         </div>
     )
 }
