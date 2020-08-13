@@ -45,7 +45,22 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({ remp: { prefix: `rtsEvents/${shortName}` }, comscore: { prefix: `rtsEvents/${shortName}` } })
+            RTS.stats.send({ 
+                remp: { 
+                    prefix: `rtschallenge` 
+                },
+                comscore: { 
+                    prefix: `rtschallenge` 
+                }, 
+                tc: {
+                    navigation_environment:`preprod`,
+                    prefix:``,
+                    content_category_1:`rtschallenge`,
+                    content_category_2:`${shortName}`,
+                    navigation_app_sitename:`www.rts.ch`,
+                    navigation_level_0:``
+                }
+            })
             /* eslint-enable */
         } catch (e) {
             console.log('_app - Stats - ERROR', e)
