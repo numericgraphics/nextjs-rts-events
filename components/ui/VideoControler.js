@@ -10,7 +10,9 @@ const useStyles = makeStyles({
         position: 'absolute',
         zIndex: '10',
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        right: '0',
+        top: '43.5px'
     },
     playBtn: {
         zIndex: '10'

@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     ContainerVideo: {
         display: 'flex',
         alignSelf: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        position: 'relative'
     }
 })
 
