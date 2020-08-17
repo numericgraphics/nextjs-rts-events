@@ -11,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
 import ReactCodeInput from 'react-code-input'
+import OtpInput from 'react-otp-input'
 import ReactPhoneInput from 'react-phone-input-2'
 
 const useStyles = makeStyles(() => ({
@@ -53,7 +54,7 @@ const useStyles = makeStyles(() => ({
         }
     },
     textFieldContainer: {
-        padding: 20,
+        padding: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -73,7 +74,6 @@ const styles = {
         width: '42px',
         height: '48px',
         margin: '4px',
-        paddingLeft: '12px',
         fontFamily: 'srgssr-type-Bd',
         color: '#020202',
         fontSize: '1.125rem'
@@ -84,7 +84,8 @@ const styles = {
         color: '#020202',
         border: 'none',
         width: '100%',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        textAlign: 'center'
     }
 }
 
@@ -207,13 +208,21 @@ const hasLoginModal = WrappedComponent => {
                     <Box className={classes.containerTitle}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
-                    <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) => {
-                            setUserData(
-                                Object.assign({}, userData, { code: data })
-                            )
-                        }
-                        } name={'login'}/>
+                    <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
+                        <OtpInput
+                            value={userData.code}
+                            inputStyle={styles.caseStyle}
+                            className={classes.reactCodeInput}
+                            id="numberReceive"
+                            onChange={(data) => {
+                                setUserData(
+                                    Object.assign({}, userData, { code: data })
+                                )
+                            }
+                            }
+                            name={'login'}
+                            numInputs={4}
+                        />
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
                             Envoyer
                         </Button>

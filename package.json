@@ -26,6 +26,7 @@
     "react-code-input": "^3.10.0",
     "react-div-100vh": "^0.3.8",
     "react-dom": "^16.13.1",
+    "react-otp-input": "^2.0.2",
     "react-phone-input-2": "^2.13.7",
     "react-swipeable-views": "^0.13.9",
     "redux": "^4.0.5",
