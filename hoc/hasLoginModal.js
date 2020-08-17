@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -10,7 +10,7 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
-import ReactCodeInput from 'react-code-input'
+import SmsInput from '../components/ui/SmsInput'
 import OtpInput from 'react-otp-input'
 import ReactPhoneInput from 'react-phone-input-2'
 
@@ -84,8 +84,7 @@ const styles = {
         color: '#020202',
         border: 'none',
         width: '100%',
-        backgroundColor: 'white',
-        textAlign: 'center'
+        backgroundColor: 'white'
     }
 }
 
@@ -101,6 +100,7 @@ const hasLoginModal = WrappedComponent => {
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
         const [disabled, setDisabled] = useState(true)
+        const smsOtp = useRef()
 
         const handleOpen = () => {
             setOpen(true)
@@ -258,6 +258,7 @@ const hasLoginModal = WrappedComponent => {
                                 )
                             } }
                         />
+                        <SmsInput/>
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
                         </Button>
@@ -270,7 +271,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             }
         }
-
+        console.log(smsOtp)
         return (
             <Box>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
