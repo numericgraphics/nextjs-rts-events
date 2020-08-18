@@ -51,6 +51,7 @@ function SmsInput (props) {
             digit4: s[3]
         }
         setValues(init)
+        getCode(paste)
     }
 
     const handleChange = (event) => {
@@ -76,6 +77,7 @@ function SmsInput (props) {
 
     function getCode (lastTyped) {
         const code = values.digit1 + values.digit2 + values.digit3 + lastTyped
+        props.onFill(false)
         props.onChange(code)
     }
 
