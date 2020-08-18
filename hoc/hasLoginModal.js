@@ -209,7 +209,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
-                        <OtpInput
+                        { /* <OtpInput
                             value={userData.code}
                             inputStyle={styles.caseStyle}
                             className={classes.reactCodeInput}
@@ -222,7 +222,8 @@ const hasLoginModal = WrappedComponent => {
                             }
                             name={'login'}
                             numInputs={4}
-                        />
+                        /> */ }
+                        <SmsInput/>
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
                             Envoyer
                         </Button>
@@ -258,7 +259,6 @@ const hasLoginModal = WrappedComponent => {
                                 )
                             } }
                         />
-                        <SmsInput/>
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
                         </Button>
@@ -271,7 +271,6 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             }
         }
-        console.log(smsOtp)
         return (
             <Box>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />

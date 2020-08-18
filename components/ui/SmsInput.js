@@ -3,8 +3,12 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
     input: {
-        fontSize: '2rem',
-        width: '1.5rem',
+        width: '42px',
+        height: '48px',
+        margin: '4px',
+        fontFamily: 'srgssr-type-Bd',
+        color: '#020202',
+        fontSize: '1.125rem',
         textAlign: 'center'
     }
 })
@@ -41,7 +45,6 @@ function SmsInput (props, ref) {
         const paste = ev.clipboardData.getData('text')
         if (!/\d{4}/.test(paste)) return ev.preventDefault()
         const s = [...paste]
-        console.log(s)
         const init = {
             digit1: s[0],
             digit2: s[1],
