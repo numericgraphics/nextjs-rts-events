@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -11,7 +11,6 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
-import OtpInput from 'react-otp-input'
 import ReactPhoneInput from 'react-phone-input-2'
 
 const useStyles = makeStyles(() => ({
@@ -100,7 +99,7 @@ const hasLoginModal = WrappedComponent => {
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
         const [disabled, setDisabled] = useState(true)
-        const smsOtp = useRef()
+        const [code, setCode] = useState()
 
         const handleOpen = () => {
             setOpen(true)
@@ -109,6 +108,14 @@ const hasLoginModal = WrappedComponent => {
         useEffect(() => {
             setTranslation(dataProvider.getTranslation())
         }, [])
+
+        useEffect(() => {
+            // eslint-disable-next-line no-unused-expressions
+            code
+                ? setUserData(
+                    Object.assign({}, userData, { code: code })
+                ) : null
+        }, [code])
 
         useEffect(() => {
             setDisabled(userData.phone.length === 0)
@@ -209,21 +216,7 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
-                        { /* <OtpInput
-                            value={userData.code}
-                            inputStyle={styles.caseStyle}
-                            className={classes.reactCodeInput}
-                            id="numberReceive"
-                            onChange={(data) => {
-                                setUserData(
-                                    Object.assign({}, userData, { code: data })
-                                )
-                            }
-                            }
-                            name={'login'}
-                            numInputs={4}
-                        /> */ }
-                        <SmsInput/>
+                        <SmsInput onChange={ setCode } />
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
                             Envoyer
                         </Button>
