@@ -30,7 +30,6 @@ function SmsInput (props, ref) {
     const [values, setValues] = digitState()
 
     function handleInput (e) {
-        console.log(e)
         if (e.target.value === '' && e.target.previousElementSibling !== null) {
             e.target.previousElementSibling.focus()
         } else {
@@ -57,7 +56,6 @@ function SmsInput (props, ref) {
     const handleChange = (event) => {
         setValues({ ...values, [event.target.name]: event.target.value })
     }
-    console.log(values)
 
     return (
         <div className={classes.digits}>
