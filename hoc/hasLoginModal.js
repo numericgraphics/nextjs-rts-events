@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -100,6 +100,7 @@ const hasLoginModal = WrappedComponent => {
         const theme = useTheme()
         const [disabled, setDisabled] = useState(true)
         const [code, setCode] = useState()
+        const smsSubmit = useRef()
 
         const handleOpen = () => {
             setOpen(true)
@@ -141,6 +142,13 @@ const hasLoginModal = WrappedComponent => {
             setTimeout(() => {
                 handleClose()
             }, 5000)
+        }
+
+        function KeyCheck (event) {
+            var KeyID = event.keyCode
+            if (KeyID === 13) {
+                smsSubmit.current.focus()
+            }
         }
 
         async function handleSubmitPhoneNumber (event) {
@@ -251,8 +259,9 @@ const hasLoginModal = WrappedComponent => {
                                     Object.assign({}, userData, { phone: data })
                                 )
                             } }
+                            onKeyDown={KeyCheck}
                         />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
                         </Button>
                     </form>

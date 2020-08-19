@@ -102,8 +102,6 @@ function Events (props) {
 
     function initPage () {
         setPromos(dataProvider.getPromos())
-        console.log('getPromo')
-        console.log(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         setActiveStep(0)
     }
