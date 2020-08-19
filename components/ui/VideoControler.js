@@ -1,18 +1,17 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
+import Box from '@material-ui/core/Box'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles({
     controlContainer: {
-        position: 'absolute',
-        zIndex: '10',
         display: 'flex',
         flexDirection: 'row',
-        right: '15px',
-        top: '46px'
+        marginLeft: 10
     },
     playBtn: {
         zIndex: '10'
@@ -22,16 +21,31 @@ const useStyles = makeStyles({
     }
 })
 
-const hide = { display: 'none' }
 function VideoControler (props, ref) {
     const classes = useStyles()
+    const [mute, setMute] = useState(props.player.current.muted)
+    const [pause, setPause] = useState(props.player.current.getState().player.paused)
+
+    function onVolumeClick () {
+        props.player.current.muted = !props.player.current.muted
+        setMute(props.player.current.muted)
+    }
+
+    function onPauseClick () {
+        props.player.current.getState().player.paused ? props.player.current.play() : props.player.current.pause()
+        setPause(props.player.current.getState().player.paused)
+    }
     return (
-        <div className={classes.controlContainer} style={props.endChallenge ? hide : null } >
-            <div className={classes.volumeBtn} >
-                <VolumeUpIcon color="primary" fontSize="large" style={ props.mute ? hide : null } className={classes.unmuteBtn} ref={props.refUnmute} /> <VolumeOffIcon color="primary" style={ !props.mute ? hide : null } fontSize="large" className={classes.muteBtn} ref={props.refMute} />
-            </div>
-            <PauseCircleOutlineIcon color="primary" fontSize="large" style={ !props.curPlaying ? hide : null } className={classes.pauseBtn} ref={props.refPause} /> <PlayCircleOutlineIcon color="primary" style={ props.curPlaying ? hide : null } fontSize="large" className={classes.playBtn} ref={props.refPlay}/>
-        </div>
+        <Box className={classes.controlContainer} >
+            <IconButton onClick={onVolumeClick}>
+                {mute ? <VolumeOffIcon color="primary" fontSize="large" />
+                    : <VolumeUpIcon color="primary" fontSize="large" />}
+            </IconButton>
+            <IconButton onClick={onPauseClick}>
+                {pause ? <PauseCircleOutlineIcon color="primary" fontSize="large"/>
+                    : <PlayCircleOutlineIcon color="primary" fontSize="large" />}
+            </IconButton>
+        </Box>
     )
 }
 

@@ -123,7 +123,6 @@ function Challenge (props) {
     const { events } = router.query
     const classes = useStyles()
     const layoutRef = useRef()
-    // TODO Meilleur temps d'utiliser un useRef ?
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
@@ -136,12 +135,6 @@ function Challenge (props) {
     const [backgroundType, setBackgroundType] = useState('')
     const [mute, setMute] = useState(true)
     const playerRef = useRef()
-    const videoMute = useRef()
-    const videoUnmute = useRef()
-    const videoPlay = useRef()
-    const videoPause = useRef()
-    const [curPlaying, setCurPlaying] = useState(true)
-    const [endChallenge, setEndChallenge] = useState(false)
 
     async function fetchQuestions () {
         try {
@@ -211,7 +204,7 @@ function Challenge (props) {
         switch (state) {
         case ChallengeStates.LOADING:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer}/>
+            return <Question content={questionsContent} answerCallBack={setAnswer} videoPlayer={playerRef}/>
         case ChallengeStates.RESULT:
             return <Result content={resultContent} playGameCallBack={playGame}/>
         case ChallengeStates.COUNTDOWN:
@@ -226,6 +219,9 @@ function Challenge (props) {
     // Call through question component callBack
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
+            if (backgroundType === 'video') {
+                playerRef.current.actions.pause()
+            }
             setChallengeState(ChallengeStates.LOADING)
             fetchResult().then()
         }
@@ -252,8 +248,6 @@ function Challenge (props) {
             if (videoURL) {
                 setVideoURL(videoURL)
                 setBackgroundType('video')
-                setEndChallenge(false)
-                setCurPlaying(true)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
@@ -267,39 +261,19 @@ function Challenge (props) {
     useEffect(() => {
         if (props.status) {
             setChallengeState(ChallengeStates.QUESTIONS)
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? playerRef.load(videoURL) : null
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? playerRef.current.actions.play() : null
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoMute.current.onclick = () => { setMute(false) } : null
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoUnmute.current.onclick = () => { setMute(true) } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? () => { playerRef.current.actions.handlePlay(setCurPlaying(true)) } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? () => { playerRef.current.actions.handlePause(setCurPlaying(false)) } : null
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoPause.current.onclick = function () {
-                playerRef.current.actions.pause()
-                setCurPlaying(false)
-            } : null
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoPlay.current.onclick = function () {
+            if (backgroundType === 'video') {
                 playerRef.current.actions.play()
-                setCurPlaying(true)
-            } : null
+            }
         }
     }, [props.status])
 
     // Back from fetchQuizzResult
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? playerRef.current.actions.pause() : null
-            setMute(true)
-            setCurPlaying(false)
-            setEndChallenge(true)
+            if (backgroundType === 'video') {
+                playerRef.current.actions.pause()
+                setMute(true)
+            }
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
@@ -314,8 +288,7 @@ function Challenge (props) {
                         ? <Box className={classes.gradient}/>
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                        // eslint-disable-next-line no-const-assign
-                        : <Video endChallenge={endChallenge} curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                        : <Video ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>
