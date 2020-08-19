@@ -13,13 +13,14 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         marginLeft: 10
     },
-    playBtn: {
-        zIndex: '10'
-    },
-    volumeBtn: {
-        zIndex: '10'
+    button: {
+        padding: 2,
+        paddingRight: 8,
+        paddingLeft: 8
     }
 })
+
+const iconFontSize = 33
 
 function VideoControler (props, ref) {
     const classes = useStyles()
@@ -37,13 +38,13 @@ function VideoControler (props, ref) {
     }
     return (
         <Box className={classes.controlContainer} >
-            <IconButton onClick={onVolumeClick}>
-                {mute ? <VolumeOffIcon color="primary" fontSize="large" />
-                    : <VolumeUpIcon color="primary" fontSize="large" />}
+            <IconButton onClick={onPauseClick} className={classes.button}>
+                {pause ? <PauseCircleOutlineIcon color="primary" style={{ fontSize: iconFontSize }} />
+                    : <PlayCircleOutlineIcon color="primary" style={{ fontSize: iconFontSize }} />}
             </IconButton>
-            <IconButton onClick={onPauseClick}>
-                {pause ? <PauseCircleOutlineIcon color="primary" fontSize="large"/>
-                    : <PlayCircleOutlineIcon color="primary" fontSize="large" />}
+            <IconButton onClick={onVolumeClick} className={classes.button}>
+                {mute ? <VolumeOffIcon color="primary" style={{ fontSize: iconFontSize }} />
+                    : <VolumeUpIcon color="primary" style={{ fontSize: iconFontSize }} />}
             </IconButton>
         </Box>
     )
