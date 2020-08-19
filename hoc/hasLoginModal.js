@@ -224,8 +224,8 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
-                        <SmsInput onChange={ setCode } onFill={ setDisabled } />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
+                        <SmsInput onChange={ setCode } />
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             Envoyer
                         </Button>
                     </form>

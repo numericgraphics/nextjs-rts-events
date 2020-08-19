@@ -28,15 +28,17 @@ function SmsInput (props) {
     const classes = useStyles()
     const input = useRef()
     const [values, setValues] = digitState()
+    const lastDigit = useRef()
 
     function handleInput (e) {
         if (e.target.value === '' && e.target.previousElementSibling !== null) {
             e.target.previousElementSibling.focus()
         } else {
             // eslint-disable-next-line no-unused-expressions
-            e.data === undefined || e.data === '' ? null : e.target.value = e.data.replace(/[^0-9]/g, '')
+            e.data !== undefined ? e.target.value = e.data.replace(/[^0-9]/g, '') : null
         }
         if (e.target.value !== '' && e.target.nextElementSibling && e.target.nextElementSibling.nodeName === 'INPUT') {
+            if (/[^0-9]/.test(e.target.value)) return e.preventDefault()
             e.target.nextElementSibling.focus()
         }
     }
@@ -52,9 +54,11 @@ function SmsInput (props) {
         }
         setValues(init)
         getCode(paste)
+        lastDigit.current.focus()
     }
 
     const handleChange = (event) => {
+        if (/[^0-9]/.test(event.target.value)) return event.preventDefault()
         setValues({ ...values, [event.target.name]: event.target.value })
         getCode(event.target.value)
     }
@@ -77,7 +81,6 @@ function SmsInput (props) {
 
     function getCode (lastTyped) {
         const code = values.digit1 + values.digit2 + values.digit3 + lastTyped
-        props.onFill(false)
         props.onChange(code)
     }
 
@@ -86,7 +89,7 @@ function SmsInput (props) {
             <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit1} onChange={handleChange} type="text" maxLength="1" name="digit1" autoFocus />
             <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit2} onChange={handleChange} type="text" maxLength="1" name="digit2" />
             <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit3} onChange={handleChange} type="text" maxLength="1" name="digit3" />
-            <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit4} onChange={handleChange} type="text" maxLength="1" name="digit4" />
+            <input className={classes.input} ref={lastDigit} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit4} onChange={handleChange} type="text" maxLength="1" name="digit4" />
         </div>
     )
 }
