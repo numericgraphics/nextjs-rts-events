@@ -11,7 +11,6 @@ import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
-import Video from '../../components/ui/Player'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -125,23 +124,26 @@ function Challenge (props) {
     const layoutRef = useRef()
     // TODO Meilleur temps d'utiliser un useRef ?
     const { dataProvider, store } = useContext(UserContext)
-    const { isGlobalLoading, isLoading, setLoading, setEventName } = store
+    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = React.useState()
-    const [videoURL, setVideoURL] = useState()
     const height = useHeight()
     const [backgroundType, setBackgroundType] = useState('')
-    const [mute, setMute] = useState(true)
     const playerRef = useRef()
+
+    /* eslint-disable */
+    const [videoURL, setVideoURL] = useState()
+    const [mute, setMute] = useState(true)
     const videoMute = useRef()
     const videoUnmute = useRef()
     const videoPlay = useRef()
     const videoPause = useRef()
     const [curPlaying, setCurPlaying] = useState(true)
     const [endChallenge, setEndChallenge] = useState(false)
+    /* eslint-enable */
 
     async function fetchQuestions () {
         try {
@@ -254,6 +256,8 @@ function Challenge (props) {
                 setBackgroundType('video')
                 setEndChallenge(false)
                 setCurPlaying(true)
+                console.log('player', videoController.player)
+                videoController.setVideoSource(videoURL)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
@@ -266,29 +270,32 @@ function Challenge (props) {
 
     useEffect(() => {
         if (props.status) {
+            /* */
             setChallengeState(ChallengeStates.QUESTIONS)
             // eslint-disable-next-line no-unused-expressions
             // backgroundType === 'video' ? playerRef.load(videoURL) : null
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? playerRef.current.actions.play() : null
+            // backgroundType === 'video' ? playerRef.current.actions.play() : null
+            console.log('videoController.player.actions', videoController.player.current.actions.play())
+            // backgroundType === 'video' && videoController.player.actions.play()
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoMute.current.onclick = () => { setMute(false) } : null
+            // backgroundType === 'video' ? videoMute.current.onclick = () => { setMute(false) } : null
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoUnmute.current.onclick = () => { setMute(true) } : null
+            // backgroundType === 'video' ? videoUnmute.current.onclick = () => { setMute(true) } : null
             // eslint-disable-next-line no-unused-expressions
             // backgroundType === 'video' ? () => { playerRef.current.actions.handlePlay(setCurPlaying(true)) } : null
             // eslint-disable-next-line no-unused-expressions
             // backgroundType === 'video' ? () => { playerRef.current.actions.handlePause(setCurPlaying(false)) } : null
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoPause.current.onclick = function () {
-                playerRef.current.actions.pause()
-                setCurPlaying(false)
-            } : null
+            // backgroundType === 'video' ? videoPause.current.onclick = function () {
+            //     playerRef.current.actions.pause()
+            //     setCurPlaying(false)
+            // } : null
             // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? videoPlay.current.onclick = function () {
-                playerRef.current.actions.play()
-                setCurPlaying(true)
-            } : null
+            // backgroundType === 'video' ? videoPlay.current.onclick = function () {
+            //     playerRef.current.actions.play()
+            //     setCurPlaying(true)
+            // } : null
         }
     }, [props.status])
 
@@ -313,9 +320,8 @@ function Challenge (props) {
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                        // eslint-disable-next-line no-const-assign
-                        : <Video endChallenge={endChallenge} curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                    {backgroundType === 'image' &&
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
                 </InnerHeightLayout>
             }
         </EventLayout>
@@ -340,3 +346,5 @@ export async function getStaticProps ({ params }) {
         }
     }
 }
+
+// <Video endChallenge={endChallenge} curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} />

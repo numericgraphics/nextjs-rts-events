@@ -150,7 +150,7 @@ function Question (props) {
             setDisabled(true)
         }
     }, [progress])
-    console.log(props.sizer)
+
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >

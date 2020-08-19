@@ -3,16 +3,15 @@ import UserContext from '../components/UserContext'
 
 export const useHeight = () => {
     const { dataProvider } = useContext(UserContext)
+    console.log('dataProvider.innerHeight', dataProvider.innerHeight)
     const [height, setHeight] = useState(dataProvider.innerHeight)
     const handleResize = () => setHeight(window.innerHeight)
-    const handleOnload = () => setHeight(window.innerHeight)
     useEffect(() => {
         window.addEventListener('resize', handleResize)
-        window.addEventListener('onload', handleOnload)
         return () => {
             window.removeEventListener('resize', handleResize)
-            window.removeEventListener('onload', handleOnload)
         }
-    }, [handleResize, handleOnload])
+    }, [handleResize])
     return height
 }
+//document && document.documentElement && document.documentElement.clientHeight || window.innerHeight

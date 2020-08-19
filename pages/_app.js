@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { ThemeProvider } from '@material-ui/core/styles'
+import React, { useEffect, useRef, useState } from 'react'
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
@@ -14,8 +14,17 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import 'video-react/dist/video-react.css'
+import { Player } from 'video-react'
+
+const useStyles = makeStyles({
+    video: {
+        position: 'absolute',
+        top: 0
+    }
+})
 
 function MyApp ({ Component, pageProps }) {
+    const classes = useStyles()
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
@@ -26,7 +35,10 @@ function MyApp ({ Component, pageProps }) {
     const [error, setError] = useState(false)
     const [eventName, setEventName] = useState('')
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
-    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData }
+    const player = useRef()
+    const [videoSource, setVideoSource] = useState('')
+    const videoController = { player, setVideoSource }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
     function startedCallBack () {
@@ -52,6 +64,10 @@ function MyApp ({ Component, pageProps }) {
             console.log('_app - Stats - ERROR', e)
         }
     }
+
+    useEffect(() => {
+        console.log('videoSource', videoSource)
+    }, [videoSource])
 
     // First load a stats event is sent if GlobalLoading is true
     useEffect(() => {
@@ -102,6 +118,7 @@ function MyApp ({ Component, pageProps }) {
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
+                <Player fluid={false} width="100%" height="100%" loop playsInline ref={player} src={videoSource} controls={false} className={classes.video} />
             </ThemeProvider>}
         </UserContext.Provider>
     )
