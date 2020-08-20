@@ -84,12 +84,28 @@ function SmsInput (props) {
         props.onChange(!/\d{4}/.test(lastTyped) ? values.digit1 + values.digit2 + values.digit3 + lastTyped : lastTyped)
     }
 
+    function getInput () {
+        let inputProps = {
+            autoFocus: true,
+            ref: null
+        }
+        let inpTab = []
+        const valuesTab = [Object.keys(values)]
+        for (const proprety in values) {
+            if (proprety !== 'digit1') {
+                inputProps.autoFocus = false
+            }
+            if ('digit' + valuesTab[0].length === proprety) {
+                inputProps.ref = lastDigit
+            }
+            inpTab.push(<input {...inputProps} className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values[proprety]} onChange={handleChange} type="text" maxLength="1" name={'digit' + i } />)
+        }
+        return inpTab
+    }
+
     return (
         <Box className={classes.digits} >
-            <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit1} onChange={handleChange} type="text" maxLength="1" name="digit1" autoFocus />
-            <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit2} onChange={handleChange} type="text" maxLength="1" name="digit2" />
-            <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit3} onChange={handleChange} type="text" maxLength="1" name="digit3" />
-            <input className={classes.input} ref={lastDigit} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit4} onChange={handleChange} type="text" maxLength="1" name="digit4" />
+            {getInput()}
         </Box>
     )
 }
