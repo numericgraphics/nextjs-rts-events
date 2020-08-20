@@ -80,7 +80,9 @@ function SmsInput (props) {
     }
 
     function getCode (lastTyped) {
-        const code = values.digit1 + values.digit2 + values.digit3 + lastTyped
+        let code = ''
+        !/\d{4}/.test(lastTyped) ? code = values.digit1 + values.digit2 + values.digit3 + lastTyped : code = lastTyped
+
         props.onChange(code)
     }
 
