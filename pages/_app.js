@@ -46,13 +46,13 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({ 
-                remp: { 
-                    prefix: `rtschallenge` 
+            RTS.stats.send({
+                remp: {
+                    prefix: `rtschallenge`
                 },
-                comscore: { 
-                    prefix: `rtschallenge` 
-                }, 
+                comscore: {
+                    prefix: `rtschallenge`
+                },
                 tc: {
                     navigation_environment:`preprod`,
                     prefix:``,
@@ -82,7 +82,7 @@ function MyApp ({ Component, pageProps }) {
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])
 
-    // Each page should trigger loading false after his initizialisation throught the store.setLoading
+    // Each page should trigger loading false after his initialisation through the store.setLoading
     useEffect(() => {
         if (routeChange) {
             setLoading(true)
