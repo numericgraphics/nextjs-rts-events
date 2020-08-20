@@ -11,7 +11,8 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'white'
     },
     textRegularCenter: {
         color: 'white',
