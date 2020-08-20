@@ -9,13 +9,20 @@ const useStyles = makeStyles({
     },
     video: {
         display: 'flex',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        left: '50%',
+        minHeight: '100%',
+        minWidth: '100%',
+        position: 'absolute',
+        transform: 'translate(-50%)'
     },
     ContainerVideo: {
         display: 'flex',
         alignSelf: 'center',
         flexDirection: 'column',
-        position: 'relative'
+        position: 'relative',
+        height: '100%',
+        width: '100%'
     }
 })
 
@@ -24,7 +31,7 @@ function Video (props, ref) {
 
     return (
         <div className={classes.ContainerVideo}>
-            <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={false} className={classes.video} >
+            <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={true} className={classes.video} >
                 <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                 <ControlBar disableCompletely={true} />
             </Player>
