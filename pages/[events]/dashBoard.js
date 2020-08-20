@@ -207,7 +207,7 @@ function DashBoard (props) {
 
     // TODO : translation "pts"
     return (
-        <EventLayout>
+        <EventLayout >
             {isLoading && isGlobalLoading
                 ? null
                 : <InnerHeightLayout ref={layoutRef} class={classes.containerGlobal} >

@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
     container: {
-        width: '100vw'
+        width: '100%'
     },
     content: {
         display: 'flex',
