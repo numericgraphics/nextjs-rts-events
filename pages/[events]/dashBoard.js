@@ -152,10 +152,9 @@ function DashBoard (props) {
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const [score, setScore] = useState({})
-    const [challenges, setChallenges] = useState([])
-    const [remainingChallenges, setRemainingChallenges] = useState(0)
-    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const [gameStats, setGameStats] = useState({})
+    const [progress, setProgress] = useState(0)
+    const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
 
@@ -169,7 +168,7 @@ function DashBoard (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                scoreService.init(dataProvider)
+                gameStatsService.init(dataProvider)
                 initPage()
             } else {
                 await Router.push('/[events]', {
@@ -183,9 +182,8 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
-        setChallenges(scoreService.getChallenges().length)
-        setScore(dataProvider.getScore())
+        setProgress(gameStatsService.getProgress())
+        setGameStats(dataProvider.getGameStats())
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
@@ -207,11 +205,7 @@ function DashBoard (props) {
         fetchData().then()
     }, [])
 
-    // TODO : remove this local translation
-    useEffect(() => {
-        score.bestScore = 2000
-    }, [score, translation])
-
+    // TODO : translation "pts"
     return (
         <EventLayout >
             {isLoading && isGlobalLoading
@@ -233,18 +227,18 @@ function DashBoard (props) {
                                 <Box className={classes.cardHeader}>
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
+                                            <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                            {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
                                         </Typography>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
+                                            <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                            {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
                                         </Typography>
                                     </Box>
-                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                    <Avatar className={classes.avatar} src={user.avatarURL} />
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderRightSideText}>
-                                            {`${score.totalPoints} pts`}
+                                            {`${gameStats.currentScore} pts`}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -253,16 +247,16 @@ function DashBoard (props) {
                                 </Typography>
                                 <Box>
                                     <Typography className={classes.textRegularCenter}>
-                                        {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
+                                        {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
                                     </Typography>
                                     {availableChallenges
-                                        ? <DashBoardChallengesProgress variant="determinate" progress={remainingChallenges} />
+                                        ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                         : <Box>
                                             <Typography className={classes.textRegularCenter}>
-                                                {`${translation.score} ${score.totalPoints}`}
+                                                {`${translation.score} ${gameStats.currentScore}`}
                                             </Typography>
                                             <Typography className={classes.textRegularCenter}>
-                                                {`${translation.bestScore} ${score.bestScore}`}
+                                                {`${translation.bestScore} ${gameStats.topScore}`}
                                             </Typography>
                                         </Box>
                                     }
@@ -281,7 +275,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Box>
                     </Fade>
-                    <Box className={classes.gradient}/>
+                    <Box className={classes.gradient} />
                 </InnerHeightLayout>
             }
         </EventLayout>

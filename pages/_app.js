@@ -6,7 +6,7 @@ import 'react-phone-input-2/lib/style.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
-import ScoreService from '../data/scoreServices'
+import GameStatsService from '../data/gameStats'
 import Progress from '../components/progress'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
@@ -96,7 +96,7 @@ function MyApp ({ Component, pageProps }) {
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             { <ThemeProvider theme={ theme }>
