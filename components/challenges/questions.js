@@ -52,6 +52,7 @@ const useStyles = makeStyles({
     HeaderText: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
+        lineHeight: 1.2,
         textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {
@@ -86,9 +87,7 @@ const useStyles = makeStyles({
     buttonWrapper: {
         position: 'relative',
         bottom: 50,
-
-        padding: '6px 20px',
-        marginTop: 10
+        padding: '7px 20px'
     },
     buttonProgress: {
         position: 'absolute',

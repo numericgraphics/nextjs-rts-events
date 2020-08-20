@@ -77,7 +77,6 @@ function Events (props) {
                 await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
             } else {
                 initPage()
-                console.log('Not status 200')
             }
         } catch (error) {
             throw new Error(error.message)
