@@ -14,6 +14,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getTranslations } from '../../data/tools'
+import { ColorBorderButton } from '../ui/ColorBorderButton'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -230,9 +231,9 @@ function Result (props) {
                 <Box className={classes.footer}>
                     {hasAvailableChallenges
                         ? <Box>
-                            <Button key={'gotoDashBoard'} color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={classes.button} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
-                            </Button>
+                            </ColorBorderButton>
                             <Button key={'continueGame'} color="primary" variant="contained" className={classes.button} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>

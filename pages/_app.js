@@ -13,6 +13,7 @@ import SplashScreen from '../components/splashScreen'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
+import 'video-react/dist/video-react.css'
 
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
@@ -45,7 +46,22 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({ remp: { prefix: `rtsEvents/${shortName}` }, comscore: { prefix: `rtsEvents/${shortName}` } })
+            RTS.stats.send({
+                remp: {
+                    prefix: `rtschallenge`
+                },
+                comscore: {
+                    prefix: `rtschallenge`
+                },
+                tc: {
+                    navigation_environment:`preprod`,
+                    prefix:``,
+                    content_category_1:`rtschallenge`,
+                    content_category_2:`${shortName}`,
+                    navigation_app_sitename:`www.rts.ch`,
+                    navigation_level_0:``
+                }
+            })
             /* eslint-enable */
         } catch (e) {
             console.log('_app - Stats - ERROR', e)
@@ -66,7 +82,7 @@ function MyApp ({ Component, pageProps }) {
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])
 
-    // Each page should trigger loading false after his initizialisation throught the store.setLoading
+    // Each page should trigger loading false after his initialisation through the store.setLoading
     useEffect(() => {
         if (routeChange) {
             setLoading(true)

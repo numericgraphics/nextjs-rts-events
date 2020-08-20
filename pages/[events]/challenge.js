@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useState } from 'react'
+import React, { useRef, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../components/UserContext'
@@ -11,6 +11,7 @@ import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
+import Video from '../../components/ui/Player'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -89,6 +90,7 @@ const useStyles = makeStyles({
         zIndex: 2,
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
     }
+
 })
 const styles = {
     containerOverlay: {
@@ -120,7 +122,7 @@ function Challenge (props) {
     const router = useRouter()
     const { events } = router.query
     const classes = useStyles()
-    const layoutRef = createRef()
+    const layoutRef = useRef()
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
@@ -128,7 +130,11 @@ function Challenge (props) {
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = React.useState()
+    const [videoURL, setVideoURL] = useState()
     const height = useHeight()
+    const [backgroundType, setBackgroundType] = useState('')
+    const [mute, setMute] = useState(true)
+    const playerRef = useRef()
 
     async function fetchQuestions () {
         try {
@@ -198,7 +204,7 @@ function Challenge (props) {
         switch (state) {
         case ChallengeStates.LOADING:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer}/>
+            return <Question content={questionsContent} answerCallBack={setAnswer} videoPlayer={playerRef}/>
         case ChallengeStates.RESULT:
             return <Result content={resultContent} playGameCallBack={playGame}/>
         case ChallengeStates.COUNTDOWN:
@@ -213,6 +219,9 @@ function Challenge (props) {
     // Call through question component callBack
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
+            if (backgroundType === 'video') {
+                playerRef.current.actions.pause()
+            }
             setChallengeState(ChallengeStates.LOADING)
             fetchResult().then()
         }
@@ -235,7 +244,14 @@ function Challenge (props) {
                 setLoading(false)
             }
             const { imageURL } = questionsContent
-            setImageURL(imageURL)
+            const { videoURL } = questionsContent
+            if (videoURL) {
+                setVideoURL(videoURL)
+                setBackgroundType('video')
+            } else {
+                setImageURL(imageURL)
+                setBackgroundType('image')
+            }
             setChallengeState(ChallengeStates.COUNTDOWN)
             props.openCountDownModal()
             props.startCountDown()
@@ -245,17 +261,23 @@ function Challenge (props) {
     useEffect(() => {
         if (props.status) {
             setChallengeState(ChallengeStates.QUESTIONS)
+            if (backgroundType === 'video') {
+                playerRef.current.actions.play()
+            }
         }
     }, [props.status])
 
     // Back from fetchQuizzResult
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
+            if (backgroundType === 'video') {
+                playerRef.current.actions.pause()
+                setMute(true)
+            }
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }
     }, [resultContent])
-
     return (
         <EventLayout>
             {isLoading
@@ -265,7 +287,8 @@ function Challenge (props) {
                     {challengeState === ChallengeStates.QUESTIONS
                         ? <Box className={classes.gradient}/>
                         : null}
-                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
+                    {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
+                        : <Video ref={playerRef} muted={mute} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>

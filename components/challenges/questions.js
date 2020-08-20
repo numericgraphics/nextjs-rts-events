@@ -7,6 +7,7 @@ import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import VideoControler from '../ui/VideoControler'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles({
     },
     counter: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'flex-end',
         width: '100%',
         flex: 1,
@@ -156,6 +158,8 @@ function Question (props) {
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
                 <Box className={classes.counter}>
                     <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                    {props.content.videoURL && <VideoControler player={props.videoPlayer} />}
+
                 </Box>
                 <Box className={classes.header}>
                     <Typography className={classes.HeaderTitle} align={'left'}>

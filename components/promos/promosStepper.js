@@ -40,8 +40,8 @@ export default function PromosStepper (props) {
     const classes = styles()
     return (
         <Stepper alternativeLabel activeStep={props.activeStep} connector={<ColorLibConnector />} className={classes.stepper} >
-            {props.steps.map((label) => (
-                <Step key={label}>
+            {props.steps.map((label, index) => (
+                <Step key={index}>
                     <StepLabel StepIconComponent={ColorLibStepIcon}/>
                 </Step>
             ))}
