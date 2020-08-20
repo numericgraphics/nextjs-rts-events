@@ -1,7 +1,6 @@
 import { Player, ControlBar, BigPlayButton } from 'video-react'
 import React, { forwardRef } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import VideoControler from './VideoControler'
 
 const useStyles = makeStyles({
     playBtn: {
@@ -25,7 +24,6 @@ function Video (props, ref) {
 
     return (
         <div className={classes.ContainerVideo}>
-            <VideoControler endChallenge={props.endChallenge} curPlaying={props.curPlaying} refPlay={props.refPlay} refPause={props.refPause} mute={props.muted} refUnmute={props.refUnmute} refMute={props.refMute} />
             <Player videoWidth="auto" videoHeight="100%" {...props} loop playsInline ref={ref} fluid={false} className={classes.video} >
                 <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                 <ControlBar disableCompletely={true} />

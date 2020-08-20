@@ -6,7 +6,7 @@ import 'react-phone-input-2/lib/style.css'
 import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
-import ScoreService from '../data/scoreServices'
+import GameStatsService from '../data/gameStats'
 import Progress from '../components/progress'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
@@ -46,7 +46,22 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({ remp: { prefix: `rtsEvents/${shortName}` }, comscore: { prefix: `rtsEvents/${shortName}` } })
+            RTS.stats.send({ 
+                remp: { 
+                    prefix: `rtschallenge` 
+                },
+                comscore: { 
+                    prefix: `rtschallenge` 
+                }, 
+                tc: {
+                    navigation_environment:`preprod`,
+                    prefix:``,
+                    content_category_1:`rtschallenge`,
+                    content_category_2:`${shortName}`,
+                    navigation_app_sitename:`www.rts.ch`,
+                    navigation_level_0:``
+                }
+            })
             /* eslint-enable */
         } catch (e) {
             console.log('_app - Stats - ERROR', e)
@@ -96,7 +111,7 @@ function MyApp ({ Component, pageProps }) {
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             { <ThemeProvider theme={ theme }>

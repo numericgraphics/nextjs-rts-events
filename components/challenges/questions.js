@@ -7,106 +7,109 @@ import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import VideoControler from '../ui/VideoControler'
+
+const useStyles = makeStyles({
+    containerGlobal: {
+        justifyContent: 'flex-start'
+    },
+    counter: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        width: '100%',
+        flex: 1,
+        maxHeight: 100,
+        padding: 10
+    },
+    header: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        padding: '10px 30px',
+        textAlign: 'center'
+    },
+    footer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        flex: 2,
+        textAlign: 'center',
+        bottom: 30
+    },
+    avatar: {
+        width: 100,
+        height: 100,
+        border: 'solid',
+        borderColor: 'gray'
+    },
+    card: {
+        minWidth: 275,
+        minHeight: 300,
+        margin: 20
+    },
+    HeaderText: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.5rem',
+        textShadow: '0px 3px 6px #00000040'
+    },
+    HeaderTitle: {
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1.25rem',
+        textShadow: '0px 3px 6px #00000040'
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 275,
+        minHeight: 300
+    },
+    gradient: {
+        position: 'absolute',
+        width: '100vw',
+        height: '100vh',
+        flexGrow: 1,
+        zIndex: 2,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
+    },
+    button: {
+        width: '80vw',
+        borderRadius: 30,
+        alignSelf: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1rem',
+        textTransform: 'none'
+    },
+    buttonWrapper: {
+        position: 'relative',
+        bottom: 50,
+
+        padding: '6px 20px',
+        marginTop: 10
+    },
+    buttonProgress: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12
+    }
+})
+const styles = {
+    containerOverlay: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '100vw',
+        zIndex: 3
+    }
+}
 
 function Question (props) {
-    const useStyles = makeStyles({
-        containerGlobal: {
-            justifyContent: 'flex-start'
-        },
-        counter: {
-            display: 'flex',
-            alignItems: 'flex-end',
-            width: props.content.videoURL ? '75%' : '100%',
-            flex: 1,
-            maxHeight: 100,
-            padding: 10
-        },
-        header: {
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            padding: '10px 30px',
-            textAlign: 'center'
-        },
-        footer: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            flex: 2,
-            textAlign: 'center',
-            bottom: 30
-        },
-        avatar: {
-            width: 100,
-            height: 100,
-            border: 'solid',
-            borderColor: 'gray'
-        },
-        card: {
-            minWidth: 275,
-            minHeight: 300,
-            margin: 20
-        },
-        HeaderText: {
-            fontFamily: 'srgssr-type-Bd',
-            fontSize: '1.5rem',
-            textShadow: '0px 3px 6px #00000040'
-        },
-        HeaderTitle: {
-            fontFamily: 'srgssr-type-Rg',
-            fontSize: '1.25rem',
-            textShadow: '0px 3px 6px #00000040'
-        },
-        content: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minWidth: 275,
-            minHeight: 300
-        },
-        gradient: {
-            position: 'absolute',
-            width: '100vw',
-            height: '100vh',
-            flexGrow: 1,
-            zIndex: 2,
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
-        },
-        button: {
-            width: '80vw',
-            borderRadius: 30,
-            alignSelf: 'center',
-            fontFamily: 'srgssr-type-Rg',
-            fontSize: '1rem',
-            textTransform: 'none'
-        },
-        buttonWrapper: {
-            position: 'relative',
-            bottom: 50,
-
-            padding: '6px 20px',
-            marginTop: 10
-        },
-        buttonProgress: {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            marginTop: -12,
-            marginLeft: -12
-        }
-    })
-    const styles = {
-        containerOverlay: {
-            position: 'absolute',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            width: '100vw',
-            zIndex: 3
-        }
-    }
     const classes = useStyles()
     const { quiz, title, duration } = props.content
     const { question, answers } = quiz
@@ -150,12 +153,14 @@ function Question (props) {
             setDisabled(true)
         }
     }, [progress])
-    console.log(props.sizer)
+
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
                 <Box className={classes.counter}>
                     <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                    {props.content.videoURL && <VideoControler player={props.videoPlayer} />}
+
                 </Box>
                 <Box className={classes.header}>
                     <Typography className={classes.HeaderTitle} align={'left'}>

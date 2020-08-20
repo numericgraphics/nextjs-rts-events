@@ -85,10 +85,12 @@ function SmsInput (props) {
     }
 
     function getInput () {
+        // eslint-disable-next-line prefer-const
         let inputProps = {
             autoFocus: true,
             ref: null
         }
+        // eslint-disable-next-line prefer-const
         let inpTab = []
         const valuesTab = [Object.keys(values)]
         for (const proprety in values) {
@@ -98,7 +100,7 @@ function SmsInput (props) {
             if ('digit' + valuesTab[0].length === proprety) {
                 inputProps.ref = lastDigit
             }
-            inpTab.push(<input {...inputProps} className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values[proprety]} onChange={handleChange} type="text" maxLength="1" name={'digit' + i } />)
+            inpTab.push(<input {...inputProps} className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values[proprety]} onChange={handleChange} type="text" maxLength="1" name={proprety} />)
         }
         return inpTab
     }

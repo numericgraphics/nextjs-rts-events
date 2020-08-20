@@ -75,7 +75,6 @@ function Events (props) {
                 const content = await response.json()
                 dataProvider.setData(content)
                 await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
-                console.log('status 200')
             } else {
                 initPage()
                 console.log('Not status 200')
