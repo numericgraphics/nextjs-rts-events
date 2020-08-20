@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles({
     input: {
@@ -80,19 +81,16 @@ function SmsInput (props) {
     }
 
     function getCode (lastTyped) {
-        let code = ''
-        !/\d{4}/.test(lastTyped) ? code = values.digit1 + values.digit2 + values.digit3 + lastTyped : code = lastTyped
-
-        props.onChange(code)
+        props.onChange(!/\d{4}/.test(lastTyped) ? values.digit1 + values.digit2 + values.digit3 + lastTyped : lastTyped)
     }
 
     return (
-        <div className={classes.digits} >
+        <Box className={classes.digits} >
             <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit1} onChange={handleChange} type="text" maxLength="1" name="digit1" autoFocus />
             <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit2} onChange={handleChange} type="text" maxLength="1" name="digit2" />
             <input className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit3} onChange={handleChange} type="text" maxLength="1" name="digit3" />
             <input className={classes.input} ref={lastDigit} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values.digit4} onChange={handleChange} type="text" maxLength="1" name="digit4" />
-        </div>
+        </Box>
     )
 }
 
