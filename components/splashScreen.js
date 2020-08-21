@@ -27,26 +27,26 @@ function SplashScreen (props) {
     const animRef = useRef()
 
     function animCallback () {
-        if (props.animationState) {
-            props.endedCallBack()
-        } else {
-            props.startedCallBack()
-        }
+        props.startedCallBack()
+    }
+
+    function animEndedCallback () {
+        props.endedCallBack()
     }
 
     const [startAnimHandler] = useTweenMaxWithRef(animRef, 2, {
         y: -250,
-        opacity: 1,
+        autoAlpha: 1,
         delay: 0.5,
         transformOrigin: 'center',
         onComplete: animCallback
     })
 
     const [endAnimHandler] = useTweenMaxWithRef(animRef, 0.5, {
-        opacity: 0,
         scale: 1.4,
-        transformOrigin: 'center',
-        onComplete: animCallback
+        autoAlpha: 0,
+        overwrite: 'all',
+        onComplete: animEndedCallback
     })
 
     useEffect(() => {
@@ -59,12 +59,12 @@ function SplashScreen (props) {
         } else {
             startAnimHandler()
         }
-    }, [props.animationState, startAnimHandler, endAnimHandler])
+    }, [props.animationState])
 
     const classes = useStyles()
     return (
         <Box className={classes.containerProgress} style={{ minHeight: height }}>
-            <Box>
+            <Box >
                 <svg width="300" height="300" x="0px" y="0px" viewBox="0 0 841.89 595.28">
                     <g ref={animRef} opacity="0">
                         <g>
