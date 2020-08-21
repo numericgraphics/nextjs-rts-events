@@ -95,7 +95,7 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: '50%',
         left: '50%',
-        marginTop: -12,
+        marginTop: -6,
         marginLeft: -12
     }
 })
