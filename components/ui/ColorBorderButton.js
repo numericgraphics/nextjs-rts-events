@@ -5,6 +5,9 @@ export const ColorBorderButton = withStyles(() => ({
     root: {
         color: '#FFFFFF',
         backgroundColor: 'transparent',
-        border: '3px solid white'
+        paddingTop: 4,
+        paddingBottom: 4,
+        boxSizing: 'border-box',
+        border: '2px solid white'
     }
 }))(Button)
