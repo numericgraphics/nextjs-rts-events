@@ -90,6 +90,7 @@ function SmsInput (props) {
             autoFocus: true,
             ref: null
         }
+        // Work
         // eslint-disable-next-line prefer-const
         let inpTab = []
         const valuesTab = [Object.keys(values)]
