@@ -36,7 +36,7 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         flex: 2,
         textAlign: 'center',
-        bottom: 30
+        marginBottom: 30
     },
     avatar: {
         width: 100,
@@ -86,8 +86,10 @@ const useStyles = makeStyles({
     },
     buttonWrapper: {
         position: 'relative',
-        bottom: 50,
-        padding: '7px 20px'
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 7,
+        paddingBottom: 0
     },
     buttonProgress: {
         position: 'absolute',

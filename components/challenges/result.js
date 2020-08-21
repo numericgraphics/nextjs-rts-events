@@ -26,7 +26,7 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         flex: 2,
         textAlign: 'center',
-        marginBottom: 50
+        marginBottom: 30
     },
 
     card: {
