@@ -61,13 +61,6 @@ const useStyles = makeStyles(() => ({
 
     }
 }))
-const ModalStates = Object.freeze({
-    PHONE_NUMBER: 'phoneNumber',
-    NUMBER_RECEIVE: 'numberReceive',
-    LOADING: 'loading',
-    ERROR: 'error'
-})
-
 const styles = {
     caseStyle: {
         width: '42px',
@@ -86,6 +79,12 @@ const styles = {
         backgroundColor: 'white'
     }
 }
+const ModalStates = Object.freeze({
+    PHONE_NUMBER: 'phoneNumber',
+    NUMBER_RECEIVE: 'numberReceive',
+    LOADING: 'loading',
+    ERROR: 'error'
+})
 
 const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
@@ -232,7 +231,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress />
+                    <CircularProgress color="secondary"/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>

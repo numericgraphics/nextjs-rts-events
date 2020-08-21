@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
 import 'typeface-roboto'
+import 'video-react/dist/video-react.css'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import GameStatsService from '../data/gameStats'
-import Progress from '../components/progress'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
-import 'video-react/dist/video-react.css'
+import Progress from '../components/progress'
 
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
