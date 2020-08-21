@@ -38,7 +38,7 @@ const useStyles = makeStyles({
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        marginBottom: 50,
+        marginBottom: 30,
         zIndex: 2,
         textAlign: 'center'
     },
