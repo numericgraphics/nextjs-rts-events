@@ -88,7 +88,7 @@ const useStyles = makeStyles({
         position: 'relative',
         paddingLeft: 20,
         paddingRight: 20,
-        paddingTop: 7,
+        paddingTop: 14,
         paddingBottom: 0
     },
     buttonProgress: {
