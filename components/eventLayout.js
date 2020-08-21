@@ -56,7 +56,6 @@ export default function EventLayout ({ children, home }) {
         setGlobalInnerHeight()
         window.addEventListener('orientationchange', () => {
             setOrientation(window.innerWidth < window.innerHeight)
-            setGlobalInnerHeight()
         })
     }, [])
 
