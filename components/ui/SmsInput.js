@@ -15,12 +15,12 @@ const useStyles = makeStyles({
 })
 
 const digitState = () => {
-    const init = {
-        digit1: '',
-        digit2: '',
-        digit3: '',
-        digit4: ''
-    }
+    const init = [
+        ['digit1', ''],
+        ['digit2', ''],
+        ['digit3', ''],
+        ['digit4', '']
+    ]
     const [values, setValues] = useState(init)
     return [values, setValues]
 }
@@ -34,10 +34,10 @@ function SmsInput (props) {
     function handleInput (e) {
         if (e.target.value === '' && e.target.previousElementSibling !== null) {
             e.target.previousElementSibling.focus()
-        } else {
+        } /* else {
             // eslint-disable-next-line no-unused-expressions
             e.data !== undefined ? e.target.value = e.data.replace(/[^0-9]/g, '') : null
-        }
+        } */
         if (e.target.value !== '' && e.target.nextElementSibling && e.target.nextElementSibling.nodeName === 'INPUT') {
             if (/[^0-9]/.test(e.target.value)) return e.preventDefault()
             e.target.nextElementSibling.focus()
@@ -47,12 +47,12 @@ function SmsInput (props) {
         const paste = ev.clipboardData.getData('text')
         if (!/\d{4}/.test(paste)) return ev.preventDefault()
         const s = [...paste]
-        const init = {
-            digit1: s[0],
-            digit2: s[1],
-            digit3: s[2],
-            digit4: s[3]
-        }
+        const init = [
+            ['digit1', s[0]],
+            ['digit2', s[1]],
+            ['digit3', s[2]],
+            ['digit4', s[3]]
+        ]
         setValues(init)
         getCode(paste)
         lastDigit.current.focus()
@@ -60,8 +60,13 @@ function SmsInput (props) {
 
     const handleChange = (event) => {
         if (/[^0-9]/.test(event.target.value)) return event.preventDefault()
-        setValues({ ...values, [event.target.name]: event.target.value })
-        getCode(event.target.value)
+        // setValues({ ...values, [event.target.name]: event.target.value })
+        for (let i = 0; i < values.length; i++) {
+            if (values[i][0] === event.target.name) {
+                values[i][1] = event.target.value
+            }
+        }
+        getCode()
     }
 
     function KeyCheck (event) {
@@ -80,8 +85,8 @@ function SmsInput (props) {
         }
     }
 
-    function getCode (lastTyped) {
-        props.onChange(!/\d{4}/.test(lastTyped) ? values.digit1 + values.digit2 + values.digit3 + lastTyped : lastTyped)
+    function getCode (pasted) {
+        props.onChange(!/\d{4}/.test(pasted) ? values[0][1] + values[1][1] + values[2][1] + values[3][1] : pasted)
     }
 
     function getInput () {
@@ -90,18 +95,27 @@ function SmsInput (props) {
             autoFocus: true,
             ref: null
         }
-        // Work
         // eslint-disable-next-line prefer-const
         let inpTab = []
-        const valuesTab = [Object.keys(values)]
-        for (const proprety in values) {
-            if (proprety !== 'digit1') {
+        for (let i = 0; i < values.length; i++) {
+            if (values[i][0] !== 'digit1') {
                 inputProps.autoFocus = false
             }
-            if ('digit' + valuesTab[0].length === proprety) {
+            if (i === values.length - 1) {
                 inputProps.ref = lastDigit
             }
-            inpTab.push(<input {...inputProps} className={classes.input} onKeyDown={KeyCheck} autoComplete="one-time-code" onInput={handleInput} onPaste={handlePaste} value={values[proprety]} onChange={handleChange} type="text" maxLength="1" name={proprety} />)
+            inpTab.push(<input {...inputProps}
+                key={i}
+                className={classes.input}
+                onKeyDown={KeyCheck}
+                autoComplete="one-time-code"
+                onInput={handleInput}
+                onPaste={handlePaste}
+                value={values[i][1]}
+                onChange={handleChange}
+                type="text"
+                maxLength="1"
+                name={values[i][0]} />)
         }
         return inpTab
     }
