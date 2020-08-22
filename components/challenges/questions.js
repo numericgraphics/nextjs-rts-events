@@ -86,17 +86,17 @@ const useStyles = makeStyles({
     },
     buttonWrapper: {
         position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 14,
         paddingBottom: 0
     },
     buttonProgress: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        marginTop: -6,
-        marginLeft: -12
+        position: 'absolute'
     }
 })
 const styles = {
