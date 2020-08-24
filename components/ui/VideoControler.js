@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
@@ -24,7 +24,6 @@ const iconFontSize = 33
 
 function VideoControler (props, ref) {
     const classes = useStyles()
-    const [isDisabled, setDisabled] = useState(false)
     const [mute, setMute] = useState(props.player.current.muted)
     const [pause, setPause] = useState(props.player.current.getState().player.paused)
 
@@ -38,20 +37,13 @@ function VideoControler (props, ref) {
         setPause(props.player.current.getState().player.paused)
     }
 
-    useEffect(() => {
-        console.log('useEffect', props.player.current.getState().player.readyState)
-        setDisabled(false)
-    //     if (props.player.current.getState().player.readyState > 2) {
-    //         setDisabled(false)
-    //     }
-    }, [props.player.current.getState()])
     return (
         <Box className={classes.controlContainer} >
-            <IconButton onClick={onPauseClick} color="primary" className={classes.button} disabled={isDisabled}>
+            <IconButton onClick={onPauseClick} color="primary" className={classes.button}>
                 {pause ? <PauseCircleOutlineIcon style={{ fontSize: iconFontSize }} />
                     : <PlayCircleOutlineIcon style={{ fontSize: iconFontSize }} />}
             </IconButton>
-            <IconButton onClick={onVolumeClick} color="primary" className={classes.button} disabled={isDisabled}>
+            <IconButton onClick={onVolumeClick} color="primary" className={classes.button}>
                 {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize }} />
                     : <VolumeUpIcon style={{ fontSize: iconFontSize }} />}
             </IconButton>
