@@ -114,9 +114,7 @@ const useStyles = makeStyles({
     },
     avatar: {
         width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
+        height: 100
     },
     winPointText: {
         fontFamily: 'srgssr-type-Bd',
