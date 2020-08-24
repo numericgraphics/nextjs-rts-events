@@ -24,7 +24,7 @@ const iconFontSize = 33
 
 function VideoControler (props, ref) {
     const classes = useStyles()
-    const [isDisabled, setDisabled] = useState(true)
+    const [isDisabled, setDisabled] = useState(false)
     const [mute, setMute] = useState(props.player.current.muted)
     const [pause, setPause] = useState(props.player.current.getState().player.paused)
 
@@ -39,9 +39,11 @@ function VideoControler (props, ref) {
     }
 
     useEffect(() => {
-        if (props.player.current.getState().player.readyState > 2) {
-            setDisabled(false)
-        }
+        console.log('useEffect', props.player.current.getState().player.readyState)
+        setDisabled(false)
+    //     if (props.player.current.getState().player.readyState > 2) {
+    //         setDisabled(false)
+    //     }
     }, [props.player.current.getState()])
     return (
         <Box className={classes.controlContainer} >
