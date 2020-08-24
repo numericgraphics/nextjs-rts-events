@@ -3,7 +3,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import TimerIcon from '@material-ui/icons/Timer'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import UserContext from '../UserContext'
 
 const useStyles = makeStyles({
@@ -38,6 +38,7 @@ function QuestionTimer (props) {
     const { timeLeft, progress } = props
     const { dataProvider } = useContext(UserContext)
     const [translation, setTranslation] = useState([])
+    const theme = useTheme()
 
     useEffect(() => {
         setTranslation(dataProvider.getTranslation())
@@ -45,7 +46,7 @@ function QuestionTimer (props) {
 
     return (
         <Box className={classes.container}>
-            <LinearProgress variant="determinate" color='secondary' value={progress} className={classes.linearProgress}/>
+            <LinearProgress variant="determinate" style={{ color: theme.palette.secondary.light }} value={progress} className={classes.linearProgress}/>
             <Box className={classes.content}>
                 <TimerIcon style={styles.icon}/>
                 <Typography className={classes.text} >

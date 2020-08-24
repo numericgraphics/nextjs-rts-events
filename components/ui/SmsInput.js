@@ -34,10 +34,7 @@ function SmsInput (props) {
     function handleInput (e) {
         if (e.target.value === '' && e.target.previousElementSibling !== null) {
             e.target.previousElementSibling.focus()
-        } /* else {
-            // eslint-disable-next-line no-unused-expressions
-            e.data !== undefined ? e.target.value = e.data.replace(/[^0-9]/g, '') : null
-        } */
+        }
         if (e.target.value !== '' && e.target.nextElementSibling && e.target.nextElementSibling.nodeName === 'INPUT') {
             if (/[^0-9]/.test(e.target.value)) return e.preventDefault()
             e.target.nextElementSibling.focus()
@@ -60,7 +57,6 @@ function SmsInput (props) {
 
     const handleChange = (event) => {
         if (/[^0-9]/.test(event.target.value)) return event.preventDefault()
-        // setValues({ ...values, [event.target.name]: event.target.value })
         for (let i = 0; i < values.length; i++) {
             if (values[i][0] === event.target.name) {
                 values[i][1] = event.target.value

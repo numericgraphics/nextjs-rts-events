@@ -1,7 +1,7 @@
 import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
@@ -52,8 +52,6 @@ const useStyles = makeStyles({
     avatar: {
         width: 100,
         height: 100,
-        border: 'solid',
-        borderColor: 'gray',
         position: 'absolute',
         marginTop: '-25px'
     },
@@ -65,7 +63,6 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        backgroundColor: '#56C8D8',
         borderRadius: '10px',
         paddingLeft: '10px',
         paddingRight: '10px',
@@ -157,6 +154,7 @@ function DashBoard (props) {
     const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
+    const theme = useTheme()
 
     async function fetchData () {
         try {
@@ -224,7 +222,7 @@ function DashBoard (props) {
                     <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
                         <ColorCard className={classes.card}>
                             <ColorCardContent className={classes.content}>
-                                <Box className={classes.cardHeader}>
+                                <Box className={classes.cardHeader} style={{ backgroundColor: theme.palette.secondary.light }}>
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderLeftSideText}>
                                             <CheckIcon fontSize="small" className={classes.rateIcon} />
