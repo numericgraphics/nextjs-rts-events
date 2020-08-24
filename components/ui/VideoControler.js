@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
@@ -24,6 +24,7 @@ const iconFontSize = 33
 
 function VideoControler (props, ref) {
     const classes = useStyles()
+    const [isDisabled, setDisabled] = useState(true)
     const [mute, setMute] = useState(props.player.current.muted)
     const [pause, setPause] = useState(props.player.current.getState().player.paused)
 
@@ -36,15 +37,21 @@ function VideoControler (props, ref) {
         props.player.current.getState().player.paused ? props.player.current.play() : props.player.current.pause()
         setPause(props.player.current.getState().player.paused)
     }
+
+    useEffect(() => {
+        if (props.player.current.getState().player.readyState > 2) {
+            setDisabled(false)
+        }
+    }, [props.player.current.getState()])
     return (
         <Box className={classes.controlContainer} >
-            <IconButton onClick={onPauseClick} className={classes.button}>
-                {pause ? <PauseCircleOutlineIcon color="primary" style={{ fontSize: iconFontSize }} />
-                    : <PlayCircleOutlineIcon color="primary" style={{ fontSize: iconFontSize }} />}
+            <IconButton onClick={onPauseClick} color="primary" className={classes.button} disabled={isDisabled}>
+                {pause ? <PauseCircleOutlineIcon style={{ fontSize: iconFontSize }} />
+                    : <PlayCircleOutlineIcon style={{ fontSize: iconFontSize }} />}
             </IconButton>
-            <IconButton onClick={onVolumeClick} className={classes.button}>
-                {mute ? <VolumeOffIcon color="primary" style={{ fontSize: iconFontSize }} />
-                    : <VolumeUpIcon color="primary" style={{ fontSize: iconFontSize }} />}
+            <IconButton onClick={onVolumeClick} color="primary" className={classes.button} disabled={isDisabled}>
+                {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize }} />
+                    : <VolumeUpIcon style={{ fontSize: iconFontSize }} />}
             </IconButton>
         </Box>
     )
