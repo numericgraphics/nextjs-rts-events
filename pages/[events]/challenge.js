@@ -248,6 +248,7 @@ function Challenge (props) {
             if (videoURL) {
                 setVideoURL(videoURL)
                 setBackgroundType('video')
+                setImageURL(imageURL)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
@@ -288,7 +289,7 @@ function Challenge (props) {
                         ? <Box className={classes.gradient}/>
                         : null}
                     {backgroundType === 'image' ? <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                        : <Video ref={playerRef} muted={mute} height={height} src={videoURL} /> }
+                        : <Video ref={playerRef} muted={mute} poster={imageURL} height={height} src={videoURL} /> }
                 </InnerHeightLayout>
             }
         </EventLayout>

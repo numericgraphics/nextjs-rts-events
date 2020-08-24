@@ -8,13 +8,14 @@ const useStyles = makeStyles({
         opacity: 0
     },
     video: {
-        display: 'flex',
-        alignSelf: 'center',
-        left: '50%',
-        minHeight: '100%',
-        minWidth: '100%',
         position: 'absolute',
-        transform: 'translate(-50%)'
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
+        verticalAlign: 'center',
+        width: '100vw',
+        backgroundColor: 'white'
+
     },
     ContainerVideo: {
         display: 'flex',
