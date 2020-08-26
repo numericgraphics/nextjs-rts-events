@@ -18,6 +18,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
+import GiftsBox from '../../components/gifts/giftsBox'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -202,7 +203,7 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-
+    console.log(eventData)
     // TODO : translation "pts"
     return (
         <EventLayout >
@@ -259,6 +260,7 @@ function DashBoard (props) {
                                         </Box>
                                     }
                                 </Box>
+                                <GiftsBox gifts={eventData.content.gifts} />
 
                             </ColorCardContent>
                         </ColorCard>
