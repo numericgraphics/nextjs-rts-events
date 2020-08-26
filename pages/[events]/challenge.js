@@ -256,44 +256,9 @@ function Challenge (props) {
         }
     }, [questionsContent])
 
-    useEffect(() => {
-        if (props.status) {
-            /* */
-            setChallengeState(ChallengeStates.QUESTIONS)
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? playerRef.load(videoURL) : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? playerRef.current.actions.play() : null
-            console.log('videoController.player.actions', videoController.player.current.actions.play())
-            // backgroundType === 'video' && videoController.player.actions.play()
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? videoMute.current.onclick = () => { setMute(false) } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? videoUnmute.current.onclick = () => { setMute(true) } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? () => { playerRef.current.actions.handlePlay(setCurPlaying(true)) } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? () => { playerRef.current.actions.handlePause(setCurPlaying(false)) } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? videoPause.current.onclick = function () {
-            //     playerRef.current.actions.pause()
-            //     setCurPlaying(false)
-            // } : null
-            // eslint-disable-next-line no-unused-expressions
-            // backgroundType === 'video' ? videoPlay.current.onclick = function () {
-            //     playerRef.current.actions.play()
-            //     setCurPlaying(true)
-            // } : null
-        }
-    }, [props.status])
-
     // Back from fetchQuizzResult
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
-            if (backgroundType === 'video') {
-                // playerRef.current.actions.pause()
-                // setMute(true)
-            }
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }

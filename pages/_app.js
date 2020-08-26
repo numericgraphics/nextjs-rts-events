@@ -19,7 +19,11 @@ import Progress from '../components/progress'
 const useStyles = makeStyles({
     video: {
         position: 'absolute',
-        top: 0
+        top: 0,
+        verticalAlign: 'center',
+        width: '100vw',
+        backgroundColor: 'white',
+        overflow: 'hidden'
     },
     playBtn: {
         display: 'none',
@@ -139,7 +143,7 @@ function MyApp ({ Component, pageProps }) {
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
-                <Player fluid={false} width="100%" height="100%" loop playsInline ref={player} src={videoSource} poster={videoPoster} controls={false} className={classes.video} autoPlay={true}>
+                <Player fluid={true} width="100%" height="100%" loop playsInline ref={player} src={videoSource} poster={videoPoster} controls={false} className={classes.video} autoPlay={true} >
                     <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
                     <ControlBar disableCompletely={true} />
                 </Player>
