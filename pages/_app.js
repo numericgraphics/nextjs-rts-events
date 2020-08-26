@@ -15,6 +15,7 @@ import SplashScreen from '../components/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles({
     video: {
@@ -46,7 +47,8 @@ function MyApp ({ Component, pageProps }) {
     const player = useRef()
     const [videoSource, setVideoSource] = useState('')
     const [videoPoster, setVideoPoster] = useState('')
-    const videoController = { player, setVideoSource, setVideoPoster }
+    const [videoVisible, setVideoVisible] = useState(false)
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
@@ -139,15 +141,28 @@ function MyApp ({ Component, pageProps }) {
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
-            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
+            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
-                <Player fluid={true} width="100%" height="100%" loop playsInline ref={player} src={videoSource} poster={videoPoster} controls={false} className={classes.video} autoPlay={true} >
-                    <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
-                    <ControlBar disableCompletely={true} />
-                </Player>
-            </ThemeProvider>}
+                <Box style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
+                    <Player
+                        ref={player}
+                        src={videoSource}
+                        fluid={true}
+                        width="100%"
+                        height="100%"
+                        loop
+                        playsInline
+                        poster={videoPoster}
+                        controls={false}
+                        className={classes.video}
+                        autoPlay={true}>
+                        <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
+                        <ControlBar disableCompletely={true} />
+                    </Player>
+                </Box>
+            </ThemeProvider> }
         </UserContext.Provider>
     )
 }

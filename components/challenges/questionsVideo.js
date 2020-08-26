@@ -8,7 +8,6 @@ import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoControler'
-import hasCountDownModal from '../../hoc/hasCountDownModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -111,7 +110,7 @@ const styles = {
     }
 }
 
-function Question (props) {
+function questionVideo (props) {
     const classes = useStyles()
     const { quiz, title, duration } = props.content
     const { question, answers } = quiz
@@ -141,18 +140,11 @@ function Question (props) {
     }
 
     useEffect(() => {
-        props.openCountDownModal()
-        props.startCountDown()
+        setDisabled(false)
+        setShowComponent(true)
+        startTimer()
         return () => clearInterval(intervalId.current)
     }, [])
-
-    useEffect(() => {
-        if (props.status) {
-            setDisabled(false)
-            setShowComponent(true)
-            startTimer()
-        }
-    }, [props.status])
 
     useEffect(() => {
         if (progress >= 100) {
@@ -199,4 +191,4 @@ function Question (props) {
     )
 }
 
-export default hasCountDownModal(Question)
+export default questionVideo

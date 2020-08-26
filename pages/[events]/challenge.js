@@ -5,8 +5,8 @@ import UserContext from '../../components/UserContext'
 import EventLayout from '../../components/eventLayout'
 import Box from '@material-ui/core/Box'
 import InnerHeightLayout from '../../components/innerHeightLayout'
-import hasCountDownModal from '../../hoc/hasCountDownModal'
 import Question from '../../components/challenges/questions'
+import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
@@ -117,7 +117,7 @@ const ChallengeStates = Object.freeze({
     ERROR: 'error'
 })
 
-function Challenge (props) {
+function Challenge () {
     const router = useRouter()
     const { events } = router.query
     const classes = useStyles()
@@ -130,7 +130,7 @@ function Challenge (props) {
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = React.useState()
     const height = useHeight()
-    const [backgroundType, setBackgroundType] = useState('')
+    const [backgroundType, setBackgroundType] = useState('image')
 
     async function fetchQuestions () {
         try {
@@ -200,11 +200,11 @@ function Challenge (props) {
         switch (state) {
         case ChallengeStates.LOADING:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer} />
+            return backgroundType === 'video'
+                ? <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
+                : <Question content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
             return <Result content={resultContent} playGameCallBack={playGame}/>
-        case ChallengeStates.COUNTDOWN:
-            return null
         }
     }
 
@@ -243,18 +243,19 @@ function Challenge (props) {
             const { videoURL } = questionsContent
             if (videoURL) {
                 setBackgroundType('video')
-                console.log('player', videoController.player)
                 videoController.setVideoSource(videoURL)
                 videoController.setVideoPoster(imageURL)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
             }
-            setChallengeState(ChallengeStates.COUNTDOWN)
-            props.openCountDownModal()
-            props.startCountDown()
+            setChallengeState(ChallengeStates.QUESTIONS)
         }
     }, [questionsContent])
+
+    useEffect(() => {
+        videoController.setVideoVisible(backgroundType === 'video')
+    }, [backgroundType])
 
     // Back from fetchQuizzResult
     useEffect(() => {
@@ -280,7 +281,7 @@ function Challenge (props) {
     )
 }
 
-export default hasCountDownModal(Challenge)
+export default Challenge
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()
