@@ -14,6 +14,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getTranslations } from '../../data/tools'
+import { ColorBorderButton } from '../ui/ColorBorderButton'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         flex: 2,
         textAlign: 'center',
-        marginBottom: 50
+        marginBottom: 30
     },
 
     card: {
@@ -113,9 +114,7 @@ const useStyles = makeStyles({
     },
     avatar: {
         width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
+        height: 100
     },
     winPointText: {
         fontFamily: 'srgssr-type-Bd',
@@ -230,9 +229,9 @@ function Result (props) {
                 <Box className={classes.footer}>
                     {hasAvailableChallenges
                         ? <Box>
-                            <Button key={'gotoDashBoard'} color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={classes.button} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
-                            </Button>
+                            </ColorBorderButton>
                             <Button key={'continueGame'} color="primary" variant="contained" className={classes.button} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>

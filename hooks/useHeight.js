@@ -3,7 +3,6 @@ import UserContext from '../components/UserContext'
 
 export const useHeight = () => {
     const { dataProvider } = useContext(UserContext)
-    console.log('dataProvider.innerHeight', dataProvider.innerHeight)
     const [height, setHeight] = useState(dataProvider.innerHeight)
     const handleResize = () => setHeight(window.innerHeight)
     useEffect(() => {

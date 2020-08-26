@@ -6,7 +6,6 @@ import InnerHeightLayout from './innerHeightLayout'
 const useStyles = makeStyles({
     containerProgress: {
         width: '100%',
-        minHeight: '100vh',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center'
@@ -17,7 +16,7 @@ function Progress () {
     const classes = useStyles()
     return (
         <InnerHeightLayout class={classes.containerProgress} >
-            <CircularProgress />
+            <CircularProgress color="secondary" />
         </InnerHeightLayout>
     )
 }

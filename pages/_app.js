@@ -1,25 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Player, ControlBar, BigPlayButton } from 'video-react'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
 import 'typeface-roboto'
+import 'video-react/dist/video-react.css'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
-import ScoreService from '../data/scoreServices'
-import Progress from '../components/progress'
+import GameStatsService from '../data/gameStats'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
-import 'video-react/dist/video-react.css'
-import { Player } from 'video-react'
+import Progress from '../components/progress'
 
 const useStyles = makeStyles({
     video: {
         position: 'absolute',
         top: 0
+    },
+    playBtn: {
+        display: 'none',
+        opacity: 0
     }
 })
 
@@ -37,7 +41,8 @@ function MyApp ({ Component, pageProps }) {
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
     const player = useRef()
     const [videoSource, setVideoSource] = useState('')
-    const videoController = { player, setVideoSource }
+    const [videoPoster, setVideoPoster] = useState('')
+    const videoController = { player, setVideoSource, setVideoPoster }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
@@ -58,7 +63,22 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({ remp: { prefix: `rtsEvents/${shortName}` }, comscore: { prefix: `rtsEvents/${shortName}` } })
+            RTS.stats.send({
+                remp: {
+                    prefix: `rtschallenge`
+                },
+                comscore: {
+                    prefix: `rtschallenge`
+                },
+                tc: {
+                    navigation_environment:`preprod`,
+                    prefix:``,
+                    content_category_1:`rtschallenge`,
+                    content_category_2:`${shortName}`,
+                    navigation_app_sitename:`www.rts.ch`,
+                    navigation_level_0:``
+                }
+            })
             /* eslint-enable */
         } catch (e) {
             console.log('_app - Stats - ERROR', e)
@@ -83,7 +103,7 @@ function MyApp ({ Component, pageProps }) {
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])
 
-    // Each page should trigger loading false after his initizialisation throught the store.setLoading
+    // Each page should trigger loading false after his initialisation through the store.setLoading
     useEffect(() => {
         if (routeChange) {
             setLoading(true)
@@ -111,14 +131,18 @@ function MyApp ({ Component, pageProps }) {
         router.events.on('routeChangeStart', handleRouteChange)
     }, [])
 
+    // TODO make forwardRef player
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
-                <Player fluid={false} width="100%" height="100%" loop playsInline ref={player} src={videoSource} controls={false} className={classes.video} />
+                <Player fluid={false} width="100%" height="100%" loop playsInline ref={player} src={videoSource} poster={videoPoster} controls={false} className={classes.video} autoPlay={true}>
+                    <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
+                    <ControlBar disableCompletely={true} />
+                </Player>
             </ThemeProvider>}
         </UserContext.Provider>
     )

@@ -1,8 +1,12 @@
 import fetch from 'node-fetch'
+import getConfig from 'next/config'
+const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
     try {
-        const response = await fetch('https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF')
+        const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/WF` // FIXME: WF???
+
+        const response = await fetch(url)
         const content = await response.json()
 
         if (response.status !== 200) {

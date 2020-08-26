@@ -122,7 +122,6 @@ function Challenge (props) {
     const { events } = router.query
     const classes = useStyles()
     const layoutRef = useRef()
-    // TODO Meilleur temps d'utiliser un useRef ?
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName, videoController } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
@@ -132,18 +131,6 @@ function Challenge (props) {
     const [imageURL, setImageURL] = React.useState()
     const height = useHeight()
     const [backgroundType, setBackgroundType] = useState('')
-    const playerRef = useRef()
-
-    /* eslint-disable */
-    const [videoURL, setVideoURL] = useState()
-    const [mute, setMute] = useState(true)
-    const videoMute = useRef()
-    const videoUnmute = useRef()
-    const videoPlay = useRef()
-    const videoPause = useRef()
-    const [curPlaying, setCurPlaying] = useState(true)
-    const [endChallenge, setEndChallenge] = useState(false)
-    /* eslint-enable */
 
     async function fetchQuestions () {
         try {
@@ -213,7 +200,7 @@ function Challenge (props) {
         switch (state) {
         case ChallengeStates.LOADING:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer}/>
+            return <Question content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
             return <Result content={resultContent} playGameCallBack={playGame}/>
         case ChallengeStates.COUNTDOWN:
@@ -228,6 +215,9 @@ function Challenge (props) {
     // Call through question component callBack
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
+            if (backgroundType === 'video') {
+                videoController.player.current.pause()
+            }
             setChallengeState(ChallengeStates.LOADING)
             fetchResult().then()
         }
@@ -252,12 +242,10 @@ function Challenge (props) {
             const { imageURL } = questionsContent
             const { videoURL } = questionsContent
             if (videoURL) {
-                setVideoURL(videoURL)
                 setBackgroundType('video')
-                setEndChallenge(false)
-                setCurPlaying(true)
                 console.log('player', videoController.player)
                 videoController.setVideoSource(videoURL)
+                videoController.setVideoPoster(imageURL)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
@@ -302,11 +290,10 @@ function Challenge (props) {
     // Back from fetchQuizzResult
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
-            // eslint-disable-next-line no-unused-expressions
-            backgroundType === 'video' ? playerRef.current.actions.pause() : null
-            setMute(true)
-            setCurPlaying(false)
-            setEndChallenge(true)
+            if (backgroundType === 'video') {
+                // playerRef.current.actions.pause()
+                // setMute(true)
+            }
             setChallengeState(ChallengeStates.RESULT)
             initGame()
         }

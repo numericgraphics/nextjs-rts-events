@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -10,7 +10,7 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
-import ReactCodeInput from 'react-code-input'
+import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 
 const useStyles = makeStyles(() => ({
@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
         }
     },
     textFieldContainer: {
-        padding: 20,
+        padding: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -61,19 +61,11 @@ const useStyles = makeStyles(() => ({
 
     }
 }))
-const ModalStates = Object.freeze({
-    PHONE_NUMBER: 'phoneNumber',
-    NUMBER_RECEIVE: 'numberReceive',
-    LOADING: 'loading',
-    ERROR: 'error'
-})
-
 const styles = {
     caseStyle: {
         width: '42px',
         height: '48px',
         margin: '4px',
-        paddingLeft: '12px',
         fontFamily: 'srgssr-type-Bd',
         color: '#020202',
         fontSize: '1.125rem'
@@ -87,6 +79,12 @@ const styles = {
         backgroundColor: 'white'
     }
 }
+const ModalStates = Object.freeze({
+    PHONE_NUMBER: 'phoneNumber',
+    NUMBER_RECEIVE: 'numberReceive',
+    LOADING: 'loading',
+    ERROR: 'error'
+})
 
 const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
@@ -100,6 +98,8 @@ const hasLoginModal = WrappedComponent => {
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
         const [disabled, setDisabled] = useState(true)
+        const [code, setCode] = useState()
+        const smsSubmit = useRef()
 
         const handleOpen = () => {
             setOpen(true)
@@ -108,6 +108,14 @@ const hasLoginModal = WrappedComponent => {
         useEffect(() => {
             setTranslation(dataProvider.getTranslation())
         }, [])
+
+        useEffect(() => {
+            // eslint-disable-next-line no-unused-expressions
+            code
+                ? setUserData(
+                    Object.assign({}, userData, { code: code })
+                ) : null
+        }, [code])
 
         useEffect(() => {
             setDisabled(userData.phone.length === 0)
@@ -133,6 +141,13 @@ const hasLoginModal = WrappedComponent => {
             setTimeout(() => {
                 handleClose()
             }, 5000)
+        }
+
+        function KeyCheck (event) {
+            var KeyID = event.keyCode
+            if (KeyID === 13) {
+                smsSubmit.current.focus()
+            }
         }
 
         async function handleSubmitPhoneNumber (event) {
@@ -207,21 +222,16 @@ const hasLoginModal = WrappedComponent => {
                     <Box className={classes.containerTitle}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
-                    <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) => {
-                            setUserData(
-                                Object.assign({}, userData, { code: data })
-                            )
-                        }
-                        } name={'login'}/>
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
+                    <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
+                        <SmsInput onChange={ setCode } />
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             Envoyer
                         </Button>
                     </form>
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress />
+                    <CircularProgress color="secondary"/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
@@ -248,8 +258,9 @@ const hasLoginModal = WrappedComponent => {
                                     Object.assign({}, userData, { phone: data })
                                 )
                             } }
+                            onKeyDown={KeyCheck}
                         />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
                             Envoyer
                         </Button>
                     </form>
@@ -261,7 +272,6 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             }
         }
-
         return (
             <Box>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
@@ -274,11 +284,7 @@ const hasLoginModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                        timeout: 500,
-                        style: {
-                            backgroundColor: theme.palette.secondary.main,
-                            opacity: '0.8'
-                        }
+                        timeout: 500
                     }}
                 >
                     <Fade in={open}>

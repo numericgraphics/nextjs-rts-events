@@ -1,7 +1,7 @@
 import React, { createRef, useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
@@ -11,7 +11,7 @@ import { ColorCardContent } from '../../components/ui/ColorCardContent'
 import { ColorCard } from '../../components/ui/ColorCard'
 import { CustomDisabledButton } from '../../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/DashBoardChallengesProgress'
-import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
+// import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        marginBottom: 50,
+        marginBottom: 30,
         zIndex: 2,
         textAlign: 'center'
     },
@@ -52,8 +52,6 @@ const useStyles = makeStyles({
     avatar: {
         width: 100,
         height: 100,
-        border: 'solid',
-        borderColor: 'gray',
         position: 'absolute',
         marginTop: '-25px'
     },
@@ -65,7 +63,6 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        backgroundColor: '#56C8D8',
         borderRadius: '10px',
         paddingLeft: '10px',
         paddingRight: '10px',
@@ -152,12 +149,12 @@ function DashBoard (props) {
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const [score, setScore] = useState({})
-    const [challenges, setChallenges] = useState([])
-    const [remainingChallenges, setRemainingChallenges] = useState(0)
-    const { dataProvider, scoreService, store } = useContext(UserContext)
+    const [gameStats, setGameStats] = useState({})
+    const [progress, setProgress] = useState(0)
+    const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
+    const theme = useTheme()
 
     async function fetchData () {
         try {
@@ -169,7 +166,7 @@ function DashBoard (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData(content)
-                scoreService.init(dataProvider)
+                gameStatsService.init(dataProvider)
                 initPage()
             } else {
                 await Router.push('/[events]', {
@@ -183,9 +180,8 @@ function DashBoard (props) {
     }
 
     function initPage () {
-        setRemainingChallenges(scoreService.getRemainingChallengesByPercent())
-        setChallenges(scoreService.getChallenges().length)
-        setScore(dataProvider.getScore())
+        setProgress(gameStatsService.getProgress())
+        setGameStats(dataProvider.getGameStats())
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
@@ -207,11 +203,7 @@ function DashBoard (props) {
         fetchData().then()
     }, [])
 
-    // TODO : remove this local translation
-    useEffect(() => {
-        score.bestScore = 2000
-    }, [score, translation])
-
+    // TODO : translation "pts"
     return (
         <EventLayout >
             {isLoading && isGlobalLoading
@@ -230,21 +222,21 @@ function DashBoard (props) {
                     <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
                         <ColorCard className={classes.card}>
                             <ColorCardContent className={classes.content}>
-                                <Box className={classes.cardHeader}>
+                                <Box className={classes.cardHeader} style={{ backgroundColor: theme.palette.secondary.light }}>
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
+                                            <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                            {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
                                         </Typography>
                                         <Typography className={classes.cardHeaderLeftSideText}>
-                                            <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                            {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
+                                            <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                            {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
                                         </Typography>
                                     </Box>
-                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                    <Avatar className={classes.avatar} src={user.avatarURL} />
                                     <Box className={classes.cardHeaderSide}>
                                         <Typography className={classes.cardHeaderRightSideText}>
-                                            {`${score.totalPoints} pts`}
+                                            {`${gameStats.currentScore} pts`}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -253,16 +245,16 @@ function DashBoard (props) {
                                 </Typography>
                                 <Box>
                                     <Typography className={classes.textRegularCenter}>
-                                        {`${challenges} ${translation.dashBoardChallengesOfTheDay}`}
+                                        {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
                                     </Typography>
                                     {availableChallenges
-                                        ? <DashBoardChallengesProgress variant="determinate" progress={remainingChallenges} />
+                                        ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                         : <Box>
                                             <Typography className={classes.textRegularCenter}>
-                                                {`${translation.score} ${score.totalPoints}`}
+                                                {`${translation.score} ${gameStats.currentScore}`}
                                             </Typography>
                                             <Typography className={classes.textRegularCenter}>
-                                                {`${translation.bestScore} ${score.bestScore}`}
+                                                {`${translation.bestScore} ${gameStats.topScore}`}
                                             </Typography>
                                         </Box>
                                     }
@@ -273,15 +265,15 @@ function DashBoard (props) {
                     </Fade>
                     <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                         <Box className={classes.footer}>
-                            <ColorBorderButton variant="outlined" className={classes.button}>
-                                {`${translation.dashBoardSharingButton}`}
-                            </ColorBorderButton>
+                            {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
+                            {/*    {`${translation.dashBoardSharingButton}`} */}
+                            {/* </ColorBorderButton> */}
                             <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Box>
                     </Fade>
-                    <Box className={classes.gradient}/>
+                    <Box className={classes.gradient} />
                 </InnerHeightLayout>
             }
         </EventLayout>

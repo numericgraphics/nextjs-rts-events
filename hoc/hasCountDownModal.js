@@ -104,7 +104,7 @@ const hasCountDownModal = WrappedComponent => {
                         <Fade in={open} timeout={1000}>
                             <Box position="relative" display="inline-flex">
                                 <CircularProgress className={classes.bottomCircle} variant="static" size={300} thickness={0.5} value={100} />
-                                <CircularProgress className={classes.topCircle} variant="static" size={300} thickness={0.5} value={progress} />
+                                <CircularProgress className={classes.topCircle} color={'secondary'} variant="static" size={300} thickness={0.5} value={progress} />
                                 <Box
                                     top={0}
                                     left={0}

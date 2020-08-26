@@ -1,5 +1,7 @@
 import cookie, { serialize } from 'cookie'
 import fetch from 'node-fetch'
+import getConfig from 'next/config'
+const { serverRuntimeConfig } = getConfig()
 
 let userData = {}
 
@@ -21,7 +23,9 @@ export default async (req, res) => {
                 code: code
             }
 
-            const response = await fetch(`https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/${eventName}/${userData.userID}/getUser`, {
+            const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userData.userID}/getUser`
+
+            const response = await fetch(url, {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
