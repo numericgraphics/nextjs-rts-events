@@ -152,6 +152,7 @@ function DashBoard (props) {
     const [translation, setTranslation] = useState([])
     const [gameStats, setGameStats] = useState({})
     const [progress, setProgress] = useState(0)
+    const [gifts, setGifts] = useState()
     const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
@@ -184,6 +185,7 @@ function DashBoard (props) {
         setProgress(gameStatsService.getProgress())
         setGameStats(dataProvider.getGameStats())
         setTranslation(dataProvider.getTranslation())
+        setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
         setLoading(false)
@@ -203,7 +205,7 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-    console.log(eventData)
+    console.log(gifts)
     // TODO : translation "pts"
     return (
         <EventLayout >
@@ -260,7 +262,7 @@ function DashBoard (props) {
                                         </Box>
                                     }
                                 </Box>
-                                <GiftsBox gifts={eventData.content.gifts} />
+                                <GiftsBox gifts={gifts} />
 
                             </ColorCardContent>
                         </ColorCard>
