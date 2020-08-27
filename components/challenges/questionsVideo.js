@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -8,6 +8,8 @@ import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoControler'
+import hasButtonModal from '../../hoc/hasButtonModal'
+import UserContext from '../UserContext'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -110,10 +112,12 @@ const styles = {
     }
 }
 
-function questionVideo (props) {
+function QuestionVideo (props) {
     const classes = useStyles()
-    const { quiz, title, duration } = props.content
+    const { quiz, title, duration, imageURL, videoURL } = props.content
     const { question, answers } = quiz
+    const { store } = useContext(UserContext)
+    const { videoController } = store
     const [progress, setProgress] = useState(0)
     const [timeLeft, setTimeLeft] = useState(duration)
     const [showComponent, setShowComponent] = useState(false)
@@ -125,6 +129,7 @@ function questionVideo (props) {
     function onAnswer (index) {
         if (progress > 0) {
             setAnswer(index)
+            videoController.player.current.pause()
             props.answerCallBack(index)
             clearInterval(intervalId.current)
             setDisabled(true)
@@ -140,16 +145,33 @@ function questionVideo (props) {
     }
 
     useEffect(() => {
-        setDisabled(false)
-        setShowComponent(true)
-        startTimer()
+        if (videoController.videoHasPlayed) {
+            props.setStatus(true)
+        } else {
+            videoController.setVideoPoster(imageURL)
+            props.openModal()
+        }
+
         return () => clearInterval(intervalId.current)
     }, [])
+
+    useEffect(() => {
+        if (props.status) {
+            setDisabled(false)
+            setShowComponent(true)
+            videoController.setVideoPoster('')
+            videoController.setVideoSource(videoURL)
+            videoController.player.current.play()
+            videoController.setVideoAutoPlay(true)
+            startTimer()
+        }
+    }, [props.status])
 
     useEffect(() => {
         if (progress >= 100) {
             setTimeLeft(0)
             setProgress(0)
+            videoController.player.current.pause()
             props.answerCallBack(-1)
             setDisabled(true)
         }
@@ -191,4 +213,4 @@ function questionVideo (props) {
     )
 }
 
-export default questionVideo
+export default hasButtonModal(QuestionVideo)

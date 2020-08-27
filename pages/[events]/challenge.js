@@ -128,7 +128,7 @@ function Challenge () {
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
-    const [imageURL, setImageURL] = React.useState()
+    const [imageURL, setImageURL] = useState()
     const height = useHeight()
     const [backgroundType, setBackgroundType] = useState('image')
 
@@ -212,12 +212,9 @@ function Challenge () {
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
 
-    // Call through question component callBack
+    // Call through question component callBack when user answered question
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
-            if (backgroundType === 'video') {
-                videoController.player.current.pause()
-            }
             setChallengeState(ChallengeStates.LOADING)
             fetchResult().then()
         }
@@ -243,8 +240,6 @@ function Challenge () {
             const { videoURL } = questionsContent
             if (videoURL) {
                 setBackgroundType('video')
-                videoController.setVideoSource(videoURL)
-                videoController.setVideoPoster(imageURL)
             } else {
                 setImageURL(imageURL)
                 setBackgroundType('image')
@@ -299,5 +294,3 @@ export async function getStaticProps ({ params }) {
         }
     }
 }
-
-// <Video endChallenge={endChallenge} curPlaying={curPlaying} refPlay={videoPlay} refPause={videoPause} refMute={videoMute} refUnmute={videoUnmute} ref={playerRef} muted={mute} height={height} src={videoURL} />

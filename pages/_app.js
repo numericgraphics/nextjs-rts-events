@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Player, ControlBar, BigPlayButton } from 'video-react'
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
@@ -16,24 +15,10 @@ import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
 import Box from '@material-ui/core/Box'
-
-const useStyles = makeStyles({
-    video: {
-        position: 'absolute',
-        top: 0,
-        verticalAlign: 'center',
-        width: '100vw',
-        backgroundColor: 'white',
-        overflow: 'hidden'
-    },
-    playBtn: {
-        display: 'none',
-        opacity: 0
-    }
-})
+import VideoPlayer from '../components/ui/VideoPlayer'
+import { storeInLocalStorage, UserStates } from '../data/tools'
 
 function MyApp ({ Component, pageProps }) {
-    const classes = useStyles()
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
@@ -48,7 +33,10 @@ function MyApp ({ Component, pageProps }) {
     const [videoSource, setVideoSource] = useState('')
     const [videoPoster, setVideoPoster] = useState('')
     const [videoVisible, setVideoVisible] = useState(false)
-    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster }
+    const [videoAutoPlay, setVideoAutoPlay] = useState(true)
+    const [videoHasPlayed, setVideoPlayed] = useState(false)
+    const [playerState, setPlayerState] = useState()
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, playerState, videoHasPlayed }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
@@ -92,8 +80,19 @@ function MyApp ({ Component, pageProps }) {
     }
 
     useEffect(() => {
-        console.log('videoSource', videoSource)
+        console.log('APP_ - DEBUG - videoAutoPlay', videoAutoPlay)
+    }, [videoAutoPlay])
+
+    useEffect(() => {
+        console.log('APP_ - DEBUG - videoSource', videoSource)
     }, [videoSource])
+
+    useEffect(() => {
+        console.log('APP_ - DEBUG - videoHasPlayed', videoHasPlayed)
+        if (videoHasPlayed) {
+            storeInLocalStorage(`${eventName}-storage`, { [UserStates.USER_ACTION_CLICKED_VIDEO]: true })
+        }
+    }, [videoHasPlayed])
 
     // First load a stats event is sent if GlobalLoading is true
     useEffect(() => {
@@ -146,21 +145,14 @@ function MyApp ({ Component, pageProps }) {
                 <CssBaseline />
                 <Component {...pageProps} />
                 <Box style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
-                    <Player
+                    <VideoPlayer
                         ref={player}
-                        src={videoSource}
-                        fluid={true}
-                        width="100%"
-                        height="100%"
-                        loop
-                        playsInline
-                        poster={videoPoster}
-                        controls={false}
-                        className={classes.video}
-                        autoPlay={true}>
-                        <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
-                        <ControlBar disableCompletely={true} />
-                    </Player>
+                        videoSource={videoSource}
+                        videoPoster={videoPoster}
+                        autoPlay={videoAutoPlay}
+                        callBackState={setPlayerState}
+                        callBackPlayed={setVideoPlayed}
+                    />
                 </Box>
             </ThemeProvider> }
         </UserContext.Provider>

@@ -23,3 +23,27 @@ export function getTranslations (value, translation, type) {
         break
     }
 }
+
+export const UserStates = Object.freeze({
+    USER_ACTION_CLICKED_VIDEO: 'userActionClickedVideo'
+})
+
+export function storeInLocalStorage (localStorageName, obj) {
+    let data = localStorage.getItem(localStorageName)
+    data = data === null ? [] : JSON.parse(data)
+    data.push(obj)
+
+    localStorage.setItem(localStorageName, JSON.stringify(data))
+}
+
+export function getLocalStorage (localStorageName) {
+    return localStorage.getItem(localStorageName)
+}
+
+export function getDataFromLocalStorage (localStorageName, key) {
+    const localStorage = JSON.parse(getLocalStorage(localStorageName))
+    if (localStorage && localStorage[0][key]) {
+        return localStorage[0][key]
+    }
+    return null
+}
