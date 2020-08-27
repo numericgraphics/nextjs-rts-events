@@ -107,7 +107,7 @@ function GiftsBox (props) {
         }
         return re
     }
-    console.log(gifts)
+
     return (
         <Box className={classes.container}>
             <Typography className={classes.textRegularCenter}>

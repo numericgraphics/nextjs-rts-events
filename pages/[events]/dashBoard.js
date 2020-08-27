@@ -205,7 +205,6 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-    console.log(gifts)
     // TODO : translation "pts"
     return (
         <EventLayout >
