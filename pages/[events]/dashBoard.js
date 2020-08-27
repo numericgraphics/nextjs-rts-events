@@ -261,7 +261,7 @@ function DashBoard (props) {
                                         </Box>
                                     }
                                 </Box>
-                                <GiftsBox gifts={gifts} />
+                                <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} />
 
                             </ColorCardContent>
                         </ColorCard>
