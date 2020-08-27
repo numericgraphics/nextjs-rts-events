@@ -10,10 +10,12 @@ function GiftsBox (props) {
         gift: {
             minHeight: '34px',
             minWidth: '34px',
-            width: '1vw',
-            height: '1vw',
+            width: '10vw',
+            height: '10vw',
             marginLeft: '10px',
-            marginRight: '10px'
+            marginRight: '10px',
+            maxWidth: '50px',
+            maxHeight: '50px'
         },
         gifts: {
             display: 'flex',
