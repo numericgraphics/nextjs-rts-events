@@ -1,14 +1,15 @@
-import { Player, ControlBar, BigPlayButton } from 'video-react'
-import React, { forwardRef, useEffect } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useHeight } from '../../hooks/useHeight'
+import Fade from '@material-ui/core/Fade/Fade'
 
 const useStyles = makeStyles({
+    ContainerVideo: {
+        justifyContent: 'flex-start'
+    },
     video: {
         position: 'absolute',
         top: 0,
         width: '100vw',
-        height: '100vh!important',
         backgroundColor: 'white',
         overflow: 'hidden'
     },
@@ -18,37 +19,37 @@ const useStyles = makeStyles({
     }
 })
 
-function VideoPlayer (props, ref) {
+function VideoPlayer (props, videoRef) {
     const classes = useStyles()
-    const { videoSource, videoPoster, callBackState, callBackPlayed } = props
-    const height = useHeight()
+    const { videoSource, videoPoster } = props
+    const [paused, setPaused] = useState(false)
+
+    function videoPlayerState () {
+        const videoPlayer = videoRef.current
+        setPaused(!videoPlayer.paused)
+    }
 
     useEffect(() => {
-        console.log('height', height)
-        ref.current.subscribeToStateChange((state) => {
-            if (state.played.length > 0) {
-                callBackPlayed(true)
-            }
-            callBackState(state)
-        })
+        const videoPlayer = videoRef.current
+        if (!videoPlayer) return
+        videoPlayer.addEventListener('pause', videoPlayerState)
+        videoPlayer.addEventListener('play', videoPlayerState)
+        setPaused(videoPlayer.paused)
     }, [])
 
     return (
-        <Player
-            ref={ref}
-            src={videoSource}
-            fluid={true}
-            width="100%"
-            loop
-            playsInline
-            poster={videoPoster}
-            controls={false}
-            className={classes.video}
-            autoPlay
-            style={{ height: `${height}!important` }}>
-            <BigPlayButton disabled={true} position="center" className={classes.playBtn}/>
-            <ControlBar disableCompletely={true} />
-        </Player>
+        <Fade in={paused} timeout={500}>
+            <video
+                ref={videoRef}
+                src={videoSource}
+                loop
+                playsInline
+                poster={videoPoster}
+                className={classes.video}
+                autoPlay
+            >
+            </video>
+        </Fade>
     )
 }
 

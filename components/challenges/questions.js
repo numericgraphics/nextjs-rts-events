@@ -7,7 +7,7 @@ import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import VideoControler from '../ui/VideoControler'
+import VideoControler from '../ui/VideoController'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
 
 const useStyles = makeStyles({

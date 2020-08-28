@@ -14,7 +14,7 @@ import SplashScreen from '../components/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
-import Box from '@material-ui/core/Box'
+import InnerHeightLayout from '../components/innerHeightLayout'
 import VideoPlayer from '../components/ui/VideoPlayer'
 import { storeInLocalStorage, UserStates } from '../data/tools'
 
@@ -35,8 +35,7 @@ function MyApp ({ Component, pageProps }) {
     const [videoVisible, setVideoVisible] = useState(false)
     const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
-    const [playerState, setPlayerState] = useState()
-    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, playerState, videoHasPlayed }
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
@@ -80,15 +79,6 @@ function MyApp ({ Component, pageProps }) {
     }
 
     useEffect(() => {
-        console.log('APP_ - DEBUG - videoAutoPlay', videoAutoPlay)
-    }, [videoAutoPlay])
-
-    useEffect(() => {
-        console.log('APP_ - DEBUG - videoSource', videoSource)
-    }, [videoSource])
-
-    useEffect(() => {
-        console.log('APP_ - DEBUG - videoHasPlayed', videoHasPlayed)
         if (videoHasPlayed) {
             storeInLocalStorage(`${eventName}-storage`, { [UserStates.USER_ACTION_CLICKED_VIDEO]: true })
         }
@@ -144,16 +134,15 @@ function MyApp ({ Component, pageProps }) {
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
-                <Box style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
+                <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
                     <VideoPlayer
                         ref={player}
                         videoSource={videoSource}
                         videoPoster={videoPoster}
                         autoPlay={videoAutoPlay}
-                        callBackState={setPlayerState}
                         callBackPlayed={setVideoPlayed}
                     />
-                </Box>
+                </InnerHeightLayout>
             </ThemeProvider> }
         </UserContext.Provider>
     )

@@ -30,8 +30,8 @@ export const UserStates = Object.freeze({
 
 export function storeInLocalStorage (localStorageName, obj) {
     let data = localStorage.getItem(localStorageName)
-    data = data === null ? [] : JSON.parse(data)
-    data.push(obj)
+    data = data === null ? {} : JSON.parse(data)
+    Object.assign(data, obj)
 
     localStorage.setItem(localStorageName, JSON.stringify(data))
 }

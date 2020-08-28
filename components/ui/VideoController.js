@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useState } from 'react'
+import React, { forwardRef, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
@@ -23,11 +23,16 @@ const useStyles = makeStyles({
 
 const iconFontSize = 33
 
-function VideoControler () {
+function VideoController () {
     const classes = useStyles()
     const { store } = useContext(UserContext)
+    const videoPlayer = store.videoController.player.current
     const [mute, setMute] = useState(store.videoController.player.current.muted)
-    const [pause, setPause] = useState(store.videoController.player.current.getState().player.paused)
+    const [pause, setPause] = useState(store.videoController.player.paused)
+
+    function play () {
+        store.videoController.setVideoPlayed(true)
+    }
 
     function onVolumeClick () {
         store.videoController.player.current.muted = !store.videoController.player.current.muted
@@ -35,15 +40,20 @@ function VideoControler () {
     }
 
     function onPauseClick () {
-        setPause(!store.videoController.player.current.getState().player.paused)
-        store.videoController.player.current.getState().player.paused ? store.videoController.player.current.play() : store.videoController.player.current.pause()
+        store.videoController.player.current.paused ? store.videoController.player.current.play() : store.videoController.player.current.pause()
+        setPause(store.videoController.player.current.paused)
     }
+
+    useEffect(() => {
+        if (!videoPlayer) return
+        videoPlayer.addEventListener('play', play)
+    }, [])
 
     return (
         <Box className={classes.controlContainer} >
             <IconButton onClick={onPauseClick} color="primary" className={classes.button}>
-                {pause ? <PauseCircleOutlineIcon style={{ fontSize: iconFontSize }} />
-                    : <PlayCircleOutlineIcon style={{ fontSize: iconFontSize }} />}
+                {pause ? <PlayCircleOutlineIcon style={{ fontSize: iconFontSize }} />
+                    : <PauseCircleOutlineIcon style={{ fontSize: iconFontSize }} />}
             </IconButton>
             <IconButton onClick={onVolumeClick} color="primary" className={classes.button}>
                 {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize }} />
@@ -53,4 +63,4 @@ function VideoControler () {
     )
 }
 
-export default forwardRef(VideoControler)
+export default forwardRef(VideoController)
