@@ -110,6 +110,9 @@ function GiftsBox (props) {
     function getGifts (gifts) {
         // eslint-disable-next-line prefer-const
         let re = []
+        if (!gifts) {
+            return null
+        }
         for (let i = 0; i < gifts.length; i++) {
             if (gifts[i].type === 'lottery') {
                 gifts[i].locked ? re.push(lockedGiftIcon({ key: i })) : re.push(giftIcon({ key: i }))
