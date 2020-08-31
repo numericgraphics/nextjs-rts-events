@@ -1,10 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
 import InnerHeightLayout from '../../components/innerHeightLayout'
-import LazyImage from '../../components/ui/LazyImage'
-import { useHeight } from '../../hooks/useHeight'
+
 import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
 import { getAllEvents } from '../../lib/events'
 
@@ -25,30 +24,33 @@ const useStyles = makeStyles({
     }
 
 })
-const styles = {
-    containerImage: {
-        position: 'absolute',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'white'
-    }
-}
+// const styles = {
+//     containerImage: {
+//         position: 'absolute',
+//         backgroundRepeat: 'no-repeat',
+//         backgroundPosition: 'center',
+//         backgroundSize: 'auto 100%',
+//         width: '100vw',
+//         backgroundColor: 'white'
+//     }
+// }
 
 function Gifts (props) {
     const router = useRouter()
     const { events } = router.query
     const classes = useStyles()
     const layoutRef = useRef()
-    const height = useHeight()
-    const [imageURL, setImageURL] = useState()
 
     useEffect(() => {
-        if (props.imageURL !== null) {
-            setImageURL(props.imageURL)
+        const params = (new URL(document.location)).searchParams
+        if (params.get('gift')) {
+            try {
+                console.log('gift', params.get('gift'))
+            } catch (e) {
+                console.log('gifts error', e)
+            }
         }
-    }, [imageURL])
+    }, [])
 
     async function gotoDashBoard () {
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
@@ -56,9 +58,8 @@ function Gifts (props) {
     return (
         <EventLayout>
             <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
-                <LazyImage style={{ ...styles.containerImage, backgroundImage: imageURL, minHeight: height }}/>
                 <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={classes.button} onClick={gotoDashBoard}>
-                    Dashboard
+                    Gifts
                 </ColorBorderButton>
             </InnerHeightLayout>
         </EventLayout>

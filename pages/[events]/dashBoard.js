@@ -195,7 +195,10 @@ function DashBoard (props) {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
     async function openGift (id) {
-        await Router.push('/[events]/gifts/[gid]', `/${events}/gifts/${id}`)
+        await Router.push('/[events]/gifts', {
+            pathname: `/${events}/gifts`,
+            query: { gift: 'g1' }
+        })
     }
 
     // check if the page was reloaded and  fetchData
@@ -209,7 +212,6 @@ function DashBoard (props) {
         fetchData().then()
     }, [])
     // TODO : translation "pts"
-    console.log(gifts)
     return (
         <EventLayout >
             {isLoading && isGlobalLoading

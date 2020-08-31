@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../../components/eventLayout'
@@ -38,11 +38,19 @@ const styles = {
 
 function Gifts (props) {
     const router = useRouter()
-    const { events } = router.query
+    const { events, gifts } = router.query
     const classes = useStyles()
     const layoutRef = useRef()
     const height = useHeight()
     const [imageURL, setImageURL] = useState()
+
+    useEffect(() => {
+        try {
+            console.log('gifts', gifts)
+        } catch (e) {
+            console.log('gifts error', e)
+        }
+    }, [])
 
     useEffect(() => {
         if (props.imageURL !== null) {
@@ -53,7 +61,7 @@ function Gifts (props) {
     async function gotoDashBoard () {
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
-    console.log(router.query)
+
     return (
         <EventLayout>
             <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
@@ -69,6 +77,23 @@ export default Gifts
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()
+
+    paths.id = [
+        {
+            id: 'g1'
+        },
+        {
+
+            id: 'g2'
+
+        },
+        {
+
+            id: 'g3'
+
+        }
+    ]
+    console.log('getStaticPaths', paths)
     return {
         paths,
         fallback: false
@@ -76,6 +101,8 @@ export async function getStaticPaths () {
 }
 
 export async function getStaticProps ({ params }) {
+    console.log('getStaticProps', params)
+    // const gifts = params.id
     const events = params.events
     return {
         props: {
