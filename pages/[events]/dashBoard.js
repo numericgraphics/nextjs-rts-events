@@ -194,6 +194,9 @@ function DashBoard (props) {
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
+    async function openGift (id) {
+        await Router.push('/[events]/gifts/[gid]', `/${events}/gifts/${id}`)
+    }
 
     // check if the page was reloaded and  fetchData
     useEffect(() => {
@@ -206,6 +209,7 @@ function DashBoard (props) {
         fetchData().then()
     }, [])
     // TODO : translation "pts"
+    console.log(gifts)
     return (
         <EventLayout >
             {isLoading && isGlobalLoading
@@ -261,7 +265,7 @@ function DashBoard (props) {
                                         </Box>
                                     }
                                 </Box>
-                                <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} />
+                                <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} onClick={openGift} />
 
                             </ColorCardContent>
                         </ColorCard>
@@ -272,6 +276,9 @@ function DashBoard (props) {
                             {/*    {`${translation.dashBoardSharingButton}`} */}
                             {/* </ColorBorderButton> */}
                             <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
+                                {`${translation.dashBoardChallengesButton}`}
+                            </CustomDisabledButton>
+                            <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={openGift} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Box>

@@ -49,8 +49,11 @@ function GiftsBox (props) {
     }, [props.gifts])
 
     function giftIcon (props) {
+        const click = () => {
+            props.onClick(props.minScore)
+        }
         return (
-            <SvgIcon key={props.key} viewBox="0 0 34 34" className={classes.gift}>
+            <SvgIcon key={props.key} onClick={click} viewBox="0 0 34 34" className={classes.gift}>
                 <svg id="IconCadeau" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" className={classes.cadeau}>
                     <rect id="Rectangle_1990" data-name="Rectangle 1990" width="34" height="34" rx="17" fill="#none"/>
                     <g id="Groupe_9085" data-name="Groupe 9085" transform="translate(7.968 6.201)">
@@ -86,8 +89,11 @@ function GiftsBox (props) {
     }
 
     function medalIcon (props) {
+        const click = () => {
+            props.onClick(props.minScore)
+        }
         return (
-            <SvgIcon key={props.key} viewBox="0 0 34 34" className={classes.gift}>
+            <SvgIcon key={props.key} onClick={click} viewBox="0 0 34 34" className={classes.gift}>
                 <svg id="IconMedaille" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" className={classes.medal}>
                     <rect id="Rectangle_1990" data-name="Rectangle 1990" width="34" height="34" rx="17" fill="#none"/>
                     <path id="Tracé_54399" data-name="Tracé 54399" d="M16.444,11.069a2.755,2.755,0,0,0,1.474-2.054,2.755,2.755,0,0,0-1.474-2.054,5.763,5.763,0,0,1-.794-.685,3.763,3.763,0,0,1,0-1.141c.113-.8.227-1.826-.454-2.4a2.583,2.583,0,0,0-2.381-.456,3.7,3.7,0,0,1-1.134,0,2.47,2.47,0,0,1-.68-.8A2.74,2.74,0,0,0,8.959,0,2.74,2.74,0,0,0,6.918,1.483a5.255,5.255,0,0,1-.794.8,3.7,3.7,0,0,1-1.134,0,2.27,2.27,0,0,0-2.381.342,2.625,2.625,0,0,0-.454,2.4,3.763,3.763,0,0,1,0,1.141c0,.228-.454.571-.68.8A2.755,2.755,0,0,0,0,9.015a2.755,2.755,0,0,0,1.474,2.054,5.763,5.763,0,0,1,.794.685,3.763,3.763,0,0,1,0,1.141c-.113.8-.227,1.826.454,2.4l.113.114.68.342L1.474,20.882a.708.708,0,0,0,.227.8.7.7,0,0,0,.794.114l2.268-1.027.794,2.054a.932.932,0,0,0,.68.456h0a.766.766,0,0,0,.68-.456l2.041-4.793L11,22.822a.766.766,0,0,0,.68.456h0a.622.622,0,0,0,.68-.456L13.268,21l2.268,1.027a.669.669,0,0,0,.794-.114.759.759,0,0,0,.227-.8l-2.041-5.135.68-.342a.111.111,0,0,0,.113-.114,2.625,2.625,0,0,0,.454-2.4,3.763,3.763,0,0,1,0-1.141C15.763,11.639,16.1,11.3,16.444,11.069ZM8.959,5.135a3.88,3.88,0,0,1,0,7.759A3.933,3.933,0,0,1,4.99,9.015,3.933,3.933,0,0,1,8.959,5.135Z" transform="translate(8.256 5.292)" fill="#fffffe"/>
@@ -115,9 +121,9 @@ function GiftsBox (props) {
         }
         for (let i = 0; i < gifts.length; i++) {
             if (gifts[i].type === 'lottery') {
-                gifts[i].locked ? re.push(lockedGiftIcon({ key: i })) : re.push(giftIcon({ key: i }))
+                gifts[i].locked ? re.push(lockedGiftIcon({ key: i })) : re.push(giftIcon({ key: i, onClick: props.onClick, minScore: gifts[i].minScore }))
             } else if (gifts[i].type === 'medal') {
-                gifts[i].locked ? re.push(disabledMedalIcon({ key: i })) : re.push(medalIcon({ key: i }))
+                gifts[i].locked ? re.push(disabledMedalIcon({ key: i })) : re.push(medalIcon({ key: i, onClick: props.onClick, minScore: gifts[i].minScore }))
             }
         }
         return re
