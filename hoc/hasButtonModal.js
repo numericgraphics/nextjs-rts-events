@@ -68,7 +68,7 @@ const hasButtonModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={openModal} {...props} status={status} setStatus={setStatus} />
+                <WrappedComponent openModal={openModal} {...props} buttonModalCliked={status} setButtonModalCliked={setStatus} />
                 <Modal
                     disableAutoFocus={true}
                     disableEnforceFocus

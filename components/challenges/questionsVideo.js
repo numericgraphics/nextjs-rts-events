@@ -146,7 +146,7 @@ function QuestionVideo (props) {
 
     useEffect(() => {
         if (videoController.videoHasPlayed) {
-            props.setStatus(true)
+            props.setButtonModalCliked(true)
         } else {
             videoController.setVideoPoster(imageURL)
             props.openModal()
@@ -156,7 +156,7 @@ function QuestionVideo (props) {
     }, [])
 
     useEffect(() => {
-        if (props.status) {
+        if (props.buttonModalCliked) {
             setDisabled(false)
             setShowComponent(true)
             videoController.setVideoPoster('')
@@ -165,7 +165,7 @@ function QuestionVideo (props) {
             videoController.setVideoAutoPlay(true)
             startTimer()
         }
-    }, [props.status])
+    }, [props.buttonModalCliked])
 
     useEffect(() => {
         if (progress >= 100) {

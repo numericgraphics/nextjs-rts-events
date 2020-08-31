@@ -190,6 +190,7 @@ function Challenge () {
 
     // Callback for Result component to keep playing game
     function playGame () {
+        videoController.setShowVideo(false)
         setLoading(true)
         fetchQuestions().then()
     }
@@ -239,6 +240,7 @@ function Challenge () {
             const { imageURL } = questionsContent
             const { videoURL } = questionsContent
             if (videoURL) {
+                videoController.setShowVideo(true)
                 setBackgroundType('video')
             } else {
                 setImageURL(imageURL)

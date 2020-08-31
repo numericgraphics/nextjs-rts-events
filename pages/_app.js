@@ -4,8 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
-import 'typeface-roboto'
-import 'video-react/dist/video-react.css'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import GameStatsService from '../data/gameStats'
@@ -16,7 +14,6 @@ import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
 import InnerHeightLayout from '../components/innerHeightLayout'
 import VideoPlayer from '../components/ui/VideoPlayer'
-import { storeInLocalStorage, UserStates } from '../data/tools'
 
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
@@ -35,7 +32,8 @@ function MyApp ({ Component, pageProps }) {
     const [videoVisible, setVideoVisible] = useState(false)
     const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
-    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed }
+    const [showVideo, setShowVideo] = useState(false)
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
@@ -77,12 +75,6 @@ function MyApp ({ Component, pageProps }) {
             console.log('_app - Stats - ERROR', e)
         }
     }
-
-    useEffect(() => {
-        if (videoHasPlayed) {
-            storeInLocalStorage(`${eventName}-storage`, { [UserStates.USER_ACTION_CLICKED_VIDEO]: true })
-        }
-    }, [videoHasPlayed])
 
     // First load a stats event is sent if GlobalLoading is true
     useEffect(() => {
@@ -126,7 +118,6 @@ function MyApp ({ Component, pageProps }) {
         router.events.on('routeChangeStart', handleRouteChange)
     }, [])
 
-    // TODO make forwardRef player
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
@@ -141,6 +132,8 @@ function MyApp ({ Component, pageProps }) {
                         videoPoster={videoPoster}
                         autoPlay={videoAutoPlay}
                         callBackPlayed={setVideoPlayed}
+                        controls={false}
+                        showVideo={showVideo}
                     />
                 </InnerHeightLayout>
             </ThemeProvider> }
