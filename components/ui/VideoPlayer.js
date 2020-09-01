@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Fade from '@material-ui/core/Fade/Fade'
 
 const useStyles = makeStyles({
@@ -10,7 +10,6 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: 0,
         width: '100vw',
-        backgroundColor: 'white',
         overflow: 'hidden'
     },
     playBtn: {
@@ -21,6 +20,7 @@ const useStyles = makeStyles({
 
 function VideoPlayer (props, videoRef) {
     const classes = useStyles()
+    const theme = useTheme()
     const { videoSource, videoPoster, showVideo } = props
 
     return (
@@ -33,6 +33,7 @@ function VideoPlayer (props, videoRef) {
                 poster={videoPoster}
                 className={classes.video}
                 autoPlay
+                style={{ backgroundColor: theme.palette.background }}
             >
             </video>
         </Fade>

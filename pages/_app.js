@@ -132,7 +132,7 @@ function MyApp ({ Component, pageProps }) {
                         videoPoster={videoPoster}
                         autoPlay={videoAutoPlay}
                         callBackPlayed={setVideoPlayed}
-                        controls={false}
+                        controls={true}
                         showVideo={showVideo}
                     />
                 </InnerHeightLayout>
