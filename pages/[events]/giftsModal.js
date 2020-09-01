@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -6,7 +6,6 @@ import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import Button from '@material-ui/core/Button'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 
@@ -36,7 +35,7 @@ const useStyles = makeStyles(() => ({
         fontSize: '1.5em',
         letterSpacing: '0em'
     },
-    subtitle: {
+    description: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.25em',
         letterSpacing: '0em'
@@ -102,7 +101,6 @@ const hasLoginModal = WrappedComponent => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
         const [loginState, setLoginState] = useState(ModalStates.GIFTS_BOX)
-        const smsSubmit = useRef()
         const height = useHeight()
         const [gift, setGift] = useState({ description: '', title: '' })
         const [imageURL, setImageURL] = useState()
@@ -137,7 +135,6 @@ const hasLoginModal = WrappedComponent => {
         } */
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
-        console.log(gift)
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.LOADING:
@@ -150,11 +147,10 @@ const hasLoginModal = WrappedComponent => {
                     <Box className={classes.containerTitle}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                     </Box>
-                    <Typography className={classes.subtitle} variant="h4" align={'center'}>{gift.description}</Typography>
+                    <Box className={classes.containerDescription}>
+                        <Typography className={classes.description} variant="h4" align={'center'}>{gift.description}</Typography>
+                    </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" >
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={true} >
-                            Participer au tirage
-                        </Button>
                     </form>
                 </Box>
             case ModalStates.ERROR:
