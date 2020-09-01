@@ -182,7 +182,7 @@ function QuestionVideo (props) {
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
                 <Box className={classes.counter}>
                     <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                    {props.content.videoURL && <VideoControler />}
+                    {props.content.videoURL && <VideoControler controls={true}/>}
 
                 </Box>
                 <Box className={classes.header}>
