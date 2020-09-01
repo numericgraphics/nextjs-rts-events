@@ -37,14 +37,18 @@ const useStyles = makeStyles(() => ({
         maxWidth: '58px',
         width: '10vw',
         height: '10vw',
-        color: 'red'
+        color: 'red',
+        zIndex: 4
     },
     containerText: {
         position: 'fixed',
-        paddingBottom: 12,
-        bottom: '10vh',
+        paddingBottom: '10vh',
+        bottom: '0',
         paddingLeft: '10px',
-        paddingRight: '10px'
+        paddingRight: '10px',
+        width: '100%',
+        backgroundColor: 'blue',
+        zIndex: 3
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
@@ -76,6 +80,14 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center'
 
+    },
+    gradient: {
+        position: 'absolute',
+        width: '100vw',
+        height: '100vh',
+        flexGrow: 1,
+        zIndex: 3,
+        background: 'linear-gradient(to top, rgba(0, 0, 255, 1) 10%,rgba(0,0,0,0) 35%)'
     }
 }))
 const styles = {
@@ -151,6 +163,7 @@ const hasLoginModal = WrappedComponent => {
         } */
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
+        console.log(gift)
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.LOADING:
@@ -159,11 +172,12 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <LazyImage style={{ ...styles.containerImage, background: 'linear-gradient(transparent, blue)', backgroundImage: `url(${imageURL})`, minHeight: height, filter: 'blur(4px)' }}/>
+                    <Box className={classes.gradient} />
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                     <CancelIcon className={classes.closeIcon} onClick={handleClose} />
                     <Box className={classes.containerText}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
-                        <Typography className={classes.description} variant="h4" align={'center'}>{gift.description}</Typography>
+                        <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.description}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" >
                     </form>
