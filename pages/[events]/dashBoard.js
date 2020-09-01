@@ -19,6 +19,7 @@ import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
 import GiftsBox from '../../components/gifts/giftsBox'
+import giftsModal from './giftsModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -196,9 +197,17 @@ function DashBoard (props) {
     }
     async function openGift (id) {
         await Router.push('/[events]/gifts', {
-            pathname: `/${events}/gifts`,
-            query: { gift: 'g1' }
+            pathname: `/${events}/gifts`
+            // query: { gift: 'g1' }
         })
+    }
+
+    function onStart () {
+        props.openModal()
+    }
+
+    function setGift (gift) {
+        props.setGift(gift)
     }
 
     // check if the page was reloaded and  fetchData
@@ -267,7 +276,7 @@ function DashBoard (props) {
                                         </Box>
                                     }
                                 </Box>
-                                <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} onClick={openGift} />
+                                <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} onClick={onStart} setGift={setGift} />
 
                             </ColorCardContent>
                         </ColorCard>
@@ -280,9 +289,6 @@ function DashBoard (props) {
                             <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
-                            <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={openGift} disabled={!availableChallenges}>
-                                {`${translation.dashBoardChallengesButton}`}
-                            </CustomDisabledButton>
                         </Box>
                     </Fade>
                     <Box className={classes.gradient} />
@@ -291,7 +297,7 @@ function DashBoard (props) {
         </EventLayout>
     )
 }
-export default DashBoard
+export default giftsModal(DashBoard)
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()
