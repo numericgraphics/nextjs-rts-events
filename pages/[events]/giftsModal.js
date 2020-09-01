@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
         minHeight: '34px',
         minWidth: '34px',
         maxHeight: '58px',
-        maxHeight: '58px',
+        maxWidth: '58px',
         width: '10vw',
         height: '10vw',
         color: 'red'
@@ -159,7 +159,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: 'blur(40px)' }}/>
+                    <LazyImage style={{ ...styles.containerImage, background: `background: linear-gradient(transparent, blue), url(${imageURL})`, minHeight: height, filter: 'blur(4px)' }}/>
                     <CancelIcon className={classes.closeIcon} onClick={handleClose} />
                     <Box className={classes.containerText}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
