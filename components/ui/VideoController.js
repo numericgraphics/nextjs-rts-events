@@ -39,6 +39,11 @@ function VideoController (props) {
 
     function play () {
         store.videoController.setVideoPlayed(true)
+        store.videoController.setBlurVideo(false)
+    }
+
+    function paused () {
+        store.videoController.setBlurVideo(true)
     }
 
     function error () {
@@ -65,6 +70,7 @@ function VideoController (props) {
         videoPlayer.addEventListener('volumechange', volumechange)
         videoPlayer.addEventListener('error', error)
         videoPlayer.addEventListener('play', play)
+        videoPlayer.addEventListener('pause', paused)
 
         const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
         videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
@@ -73,6 +79,7 @@ function VideoController (props) {
             videoPlayer.removeEventListener('volumechange', volumechange)
             videoPlayer.removeEventListener('error', error)
             videoPlayer.removeEventListener('play', play)
+            videoPlayer.removeEventListener('pause', paused)
         }
     }, [])
 

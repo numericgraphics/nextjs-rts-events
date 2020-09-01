@@ -33,7 +33,8 @@ function MyApp ({ Component, pageProps }) {
     const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
     const [showVideo, setShowVideo] = useState(false)
-    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo }
+    const [blurVideo, setBlurVideo] = useState(false)
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
@@ -133,6 +134,7 @@ function MyApp ({ Component, pageProps }) {
                         autoPlay={videoAutoPlay}
                         callBackPlayed={setVideoPlayed}
                         showVideo={showVideo}
+                        blurVideo={blurVideo}
                     />
                 </InnerHeightLayout>
             </ThemeProvider> }
