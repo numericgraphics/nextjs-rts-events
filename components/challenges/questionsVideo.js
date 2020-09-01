@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
 import UserContext from '../UserContext'
+import { storeInLocalStorage, UserStates } from '../../data/tools'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -144,6 +145,16 @@ function QuestionVideo (props) {
         }, 1000)
     }
 
+    function canPlay () {
+        setShowComponent(true)
+        if (!videoController.videoHasPlayed) {
+            videoController.player.current.play()
+            videoController.player.current.muted = props.secondaryButtonClicked
+        }
+        startTimer()
+        videoController.player.current.removeEventListener('canplay', canPlay)
+    }
+
     useEffect(() => {
         if (videoController.videoHasPlayed) {
             props.setButtonModalCliked(true)
@@ -160,10 +171,8 @@ function QuestionVideo (props) {
             setDisabled(false)
             videoController.setVideoPoster('')
             videoController.setVideoSource(videoURL)
-            videoController.player.current.play()
-            setShowComponent(true)
             videoController.setVideoAutoPlay(true)
-            startTimer()
+            videoController.player.current.addEventListener('canplay', canPlay)
         }
     }, [props.buttonModalCliked])
 

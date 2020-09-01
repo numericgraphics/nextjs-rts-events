@@ -41,10 +41,18 @@ function VideoController (props) {
         store.videoController.setVideoPlayed(true)
     }
 
+     function error () {
+        //TODO error handling
+        console.log('VideoController - ERROR - error')
+    }
+
+    function volumechange () {
+        setLocalStorageValue(UserStates.USER_ACTION_VIDEO_MUTED, videoPlayer.muted)
+        setMute(videoPlayer.muted)
+    }
+
     function onVolumeClick () {
         videoPlayer.muted = !videoPlayer.muted
-        setMute(videoPlayer.muted)
-        setLocalStorageValue(UserStates.USER_ACTION_VIDEO_MUTED, videoPlayer.muted)
     }
 
     function onPauseClick () {
@@ -56,10 +64,14 @@ function VideoController (props) {
         if (!videoPlayer) return
         const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
         videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
-        setMute(videoPlayer.muted)
         videoPlayer.addEventListener('play', play)
+        videoPlayer.addEventListener('volumechange', volumechange)
+        videoPlayer.addEventListener('error', error)
+
         return () => {
             videoPlayer.removeEventListener('play', play)
+            videoPlayer.removeEventListener('volumechange', volumechange)
+            videoPlayer.removeEventListener('error', error)
         }
     }, [])
 

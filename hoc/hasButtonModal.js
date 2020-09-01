@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Button from '@material-ui/core/Button'
+import VolumeOffIcon from '@material-ui/icons/VolumeOff'
+import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -25,18 +27,12 @@ const useStyles = makeStyles(() => ({
         color: 'white',
         margin: 10
     },
-    title: {
-
-        fontFamily: 'srgssr-type-Bd',
-        textAlign: 'center',
-        fontSize: '2rem'
-    },
     text: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
+        fontSize: '5vw',
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 30
+        marginBottom: '10vw'
     },
     button: {
         width: '80vw',
@@ -45,8 +41,20 @@ const useStyles = makeStyles(() => ({
         alignSelf: 'center',
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1.25rem',
-        marginTop: 10
+        marginBottom: '10vw'
+    },
+    icon: {
+        fontSize: '18vw',
+        marginBottom: '10vw'
+    },
+    textButton: {
+        textTransform: 'none',
+        color: 'white',
+        alignSelf: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '4vw'
     }
+
 }))
 
 const hasButtonModal = WrappedComponent => {
@@ -55,10 +63,16 @@ const hasButtonModal = WrappedComponent => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
         const [status, setStatus] = useState(false)
+        const [secondaryStatus, setSecondaryStatus] = useState(false)
 
         const startChallenge = () => {
             setOpen(false)
             setStatus(true)
+        }
+
+        const mutedVideoPlayer = () => {
+            setSecondaryStatus(true)
+            startChallenge()
         }
 
         function openModal () {
@@ -68,7 +82,7 @@ const hasButtonModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={openModal} {...props} buttonModalCliked={status} setButtonModalCliked={setStatus} />
+                <WrappedComponent openModal={openModal} {...props} buttonModalCliked={status} setButtonModalCliked={setStatus} secondaryButtonClicked={secondaryStatus}/>
                 <Modal
                     disableAutoFocus={true}
                     disableEnforceFocus
@@ -86,14 +100,21 @@ const hasButtonModal = WrappedComponent => {
                 >
                     <Fade in={open} timeout={1000}>
                         <Box className={classes.container} >
-                            <Typography className={classes.title}>
-                                    Challenge video
-                            </Typography>
+                            <VolumeOffIcon className={classes.icon}/>
                             <Typography className={classes.text}>
-                                    Clicquez ci-dessous pour commencer le defis
+                                Pour une meilleure expérience du jeux veuillez activer le son.
                             </Typography>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={classes.button} onClick={startChallenge}>
-                                    Commencer
+                            <Button
+                                key={'continueGame'}
+                                color="primary"
+                                variant="contained"
+                                className={classes.button}
+                                onClick={startChallenge}
+                                startIcon={<VolumeUpIcon style={{ fontSize: '6vw' }} />}>
+                                activer le son
+                            </Button>
+                            <Button className={classes.textButton} onClick={mutedVideoPlayer}>
+                                Ne pas activer le son
                             </Button>
                         </Box>
                     </Fade>
