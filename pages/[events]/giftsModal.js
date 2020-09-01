@@ -33,6 +33,8 @@ const useStyles = makeStyles(() => ({
         right: '20px',
         minHeight: '34px',
         minWidth: '34px',
+        maxHeight: '58px',
+        maxHeight: '58px',
         width: '10vw',
         height: '10vw',
         color: 'red'
