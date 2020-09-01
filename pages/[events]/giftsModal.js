@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import CancelIcon from '@material-ui/icons/Cancel'
+import { useTheme } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -47,7 +48,6 @@ const useStyles = makeStyles(() => ({
         paddingLeft: '10px',
         paddingRight: '10px',
         width: '100%',
-        backgroundColor: 'blue',
         zIndex: 3
     },
     title: {
@@ -87,26 +87,10 @@ const useStyles = makeStyles(() => ({
         height: '100vh',
         flexGrow: 1,
         zIndex: 3,
-        background: 'linear-gradient(to top, rgba(0, 0, 255, 1) 10%,rgba(0,0,0,0) 35%)'
+        marginBottom: '20vh'
     }
 }))
 const styles = {
-    caseStyle: {
-        width: '42px',
-        height: '48px',
-        margin: '4px',
-        fontFamily: 'srgssr-type-Bd',
-        color: '#020202',
-        fontSize: '1.125rem'
-    },
-    textField: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.125rem',
-        color: '#020202',
-        border: 'none',
-        width: '100%',
-        backgroundColor: 'white'
-    },
     containerImage: {
         position: 'absolute',
         backgroundRepeat: 'no-repeat',
@@ -132,6 +116,7 @@ const hasLoginModal = WrappedComponent => {
         const height = useHeight()
         const [gift, setGift] = useState({ description: '', title: '' })
         const [imageURL, setImageURL] = useState()
+        const theme = useTheme()
 
         useEffect(() => {
             setImageURL(gift.imageURL)
@@ -163,7 +148,6 @@ const hasLoginModal = WrappedComponent => {
         } */
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
-        console.log(gift)
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.LOADING:
@@ -172,15 +156,13 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <Box className={classes.gradient} />
+                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,rgba(0,0,0,0) 35%)` }} />
                     <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                     <CancelIcon className={classes.closeIcon} onClick={handleClose} />
-                    <Box className={classes.containerText}>
+                    <Box className={classes.containerText} style={{ backgroundColor: theme.palette.secondary.main }}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                         <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.description}</Typography>
                     </Box>
-                    <form className={classes.textFieldContainer} noValidate autoComplete="off" >
-                    </form>
                 </Box>
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
