@@ -41,8 +41,8 @@ function VideoController (props) {
         store.videoController.setVideoPlayed(true)
     }
 
-     function error () {
-        //TODO error handling
+    function error () {
+        // TODO error handling
         console.log('VideoController - ERROR - error')
     }
 
@@ -62,16 +62,17 @@ function VideoController (props) {
 
     useEffect(() => {
         if (!videoPlayer) return
-        const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
-        videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
-        videoPlayer.addEventListener('play', play)
         videoPlayer.addEventListener('volumechange', volumechange)
         videoPlayer.addEventListener('error', error)
+        videoPlayer.addEventListener('play', play)
+
+        const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
+        videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
 
         return () => {
-            videoPlayer.removeEventListener('play', play)
             videoPlayer.removeEventListener('volumechange', volumechange)
             videoPlayer.removeEventListener('error', error)
+            videoPlayer.removeEventListener('play', play)
         }
     }, [])
 
