@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
+import CancelIcon from '@material-ui/icons/Cancel'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles(() => ({
     modalContent: {
         display: 'flex',
         flexDirection: 'column',
-        width: '90vw',
+        width: '100vw',
         minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'center',
@@ -26,9 +27,22 @@ const useStyles = makeStyles(() => ({
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
-    containerTitle: {
-        position: 'relative',
-        paddingBottom: 12
+    closeIcon: {
+        position: 'absolute',
+        top: '20px',
+        right: '20px',
+        minHeight: '34px',
+        minWidth: '34px',
+        width: '10vw',
+        height: '10vw',
+        color: 'red'
+    },
+    containerText: {
+        position: 'fixed',
+        paddingBottom: 12,
+        bottom: '10vh',
+        paddingLeft: '10px',
+        paddingRight: '10px'
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
@@ -143,11 +157,10 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: 'blur(4px)' }}/>
-                    <Box className={classes.containerTitle}>
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: 'blur(40px)' }}/>
+                    <CancelIcon className={classes.closeIcon} onClick={handleClose} />
+                    <Box className={classes.containerText}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
-                    </Box>
-                    <Box className={classes.containerDescription}>
                         <Typography className={classes.description} variant="h4" align={'center'}>{gift.description}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" >
