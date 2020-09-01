@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
-import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import UserContext from '../../components/UserContext'
 import Button from '@material-ui/core/Button'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
@@ -82,10 +79,18 @@ const styles = {
         border: 'none',
         width: '100%',
         backgroundColor: 'white'
+    },
+    containerImage: {
+        position: 'absolute',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
+        width: '100vw',
+        backgroundColor: 'white'
     }
 }
 const ModalStates = Object.freeze({
-    PHONE_NUMBER: 'phoneNumber',
+    GIFTS_BOX: 'phoneNumber',
     NUMBER_RECEIVE: 'numberReceive',
     LOADING: 'loading',
     ERROR: 'error'
@@ -96,17 +101,15 @@ const hasLoginModal = WrappedComponent => {
     return (props) => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
-        const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
-        const [userData, setUserData] = useState({ phone: '', code: '' })
-        const { dataProvider, store } = useContext(UserContext)
-        const { setLoading, eventName } = store
-        const [translation, setTranslation] = useState([])
-        const theme = useTheme()
-        const [disabled, setDisabled] = useState(true)
-        const [code, setCode] = useState()
+        const [loginState, setLoginState] = useState(ModalStates.GIFTS_BOX)
         const smsSubmit = useRef()
         const height = useHeight()
-        const [gift, setGift] = useState()
+        const [gift, setGift] = useState({ description: '', title: '' })
+        const [imageURL, setImageURL] = useState()
+
+        useEffect(() => {
+            setImageURL(gift.imageURL)
+        }, [gift.imageURL])
 
         const handleOpen = () => {
             setOpen(true)
@@ -116,12 +119,8 @@ const hasLoginModal = WrappedComponent => {
             setGift(gift)
         }
 
-        useEffect(() => {
-            setTranslation(dataProvider.getTranslation())
-        }, [])
-
         const handleClose = () => {
-            setLoginState(ModalStates.PHONE_NUMBER)
+            setLoginState(ModalStates.GIFTS_BOX)
             // reset modal value setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
         }
@@ -130,30 +129,30 @@ const hasLoginModal = WrappedComponent => {
             handleOpen()
         }
 
-        function onError (message) {
+        /* function onError (message) {
             setLoginState(ModalStates.ERROR)
-            setUserData({ phone: '', code: '', error: message })
             setTimeout(() => {
                 handleClose()
             }, 5000)
-        }
+        } */
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
+        console.log(gift)
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
                     <CircularProgress color="secondary"/>
                 </Box>
-            case ModalStates.PHONE_NUMBER:
+            case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <LazyImage style={{ ...styles.containerImage, backgroundColor: 'black', minHeight: height, filter: 'blur(4px)' }}/>
+                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: 'blur(4px)' }}/>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>Une montre luxueuse de la FeVi.</Typography>
-                        <Typography className={classes.subtitle} variant="h4" align={'center'}>A partir de 2000 points gagné, participer au tirage au sort</Typography>
+                        <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                     </Box>
+                    <Typography className={classes.subtitle} variant="h4" align={'center'}>{gift.description}</Typography>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" >
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={true} >
                             Participer au tirage
                         </Button>
                     </form>
@@ -161,7 +160,6 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
                     <Typography className={classes.title} variant="h4" align={'center'}>Erreur</Typography>
-                    {userData.error && <p className="error">Error: {userData.error}</p>}
                 </Box>
             }
         }

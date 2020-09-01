@@ -195,12 +195,6 @@ function DashBoard (props) {
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
-    async function openGift (id) {
-        await Router.push('/[events]/gifts', {
-            pathname: `/${events}/gifts`
-            // query: { gift: 'g1' }
-        })
-    }
 
     function onStart () {
         props.openModal()
