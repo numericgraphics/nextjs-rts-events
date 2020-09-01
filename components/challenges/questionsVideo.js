@@ -158,10 +158,10 @@ function QuestionVideo (props) {
     useEffect(() => {
         if (props.buttonModalCliked) {
             setDisabled(false)
-            setShowComponent(true)
             videoController.setVideoPoster('')
             videoController.setVideoSource(videoURL)
             videoController.player.current.play()
+            setShowComponent(true)
             videoController.setVideoAutoPlay(true)
             startTimer()
         }
