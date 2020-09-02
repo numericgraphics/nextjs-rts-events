@@ -41,9 +41,9 @@ export function getLocalStorage (localStorageName) {
 }
 
 export function getDataFromLocalStorage (localStorageName, key) {
-    const localStorage = JSON.parse(getLocalStorage(localStorageName))
-    if (localStorage && localStorage[key]) {
-        return localStorage[key]
+    const data = JSON.parse(getLocalStorage(localStorageName))
+    if (data && data[key] !== undefined) {
+        return data[key]
     }
     return null
 }
