@@ -84,7 +84,7 @@ const useStyles = makeStyles(() => ({
     gradient: {
         position: 'absolute',
         width: '100vw',
-        height: '10vh',
+        height: '20vh',
         flexGrow: 1,
         zIndex: 3,
         bottom: 0
@@ -117,7 +117,7 @@ const hasLoginModal = WrappedComponent => {
         const [gift, setGift] = useState({ description: '', title: '' })
         const [imageURL, setImageURL] = useState()
         const theme = useTheme()
-        const boxTextRef = useRef()
+        const boxTextRef = useRef(null)
         const [boxHeight, setBoxHeight] = useState(0)
 
         useEffect(() => {
@@ -129,7 +129,13 @@ const hasLoginModal = WrappedComponent => {
             // eslint-disable-next-line no-unused-expressions
                 boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
             }
+            // eslint-disable-next-line no-unused-expressions
             window.addEventListener('resize', handleResize)
+        }, [boxTextRef.current])
+
+        useEffect(() => {
+            // eslint-disable-next-line no-unused-expressions
+            boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
         }, [boxTextRef.current])
 
         const handleOpen = () => {
