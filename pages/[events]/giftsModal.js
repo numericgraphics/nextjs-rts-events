@@ -166,7 +166,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,rgba(0,0,0,0) 100%)`, marginBottom: boxHeight - 1 }} />
+                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`, marginBottom: boxHeight - 1 }} />
                     <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                     <CancelIcon className={classes.closeIcon} onClick={handleClose} />
                     <Box className={classes.containerText} ref={boxTextRef} style={{ backgroundColor: theme.palette.secondary.main }}>
