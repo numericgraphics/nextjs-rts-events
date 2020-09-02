@@ -153,7 +153,8 @@ const styles = {
 }
 
 function Result (props) {
-    const { points, score, message, success, hasAvailableChallenges } = props.content
+    const { points, message, success } = props.content
+    const [gameStats, setGameStats] = useState({})
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
@@ -176,6 +177,7 @@ function Result (props) {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
+        setGameStats(dataProvider.getGameStats())
     }, [])
 
     // TODO : remove this local translation
@@ -192,14 +194,14 @@ function Result (props) {
                             <div className={classes.iconType}>
                                 <CheckIcon fontSize="small" className={classes.rateIcon}/>
                                 <Typography className={classes.cardHeaderSuccess}>
-                                    {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
+                                    {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
                                 </Typography>
                             </div>
                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                             <div className={classes.iconType}>
                                 <CloseIcon fontSize="small" className={classes.rateIcon}/>
                                 <Typography className={classes.cardHeaderWrong}>
-                                    {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
+                                    {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
                                 </Typography>
                             </div>
                         </Box>
@@ -211,25 +213,25 @@ function Result (props) {
                         <Typography className={classes.subTitle}>
                             {message}
                         </Typography>
-                        {!hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
+                        {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
                             {translation.challengeResultInfoTitle}
                         </Typography> }
                     </ColorCardContent>
                     <ColorCardActions className={classes.cardFooter}>
                         <Typography className={classes.winPointText}>
 
-                            {hasAvailableChallenges
+                            {gameStats.hasAvailableChallenges
                                 ? success
                                     ? `+ ${points} pts`
                                     : `${points} pts`
-                                : `+ ${score.totalPoints} pts`
+                                : `+ ${gameStats.currentScore} pts`
                             }
 
                         </Typography>
                     </ColorCardActions>
                 </ColorCard>
                 <Box className={classes.footer}>
-                    {hasAvailableChallenges
+                    {gameStats.hasAvailableChallenges
                         ? <Box>
                             <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={classes.button} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
