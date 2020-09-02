@@ -109,7 +109,7 @@ const hasLoginModal = WrappedComponent => {
         const [gift, setGift] = useState({ description: '', title: '' })
         const [imageURL, setImageURL] = useState()
         const theme = useTheme()
-        const boxTextRef = useRef(null)
+        const boxTextRef = useRef()
         const [boxHeight, setBoxHeight] = useState(0)
 
         useEffect(() => {
@@ -126,10 +126,10 @@ const hasLoginModal = WrappedComponent => {
         }, [boxTextRef.current])
 
         useEffect(() => {
-            // eslint-disable-next-line no-unused-expressions
-            // boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
-            console.log('Ref : ', boxTextRef)
-        }, [open])
+            if (boxTextRef.current) {
+                setBoxHeight(boxTextRef.current.clientHeight)
+            }
+        })
 
         const handleOpen = () => {
             setOpen(true)
@@ -144,13 +144,9 @@ const hasLoginModal = WrappedComponent => {
             setOpen(false)
         }
 
-        function OpenModal () {
-            handleOpen()
-        }
-
         return (
             <Box>
-                <WrappedComponent setGift={setMGift} openModal={OpenModal} isModalOpen={open} {...props} />
+                <WrappedComponent setGift={setMGift} openModal={handleOpen} isModalOpen={open} {...props} />
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -165,7 +161,7 @@ const hasLoginModal = WrappedComponent => {
                 >
                     <Fade in={open}>
                         <Box className={classes.modalContent}>
-                            <Box className={classes.containerText} ref={boxTextRef} style={{ backgroundColor: theme.palette.secondary.main }}>
+                            <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                 <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                                 <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.description}</Typography>
                             </Box>
