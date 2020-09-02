@@ -84,7 +84,7 @@ const useStyles = makeStyles(() => ({
     gradient: {
         position: 'absolute',
         width: '100vw',
-        height: '100vh',
+        height: '10vh',
         flexGrow: 1,
         zIndex: 3,
         bottom: 0
