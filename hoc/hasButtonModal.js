@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
         fontFamily: 'srgssr-type-Rg',
         fontSize: '5vw',
         textAlign: 'center',
-        lineHeight: 1,
+        lineHeight: '6vw',
         marginBottom: '10vw'
     },
     button: {
@@ -110,7 +110,7 @@ const hasButtonModal = WrappedComponent => {
                                 variant="contained"
                                 className={classes.button}
                                 onClick={startChallenge}
-                                startIcon={<VolumeUpIcon style={{ fontSize: '6vw' }} />}>
+                                startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                 activer le son
                             </Button>
                             <Button className={classes.textButton} onClick={mutedVideoPlayer}>
