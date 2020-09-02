@@ -128,7 +128,6 @@ const hasLoginModal = WrappedComponent => {
             function handleResize () {
             // eslint-disable-next-line no-unused-expressions
                 boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
-                console.log('resize')
             }
             window.addEventListener('resize', handleResize)
         }, [boxTextRef.current])
