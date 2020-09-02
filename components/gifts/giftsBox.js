@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -43,6 +43,7 @@ function GiftsBox (props) {
 
     const classes = useStyles()
     const [gifts, setGifts] = useState([])
+    const boxTextRef = useRef()
 
     useEffect(() => {
         setGifts(props.gifts)
@@ -122,7 +123,7 @@ function GiftsBox (props) {
             </SvgIcon>
         )
     }
-
+    console.log('box text: ', boxTextRef)
     function getGifts (gifts, props) {
         // eslint-disable-next-line prefer-const
         let re = []
@@ -141,7 +142,7 @@ function GiftsBox (props) {
 
     return (
         <Box className={classes.container}>
-            <Typography className={classes.textRegularCenter}>
+            <Typography className={classes.textRegularCenter} ref={boxTextRef}>
                 {props.translation}
             </Typography>
             <Box className={classes.gifts}>

@@ -148,6 +148,7 @@ const hasLoginModal = WrappedComponent => {
         } */
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
+        console.log(theme.palette.secondary.main)
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.LOADING:
@@ -156,7 +157,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,rgba(0,0,0,0) 35%)` }} />
+                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 17%,rgba(0,0,0,0) 95%)` }} />
                     <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                     <CancelIcon className={classes.closeIcon} onClick={handleClose} />
                     <Box className={classes.containerText} style={{ backgroundColor: theme.palette.secondary.main }}>
