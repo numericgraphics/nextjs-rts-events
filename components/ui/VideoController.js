@@ -38,7 +38,9 @@ function VideoController (props) {
     }
 
     function play () {
-        store.videoController.setVideoPlayed(true)
+        if (store.videoController.videoHasPlayed === false) {
+            store.videoController.setVideoPlayed(true)
+        }
         store.videoController.setBlurVideo(false)
     }
 
@@ -85,7 +87,7 @@ function VideoController (props) {
 
     useEffect(() => {
         if (store.videoController.videoHasPlayed) {
-            storeInLocalStorage(`${eventName}-storage`, { [UserStates.USER_ACTION_CLICKED_VIDEO]: true })
+            storeInLocalStorage(`${eventName}-storage`, { [UserStates.USER_ACTION_CLICKED_VIDEO]: true, [UserStates.USER_ACTION_VIDEO_MUTED]: videoPlayer.muted })
         }
     }, [store.videoController.videoHasPlayed])
 
