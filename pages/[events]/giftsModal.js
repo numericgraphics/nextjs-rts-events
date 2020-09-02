@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -87,7 +87,7 @@ const useStyles = makeStyles(() => ({
         height: '100vh',
         flexGrow: 1,
         zIndex: 3,
-        marginBottom: '20vh'
+        bottom: 0
     }
 }))
 const styles = {
@@ -117,10 +117,21 @@ const hasLoginModal = WrappedComponent => {
         const [gift, setGift] = useState({ description: '', title: '' })
         const [imageURL, setImageURL] = useState()
         const theme = useTheme()
+        const boxTextRef = useRef()
+        const [boxHeight, setBoxHeight] = useState(0)
 
         useEffect(() => {
             setImageURL(gift.imageURL)
         }, [gift.imageURL])
+
+        useEffect(() => {
+            function handleResize () {
+            // eslint-disable-next-line no-unused-expressions
+                boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
+                console.log('resize')
+            }
+            window.addEventListener('resize', handleResize)
+        }, [boxTextRef.current])
 
         const handleOpen = () => {
             setOpen(true)
@@ -148,7 +159,6 @@ const hasLoginModal = WrappedComponent => {
         } */
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
-        console.log(theme.palette.secondary.main)
         function getLoginContent (state) {
             switch (state) {
             case ModalStates.LOADING:
@@ -157,10 +167,10 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.GIFTS_BOX:
                 return <Box className={classes.modalContent}>
-                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 17%,rgba(0,0,0,0) 95%)` }} />
+                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,rgba(0,0,0,0) 100%)`, marginBottom: boxHeight - 1 }} />
                     <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
                     <CancelIcon className={classes.closeIcon} onClick={handleClose} />
-                    <Box className={classes.containerText} style={{ backgroundColor: theme.palette.secondary.main }}>
+                    <Box className={classes.containerText} ref={boxTextRef} style={{ backgroundColor: theme.palette.secondary.main }}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                         <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.description}</Typography>
                     </Box>
