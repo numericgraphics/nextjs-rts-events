@@ -153,8 +153,7 @@ const styles = {
 }
 
 function Result (props) {
-    const { points, message, success } = props.content
-    const [gameStats, setGameStats] = useState({})
+    const { points, message, success, gameStats } = props.content
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
@@ -177,7 +176,6 @@ function Result (props) {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
         setUser(dataProvider.getUser())
-        setGameStats(dataProvider.getGameStats())
     }, [])
 
     // TODO : remove this local translation
@@ -219,10 +217,9 @@ function Result (props) {
                     </ColorCardContent>
                     <ColorCardActions className={classes.cardFooter}>
                         <Typography className={classes.winPointText}>
-
                             {gameStats.hasAvailableChallenges
                                 ? success
-                                    ? `+ ${points} pts`
+                                    ? `+ ${points} pts` // TODO: Translation pts
                                     : `${points} pts`
                                 : `+ ${gameStats.currentScore} pts`
                             }
