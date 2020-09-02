@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
     },
     containerText: {
         position: 'fixed',
-        paddingBottom: '10vh',
+        paddingBottom: '10px',
         bottom: '0',
         paddingLeft: '10px',
         paddingRight: '10px',
