@@ -231,7 +231,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress color="secondary"/>
+                    <CircularProgress style={{ color: theme.palette.secondary.main }}/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
