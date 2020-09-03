@@ -28,16 +28,48 @@ function GiftsBox (props) {
             fontSize: '1.1rem'
         },
         cadeau: {
-            fill: theme.palette.primary
+            fill: theme.palette.primary,
+            minHeight: '34px',
+            minWidth: '34px',
+            width: '10vw',
+            height: '10vw',
+            marginLeft: '10px',
+            marginRight: '10px',
+            maxWidth: '50px',
+            maxHeight: '50px'
         },
         medal: {
-            fill: theme.palette.primary
+            fill: theme.palette.primary,
+            minHeight: '34px',
+            minWidth: '34px',
+            width: '10vw',
+            height: '10vw',
+            marginLeft: '10px',
+            marginRight: '10px',
+            maxWidth: '50px',
+            maxHeight: '50px'
         },
         lockedGiftIcon: {
-            opacity: '0.5'
+            opacity: '0.5',
+            minHeight: '34px',
+            minWidth: '34px',
+            width: '10vw',
+            height: '10vw',
+            marginLeft: '10px',
+            marginRight: '10px',
+            maxWidth: '50px',
+            maxHeight: '50px'
         },
         lockedMedal: {
-            opacity: '0.5'
+            opacity: '0.5',
+            minHeight: '34px',
+            minWidth: '34px',
+            width: '10vw',
+            height: '10vw',
+            marginLeft: '10px',
+            marginRight: '10px',
+            maxWidth: '50px',
+            maxHeight: '50px'
         },
         cadenasIcon: {
             minHeight: '6.8px',
@@ -56,17 +88,23 @@ function GiftsBox (props) {
         setGifts(props.gifts)
     }, [props.gifts])
 
+    const setGift = (i) => {
+        props.setGift(gifts[i])
+        props.onClick()
+    }
+
     function getGifts (gifts, props) {
         // eslint-disable-next-line prefer-const
         let re = []
         if (!gifts) {
             return null
         }
+
         for (let i = 0; i < gifts.length; i++) {
             if (gifts[i].type === 'lottery') {
-                gifts[i].locked ? re.push(lockedGiftIcon({ classeCadenas: classes.cadenasIcon, classeLockedCadeau: classes.lockedGiftIcon, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift })) : re.push(giftIcon({ classeCadeau: classes.cadeau, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift }))
+                gifts[i].locked ? re.push(lockedGiftIcon({ onClick: () => setGift(i), classeGift: classes.lockedGiftIcon, key: i })) : re.push(giftIcon({ onClick: () => setGift(i), classeGift: classes.cadeau, key: i }))
             } else if (gifts[i].type === 'medal') {
-                gifts[i].locked ? re.push(disabledMedalIcon({ classeLockMedal: classes.lockedMedal, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift })) : re.push(medalIcon({ classeMedal: classes.medal, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift }))
+                gifts[i].locked ? re.push(disabledMedalIcon({ onClick: () => setGift(i), classeGift: classes.lockedMedal, key: i })) : re.push(medalIcon({ onClick: () => setGift(i), classeGift: classes.medal, key: i }))
             }
         }
         return re

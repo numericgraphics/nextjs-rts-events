@@ -119,7 +119,7 @@ const hasLoginModal = WrappedComponent => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
         const height = useHeight()
-        const [gift, setGift] = useState({ description: '', title: '' })
+        const [gift, setGift] = useState({ description: '', title: '', locked: true })
         const [imageURL, setImageURL] = useState()
         const theme = useTheme()
         const boxTextRef = useRef()
@@ -174,10 +174,6 @@ const hasLoginModal = WrappedComponent => {
             setOpen(true)
         }
 
-        const setMGift = (gift) => {
-            setGift(gift)
-        }
-
         const handleClose = () => {
             // reset modal value setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
@@ -185,7 +181,7 @@ const hasLoginModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent setGift={setMGift} openModal={handleOpen} isModalOpen={open} {...props} />
+                <WrappedComponent setGift={setGift} openModal={handleOpen} isModalOpen={open} {...props} />
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
