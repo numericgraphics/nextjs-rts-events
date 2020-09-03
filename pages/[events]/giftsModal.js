@@ -141,7 +141,8 @@ const hasLoginModal = WrappedComponent => {
                 marginBottom: gift.locked ? (lockHeight + boxHeight) - 1 : boxHeight - 1
             },
             lockContainer: {
-                backgroundColor: theme.palette.secondary.main
+                backgroundColor: theme.palette.secondary.main,
+                zIndex: 3
             }
         }
 

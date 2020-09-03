@@ -38,6 +38,14 @@ function GiftsBox (props) {
         },
         lockedMedal: {
             opacity: '0.5'
+        },
+        cadenasIcon: {
+            minHeight: '6.8px',
+            minWidth: '6.8px',
+            maxWidth: '10px',
+            maxHeight: '10px',
+            width: '3vw',
+            height: '3vw'
         }
     })
 
@@ -56,7 +64,7 @@ function GiftsBox (props) {
         }
         for (let i = 0; i < gifts.length; i++) {
             if (gifts[i].type === 'lottery') {
-                gifts[i].locked ? re.push(lockedGiftIcon({ classeLockedCadeau: classes.lockedGiftIcon, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift })) : re.push(giftIcon({ classeCadeau: classes.cadeau, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift }))
+                gifts[i].locked ? re.push(lockedGiftIcon({ classeCadenas: classes.cadenasIcon, classeLockedCadeau: classes.lockedGiftIcon, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift })) : re.push(giftIcon({ classeCadeau: classes.cadeau, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift }))
             } else if (gifts[i].type === 'medal') {
                 gifts[i].locked ? re.push(disabledMedalIcon({ classeLockMedal: classes.lockedMedal, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift })) : re.push(medalIcon({ classeMedal: classes.medal, classeGift: classes.gift, gifts: gifts, key: i, onClick: props.onClick, id: gifts[i].giftID, setGift: props.setGift }))
             }
