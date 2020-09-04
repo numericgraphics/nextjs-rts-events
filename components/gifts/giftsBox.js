@@ -35,10 +35,11 @@ function GiftsBox (props) {
             minWidth: '34px',
             width: '10vw',
             height: '10vw',
-            marginLeft: '10px',
-            marginRight: '10px',
             maxWidth: '50px',
-            maxHeight: '50px'
+            maxHeight: '50px',
+            position: 'absolute',
+            top: 0,
+            left: 0
         },
         medal: {
             fill: 'white',
@@ -46,10 +47,11 @@ function GiftsBox (props) {
             minWidth: '34px',
             width: '10vw',
             height: '10vw',
-            marginLeft: '10px',
-            marginRight: '10px',
             maxWidth: '50px',
-            maxHeight: '50px'
+            maxHeight: '50px',
+            position: 'absolute',
+            top: 0,
+            left: 0
         },
         lock: {
             position: 'absolute',
