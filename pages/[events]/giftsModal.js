@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
         maxWidth: '58px',
         width: '10vw',
         height: '10vw',
-        fill: 'red',
+        fill: 'white',
         zIndex: 4
     },
     lockContainer: {

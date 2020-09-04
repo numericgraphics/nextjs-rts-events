@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { lockedGiftIcon, disabledMedalIcon, medalIcon, giftIcon, lockIcon } from './icon'
+import { medalIcon, giftIcon, lockIcon } from './icon'
 import IconButton from '@material-ui/core/IconButton'
 
 function GiftsBox (props) {
@@ -50,36 +50,6 @@ function GiftsBox (props) {
             marginRight: '10px',
             maxWidth: '50px',
             maxHeight: '50px'
-        },
-        lockedGiftIcon: {
-            opacity: '0.5',
-            minHeight: '34px',
-            minWidth: '34px',
-            width: '10vw',
-            height: '10vw',
-            marginLeft: '10px',
-            marginRight: '10px',
-            maxWidth: '50px',
-            maxHeight: '50px'
-        },
-        lockedMedal: {
-            opacity: '0.5',
-            minHeight: '34px',
-            minWidth: '34px',
-            width: '10vw',
-            height: '10vw',
-            marginLeft: '10px',
-            marginRight: '10px',
-            maxWidth: '50px',
-            maxHeight: '50px'
-        },
-        cadenasIcon: {
-            minHeight: '6.8px',
-            minWidth: '6.8px',
-            maxWidth: '10px',
-            maxHeight: '10px',
-            width: '3vw',
-            height: '3vw'
         },
         lock: {
             position: 'absolute',
