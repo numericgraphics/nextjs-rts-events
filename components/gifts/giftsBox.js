@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { lockedGiftIcon, disabledMedalIcon, medalIcon, giftIcon } from './icon'
+import { lockedGiftIcon, disabledMedalIcon, medalIcon, giftIcon, lockIcon } from './icon'
 import IconButton from '@material-ui/core/IconButton'
 
 function GiftsBox (props) {
@@ -16,7 +16,8 @@ function GiftsBox (props) {
             marginLeft: '10px',
             marginRight: '10px',
             maxWidth: '50px',
-            maxHeight: '50px'
+            maxHeight: '50px',
+            backgroundColor: theme.palette.primary.main
         },
         gifts: {
             display: 'flex',
@@ -29,7 +30,7 @@ function GiftsBox (props) {
             fontSize: '1.1rem'
         },
         cadeau: {
-            fill: theme.palette.primary,
+            fill: 'white',
             minHeight: '34px',
             minWidth: '34px',
             width: '10vw',
@@ -40,7 +41,7 @@ function GiftsBox (props) {
             maxHeight: '50px'
         },
         medal: {
-            fill: theme.palette.primary,
+            fill: 'white',
             minHeight: '34px',
             minWidth: '34px',
             width: '10vw',
@@ -79,6 +80,18 @@ function GiftsBox (props) {
             maxHeight: '10px',
             width: '3vw',
             height: '3vw'
+        },
+        lock: {
+            position: 'absolute',
+            top: 0,
+            right: '70%',
+            minHeight: '17px',
+            minWidth: '17px',
+            maxWidth: '25px',
+            maxHeight: '25px',
+            width: '7.5vw',
+            height: '7.5vw',
+            fill: 'white'
         }
     })
 
@@ -97,12 +110,14 @@ function GiftsBox (props) {
     function getGift (item, index) {
         switch (item.type) {
         case 'lottery':
-            return <IconButton onClick={() => setGift(item) } color="primary" key={index}>
-                {item.locked ? giftIcon({ className: classes.cadeau, key: index }) : lockedGiftIcon({ className: classes.lockedGiftIcon, key: index })}
+            return <IconButton onClick={() => setGift(item) } color="primary" key={index} className={classes.gift}>
+                {item.locked && lockIcon({ className: classes.lock, key: index + 1 }) }
+                { giftIcon({ className: classes.cadeau, key: index }) }
             </IconButton>
         case 'medal':
-            return <IconButton onClick={() => setGift(item)} color="primary" key={index}>
-                {item.locked ? medalIcon({ className: classes.medal, key: index }) : disabledMedalIcon({ className: classes.medal, key: index })}
+            return <IconButton onClick={() => setGift(item)} color="primary" key={index} className={classes.gift}>
+                {item.locked && lockIcon({ className: classes.lock, key: index + 1 }) }
+                { medalIcon({ className: classes.medal, key: index })}
             </IconButton>
         }
     }

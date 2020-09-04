@@ -9,7 +9,7 @@ import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import CancelIcon from '@material-ui/icons/Cancel'
 import { useTheme } from '@material-ui/core/styles'
-import { lockIcon } from './icon'
+import { lockIcon } from '../../components/gifts/icon'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -138,7 +138,7 @@ const hasLoginModal = WrappedComponent => {
             },
             gradient: {
                 background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`,
-                marginBottom: gift.locked ? (lockHeight + boxHeight) - 1 : boxHeight - 1
+                marginBottom: gift.locked ? (lockHeight + boxHeight) - 6 : boxHeight - 1
             },
             lockContainer: {
                 backgroundColor: theme.palette.secondary.main,
