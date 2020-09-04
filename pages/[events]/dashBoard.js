@@ -18,6 +18,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
+import { useImagesServices } from '../../hooks/useImagesServices'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -151,6 +152,9 @@ function DashBoard (props) {
     const [translation, setTranslation] = useState([])
     const [gameStats, setGameStats] = useState({})
     const [progress, setProgress] = useState(0)
+    const [preCaching, setPreCaching] = useState([])
+    const isImagesPreLoaded = useImagesServices(preCaching)
+    const [isPageReady, setPageReady] = useState(false)
     const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
@@ -167,7 +171,7 @@ function DashBoard (props) {
                 const content = await response.json()
                 dataProvider.setData(content)
                 gameStatsService.init(dataProvider)
-                initPage()
+                setPageReady(true)
             } else {
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
@@ -191,6 +195,18 @@ function DashBoard (props) {
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
+
+    useEffect(() => {
+        if (isPageReady) {
+            setPreCaching(dataProvider.getGameStats())
+        }
+    }, [isPageReady])
+
+    useEffect(() => {
+        if (isImagesPreLoaded) {
+            initPage()
+        }
+    }, [isImagesPreLoaded])
 
     // check if the page was reloaded and  fetchData
     useEffect(() => {
