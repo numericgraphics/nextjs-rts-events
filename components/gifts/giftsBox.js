@@ -95,14 +95,13 @@ function GiftsBox (props) {
     }
 
     function getGift (item, index) {
-        console.log(index)
         switch (item.type) {
         case 'lottery':
-            return <IconButton onClick={() => setGift(item)}>
+            return <IconButton onClick={() => setGift(item) } color="primary" key={index}>
                 {item.locked ? giftIcon({ className: classes.cadeau, key: index }) : lockedGiftIcon({ className: classes.lockedGiftIcon, key: index })}
             </IconButton>
         case 'medal':
-            return <IconButton onClick={() => setGift(item)}>
+            return <IconButton onClick={() => setGift(item)} color="primary" key={index}>
                 {item.locked ? medalIcon({ className: classes.medal, key: index }) : disabledMedalIcon({ className: classes.medal, key: index })}
             </IconButton>
         }
@@ -113,7 +112,7 @@ function GiftsBox (props) {
                 {props.translation}
             </Typography>
             <Box className={classes.gifts}>
-                {gifts.map((item, index) => getGift(item, index))}
+                {gifts ? gifts.map((item, index) => getGift(item, index)) : null}
             </Box>
         </Box>
     )
