@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import { lockedGiftIcon, disabledMedalIcon, medalIcon, giftIcon } from './icon'
+import IconButton from '@material-ui/core/IconButton'
 
 function GiftsBox (props) {
     const theme = useTheme()
@@ -93,38 +94,26 @@ function GiftsBox (props) {
         props.onClick()
     }
 
-    function getGifts (gifts, props) {
-        // eslint-disable-next-line prefer-const
-        let re = []
-        if (!gifts) {
-            return null
+    function getGift (item, index) {
+        console.log(index)
+        switch (item.type) {
+        case 'lottery':
+            return <IconButton onClick={() => setGift(item)}>
+                {item.locked ? giftIcon({ className: classes.cadeau, key: index }) : lockedGiftIcon({ className: classes.lockedGiftIcon, key: index })}
+            </IconButton>
+        case 'medal':
+            return <IconButton onClick={() => setGift(item)}>
+                {item.locked ? medalIcon({ className: classes.medal, key: index }) : disabledMedalIcon({ className: classes.medal, key: index })}
+            </IconButton>
         }
-
-        gifts.map((gift, index) => {
-            if (gift.type === 'lottery') {
-                if (gift.locked) {
-                    re.push(lockedGiftIcon({ onClick: () => setGift(gift), classeGift: classes.lockedGiftIcon, key: index }))
-                } else {
-                    re.push(giftIcon({ onClick: () => setGift(gift), classeGift: classes.cadeau, key: index }))
-                }
-            } else if (gift.type === 'medal') {
-                if (gift.locked) {
-                    re.push(disabledMedalIcon({ onClick: () => setGift(gift), classeGift: classes.lockedMedal, key: index }))
-                } else {
-                    re.push(medalIcon({ onClick: () => setGift(gift), classeGift: classes.medal, key: index }))
-                }
-            }
-        })
-        return re
     }
-
     return (
         <Box className={classes.container}>
             <Typography className={classes.textRegularCenter}>
                 {props.translation}
             </Typography>
             <Box className={classes.gifts}>
-                {getGifts(gifts, props)}
+                {gifts.map((item, index) => getGift(item, index))}
             </Box>
         </Box>
     )
