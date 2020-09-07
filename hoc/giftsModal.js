@@ -191,7 +191,7 @@ const hasLoginModal = WrappedComponent => {
                         timeout: 500
                     }}
                 >
-                    <Slide direction="up" in={open} timeout={750} mountOnEnter unmountOnExit>
+                    <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
                         <Box className={classes.modalContent}>
                             {gift.locked ? <Box className={classes.lockContainer} style={{ ...styles.lockContainer, bottom: boxHeight - 1 }}>
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
