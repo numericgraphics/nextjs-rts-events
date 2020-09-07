@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
         minHeight: '100vh',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top',
-        backgroundSize: 'auto 100%',
+        backgroundSize: 'cover',
         backgroundColor: 'black'
     },
     text: {
