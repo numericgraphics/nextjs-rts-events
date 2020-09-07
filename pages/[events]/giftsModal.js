@@ -65,15 +65,16 @@ const useStyles = makeStyles(() => ({
         position: 'fixed',
         paddingBottom: '5vh',
         bottom: '0',
-        paddingLeft: '10px',
-        paddingRight: '10px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
         width: '100%',
         zIndex: 3
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.75em',
-        letterSpacing: '0em'
+        letterSpacing: '0em',
+        paddingBottom: '15px'
     },
     description: {
         fontFamily: 'srgssr-type-Rg',
@@ -86,7 +87,6 @@ const useStyles = makeStyles(() => ({
         }
     },
     textFieldContainer: {
-        padding: 20,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -191,7 +191,7 @@ const hasLoginModal = WrappedComponent => {
                         timeout: 500
                     }}
                 >
-                    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+                    <Slide direction="up" in={open} timeout={750} mountOnEnter unmountOnExit>
                         <Box className={classes.modalContent}>
                             {gift.locked ? <Box className={classes.lockContainer} style={{ ...styles.lockContainer, bottom: boxHeight - 1 }}>
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
