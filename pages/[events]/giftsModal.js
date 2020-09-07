@@ -201,7 +201,7 @@ const hasLoginModal = WrappedComponent => {
                             </Box> : null }
                             <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                 <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
-                                <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.description}</Typography>
+                                <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                             </Box>
                             <Box className={classes.gradient} style={{ ...styles.gradient }} />
                             <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
