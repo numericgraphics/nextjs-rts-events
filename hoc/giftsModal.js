@@ -119,7 +119,7 @@ const hasLoginModal = WrappedComponent => {
         const [open, setOpen] = useState(false)
         const height = useHeight()
         const [gift, setGift] = useState({ description: '', title: '', locked: true })
-        const [imageURL, setImageURL] = useState()
+        const [imageURL, setImageURL] = useState('')
         const theme = useTheme()
         const boxTextRef = useRef()
         const lockIconRef = createRef()
@@ -201,7 +201,7 @@ const hasLoginModal = WrappedComponent => {
                                 <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                             </Box>
                             <Box className={classes.gradient} style={{ ...styles.gradient }} />
-                            <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
+                            <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${gift.imageURL})`, minHeight: height }}/>
                             <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ ...styles.closeBtn }}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
