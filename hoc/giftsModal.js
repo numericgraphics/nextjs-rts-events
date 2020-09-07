@@ -119,7 +119,6 @@ const hasLoginModal = WrappedComponent => {
         const [open, setOpen] = useState(false)
         const height = useHeight()
         const [gift, setGift] = useState({ description: '', title: '', locked: true })
-        const [imageURL, setImageURL] = useState('')
         const theme = useTheme()
         const boxTextRef = useRef()
         const lockIconRef = createRef()
@@ -147,10 +146,6 @@ const hasLoginModal = WrappedComponent => {
                 stroke: theme.palette.primary.contrastText
             }
         }
-
-        useEffect(() => {
-            setImageURL(gift.imageURL)
-        }, [gift.imageURL])
 
         useEffect(() => {
             function handleResize () {
