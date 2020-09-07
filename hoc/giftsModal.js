@@ -5,10 +5,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Box from '@material-ui/core/Box'
 import Slide from '@material-ui/core/Slide'
 import Typography from '@material-ui/core/Typography'
-import LazyImage from '../../components/ui/LazyImage'
-import { useHeight } from '../../hooks/useHeight'
+import LazyImage from '../components/ui/LazyImage'
+import { useHeight } from '../hooks/useHeight'
 import { useTheme } from '@material-ui/core/styles'
-import { lockIcon, closeIcon } from '../../components/gifts/icon'
+import { lockIcon, closeIcon } from '../components/gifts/icon'
 import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(() => ({

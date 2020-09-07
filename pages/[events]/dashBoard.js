@@ -19,7 +19,7 @@ import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
 import GiftsBox from '../../components/gifts/giftsBox'
-import giftsModal from './giftsModal'
+import giftsModal from '../../hoc/giftsModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
