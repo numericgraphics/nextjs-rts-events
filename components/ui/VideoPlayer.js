@@ -39,7 +39,7 @@ function VideoPlayer (props, videoRef) {
     return (
         <Fade in={showVideo} timeout={500}>
             <Box>
-                {<Box className={classes.poster} style={{ backgroundImage: `url(${videoPoster})`, visibility: videoHasPlayed ? 'hidden' : 'visible' }} />}
+                {<Box className={classes.poster} style={{ backgroundImage: `url(${videoPoster})`, visibility: videoHasPlayed ? 'hidden' : 'visible', display: videoHasPlayed ? 'none' : 'block' }} />}
                 <video
                     ref={videoRef}
                     preload={'auto'}
