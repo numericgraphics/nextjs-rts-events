@@ -48,9 +48,9 @@ function VideoController (props) {
         store.videoController.setBlurVideo(true)
     }
 
-    function error () {
+    function error (e) {
         // TODO error handling
-        console.log('VideoController - ERROR - error')
+        console.log('VideoController - ERROR - error', e)
     }
 
     function volumechange () {
