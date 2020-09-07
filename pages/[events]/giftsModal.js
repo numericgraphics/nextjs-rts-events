@@ -143,8 +143,8 @@ const hasLoginModal = WrappedComponent => {
                 fill: theme.palette.secondary.contrastText
             },
             closeBtn: {
-                backgroundColor: theme.palette.secondary.contrastText,
-                stroke: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                stroke: theme.palette.primary.contrastText
             }
         }
 

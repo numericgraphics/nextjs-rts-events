@@ -30,7 +30,7 @@ function GiftsBox (props) {
             fontSize: '1.1rem'
         },
         cadeau: {
-            fill: 'white',
+            fill: theme.palette.primary.contrastText,
             minHeight: '34px',
             minWidth: '34px',
             width: '10vw',
@@ -42,7 +42,7 @@ function GiftsBox (props) {
             left: 0
         },
         medal: {
-            fill: 'white',
+            fill: theme.palette.primary.contrastText,
             minHeight: '34px',
             minWidth: '34px',
             width: '10vw',
