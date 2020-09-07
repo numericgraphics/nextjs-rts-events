@@ -3,7 +3,7 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Box from '@material-ui/core/Box'
-import Fade from '@material-ui/core/Fade'
+import Slide from '@material-ui/core/Slide'
 import Typography from '@material-ui/core/Typography'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
@@ -191,7 +191,7 @@ const hasLoginModal = WrappedComponent => {
                         timeout: 500
                     }}
                 >
-                    <Fade in={open}>
+                    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
                         <Box className={classes.modalContent}>
                             {gift.locked ? <Box className={classes.lockContainer} style={{ ...styles.lockContainer, bottom: boxHeight - 1 }}>
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
@@ -206,7 +206,7 @@ const hasLoginModal = WrappedComponent => {
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
                         </Box>
-                    </Fade>
+                    </Slide>
                 </Modal>
             </Box>
         )
