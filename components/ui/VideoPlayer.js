@@ -27,6 +27,7 @@ function VideoPlayer (props, videoRef) {
         <Fade in={showVideo} timeout={500}>
             <video
                 ref={videoRef}
+                preload={'auto'}
                 src={videoSource}
                 loop
                 playsInline
