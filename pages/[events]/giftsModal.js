@@ -7,9 +7,9 @@ import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
 import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
-import CancelIcon from '@material-ui/icons/Cancel'
 import { useTheme } from '@material-ui/core/styles'
-import { lockIcon } from '../../components/gifts/icon'
+import { lockIcon, closeIcon } from '../../components/gifts/icon'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
-    closeIcon: {
+    closeBtn: {
         position: 'absolute',
         top: '20px',
         right: '20px',
@@ -38,17 +38,15 @@ const useStyles = makeStyles(() => ({
         maxWidth: '58px',
         width: '10vw',
         height: '10vw',
-        color: 'red',
         zIndex: 4
     },
     lock: {
-        minHeight: '34px',
-        minWidth: '34px',
-        maxHeight: '58px',
-        maxWidth: '58px',
-        width: '10vw',
-        height: '10vw',
-        fill: 'white',
+        minHeight: '68px',
+        minWidth: '68px',
+        maxHeight: '116px',
+        maxWidth: '116px',
+        width: '20vw',
+        height: '20vw',
         zIndex: 4
     },
     lockContainer: {
@@ -74,21 +72,13 @@ const useStyles = makeStyles(() => ({
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.5em',
+        fontSize: '1.75em',
         letterSpacing: '0em'
     },
     description: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.25em',
         letterSpacing: '0em'
-    },
-    button: {
-        position: 'relative',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontSize: '1rem',
-        padding: '6px 20px',
-        marginTop: 30
     },
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
@@ -110,6 +100,14 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
         zIndex: 2,
         bottom: 0
+    },
+    closeIcon: {
+        minHeight: '34px',
+        minWidth: '34px',
+        maxHeight: '58px',
+        maxWidth: '58px',
+        width: '10vw',
+        height: '10vw'
     }
 }))
 
@@ -138,11 +136,15 @@ const hasLoginModal = WrappedComponent => {
             },
             gradient: {
                 background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`,
-                marginBottom: gift.locked ? (lockHeight + boxHeight) - 6 : boxHeight - 1
+                marginBottom: boxHeight - 1
             },
             lockContainer: {
-                backgroundColor: theme.palette.secondary.main,
-                zIndex: 3
+                zIndex: 3,
+                fill: theme.palette.secondary.contrastText
+            },
+            closeBtn: {
+                backgroundColor: theme.palette.secondary.contrastText,
+                stroke: theme.palette.secondary.main
             }
         }
 
@@ -164,9 +166,9 @@ const hasLoginModal = WrappedComponent => {
         useEffect(() => {
             if (boxTextRef.current) {
                 setBoxHeight(boxTextRef.current.clientHeight)
-                if (gift.locked && lockIconRef.current) {
-                    setLockHeight(lockIconRef.current.clientHeight)
-                }
+            }
+            if (lockIconRef.current) {
+                setLockHeight(lockIconRef.current.clientHeight)
             }
         })
 
@@ -178,7 +180,6 @@ const hasLoginModal = WrappedComponent => {
             // reset modal value setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
         }
-
         return (
             <Box>
                 <WrappedComponent setGift={setGift} openModal={handleOpen} isModalOpen={open} {...props} />
@@ -205,7 +206,9 @@ const hasLoginModal = WrappedComponent => {
                             </Box>
                             <Box className={classes.gradient} style={{ ...styles.gradient }} />
                             <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height }}/>
-                            <CancelIcon className={classes.closeIcon} onClick={handleClose} />
+                            <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ ...styles.closeBtn }}>
+                                { closeIcon({ className: classes.closeIcon }) }
+                            </IconButton>
                         </Box>
                     </Fade>
                 </Modal>

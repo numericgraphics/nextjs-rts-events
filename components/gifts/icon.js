@@ -69,3 +69,17 @@ export function lockIcon (props) {
         </SvgIcon>
     )
 }
+
+export function closeIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 34 34" {...props}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 30 30">
+                <g id="croix" transform="translate(8.24 7.836)">
+                    <line id="Ligne_26" data-name="Ligne 26" x2="13.752" y2="13.752" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/>
+                    <line id="Ligne_27" data-name="Ligne 27" y1="13.752" x2="13.752" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/>
+                    <rect id="Rectangle_2168" data-name="Rectangle 2168" width="30" height="30" transform="translate(-8.24 -7.836)" fill="none" stroke="none" opacity="0.357"/>
+                </g>
+            </svg>
+        </SvgIcon>
+    )
+}
