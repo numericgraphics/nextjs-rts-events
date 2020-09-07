@@ -159,6 +159,7 @@ const hasLoginModal = WrappedComponent => {
                 // eslint-disable-next-line no-unused-expressions
             }
             // eslint-disable-next-line no-unused-expressions
+            handleResize()
             window.addEventListener('resize', handleResize)
         }, [boxTextRef.current])
 
