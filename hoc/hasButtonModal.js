@@ -59,18 +59,6 @@ const useStyles = makeStyles(() => ({
         alignSelf: 'center',
         fontFamily: 'srgssr-type-Rg',
         fontSize: '4vw'
-    },
-    poster: {
-        zIndex: 1,
-        position: 'absolute',
-        width: '100vw',
-        minHeight: '100vh',
-        top: 0,
-        left: 0,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'top',
-        backgroundSize: 'cover',
-        backgroundColor: 'black'
     }
 
 }))
