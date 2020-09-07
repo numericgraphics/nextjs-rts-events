@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 function VideoPlayer (props, videoRef) {
     const classes = useStyles()
     const theme = useTheme()
-    const { videoSource, videoPoster, showVideo, blurVideo } = props
+    const { videoSource, showVideo, blurVideo } = props
 
     return (
         <Fade in={showVideo} timeout={500}>
@@ -31,7 +31,6 @@ function VideoPlayer (props, videoRef) {
                 src={videoSource}
                 loop
                 playsInline
-                poster={videoPoster}
                 className={classes.video}
                 autoPlay
                 style={{ backgroundColor: theme.palette.background, filter: blurVideo ? 'blur(4px)' : 'none' }}
