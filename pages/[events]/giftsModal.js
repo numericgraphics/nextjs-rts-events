@@ -76,7 +76,7 @@ const useStyles = makeStyles(() => ({
         letterSpacing: '0em'
     },
     description: {
-        fontFamily: 'srgssr-type-Bd',
+        fontFamily: 'srgssr-type-Rg',
         fontSize: '1.25em',
         letterSpacing: '0em'
     },
@@ -86,7 +86,7 @@ const useStyles = makeStyles(() => ({
         }
     },
     textFieldContainer: {
-        padding: 10,
+        padding: 20,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -102,6 +102,7 @@ const useStyles = makeStyles(() => ({
         bottom: 0
     },
     closeIcon: {
+        position: 'absolute',
         minHeight: '34px',
         minWidth: '34px',
         maxHeight: '58px',
@@ -121,7 +122,6 @@ const hasLoginModal = WrappedComponent => {
         const [imageURL, setImageURL] = useState()
         const theme = useTheme()
         const boxTextRef = useRef()
-        const [lockHeight, setLockHeight] = useState(0)
         const lockIconRef = createRef()
         const [boxHeight, setBoxHeight] = useState(0)
 
@@ -144,7 +144,7 @@ const hasLoginModal = WrappedComponent => {
             },
             closeBtn: {
                 backgroundColor: theme.palette.secondary.contrastText,
-                stroke: theme.palette.secondary.main
+                stroke: theme.palette.primary.main
             }
         }
 
@@ -157,7 +157,6 @@ const hasLoginModal = WrappedComponent => {
             // eslint-disable-next-line no-unused-expressions
                 boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
                 // eslint-disable-next-line no-unused-expressions
-                lockIconRef.current ? setLockHeight(lockIconRef.current.clientHeight) : null
             }
             // eslint-disable-next-line no-unused-expressions
             window.addEventListener('resize', handleResize)
@@ -166,9 +165,6 @@ const hasLoginModal = WrappedComponent => {
         useEffect(() => {
             if (boxTextRef.current) {
                 setBoxHeight(boxTextRef.current.clientHeight)
-            }
-            if (lockIconRef.current) {
-                setLockHeight(lockIconRef.current.clientHeight)
             }
         })
 
