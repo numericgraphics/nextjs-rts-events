@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 export function useImagesServices (eventData) {
     const [isImagesPreLoaded, setImagePreLoaded] = useState(false)
-    const refArray = ['.jpg', '.png', '.jpeg']
+    const refArray = ['.jpg', '.png', '.jpeg', '.image?']
     const imagesArray = []
 
     function getAllImagesFromJSON (data) {
@@ -28,12 +28,15 @@ export function useImagesServices (eventData) {
     function preloadImages (images) {
         let i = 0
         let counter = 0
+        function finish () {
+            setImagePreLoaded(true)
+            counter = 0
+            i = 0
+        }
         function completed () {
             counter++
             if (counter === images.length) {
-                setImagePreLoaded(true)
-                counter = 0
-                i = 0
+                finish()
             }
         }
         function error () {
@@ -48,7 +51,11 @@ export function useImagesServices (eventData) {
                 image.src = images[i]
             }
         }
-        load()
+        if (images.length > 0) {
+            load()
+        } else {
+            finish()
+        }
     }
 
     useEffect(() => {

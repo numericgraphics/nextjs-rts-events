@@ -132,7 +132,6 @@ function MyApp ({ Component, pageProps }) {
                         videoSource={videoSource}
                         videoPoster={videoPoster}
                         autoPlay={videoAutoPlay}
-                        callBackPlayed={setVideoPlayed}
                         showVideo={showVideo}
                         blurVideo={blurVideo}
                     />
