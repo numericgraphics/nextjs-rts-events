@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { medalIcon, giftIcon, lockIcon } from './icon'
+import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles((theme = useTheme) => ({

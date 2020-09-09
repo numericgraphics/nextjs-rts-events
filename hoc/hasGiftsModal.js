@@ -7,7 +7,7 @@ import Slide from '@material-ui/core/Slide'
 import Typography from '@material-ui/core/Typography'
 import LazyImage from '../components/ui/LazyImage'
 import { useTheme } from '@material-ui/core/styles'
-import { lockIcon, closeIcon } from '../components/gifts/icon'
+import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 
 const styles = {
@@ -134,13 +134,10 @@ const hasGiftModal = WrappedComponent => {
         const [boxHeight, setBoxHeight] = useState(0)
 
         function handleResize () {
-            // eslint-disable-next-line no-unused-expressions
-            boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
-            // eslint-disable-next-line no-unused-expressions
+            setBoxHeight(boxTextRef.current.clientHeight)
         }
 
         useEffect(() => {
-            // eslint-disable-next-line no-unused-expressions
             window.addEventListener('resize', handleResize)
             return () => {
                 window.removeEventListener('resize', handleResize)
@@ -148,13 +145,13 @@ const hasGiftModal = WrappedComponent => {
         }, [handleResize])
 
         const initModal = () => {
-            // eslint-disable-next-line no-unused-expressions
             handleResize()
         }
 
         useEffect(() => {
-            // eslint-disable-next-line no-unused-expressions
-            open ? setTimeout(initModal, 10) : null
+            if (open) {
+                setTimeout(initModal, 10)
+            }
         }, [open])
 
         const handleOpen = () => {
