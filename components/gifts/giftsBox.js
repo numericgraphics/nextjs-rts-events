@@ -79,19 +79,13 @@ function GiftsBox (props) {
     }
 
     function getGift (item, index) {
-        switch (item.type) {
-        case 'lottery':
-            return <IconButton onClick={() => setGift(item) } color="primary" key={index} className={classes.gift}>
-                {item.locked && lockIcon({ className: classes.lock, key: index + 1 }) }
-                { giftIcon({ className: classes.cadeau, key: index }) }
-            </IconButton>
-        case 'medal':
-            return <IconButton onClick={() => setGift(item)} color="primary" key={index} className={classes.gift}>
-                {item.locked && lockIcon({ className: classes.lock, key: index + 1 }) }
-                { medalIcon({ className: classes.medal, key: index })}
-            </IconButton>
-        }
+        return <IconButton onClick={() => setGift(item) } color="primary" key={index} className={classes.gift}>
+            {item.locked && lockIcon({ className: classes.lock }) }
+            {item.type === 'lottery' ? giftIcon({ className: classes.cadeau, key: index })
+                : medalIcon({ className: classes.medal })}
+        </IconButton>
     }
+
     return (
         <Box className={classes.container}>
             <Typography className={classes.textRegularCenter}>

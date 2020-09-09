@@ -18,7 +18,7 @@ import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
 import GiftsBox from '../../components/gifts/giftsBox'
-import giftsModal from '../../hoc/giftsModal'
+import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 
 const useStyles = makeStyles({
