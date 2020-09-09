@@ -142,7 +142,10 @@ const hasGiftModal = WrappedComponent => {
         useEffect(() => {
             // eslint-disable-next-line no-unused-expressions
             window.addEventListener('resize', handleResize)
-        }, [boxTextRef.current])
+            return () => {
+                window.removeEventListener('resize', handleResize)
+            }
+        }, [handleResize])
 
         const initModal = () => {
             // eslint-disable-next-line no-unused-expressions
@@ -159,9 +162,7 @@ const hasGiftModal = WrappedComponent => {
         }
 
         const handleClose = () => {
-            // reset modal value setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
-            window.removeEventListener('resize', handleResize)
         }
 
         return (
