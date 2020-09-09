@@ -133,19 +133,20 @@ const hasGiftModal = WrappedComponent => {
         const lockIconRef = createRef()
         const [boxHeight, setBoxHeight] = useState(0)
 
-        useEffect(() => {
-            function handleResize () {
+        function handleResize () {
             // eslint-disable-next-line no-unused-expressions
-                boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
-                // eslint-disable-next-line no-unused-expressions
-            }
+            boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
+            // eslint-disable-next-line no-unused-expressions
+        }
+
+        useEffect(() => {
             // eslint-disable-next-line no-unused-expressions
             window.addEventListener('resize', handleResize)
         }, [boxTextRef.current])
 
         const initModal = () => {
             // eslint-disable-next-line no-unused-expressions
-            boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
+            handleResize()
         }
 
         useEffect(() => {
@@ -160,6 +161,7 @@ const hasGiftModal = WrappedComponent => {
         const handleClose = () => {
             // reset modal value setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
+            window.removeEventListener('resize', handleResize)
         }
 
         return (
