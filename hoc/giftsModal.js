@@ -124,29 +124,6 @@ const hasLoginModal = WrappedComponent => {
         const lockIconRef = createRef()
         const [boxHeight, setBoxHeight] = useState(0)
 
-        const styles = {
-            containerImage: {
-                position: 'absolute',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                backgroundSize: 'auto 100%',
-                width: '100vw',
-                backgroundColor: 'white'
-            },
-            gradient: {
-                background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`,
-                marginBottom: boxHeight - 1
-            },
-            lockContainer: {
-                zIndex: 3,
-                fill: theme.palette.secondary.contrastText
-            },
-            closeBtn: {
-                backgroundColor: theme.palette.primary.main,
-                stroke: theme.palette.primary.contrastText
-            }
-        }
-
         useEffect(() => {
             function handleResize () {
             // eslint-disable-next-line no-unused-expressions
@@ -171,6 +148,7 @@ const hasLoginModal = WrappedComponent => {
             // reset modal value setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
         }
+
         return (
             <Box>
                 <WrappedComponent setGift={setGift} openModal={handleOpen} isModalOpen={open} {...props} />
@@ -188,16 +166,16 @@ const hasLoginModal = WrappedComponent => {
                 >
                     <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
                         <Box className={classes.modalContent}>
-                            {gift.locked ? <Box className={classes.lockContainer} style={{ ...styles.lockContainer, bottom: boxHeight - 1 }}>
+                            {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
                             </Box> : null }
                             <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                 <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                                 <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                             </Box>
-                            <Box className={classes.gradient} style={{ ...styles.gradient }} />
-                            <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${gift.imageURL})`, minHeight: height }}/>
-                            <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ ...styles.closeBtn }}>
+                            <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`, marginBottom: boxHeight - 1 }} />
+                            <LazyImage style={{ position: 'absolute', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'auto 100%', width: '100vw', backgroundColor: 'white', backgroundImage: `url(${gift.imageURL})`, minHeight: height }}/>
+                            <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
                         </Box>
