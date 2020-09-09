@@ -10,6 +10,17 @@ import { useTheme } from '@material-ui/core/styles'
 import { lockIcon, closeIcon } from '../components/gifts/icon'
 import IconButton from '@material-ui/core/IconButton'
 
+const styles = {
+    image: {
+        position: 'absolute',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%',
+        width: '100vw',
+        backgroundColor: 'white',
+        minHeight: '100vh'
+    }
+}
 const useStyles = makeStyles(() => ({
     modal: {
         display: 'flex',
@@ -176,7 +187,7 @@ const hasGiftModal = WrappedComponent => {
                                 <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                             </Box>
                             <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`, marginBottom: boxHeight - 1 }} />
-                            <LazyImage style={{ position: 'absolute', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'auto 100%', width: '100vw', backgroundColor: 'white', backgroundImage: `url(${gift.imageURL})`, minHeight: '100vh' }}/>
+                            <LazyImage style={{ ...styles.image, backgroundImage: `url(${gift.imageURL})` }}/>
                             <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
