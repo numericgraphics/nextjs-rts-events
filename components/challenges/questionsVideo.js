@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -8,7 +8,8 @@ import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoController'
-import hasCountDownModal from '../../hoc/hasCountDownModal'
+import hasButtonModal from '../../hoc/hasButtonModal'
+import UserContext from '../UserContext'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -111,10 +112,12 @@ const styles = {
     }
 }
 
-function Question (props) {
+function QuestionVideo (props) {
     const classes = useStyles()
-    const { quiz, title, duration } = props.content
+    const { quiz, title, duration, imageURL, videoURL } = props.content
     const { question, answers } = quiz
+    const { store } = useContext(UserContext)
+    const { videoController } = store
     const [progress, setProgress] = useState(0)
     const [timeLeft, setTimeLeft] = useState(duration)
     const [showComponent, setShowComponent] = useState(false)
@@ -126,6 +129,7 @@ function Question (props) {
     function onAnswer (index) {
         if (progress > 0) {
             setAnswer(index)
+            videoController.player.current.pause()
             props.answerCallBack(index)
             clearInterval(intervalId.current)
             setDisabled(true)
@@ -140,24 +144,42 @@ function Question (props) {
         }, 1000)
     }
 
+    function canPlay () {
+        setShowComponent(true)
+        if (!videoController.videoHasPlayed) {
+            videoController.player.current.play()
+            videoController.player.current.muted = props.secondaryButtonClicked
+        }
+        startTimer()
+        videoController.player.current.removeEventListener('canplay', canPlay)
+    }
+
     useEffect(() => {
-        props.openCountDownModal()
-        props.startCountDown()
+        if (videoController.videoHasPlayed) {
+            props.setButtonModalCliked(true)
+        } else {
+            videoController.setVideoPoster(imageURL)
+            props.openModal()
+        }
+
         return () => clearInterval(intervalId.current)
     }, [])
 
     useEffect(() => {
-        if (props.status) {
+        if (props.buttonModalCliked) {
             setDisabled(false)
-            setShowComponent(true)
-            startTimer()
+            videoController.player.current.addEventListener('canplay', canPlay)
+            videoController.setVideoPoster('')
+            videoController.setVideoAutoPlay(true)
+            videoController.setVideoSource(videoURL)
         }
-    }, [props.status])
+    }, [props.buttonModalCliked])
 
     useEffect(() => {
         if (progress >= 100) {
             setTimeLeft(0)
             setProgress(0)
+            videoController.player.current.pause()
             props.answerCallBack(-1)
             setDisabled(true)
         }
@@ -168,7 +190,7 @@ function Question (props) {
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
                 <Box className={classes.counter}>
                     <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                    {props.content.videoURL && <VideoControler />}
+                    {props.content.videoURL && <VideoControler controls={true}/>}
 
                 </Box>
                 <Box className={classes.header}>
@@ -199,4 +221,4 @@ function Question (props) {
     )
 }
 
-export default hasCountDownModal(Question)
+export default hasButtonModal(QuestionVideo)

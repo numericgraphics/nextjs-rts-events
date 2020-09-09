@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
-import 'typeface-roboto'
-import 'video-react/dist/video-react.css'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import GameStatsService from '../data/gameStats'
@@ -14,6 +12,8 @@ import SplashScreen from '../components/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
+import InnerHeightLayout from '../components/innerHeightLayout'
+import VideoPlayer from '../components/ui/VideoPlayer'
 
 function MyApp ({ Component, pageProps }) {
     const [eventData, setEventData] = useState([])
@@ -26,7 +26,16 @@ function MyApp ({ Component, pageProps }) {
     const [error, setError] = useState(false)
     const [eventName, setEventName] = useState('')
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
-    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData }
+    const player = useRef()
+    const [videoSource, setVideoSource] = useState('')
+    const [videoPoster, setVideoPoster] = useState('')
+    const [videoVisible, setVideoVisible] = useState(false)
+    const [videoAutoPlay, setVideoAutoPlay] = useState(true)
+    const [videoHasPlayed, setVideoPlayed] = useState(false)
+    const [showVideo, setShowVideo] = useState(false)
+    const [blurVideo, setBlurVideo] = useState(false)
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
 
     function startedCallBack () {
@@ -113,11 +122,21 @@ function MyApp ({ Component, pageProps }) {
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
-            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
+            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
-            </ThemeProvider>}
+                <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
+                    <VideoPlayer
+                        ref={player}
+                        videoSource={videoSource}
+                        videoPoster={videoPoster}
+                        autoPlay={videoAutoPlay}
+                        showVideo={showVideo}
+                        blurVideo={blurVideo}
+                    />
+                </InnerHeightLayout>
+            </ThemeProvider> }
         </UserContext.Provider>
     )
 }

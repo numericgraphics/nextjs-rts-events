@@ -19,6 +19,7 @@ import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
 import GiftsBox from '../../components/gifts/giftsBox'
 import giftsModal from '../../hoc/giftsModal'
+import { useImagesServices } from '../../hooks/useImagesServices'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -153,6 +154,9 @@ function DashBoard (props) {
     const [gameStats, setGameStats] = useState({})
     const [progress, setProgress] = useState(0)
     const [gifts, setGifts] = useState()
+    const [preCaching, setPreCaching] = useState([])
+    const isImagesPreLoaded = useImagesServices(preCaching)
+    const [isPageReady, setPageReady] = useState(false)
     const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const layoutRef = createRef()
@@ -169,7 +173,7 @@ function DashBoard (props) {
                 const content = await response.json()
                 dataProvider.setData(content)
                 gameStatsService.init(dataProvider)
-                initPage()
+                setPageReady(true)
             } else {
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
@@ -202,6 +206,17 @@ function DashBoard (props) {
     function setGift (gift) {
         props.setGift(gift)
     }
+    useEffect(() => {
+        if (isPageReady) {
+            setPreCaching(dataProvider.getGameStats())
+        }
+    }, [isPageReady])
+
+    useEffect(() => {
+        if (isImagesPreLoaded) {
+            initPage()
+        }
+    }, [isImagesPreLoaded])
 
     // check if the page was reloaded and  fetchData
     useEffect(() => {

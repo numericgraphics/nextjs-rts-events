@@ -13,3 +13,4 @@ export const useHeight = () => {
     }, [handleResize])
     return height
 }
+//document && document.documentElement && document.documentElement.clientHeight || window.innerHeight
