@@ -11,6 +11,192 @@
     src: url(../assets/fonts/SRGSSRType_Rg.ttf);
 }
 
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-size: 2.2vh; /* Relative à la hauteur du viewPort (bloque le zoom?) */
+    font-family: sans-serif;
+}
+
+html {
+    background-color: red;
+}
+
+.background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -2;
+}
+
+.backgroundPadding { /* S'affiche en dessous de l'image sur les écrans trop haut */
+    background-color: #000;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -3;
+}
+
+.backgroundGradient { /* Dégradé sur l'image, pas réussi à mettre ca dans le div background en multibackground... */
+    background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 65%, rgba(0,0,0,1) 90%);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
+.content {
+    padding: 0 0 17rem 0; /* Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
+}
+
+.topZone {
+    padding: 1rem 1rem 0 1rem;
+}
+
+.topZone .text {
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    opacity: 0.8;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 0;
+
+}
+
+.bottomZone { /* Zone des boutons fixée en bas de page */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0.9;
+    height: 16rem; /* Attention, les boutons ne doivent faire qu'une ligne */
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+/*.bottomZone ul {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+/*.bottomZone li {*/
+/*    line-height: 1rem;*/
+/*    color: white;*/
+/*    list-style-type: none;*/
+/*    background-color: red;*/
+/*    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);*/
+/*    border-radius: 1rem;*/
+/*    margin: 1rem;*/
+/*    padding: 1rem;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.hidable {*/
+/*    display: none;*/
+/*}*/
+
+
+@media only screen and (min-width: 481px) { /* Pour les écrans de desktop et iPad/iPhones portrait on limite la largeur et on centre */
+
+    html, body {
+        font-size: 1.1em;
+    }
+
+    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone {
+        max-width: 480px;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .backgroundLimiter {
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    }
+
+    .bottomZone li {
+        background-color: blue;
+    }
+
+}
+
+@media only screen and (min-height: 901px) { /* sur les écrans trop haut, on limite la hauteur du background pour que l'image/la vidéo reste acceptable */
+
+    html, body {
+        font-size: 1.1em;
+    }
+
+    .background, .backgroundGradient {
+        max-height: 900px;
+    }
+
+    .bottomZone li {
+        background-color: purple;
+    }
+}
+
+@media only screen and (min-height: 901px) and (min-width: 600px) and (min-aspect-ratio: 600/901) { /* sur les écrans trop haut, et trop large on zoome comme instagram */
+    html, body {
+        font-size: 2.2vh;
+    }
+
+    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone {
+        max-width: 55vh;
+    }
+
+    .background, .backgroundGradient {
+        max-height: 100vh;
+    }
+
+    .bottomZone li {
+        background-color: orange;
+    }
+
+}
+
+
+@media only screen and (max-height:550px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
+
+    html, body {
+        font-size: 0.9em;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    .topZone {
+        flex-grow: 1;
+    }
+
+    .bottomZone {
+        position: relative;
+    }
+
+    .bottomZone li {
+        background-color: green;
+    }
+}
+
+
+
+
+
+
+
+
+/*
 html,
 body {
     padding: 0;
@@ -19,7 +205,6 @@ body {
     line-height: 1.6;
 font-size: 18px;
     background-color: #FFFFFF;
-    /*height: 100%;*/
     overflow: hidden;
 }
 
@@ -48,3 +233,4 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+*/

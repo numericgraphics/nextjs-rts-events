@@ -9,8 +9,8 @@ export default function PromoImage (props) {
     const { backgroundImageURL } = props.data
 
     return (
-        <Box className={classes.containerGlobal}>
-            <Box style={{ ...styles.containerOverlay, backgroundImage: `url(${backgroundImageURL})`, minHeight: height }} />
+        <Box >
+            <Box className={'background'} style={{ background: `url(${backgroundImageURL}) no-repeat center center fixed`, backgroundSize: 'cover' }} />
         </Box>
     )
 }

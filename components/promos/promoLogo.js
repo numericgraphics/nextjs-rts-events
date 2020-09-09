@@ -13,7 +13,7 @@ export default function PromoLogo (props) {
     const height = useHeight()
 
     return (
-        <InnerHeightLayout class={classes.containerGlobal} ref={layoutRef} >
+        <Box >
             <Box style={styles.containerOverlay} >
                 <Box className={classes.image}>
                     <CardMedia
@@ -28,8 +28,8 @@ export default function PromoLogo (props) {
                     <Typography className={classes.description} variant="subtitle1" align={'center'}>{description}</Typography>
                 </Box>
             </Box>
-            <Box style={{ ...styles.containerImage, backgroundImage: `url(${backgroundImageURL})`, minHeight: height }} />
-        </InnerHeightLayout>
+            <Box className={'background'} style={{ backgroundImage: `url(${backgroundImageURL})` }} />
+        </Box>
 
     )
 }

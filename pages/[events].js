@@ -125,24 +125,9 @@ function Events (props) {
         <EventLayout>
             {isLoading
                 ? null
-                : <InnerHeightLayout ref={layoutRef} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
-                    <Fade in={!isLoading} timeout={500}>
-                        <Box className={classes.containerOverlayHeader} >
-                            <PromosStepper steps={promos} activeStep={activeStep}/>
-                        </Box>
-                    </Fade>
-                    <Fade in={!isLoading} timeout={500}>
-                        <Box className={classes.containerOverlayFooter} >
-                            <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
-                                {translation.startPageButtonText}
-                            </Button>
-                            <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
-                                <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
-                            </Link>
-                        </Box>
-                    </Fade>
+                : <React.Fragment>
                     <Promos data={promos} indexCallBack={slideIndexCallBack}/>
-                </InnerHeightLayout>
+                </React.Fragment>
             }
         </EventLayout>
     )
@@ -166,3 +151,51 @@ export async function getStaticProps ({ params }) {
         }
     }
 }
+
+/*
+
+<EventLayout>
+            {isLoading
+                ? null
+                : <InnerHeightLayout ref={layoutRef} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={classes.containerOverlayHeader} >
+                            <PromosStepper steps={promos} activeStep={activeStep}/>
+                        </Box>
+                    </Fade>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={classes.containerOverlayFooter} >
+                            <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
+                                {translation.startPageButtonText}
+                            </Button>
+                            <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
+                                <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
+                            </Link>
+                        </Box>
+                    </Fade>
+                    <Promos data={promos} indexCallBack={slideIndexCallBack}/>
+                </InnerHeightLayout>
+            }
+        </EventLayout>
+ */
+
+
+/*
+<div className="content">
+                        <div className="topZone">
+                            <Fade in={!isLoading} timeout={500}>
+                                <PromosStepper steps={promos} activeStep={activeStep}/>
+                            </Fade>
+                        </div>
+                        <Fade in={!isLoading} timeout={500}>
+                            <div className="bottomZone">
+                                <Button color="primary" variant="contained" className={classes.button} onClick={onStart}>
+                                    {translation.startPageButtonText}
+                                </Button>
+                                <Link href={dataProvider.getAllData().cguURL} className={classes.cgLink}>
+                                    <Typography variant="caption" className={classes.cg}>{translation.lireCGUText}</Typography>
+                                </Link>
+                            </div>
+                        </Fade>
+                    </div>
+ */

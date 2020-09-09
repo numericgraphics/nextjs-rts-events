@@ -12,7 +12,7 @@ export default function PromoNoLogo (props) {
     const height = useHeight()
 
     return (
-        <InnerHeightLayout class={classes.containerGlobalNoLogo} ref={layoutRef} >
+        <Box >
             <Box className={classes.containerOverlayNoLogo} >
                 <Box className={classes.text}>
                     <Typography className={classes.title} variant="h1" align={'center'}>{title}</Typography>
@@ -20,8 +20,8 @@ export default function PromoNoLogo (props) {
                 </Box>
             </Box>
             <Box className={classes.gradient}/>
-            <Box style={{ ...styles.containerImage, backgroundImage: `url(${backgroundImageURL})`, minHeight: height }} />
-        </InnerHeightLayout>
+            <Box className={'background'} style={{ backgroundImage: `url(${backgroundImageURL})` }} />
+        </Box>
 
     )
 }

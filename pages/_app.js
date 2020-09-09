@@ -124,7 +124,6 @@ function MyApp ({ Component, pageProps }) {
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
-                <CssBaseline />
                 <Component {...pageProps} />
                 <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
                     <VideoPlayer
