@@ -6,7 +6,6 @@ import Box from '@material-ui/core/Box'
 import Slide from '@material-ui/core/Slide'
 import Typography from '@material-ui/core/Typography'
 import LazyImage from '../components/ui/LazyImage'
-import { useHeight } from '../hooks/useHeight'
 import { useTheme } from '@material-ui/core/styles'
 import { lockIcon, closeIcon } from '../components/gifts/icon'
 import IconButton from '@material-ui/core/IconButton'
@@ -117,7 +116,6 @@ const hasLoginModal = WrappedComponent => {
     return (props) => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
-        const height = useHeight()
         const [gift, setGift] = useState({ description: '', title: '', locked: true })
         const theme = useTheme()
         const boxTextRef = useRef()
@@ -134,11 +132,15 @@ const hasLoginModal = WrappedComponent => {
             window.addEventListener('resize', handleResize)
         }, [boxTextRef.current])
 
+        const initModal = () => {
+            // eslint-disable-next-line no-unused-expressions
+            boxTextRef.current ? setBoxHeight(boxTextRef.current.clientHeight) : null
+        }
+
         useEffect(() => {
-            if (boxTextRef.current) {
-                setBoxHeight(boxTextRef.current.clientHeight)
-            }
-        })
+            // eslint-disable-next-line no-unused-expressions
+            open ? setTimeout(initModal, 10) : null
+        }, [open])
 
         const handleOpen = () => {
             setOpen(true)
@@ -174,7 +176,7 @@ const hasLoginModal = WrappedComponent => {
                                 <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                             </Box>
                             <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`, marginBottom: boxHeight - 1 }} />
-                            <LazyImage style={{ position: 'absolute', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'auto 100%', width: '100vw', backgroundColor: 'white', backgroundImage: `url(${gift.imageURL})`, minHeight: height }}/>
+                            <LazyImage style={{ position: 'absolute', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'auto 100%', width: '100vw', backgroundColor: 'white', backgroundImage: `url(${gift.imageURL})`, minHeight: '100vh' }}/>
                             <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
