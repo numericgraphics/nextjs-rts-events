@@ -5,68 +5,67 @@ import Typography from '@material-ui/core/Typography'
 import { medalIcon, giftIcon, lockIcon } from './icon'
 import IconButton from '@material-ui/core/IconButton'
 
-function GiftsBox (props) {
-    const theme = useTheme()
-    const useStyles = makeStyles({
-        gift: {
-            minHeight: '34px',
-            minWidth: '34px',
-            width: '10vw',
-            height: '10vw',
-            marginLeft: '10px',
-            marginRight: '10px',
-            maxWidth: '50px',
-            maxHeight: '50px',
-            backgroundColor: theme.palette.primary.main
-        },
-        gifts: {
-            display: 'flex',
-            margin: '10px',
-            justifyContent: 'center'
-        },
-        textRegularCenter: {
-            textAlign: 'center',
-            fontFamily: 'srgssr-type-Rg',
-            fontSize: '1.1rem'
-        },
-        cadeau: {
-            fill: theme.palette.primary.contrastText,
-            minHeight: '34px',
-            minWidth: '34px',
-            width: '10vw',
-            height: '10vw',
-            maxWidth: '50px',
-            maxHeight: '50px',
-            position: 'absolute',
-            top: 0,
-            left: 0
-        },
-        medal: {
-            fill: theme.palette.primary.contrastText,
-            minHeight: '34px',
-            minWidth: '34px',
-            width: '10vw',
-            height: '10vw',
-            maxWidth: '50px',
-            maxHeight: '50px',
-            position: 'absolute',
-            top: 0,
-            left: 0
-        },
-        lock: {
-            position: 'absolute',
-            top: 0,
-            right: '70%',
-            minHeight: '17px',
-            minWidth: '17px',
-            maxWidth: '25px',
-            maxHeight: '25px',
-            width: '7.5vw',
-            height: '7.5vw',
-            fill: 'white'
-        }
-    })
+const useStyles = makeStyles((theme = useTheme) => ({
+    gift: {
+        minHeight: '34px',
+        minWidth: '34px',
+        width: '10vw',
+        height: '10vw',
+        marginLeft: '10px',
+        marginRight: '10px',
+        maxWidth: '50px',
+        maxHeight: '50px',
+        backgroundColor: theme.palette.primary.main
+    },
+    gifts: {
+        display: 'flex',
+        margin: '10px',
+        justifyContent: 'center'
+    },
+    textRegularCenter: {
+        textAlign: 'center',
+        fontFamily: 'srgssr-type-Rg',
+        fontSize: '1.1rem'
+    },
+    cadeau: {
+        fill: theme.palette.primary.contrastText,
+        minHeight: '34px',
+        minWidth: '34px',
+        width: '10vw',
+        height: '10vw',
+        maxWidth: '50px',
+        maxHeight: '50px',
+        position: 'absolute',
+        top: 0,
+        left: 0
+    },
+    medal: {
+        fill: theme.palette.primary.contrastText,
+        minHeight: '34px',
+        minWidth: '34px',
+        width: '10vw',
+        height: '10vw',
+        maxWidth: '50px',
+        maxHeight: '50px',
+        position: 'absolute',
+        top: 0,
+        left: 0
+    },
+    lock: {
+        position: 'absolute',
+        top: 0,
+        right: '70%',
+        minHeight: '17px',
+        minWidth: '17px',
+        maxWidth: '25px',
+        maxHeight: '25px',
+        width: '7.5vw',
+        height: '7.5vw',
+        fill: 'white'
+    }
+}))
 
+function GiftsBox (props) {
     const classes = useStyles()
     const [gifts, setGifts] = useState([])
 
