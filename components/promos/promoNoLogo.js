@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import { useStyles } from './promo.style.js'
+import { useStyles } from './promo-style.js'
 
 export default function PromoNoLogo (props) {
     const styles = useStyles()

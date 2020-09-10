@@ -11,9 +11,9 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         width: '100%',
-        height: '16vh',
+        height: '6rem',
         bottom: 0,
-        margin: '0 0 2vh 0',
+        margin: '0 0 1rem 0',
         padding: 0
     },
     subContent: {
@@ -21,15 +21,14 @@ export const useStyles = makeStyles({
         width: '100%',
         height: '100vh',
         flexDirection: 'column',
-        justifyContent: 'flex-end'
+        justifyContent: 'center'
     },
     subBottomZone: {
-        position: 'fixed',
+        width: '100%',
+        margin: '0 0 7rem 0',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        width: '100%',
-        margin: '0 0 18vh 0'
+        justifyContent: 'flex-end'
     },
     button: {
         width: '80vw',
@@ -55,13 +54,13 @@ export const useStyles = makeStyles({
     title: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '2.5rem',
-        lineHeight: '1em',
+        lineHeight: '2.5rem',
         marginBottom: 12,
         textShadow: '0px 3px 6px #00000040'
     },
     subTitle: {
         fontFamily: 'srgssr-type-Bd',
-        lineHeight: '1em',
+        lineHeight: '1rem',
         fontSize: '1.5rem',
         marginBottom: 12,
         textShadow: '0px 3px 6px #00000040'
