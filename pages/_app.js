@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
@@ -12,7 +11,7 @@ import SplashScreen from '../components/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
-import InnerHeightLayout from '../components/innerHeightLayout'
+// eslint-disable-next-line no-unused-vars
 import VideoPlayer from '../components/ui/VideoPlayer'
 
 function MyApp ({ Component, pageProps }) {
@@ -27,6 +26,7 @@ function MyApp ({ Component, pageProps }) {
     const [eventName, setEventName] = useState('')
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
     const player = useRef()
+    /* eslint-disable */
     const [videoSource, setVideoSource] = useState('')
     const [videoPoster, setVideoPoster] = useState('')
     const [videoVisible, setVideoVisible] = useState(false)
@@ -34,6 +34,7 @@ function MyApp ({ Component, pageProps }) {
     const [videoHasPlayed, setVideoPlayed] = useState(false)
     const [showVideo, setShowVideo] = useState(false)
     const [blurVideo, setBlurVideo] = useState(false)
+    /* eslint-enable */
     const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
     const router = useRouter()
@@ -125,16 +126,16 @@ function MyApp ({ Component, pageProps }) {
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
                 <Component {...pageProps} />
-                <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}>
-                    <VideoPlayer
-                        ref={player}
-                        videoSource={videoSource}
-                        videoPoster={videoPoster}
-                        autoPlay={videoAutoPlay}
-                        showVideo={showVideo}
-                        blurVideo={blurVideo}
-                    />
-                </InnerHeightLayout>
+                {/* <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}> */}
+                {/*    <VideoPlayer */}
+                {/*        ref={player} */}
+                {/*        videoSource={videoSource} */}
+                {/*        videoPoster={videoPoster} */}
+                {/*        autoPlay={videoAutoPlay} */}
+                {/*        showVideo={showVideo}  */}
+                {/*        blurVideo={blurVideo} */}
+                {/*    /> */}
+                {/* </InnerHeightLayout> */}
             </ThemeProvider> }
         </UserContext.Provider>
     )

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
 import Box from '@material-ui/core/Box'
-import UserContext from './UserContext'
 
 export const siteTitle = 'TODO:SiteTitle'
 
@@ -22,9 +21,6 @@ const styles = {
 
 export default function EventLayout ({ children, home }) {
     const [isLandscape, setOrientation] = useState(false)
-    const { dataProvider, store } = useContext(UserContext)
-    const { setLoading } = store
-
 
     function handleOrientation () {
         setOrientation(window.innerWidth < window.innerHeight)
@@ -59,7 +55,7 @@ export default function EventLayout ({ children, home }) {
                         <AutorenewIcon style={{ fontSize: 80 }} />
                     </Box>
                     : <React.Fragment>
-                        {/*<Box className="backgroundPadding"/>*/}
+                        {/* <Box className="backgroundPadding"/> */}
                         {children}
                     </React.Fragment>
             }

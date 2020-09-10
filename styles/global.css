@@ -14,14 +14,14 @@
 
 
 html, body {
-    height: 100%;
+    /*height: 100%;*/
     margin: 0;
     font-size: 2.2vh; /* Relative à la hauteur du viewPort (bloque le zoom?) */
     font-family: sans-serif;
 }
 
 html {
-    background-color: red;
+    /*background-color: red;*/
 }
 
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
@@ -51,8 +51,18 @@ html {
     z-index: -1;
 }
 
+.backgroundGiftGradient {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
 .content {
-    padding: 0 0 17rem 0; /* Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
+    padding: 0 0 0 0; /* page  de place pour swipe left  right */
+    /* padding: 0 0 17rem 0;  Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
 }
 
 .topZone {
@@ -74,7 +84,7 @@ html {
     flex-direction: column;
     justify-content: flex-end;
     opacity: 0.9;
-    height: 16rem; /* Attention, les boutons ne doivent faire qu'une ligne */
+    /* height: 16rem; Attention, les boutons ne doivent faire qu'une ligne */
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -110,7 +120,7 @@ html {
         font-size: 1.1em;
     }
 
-    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone {
+    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone, .swipeableViews {
         max-width: 480px;
     }
 
@@ -148,7 +158,7 @@ html {
         font-size: 2.2vh;
     }
 
-    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone {
+    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone, .swipeableViews {
         max-width: 55vh;
     }
 
