@@ -19,9 +19,8 @@ export const useStyles = makeStyles({
     subContent: {
         display: 'flex',
         width: '100%',
-        height: '100vh',
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'flex-end'
     },
     subBottomZone: {
         width: '100%',

@@ -2,15 +2,17 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
-import { useStyles } from './promo-style.js'
+import { useStyles } from '../../styles/promo-style.js'
+import { useHeight } from '../../hooks/useHeight'
 
 export default function PromoLogo (props) {
     const styles = useStyles()
+    const height = useHeight()
     const { description, title, backgroundImageURL, logoURL } = props.data
 
     return (
         <React.Fragment>
-            <Box className={styles.subContent} >
+            <Box className={styles.subContent} style={{ height: height }}>
                 <Box className={styles.subBottomZone}>
                     <Box className={styles.image}>
                         <CardMedia

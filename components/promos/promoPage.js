@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Fade from '@material-ui/core/Fade/Fade'
-import { useStyles } from './promo-style.js'
+import { useStyles } from '../../styles/promo-style.js'
 import PromosStepper from './promosStepper'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'

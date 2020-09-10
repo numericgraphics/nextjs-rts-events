@@ -7,10 +7,10 @@ export const useHeight = () => {
     const handleResize = () => setHeight(window.innerHeight)
     useEffect(() => {
         window.addEventListener('resize', handleResize)
+        handleResize()
         return () => {
             window.removeEventListener('resize', handleResize)
         }
     }, [handleResize])
     return height
 }
-//document && document.documentElement && document.documentElement.clientHeight || window.innerHeight
