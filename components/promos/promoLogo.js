@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
-import { useStyles } from '../../styles/promo-style'
+import { useStyles } from './promo.style'
 import { useHeight } from '../../hooks/useHeight'
 
 export default function PromoLogo (props) {

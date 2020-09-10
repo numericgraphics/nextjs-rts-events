@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useStyles } from '../../styles/promo-style.js'
+import { useStyles } from './promo.style'
 import SwipeableViews from 'react-swipeable-views'
 import PromoLogo from './promoLogo'
 import PromoNoLogo from './promoNoLogo'

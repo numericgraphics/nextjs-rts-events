@@ -32,10 +32,10 @@ export const useStyles = makeStyles({
     button: {
         width: '80vw',
         bottom: 20,
-        borderRadius: 30,
+        borderRadius: '30px!important',
         alignSelf: 'center',
-        fontSize: '1.25rem',
-        padding: '6px 20px'
+        fontSize: '1.25rem!important',
+        padding: '6px 20px!important'
     },
     cg: {
         alignSelf: 'center',
@@ -51,11 +51,11 @@ export const useStyles = makeStyles({
         padding: '10px 30px'
     },
     title: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '2.5rem',
-        lineHeight: '2.5rem',
-        marginBottom: 12,
-        textShadow: '0px 3px 6px #00000040'
+        fontFamily: 'srgssr-type-Rg!important',
+        fontSize: '2.5rem!important',
+        lineHeight: '2.5rem!important',
+        marginBottom: '12px!important',
+        textShadow: '0px 3px 6px #000000a8'
     },
     subTitle: {
         fontFamily: 'srgssr-type-Bd',
