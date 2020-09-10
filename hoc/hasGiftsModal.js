@@ -21,7 +21,7 @@ const styles = {
         minHeight: '100vh'
     }
 }
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme = useTheme()) => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
@@ -78,7 +78,9 @@ const useStyles = makeStyles(() => ({
         paddingBottom: '5vh',
         paddingLeft: '20px',
         paddingRight: '20px',
-        width: '100%'
+        width: '100%',
+        border: 'solid',
+        borderColor: theme.palette.secondary.main
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
