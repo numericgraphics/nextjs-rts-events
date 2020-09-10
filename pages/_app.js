@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
@@ -125,6 +126,7 @@ function MyApp ({ Component, pageProps }) {
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
+                <CssBaseline />
                 <Component {...pageProps} />
                 {/* <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}> */}
                 {/*    <VideoPlayer */}
