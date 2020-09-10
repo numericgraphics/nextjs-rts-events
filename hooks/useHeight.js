@@ -5,6 +5,7 @@ export const useHeight = () => {
     const { dataProvider } = useContext(UserContext)
     const [height, setHeight] = useState(dataProvider.innerHeight)
     const handleResize = () => setHeight(window.innerHeight)
+
     useEffect(() => {
         window.addEventListener('resize', handleResize)
         handleResize()
@@ -12,5 +13,6 @@ export const useHeight = () => {
             window.removeEventListener('resize', handleResize)
         }
     }, [handleResize])
+
     return height
 }
