@@ -25,12 +25,15 @@ const useStyles = makeStyles(() => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: '100vw',
+        height: '100vh'
     },
     modalContent: {
         display: 'flex',
         flexDirection: 'column',
         width: '100vw',
+        height: '100vh',
         minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'center',
@@ -72,13 +75,10 @@ const useStyles = makeStyles(() => ({
         maxWidth: '58px'
     },
     containerText: {
-        position: 'fixed',
         paddingBottom: '5vh',
-        bottom: '0',
         paddingLeft: '20px',
         paddingRight: '20px',
-        width: '100%',
-        zIndex: 3
+        width: '100%'
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
@@ -96,20 +96,9 @@ const useStyles = makeStyles(() => ({
             border: 'none'
         }
     },
-    textFieldContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-
-    },
     gradient: {
-        position: 'absolute',
         width: '100vw',
-        height: '20vh',
-        flexGrow: 1,
-        zIndex: 2,
-        bottom: 0
+        height: '20vh'
     },
     closeIcon: {
         position: 'absolute',
@@ -119,6 +108,16 @@ const useStyles = makeStyles(() => ({
         maxWidth: '58px',
         width: '10vw',
         height: '10vw'
+    },
+    footer: {
+        display: 'flex',
+        flexDirection: 'column-reverse',
+        alignItems: 'flex-end',
+        width: '100vw',
+        height: '100vh',
+        zIndex: 2,
+        position: 'absolute',
+        bottom: 0
     }
 }))
 
@@ -134,7 +133,7 @@ const hasGiftModal = WrappedComponent => {
         const [boxHeight, setBoxHeight] = useState(0)
 
         function handleResize () {
-            setBoxHeight(boxTextRef.current.clientHeight)
+            setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
         }
 
         useEffect(() => {
@@ -161,7 +160,6 @@ const hasGiftModal = WrappedComponent => {
         const handleClose = () => {
             setOpen(false)
         }
-
         return (
             <Box>
                 <WrappedComponent setGift={setGift} openModal={handleOpen} isModalOpen={open} {...props} />
@@ -182,11 +180,13 @@ const hasGiftModal = WrappedComponent => {
                             {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
                             </Box> : null }
-                            <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
-                                <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
+                            <Box className={classes.footer}>
+                                <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
+                                    <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
+                                    <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
+                                </Box>
+                                <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />
                             </Box>
-                            <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)`, marginBottom: boxHeight - 1 }} />
                             <LazyImage style={{ ...styles.image, backgroundImage: `url(${gift.imageURL})` }}/>
                             <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
                                 { closeIcon({ className: classes.closeIcon }) }
