@@ -16,7 +16,7 @@
 html, body {
     /*height: 100%;*/
     margin: 0;
-    font-size: 2.2vh; /* Relative à la hauteur du viewPort (bloque le zoom?) */
+    font-size: 2.2vh!important; /* Relative à la hauteur du viewPort (bloque le zoom?) */
     font-family: sans-serif;
     -webkit-text-size-adjust:none;
 }
