@@ -5,7 +5,7 @@ import { ColorLinearProgress } from './ui/ColorLinearProgress'
 
 const useStyles = makeStyles({
     container: {
-        width: '70vw',
+        // width: '70vw',
         margin: 10
     },
     linearProgress: {

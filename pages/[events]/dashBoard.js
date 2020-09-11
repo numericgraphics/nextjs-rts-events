@@ -138,20 +138,20 @@ function DashBoard (props) {
                                     <Typography className={classes.title}>
                                         {user.nickname}
                                     </Typography>
-                                    <Box>
+                                    <Box className={classes.cardFooter}>
                                         <Typography className={classes.textRegularCenter}>
                                             {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
                                         </Typography>
                                         {availableChallenges
                                             ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
-                                            : <Box>
+                                            : <React.Fragment>
                                                 <Typography className={classes.textRegularCenter}>
                                                     {`${translation.score} ${gameStats.currentScore}`}
                                                 </Typography>
                                                 <Typography className={classes.textRegularCenter}>
                                                     {`${translation.bestScore} ${gameStats.topScore}`}
                                                 </Typography>
-                                            </Box>
+                                            </React.Fragment>
                                         }
                                     </Box>
 

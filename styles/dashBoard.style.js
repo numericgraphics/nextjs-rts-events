@@ -49,10 +49,7 @@ export const useStyles = makeStyles({
         paddingBottom: '10px'
     },
     cardFooter: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: '100%'
     },
     cardHeaderSide: {
         flex: 1,
