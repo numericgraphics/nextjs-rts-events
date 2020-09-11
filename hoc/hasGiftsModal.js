@@ -9,6 +9,7 @@ import LazyImage from '../components/ui/LazyImage'
 import { useTheme } from '@material-ui/core/styles'
 import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
+import { useHeight } from '../hooks/useHeight'
 
 const styles = {
     image: {
@@ -116,10 +117,9 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         flexDirection: 'column-reverse',
         alignItems: 'flex-end',
         width: '100vw',
-        height: '100vh',
         zIndex: 2,
         position: 'absolute',
-        bottom: 0
+        paddingBottom: '10px'
     }
 }))
 
@@ -130,6 +130,7 @@ const hasGiftModal = WrappedComponent => {
         const [open, setOpen] = useState(false)
         const [gift, setGift] = useState({ description: '', title: '', locked: true })
         const theme = useTheme()
+        const height = useHeight()
         const boxTextRef = useRef()
         const lockIconRef = createRef()
         const [boxHeight, setBoxHeight] = useState(0)
@@ -162,6 +163,7 @@ const hasGiftModal = WrappedComponent => {
         const handleClose = () => {
             setOpen(false)
         }
+
         return (
             <Box>
                 <WrappedComponent setGift={setGift} openModal={handleOpen} isModalOpen={open} {...props} />
@@ -182,7 +184,7 @@ const hasGiftModal = WrappedComponent => {
                             {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
                             </Box> : null }
-                            <Box className={classes.footer}>
+                            <Box className={classes.footer} style={{ height: height }}>
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                     <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                                     <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
