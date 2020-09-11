@@ -67,7 +67,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         position: 'absolute',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingBottom: '10px'
     },
     svgIco: {
         minHeight: '34px',
@@ -181,15 +182,17 @@ const hasGiftModal = WrappedComponent => {
                 >
                     <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
                         <Box className={classes.modalContent}>
-                            {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
-                                {lockIcon({ ref: lockIconRef, className: classes.lock })}
-                            </Box> : null }
                             <Box className={classes.footer} style={{ height: height }}>
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                     <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
                                     <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                                 </Box>
-                                <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />
+                                <Box>
+                                    {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
+                                        {lockIcon({ ref: lockIconRef, className: classes.lock })}
+                                    </Box> : null }
+                                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />
+                                </Box>
                             </Box>
                             <LazyImage style={{ ...styles.image, backgroundImage: `url(${gift.imageURL})` }}/>
                             <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
