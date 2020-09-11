@@ -67,8 +67,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         position: 'absolute',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center',
-        paddingBottom: '10px'
+        justifyContent: 'center'
     },
     svgIco: {
         minHeight: '34px',
@@ -77,7 +76,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '58px'
     },
     containerText: {
-        paddingBottom: '5vh',
+        paddingBottom: '7vh',
         paddingLeft: '20px',
         paddingRight: '20px',
         width: '100%',
@@ -119,8 +118,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         alignItems: 'flex-end',
         width: '100vw',
         zIndex: 2,
-        position: 'absolute',
-        paddingBottom: '10px'
+        position: 'absolute'
     }
 }))
 
