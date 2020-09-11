@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
     modalContent: {
         display: 'flex',
         flexDirection: 'column',
-        width: '90vw',
+        width: '90%',
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',

@@ -5,14 +5,16 @@ import { useTweenMaxWithRef } from '../hooks/useTweenMax'
 
 const useStyles = makeStyles({
     containerProgress: {
+        position: 'fixed',
         display: 'flex',
         zIndex: 10,
         width: '100%',
-        minHeight: '100vh',
+        height: '100vh',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        overflow: 'hidden'
     },
     textRegularCenter: {
         color: 'white',
@@ -63,7 +65,7 @@ function SplashScreen (props) {
 
     const classes = useStyles()
     return (
-        <Box className={classes.containerProgress} style={{ minHeight: height }}>
+        <Box className={classes.containerProgress} style={{ height: height }}>
             <Box >
                 <svg width="300" height="300" x="0px" y="0px" viewBox="0 0 841.89 595.28">
                     <g ref={animRef} opacity="0">

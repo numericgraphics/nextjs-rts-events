@@ -30,7 +30,7 @@ export const useStyles = makeStyles({
         justifyContent: 'flex-end'
     },
     button: {
-        width: '80vw',
+        width: '80%',
         bottom: 20,
         borderRadius: '30px!important',
         alignSelf: 'center',

@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
-import { useStyles } from './promo.style'
+import { useStyles } from '../../styles/promo.style'
 import { useHeight } from '../../hooks/useHeight'
 
 export default function PromoLogo (props) {
@@ -28,7 +28,7 @@ export default function PromoLogo (props) {
                     </Box>
                 </Box>
             </Box>
-            <Box className={'backgroundGiftGradient'}/>
+            <Box className={'backgroundGradientBottom'}/>
             <Box className={'background'} style={{ background: `url(${backgroundImageURL}) no-repeat center center`, backgroundSize: 'auto 100%' }} />
         </React.Fragment>
     )

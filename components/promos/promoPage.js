@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Fade from '@material-ui/core/Fade/Fade'
-import { useStyles } from './promo.style'
+import { useStyles } from '../../styles/promo.style'
 import PromosStepper from './promosStepper'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
@@ -50,7 +50,7 @@ function PromoPage (props) {
                     </Fade>
                 </div>
                 <Fade in={!isLoading} timeout={500}>
-                    <div className={styles.bottomZone}>
+                    <div className={'bottomZonePromo'}>
                         <Button color="primary" variant="contained" className={styles.button} onClick={onStart}>
                             {translation.startPageButtonText}
                         </Button>

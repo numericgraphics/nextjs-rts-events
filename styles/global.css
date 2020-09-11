@@ -16,13 +16,13 @@
 html, body {
     /*height: 100%;*/
     margin: 0;
-    font-size: 2.2vh!important; /* Relative à la hauteur du viewPort (bloque le zoom?) */
+    font-size: 2.2vh; /* Relative à la hauteur du viewPort (bloque le zoom?) */
     font-family: sans-serif;
     -webkit-text-size-adjust:none;
 }
 
 html {
-    /*background-color: red;*/
+    background-color: red;
 }
 
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
@@ -43,7 +43,7 @@ html {
     z-index: -3;
 }
 
-.backgroundGradient { /* Dégradé sur l'image, pas réussi à mettre ca dans le div background en multibackground... */
+.backgroundGradientBottom { /* Dégradé sur l'image, pas réussi à mettre ca dans le div background en multibackground... */
     background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 65%, rgba(0,0,0,1) 90%);
     height: 100vh;
     width: 100%;
@@ -52,7 +52,7 @@ html {
     z-index: -1;
 }
 
-.backgroundGiftGradient {
+.backgroundGradientTopBottom {
     background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%);
     height: 100vh;
     width: 100%;
@@ -80,12 +80,13 @@ html {
 
 }
 
-.bottomZone { /* Zone des boutons fixée en bas de page */
+.bottomZone, .bottomZonePromo { /* Zone des boutons fixée en bas de page */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     opacity: 0.9;
     /* height: 16rem; Attention, les boutons ne doivent faire qu'une ligne */
+    min-height: 150px;
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -93,26 +94,9 @@ html {
     padding: 0;
 }
 
-/*.bottomZone ul {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*}*/
-
-/*.bottomZone li {*/
-/*    line-height: 1rem;*/
-/*    color: white;*/
-/*    list-style-type: none;*/
-/*    background-color: red;*/
-/*    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);*/
-/*    border-radius: 1rem;*/
-/*    margin: 1rem;*/
-/*    padding: 1rem;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.hidable {*/
-/*    display: none;*/
-/*}*/
+.bottomZone {
+    height: 16rem;
+}
 
 
 @media only screen and (min-width: 481px) { /* Pour les écrans de desktop et iPad/iPhones portrait on limite la largeur et on centre */
@@ -121,7 +105,7 @@ html {
         font-size: 1.1em;
     }
 
-    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone, .swipeableViews {
+    .container, .background, .backgroundPadding, .backgroundGradientBottom, .backgroundGradientTopBottom, .bottomZone, .bottomZonePromo, .swipeableViews {
         max-width: 480px;
     }
 
@@ -132,11 +116,6 @@ html {
     .backgroundLimiter {
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
     }
-
-    .bottomZone li {
-        background-color: blue;
-    }
-
 }
 
 @media only screen and (min-height: 901px) { /* sur les écrans trop haut, on limite la hauteur du background pour que l'image/la vidéo reste acceptable */
@@ -145,12 +124,8 @@ html {
         font-size: 1.1em;
     }
 
-    .background, .backgroundGradient {
+    .background, .backgroundGradientBottom {
         max-height: 900px;
-    }
-
-    .bottomZone li {
-        background-color: purple;
     }
 }
 
@@ -159,18 +134,13 @@ html {
         font-size: 2.2vh;
     }
 
-    .container, .background, .backgroundPadding, .backgroundGradient, .bottomZone, .swipeableViews {
+    .container, .background, .backgroundPadding, .backgroundGradientBottom, .backgroundGradientTopBottom, .bottomZone, .bottomZonePromo, .swipeableViews {
         max-width: 55vh;
     }
 
-    .background, .backgroundGradient {
+    .background, .backgroundGradientBottom, .backgroundGradientTopBottom {
         max-height: 100vh;
     }
-
-    .bottomZone li {
-        background-color: orange;
-    }
-
 }
 
 
@@ -194,13 +164,23 @@ html {
     .bottomZone {
         position: relative;
     }
-
-    .bottomZone li {
-        background-color: green;
-    }
 }
 
+a {
+    color: #0070f3;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
 
+button:focus {outline:0;}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 
 
@@ -237,11 +217,5 @@ img {
     display: block;
 }
 
-button:focus {outline:0;}
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 */
