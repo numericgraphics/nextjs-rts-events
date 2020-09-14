@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
-import SvgIcon from '@material-ui/core/SvgIcon'
+import { giftIcon } from '../../data/icon'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     container: {
@@ -19,8 +18,10 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     text: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25rem',
-        textAlign: 'center',
+        fontSize: '1.10rem',
+        textAlign: 'left',
+        marginLeft: '15px',
+        marginRight: '5px',
         lineHeight: 1
     },
     cadeau: {
@@ -50,7 +51,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
 
 function GiftResult (props) {
     const classes = useStyles()
-    const [gifts, setGifts] = useState([])
 
     return (
         <Box className={classes.container}>
