@@ -152,7 +152,7 @@ const styles = {
 }
 
 function Result (props) {
-    const { points, message, success, gameStats } = props.content
+    const { points, message, success, gameStats, newUnlockedGifts } = props.content
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
@@ -181,7 +181,7 @@ function Result (props) {
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
     }, [translation])
-
+    console.log(newUnlockedGifts.length)
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
@@ -224,7 +224,7 @@ function Result (props) {
                             }
 
                         </Typography>
-                        <GiftResult/>
+                        {newUnlockedGifts.length ? <GiftResult gift={newUnlockedGifts} /> : null}
                     </ColorCardActions>
                 </ColorCard>
                 <Box className={classes.footer}>
