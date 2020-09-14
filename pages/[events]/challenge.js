@@ -170,7 +170,6 @@ function Challenge () {
             if (response.status === 200) {
                 const content = await response.json()
                 setResultContent(content)
-                console.log(content)
             } else {
                 // TODO : manage response !== 200
                 await Router.push('/[events]/dashBoard', {

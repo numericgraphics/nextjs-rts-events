@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
+import { medalIcon, giftIcon } from '../../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles((theme = useTheme) => ({
@@ -53,11 +53,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
 function GiftResult (props) {
     const classes = useStyles()
     const gift = props.gift[props.gift.length - 1]
-    console.log(gift)
+
+    useEffect(() => {
+        props.setGift(gift)
+    }, [gift])
 
     function getGift (item) {
-        console.log(item)
-        return <IconButton color="primary" className={classes.gift}>
+        return <IconButton color="primary" className={classes.gift} onClick={props.onClick} >
             {item.type === 'lottery' ? giftIcon({ className: classes.cadeau })
                 : medalIcon({ className: classes.medal })}
         </IconButton>

@@ -16,6 +16,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { getTranslations } from '../../data/tools'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
+import giftsModal from '../../hoc/hasGiftsModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -171,6 +172,14 @@ function Result (props) {
         await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
     }
 
+    function onStart () {
+        props.openModal()
+    }
+
+    function setGift (gift) {
+        props.setGift(gift)
+    }
+
     useEffect(() => {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
@@ -181,7 +190,7 @@ function Result (props) {
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
     }, [translation])
-    console.log(newUnlockedGifts.length)
+
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
@@ -224,7 +233,7 @@ function Result (props) {
                             }
 
                         </Typography>
-                        {newUnlockedGifts.length ? <GiftResult gift={newUnlockedGifts} /> : null}
+                        {newUnlockedGifts.length ? <GiftResult gift={newUnlockedGifts} onClick={onStart} setGift={setGift} /> : null}
                     </ColorCardActions>
                 </ColorCard>
                 <Box className={classes.footer}>
@@ -247,4 +256,4 @@ function Result (props) {
     )
 }
 
-export default withRouter(Result)
+export default giftsModal(withRouter(Result))
