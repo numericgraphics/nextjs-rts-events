@@ -19,10 +19,18 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    modalContent: {
+    modalContainer: {
         display: 'flex',
         flexDirection: 'column',
-        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    modalContent: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        width: '70%',
+        minWidth: '70%',
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
@@ -213,6 +221,7 @@ const hasLoginModal = WrappedComponent => {
                 setUserData({ ...userData, error: error.message })
             }
         }
+
         // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
         function getLoginContent (state) {
@@ -273,12 +282,13 @@ const hasLoginModal = WrappedComponent => {
             }
         }
         return (
-            <Box>
+            <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
+
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    className={classes.modal}
+                    className={'containerModal'}
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
@@ -288,10 +298,13 @@ const hasLoginModal = WrappedComponent => {
                     }}
                 >
                     <Fade in={open}>
-                        {getLoginContent(loginState)}
+                        <Box className={classes.modal} >
+                            {getLoginContent(loginState)}
+                        </Box>
                     </Fade>
                 </Modal>
-            </Box>
+
+            </React.Fragment>
         )
     }
 }

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Fade from '@material-ui/core/Fade/Fade'
-import { useStyles } from '../../styles/promo.style'
 import PromosStepper from './promosStepper'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
@@ -15,7 +14,6 @@ function PromoPage (props) {
     const [translation, setTranslation] = useState([])
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading } = store
-    const styles = useStyles()
 
     function onStart () {
         props.openModal()
@@ -43,24 +41,24 @@ function PromoPage (props) {
 
     return (
         <React.Fragment>
-            <div className={styles.content}>
-                <div className="topZone">
+            <div className='content'>
+                <div className='topZone'>
                     <Fade in={!isLoading} timeout={500}>
                         <PromosStepper steps={promos} activeStep={activeStep}/>
                     </Fade>
                 </div>
                 <Fade in={!isLoading} timeout={500}>
-                    <div className={'bottomZonePromo'}>
-                        <Button color="primary" variant="contained" className={styles.button} onClick={onStart}>
+                    <div className='bottomZonePromo'>
+                        <Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
                             {translation.startPageButtonText}
                         </Button>
-                        <Link href={dataProvider.getAllData().cguURL} className={styles.cgLink}>
-                            <Typography variant="caption" className={styles.cg}>{translation.lireCGUText}</Typography>
+                        <Link href={dataProvider.getAllData().cguURL} className='linkButton'>
+                            <Typography >{translation.lireCGUText}</Typography>
                         </Link>
                     </div>
                 </Fade>
             </div>
-            <Promos className={styles.promosAnimation} data={promos} indexCallBack={slideIndexCallBack}/>
+            <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack}/>
         </React.Fragment>
     )
 }

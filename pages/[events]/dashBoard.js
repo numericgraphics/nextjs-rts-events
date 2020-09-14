@@ -27,16 +27,6 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         padding: '10px 30px',
         maxHeight: 200,
-        zIndex: 2,
-        textAlign: 'center'
-    },
-    footer: {
-        display: 'flex',
-        flex: 2,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        marginBottom: 30,
-        zIndex: 2,
         textAlign: 'center'
     },
     title: {
@@ -47,31 +37,43 @@ const useStyles = makeStyles({
         marginBottom: 10
     },
     avatar: {
-        width: 100,
-        height: 100,
-        position: 'absolute',
-        marginTop: '-25px'
+        width: '5rem',
+        height: '5rem',
+        zIndex: 2
     },
     rateIcon: {
         display: 'inline'
     },
-    cardHeader: {
+    cardAvatarHeader: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    cardAvatarHeaderData: {
+        position: 'relative',
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        borderRadius: '10px',
+        alignItems: 'center',
         paddingLeft: '10px',
-        paddingRight: '10px',
-        marginBottom: '30px',
-        paddingTop: '10px',
-        paddingBottom: '10px'
+        paddingRight: '10px'
+    },
+    cardAvatarHeaderBG: {
+        position: 'absolute',
+        width: '100%',
+        height: '4rem',
+        borderRadius: '10px',
+        zIndex: 1
     },
     cardFooter: {
         width: '100%'
     },
     cardHeaderSide: {
         flex: 1,
+        zIndex: 2,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center'
@@ -80,53 +82,20 @@ const useStyles = makeStyles({
         alignSelf: 'left',
         textAlign: 'left',
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '0.8rem',
+        fontSize: '0.7rem',
         display: 'flex',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        alignItems: 'center'
     },
     cardHeaderRightSideText: {
         alignSelf: 'flex-end',
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.5rem'
+        fontSize: '1.3rem'
     },
     textRegularCenter: {
         textAlign: 'center',
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1.1rem'
-    },
-    card: {
-        zIndex: 2
-    },
-    HeaderTitle: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem'
-    },
-    HeaderText: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem'
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    button: {
-        width: '80%',
-        padding: '6px 20px',
-        marginTop: 10,
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25rem'
-    },
-    gradient: {
-        position: 'absolute',
-        width: '100vw',
-        height: '100vh',
-        flexGrow: 1,
-        zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.7) 100%)'
     }
 })
 
@@ -212,37 +181,40 @@ function DashBoard (props) {
         <EventLayout >
             {isLoading && isGlobalLoading
                 ? null
-                : <Box ref={layoutRef} className={'content'} >
-                    <Box ref={layoutRef} className={'topZone'} >
+                : <Box ref={layoutRef} className='content' >
+                    <Box ref={layoutRef} className='topZone' >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
                             <Box className={classes.header}>
-                                <Typography className={classes.HeaderTitle} align={'center'}>
+                                <Typography className={['bold-1-25', 'color-White'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadTitle}
                                 </Typography>
-                                <Typography className={classes.HeaderText} align={'center'}>
+                                <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadText}
                                 </Typography>
                             </Box>
                         </Fade>
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
-                            <ColorCard className={classes.card}>
-                                <ColorCardContent className={classes.content}>
-                                    <Box className={classes.cardHeader} style={{ backgroundColor: theme.palette.secondary.light }}>
-                                        <Box className={classes.cardHeaderSide}>
-                                            <Typography className={classes.cardHeaderLeftSideText}>
-                                                <CheckIcon fontSize="small" className={classes.rateIcon} />
-                                                {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
-                                            </Typography>
-                                            <Typography className={classes.cardHeaderLeftSideText}>
-                                                <CloseIcon fontSize="small" className={classes.rateIcon} />
-                                                {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
-                                            </Typography>
-                                        </Box>
-                                        <Avatar className={classes.avatar} src={user.avatarURL} />
-                                        <Box className={classes.cardHeaderSide}>
-                                            <Typography className={classes.cardHeaderRightSideText}>
-                                                {`${gameStats.currentScore} pts`}
-                                            </Typography>
+                            <ColorCard>
+                                <ColorCardContent className='cardContent'>
+                                    <Box className={classes.cardAvatarHeader} >
+                                        <Box className={[classes.cardAvatarHeaderData, 'bottom-1-rem'].join(' ')} >
+                                            <Box className={classes.cardHeaderSide}>
+                                                <Typography className={classes.cardHeaderLeftSideText}>
+                                                    <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                                    {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
+                                                </Typography>
+                                                <Typography className={classes.cardHeaderLeftSideText}>
+                                                    <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                                    {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
+                                                </Typography>
+                                            </Box>
+                                            <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                            <Box className={classes.cardAvatarHeaderBG} style={{ backgroundColor: theme.palette.secondary.light }}/>
+                                            <Box className={classes.cardHeaderSide}>
+                                                <Typography className={classes.cardHeaderRightSideText}>
+                                                    {`${gameStats.currentScore} pts`}
+                                                </Typography>
+                                            </Box>
                                         </Box>
                                     </Box>
                                     <Typography className={classes.title}>
@@ -269,16 +241,14 @@ function DashBoard (props) {
                             </ColorCard>
                         </Fade>
                     </Box>
-                    <Box ref={layoutRef} className={'bottomZone'} >
+                    <Box className={'bottomZone'} >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
-                            <Box className={classes.footer}>
-                                {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
-                                {/*    {`${translation.dashBoardSharingButton}`} */}
-                                {/* </ColorBorderButton> */}
-                                <CustomDisabledButton color="primary" variant="contained" className={classes.button} onClick={startGame} disabled={!availableChallenges}>
-                                    {`${translation.dashBoardChallengesButton}`}
-                                </CustomDisabledButton>
-                            </Box>
+                            {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
+                            {/*    {`${translation.dashBoardSharingButton}`} */}
+                            {/* </ColorBorderButton> */}
+                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
+                                {`${translation.dashBoardChallengesButton}`}
+                            </CustomDisabledButton>
                         </Fade>
                     </Box>
                     <Box className={'backgroundGradientTopBottom'} />

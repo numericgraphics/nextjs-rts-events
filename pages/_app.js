@@ -126,16 +126,15 @@ function MyApp ({ Component, pageProps }) {
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
                 <Component {...pageProps} />
-                {/* <InnerHeightLayout style={{ visibility: videoVisible ? 'visible' : 'hidden' }}> */}
-                {/*    <VideoPlayer */}
-                {/*        ref={player} */}
-                {/*        videoSource={videoSource} */}
-                {/*        videoPoster={videoPoster} */}
-                {/*        autoPlay={videoAutoPlay} */}
-                {/*        showVideo={showVideo}  */}
-                {/*        blurVideo={blurVideo} */}
-                {/*    /> */}
-                {/* </InnerHeightLayout> */}
+                <VideoPlayer
+                    ref={player}
+                    videoSource={videoSource}
+                    videoPoster={videoPoster}
+                    autoPlay={videoAutoPlay}
+                    showVideo={showVideo}
+                    blurVideo={blurVideo}
+                    style={{ visibility: videoVisible ? 'visible' : 'hidden' }}
+                />
             </ThemeProvider> }
         </UserContext.Provider>
     )

@@ -28,7 +28,6 @@ const useStyles = makeStyles({
         textAlign: 'center',
         marginBottom: 30
     },
-
     card: {
         minWidth: 275,
         minHeight: 200,

@@ -25,12 +25,18 @@ html {
     background-color: red;
 }
 
+
+/*** BACKGROUNDS ***/
+.backgroundVideo,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
-    height: 100vh;
     width: 100%;
     position: fixed;
     top: 0;
     z-index: -2;
+}
+
+.background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
+    height: 100vh;
 }
 
 .backgroundPadding { /* S'affiche en dessous de l'image sur les écrans trop haut */
@@ -61,6 +67,16 @@ html {
     z-index: -1;
 }
 
+
+/*** LAYOUT ***/
+
+.containerModal {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .content {
     padding: 0 0 0 0; /* page  de place pour swipe left  right */
     /* padding: 0 0 17rem 0;  Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
@@ -85,7 +101,6 @@ html {
     flex-direction: column;
     justify-content: flex-end;
     opacity: 0.9;
-    /* height: 16rem; Attention, les boutons ne doivent faire qu'une ligne */
     min-height: 150px;
     width: 100%;
     position: fixed;
@@ -98,6 +113,80 @@ html {
     height: 16rem;
 }
 
+/*** SPACING ***/
+
+.bottom-2-rem {
+    margin-bottom: 2rem!important;
+}
+
+.bottom-1-rem{
+    margin-bottom: 1rem!important;
+}
+
+
+/*** TYPO ***/
+
+.bold-1-25 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.25rem!important;
+}
+
+.bold-1-75 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.75rem!important;
+}
+
+.regular-1 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1rem!important;
+}
+
+.color-White {
+    color: white!important;
+}
+
+/*** COMPONENTS ***/
+
+.bottomButton {
+    width: 80%;
+    padding: 6px 20px!important;
+    margin-top: 10px!important;
+    border-radius: 30px!important;
+    align-self: center;
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1.25rem!important;
+}
+
+.linkButton {
+    align-self: center;
+    color: white!important;
+    font-size: 0.8125rem!important;
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0!important;
+    margin: 1.1rem;
+}
+
+
+/*** ANIMATION ***/
+
+.fadeInAnimation {
+    opacity: 0;
+    -webkit-animation-name: 'fadeIn';
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-delay: 0.5s;
+    -webkit-animation-fill-mode: forwards;
+
+}
+
+/*** MEDIA QUERY ***/
 
 @media only screen and (min-width: 481px) { /* Pour les écrans de desktop et iPad/iPhones portrait on limite la largeur et on centre */
 
@@ -105,11 +194,24 @@ html {
         font-size: 1.1em;
     }
 
-    .container, .background, .backgroundPadding, .backgroundGradientBottom, .backgroundGradientTopBottom, .bottomZone, .bottomZonePromo, .swipeableViews {
+    .container,
+    .containerModal,
+    .background,
+    .backgroundPadding,
+    .backgroundGradientBottom,
+    .backgroundGradientTopBottom,
+    .bottomZone,
+    .bottomZonePromo,
+    .swipeableViews {
         max-width: 480px;
     }
 
-    .container {
+    /*.containerModal {*/
+    /*    max-width: 450px;*/
+    /*}*/
+
+    .container,
+    .containerModal {
         margin: 0 auto;
     }
 
@@ -124,7 +226,8 @@ html {
         font-size: 1.1em;
     }
 
-    .background, .backgroundGradientBottom {
+    .background,
+    .backgroundGradientBottom {
         max-height: 900px;
     }
 }
@@ -134,15 +237,24 @@ html {
         font-size: 2.2vh;
     }
 
-    .container, .background, .backgroundPadding, .backgroundGradientBottom, .backgroundGradientTopBottom, .bottomZone, .bottomZonePromo, .swipeableViews {
+    .container,
+    .containerModal,
+    .background,
+    .backgroundPadding,
+    .backgroundGradientBottom,
+    .backgroundGradientTopBottom,
+    .bottomZone,
+    .bottomZonePromo,
+    .swipeableViews {
         max-width: 55vh;
     }
 
-    .background, .backgroundGradientBottom, .backgroundGradientTopBottom {
+    .background,
+    .backgroundGradientTopBottom,
+    .backgroundGradientBottom {
         max-height: 100vh;
     }
 }
-
 
 @media only screen and (max-height:550px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
 
@@ -175,47 +287,10 @@ a:hover {
 }
 
 button:focus {outline:0;}
+div:focus {outline:0;}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
-
-
-
-
-
-/*
-html,
-body {
-    padding: 0;
-    margin: 0;
-    font-family: srgssr-type-Rg, sans-serif;
-    line-height: 1.6;
-font-size: 18px;
-    background-color: #FFFFFF;
-    overflow: hidden;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-a {
-    color: #0070f3;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-img {
-    max-width: 100%;
-    display: block;
-}
-
-
-*/

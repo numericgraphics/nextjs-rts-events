@@ -29,23 +29,6 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end'
     },
-    button: {
-        width: '80%',
-        bottom: 20,
-        borderRadius: '30px!important',
-        alignSelf: 'center',
-        fontSize: '1.25rem!important',
-        padding: '6px 20px!important'
-    },
-    cg: {
-        alignSelf: 'center',
-        color: 'white',
-        marginBottom: 10,
-        fontsize: '0.8125rem'
-    },
-    cgLink: {
-        textAlign: 'center'
-    },
     text: {
         color: 'white',
         padding: '10px 30px'
@@ -68,13 +51,5 @@ export const useStyles = makeStyles({
         alignSelf: 'center',
         padding: '10px 30px',
         width: '100%'
-    },
-    promosAnimation: {
-        opacity: 0,
-        WebkitAnimationName: 'fadeIn',
-        WebkitAnimationDuration: '1s',
-        WebkitAnimationTimingFunction: 'ease-in',
-        WebkitAnimationDelay: '0.5s',
-        WebkitAnimationFillMode: 'forwards'
     }
 })
