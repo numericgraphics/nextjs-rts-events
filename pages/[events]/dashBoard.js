@@ -270,7 +270,7 @@ function DashBoard (props) {
                                 </Typography>
                                 <Box>
                                     <Typography className={classes.textRegularCenter}>
-                                        {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
+                                        {`${gameStats.activeChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
                                     </Typography>
                                     {availableChallenges
                                         ? <DashBoardChallengesProgress variant="determinate" progress={progress} />
