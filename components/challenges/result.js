@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getTranslations } from '../../data/tools'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
+import GiftResult from '../gifts/giftResult'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -223,6 +224,7 @@ function Result (props) {
                             }
 
                         </Typography>
+                        <GiftResult/>
                     </ColorCardActions>
                 </ColorCard>
                 <Box className={classes.footer}>
