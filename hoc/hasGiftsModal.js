@@ -145,13 +145,9 @@ const hasGiftModal = WrappedComponent => {
             }
         }, [handleResize])
 
-        const initModal = () => {
-            handleResize()
-        }
-
         useEffect(() => {
             if (open) {
-                setTimeout(initModal, 10)
+                setTimeout(handleResize, 10)
             }
         }, [open])
 
