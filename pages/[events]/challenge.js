@@ -1,10 +1,7 @@
-import React, { useRef, useContext, useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../components/UserContext'
 import EventLayout from '../../components/eventLayout'
-import Box from '@material-ui/core/Box'
-import InnerHeightLayout from '../../components/innerHeightLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
@@ -12,85 +9,6 @@ import LazyImage from '../../components/ui/LazyImage'
 import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
 
-const useStyles = makeStyles({
-    containerGlobal: {
-        justifyContent: 'flex-start'
-    },
-    counter: {
-        display: 'flex',
-        alignItems: 'flex-end',
-        width: '100%',
-        flex: 1,
-        maxHeight: 120,
-        padding: 10
-    },
-    header: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        padding: '10px 30px',
-        paddingTop: '10%',
-        textAlign: 'center'
-    },
-    footer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        flex: 2,
-        textAlign: 'center',
-        bottom: 30
-    },
-    avatar: {
-        width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
-    },
-    card: {
-        minWidth: 275,
-        minHeight: 300,
-        margin: 20
-    },
-    HeaderText: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem',
-        textShadow: '0px 3px 6px #00000040'
-    },
-    HeaderTitle: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        textShadow: '0px 3px 6px #00000040'
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 275,
-        minHeight: 300
-    },
-    button: {
-        bottom: 50,
-        width: '80vw',
-        padding: '6px 20px',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        marginTop: 10,
-        textTransform: 'none'
-    },
-    gradient: {
-        position: 'absolute',
-        width: '100vw',
-        height: '100vh',
-        flexGrow: 1,
-        zIndex: 2,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
-    }
-
-})
 const styles = {
     containerOverlay: {
         position: 'absolute',
@@ -120,8 +38,6 @@ const ChallengeStates = Object.freeze({
 function Challenge () {
     const router = useRouter()
     const { events } = router.query
-    const classes = useStyles()
-    const layoutRef = useRef()
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName, videoController } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
@@ -265,14 +181,11 @@ function Challenge () {
         <EventLayout>
             {isLoading
                 ? null
-                : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
+                : <React.Fragment>
                     {getChallengeContent(challengeState)}
-                    {challengeState === ChallengeStates.QUESTIONS
-                        ? <Box className={classes.gradient}/>
-                        : null}
                     {backgroundType === 'image' &&
                     <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
-                </InnerHeightLayout>
+                </React.Fragment>
             }
         </EventLayout>
     )

@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box'
 import { ColorCard } from '../ui/ColorCard'
 import { ColorCardContent } from '../ui/ColorCardContent'
 import { ColorCardActions } from '../ui/ColorCardAction'
-import { useHeight } from '../../hooks/useHeight'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
@@ -129,25 +128,6 @@ const useStyles = makeStyles({
         fontSize: '40px'
     }
 })
-const styles = {
-    containerOverlay: {
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        zIndex: 3
-    },
-    containerImage: {
-        position: 'absolute',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'gray',
-        filter: 'blur(4px)'
-    }
-}
 
 function Result (props) {
     const { points, message, success, gameStats } = props.content
@@ -157,7 +137,6 @@ function Result (props) {
     const [showComponent, setShowComponent] = useState(false)
     const { dataProvider, store } = useContext(UserContext)
     const { eventName } = store
-    const height = useHeight()
 
     async function continueGame () {
         setShowComponent(false)
@@ -182,59 +161,61 @@ function Result (props) {
 
     return (
         <Fade in={showComponent} timeout={500}>
-            <Box style={{ ...styles.containerOverlay, minHeight: height }} >
-                <ColorCard className={classes.card}>
-                    <ColorCardContent className={classes.content}>
-                        <Box className={classes.cardHeader}>
-                            <div className={classes.iconType}>
-                                <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                <Typography className={classes.cardHeaderSuccess}>
-                                    {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
-                                </Typography>
-                            </div>
-                            <Avatar className={classes.avatar} src={user.avatarURL}/>
-                            <div className={classes.iconType}>
-                                <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                <Typography className={classes.cardHeaderWrong}>
-                                    {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
-                                </Typography>
-                            </div>
-                        </Box>
-                        <Typography className={classes.title}>
-                            {success
-                                ? `${translation.challengeResultTitleGood} ${user.nickname}`
-                                : `${translation.challengeResultTitleWrong} ${user.nickname}`}
-                        </Typography>
-                        <Typography className={classes.subTitle}>
-                            {message}
-                        </Typography>
-                        {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
-                            {translation.challengeResultInfoTitle}
-                        </Typography> }
-                    </ColorCardContent>
-                    <ColorCardActions className={classes.cardFooter}>
-                        <Typography className={classes.winPointText}>
-                            {gameStats.hasAvailableChallenges
-                                ? success
-                                    ? `+ ${points} pts` // TODO: Translation pts
-                                    : `${points} pts`
-                                : `+ ${gameStats.currentScore} pts`
-                            }
+            <Box className='content' >
+                <Box className='topZone'>
+                    <ColorCard className={classes.card}>
+                        <ColorCardContent className={classes.content}>
+                            <Box className={classes.cardHeader}>
+                                <div className={classes.iconType}>
+                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                    <Typography className={classes.cardHeaderSuccess}>
+                                        {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
+                                    </Typography>
+                                </div>
+                                <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                <div className={classes.iconType}>
+                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                    <Typography className={classes.cardHeaderWrong}>
+                                        {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
+                                    </Typography>
+                                </div>
+                            </Box>
+                            <Typography className={classes.title}>
+                                {success
+                                    ? `${translation.challengeResultTitleGood} ${user.nickname}`
+                                    : `${translation.challengeResultTitleWrong} ${user.nickname}`}
+                            </Typography>
+                            <Typography className={classes.subTitle}>
+                                {message}
+                            </Typography>
+                            {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
+                                {translation.challengeResultInfoTitle}
+                            </Typography> }
+                        </ColorCardContent>
+                        <ColorCardActions className={classes.cardFooter}>
+                            <Typography className={classes.winPointText}>
+                                {gameStats.hasAvailableChallenges
+                                    ? success
+                                        ? `+ ${points} pts` // TODO: Translation pts
+                                        : `${points} pts`
+                                    : `+ ${gameStats.currentScore} pts`
+                                }
 
-                        </Typography>
-                    </ColorCardActions>
-                </ColorCard>
-                <Box className={classes.footer}>
+                            </Typography>
+                        </ColorCardActions>
+                    </ColorCard>
+                </Box>
+                <Box className='bottomZone'>
                     {gameStats.hasAvailableChallenges
-                        ? <Box>
-                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={classes.button} onClick={gotoDashBoard}>
+                        ? <React.Fragment>
+                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={classes.button} onClick={continueGame}>
+                            <Button key={'continueGame'} color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
-                        </Box>
-                        : <Button color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                        </React.Fragment>
+                        : <Button color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
                             {`${translation.challengeResultButtonEnded}`}
                         </Button>
                     }

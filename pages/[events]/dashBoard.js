@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -43,7 +43,9 @@ const useStyles = makeStyles({
         zIndex: 2
     },
     rateIcon: {
-        display: 'inline'
+        display: 'inline',
+        width: '3vw',
+        height: '3vw'
     },
     cardAvatarHeader: {
         width: '100%',
@@ -116,7 +118,6 @@ function DashBoard (props) {
     const [isPageReady, setPageReady] = useState(false)
     const { dataProvider, gameStatsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
-    const layoutRef = createRef()
     const theme = useTheme()
 
     async function fetchData () {
@@ -191,8 +192,8 @@ function DashBoard (props) {
         <EventLayout >
             {isLoading && isGlobalLoading
                 ? null
-                : <Box ref={layoutRef} className='content' >
-                    <Box ref={layoutRef} className='topZone' >
+                : <Box className='content' >
+                    <Box className='topZone' >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
                             <Box className={classes.header}>
                                 <Typography className={['bold-1-25', 'color-White'].join(' ')} align={'center'}>
@@ -210,11 +211,11 @@ function DashBoard (props) {
                                         <Box className={[classes.cardAvatarHeaderData, 'bottom-1-rem'].join(' ')} >
                                             <Box className={classes.cardHeaderSide}>
                                                 <Typography className={classes.cardHeaderLeftSideText}>
-                                                    <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                                    <CheckIcon className={classes.rateIcon} />
                                                     {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
                                                 </Typography>
                                                 <Typography className={classes.cardHeaderLeftSideText}>
-                                                    <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                                    <CloseIcon className={classes.rateIcon} />
                                                     {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
                                                 </Typography>
                                             </Box>
@@ -256,7 +257,7 @@ function DashBoard (props) {
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}
                             {/* </ColorBorderButton> */}
-                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>

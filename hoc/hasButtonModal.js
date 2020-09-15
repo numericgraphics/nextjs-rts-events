@@ -11,26 +11,6 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
 
 const useStyles = makeStyles(() => ({
-    modal: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        outline: 'none'
-    },
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        outline: 'none',
-        textAlign: 'center',
-        color: 'white',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'top',
-        backgroundSize: 'cover',
-        backgroundColor: 'black'
-    },
     icon: {
         fontSize: '6rem',
         marginBottom: '10vw'
@@ -76,7 +56,7 @@ const hasButtonModal = WrappedComponent => {
                     disableEnforceFocus
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    className={classes.modal}
+                    className='containerModal'
                     open={open}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
@@ -87,9 +67,9 @@ const hasButtonModal = WrappedComponent => {
                     tabIndex={-1}
                 >
                     <Fade in={open} timeout={1000}>
-                        <Box className={['backgroundModal', classes.container].join(' ')}
+                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                             style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${poster})`, height: height }}>
-                            <Box className='centeredContent'>
+                            <Box className='centered-content color-White'>
                                 <VolumeOffIcon className={classes.icon}/>
                                 <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
                                     Pour une meilleure expérience du jeux veuillez activer le son.

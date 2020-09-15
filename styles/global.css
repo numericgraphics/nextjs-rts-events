@@ -22,7 +22,7 @@ html, body {
 }
 
 html {
-    background-color: red;
+    /*background-color: red;*/
 }
 
 
@@ -64,6 +64,15 @@ html {
     z-index: -1;
 }
 
+.backgroundGradientBottomAspectRatio {
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 90%);
+    width: 100%;
+    padding-top: 200%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
 .backgroundGradientTopBottom {
     background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%);
     height: 100vh;
@@ -71,6 +80,13 @@ html {
     position: fixed;
     top: 0;
     z-index: -1;
+}
+
+.bg-top-cover {
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    background-color: black;
 }
 
 
@@ -81,6 +97,8 @@ html {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    outline: none;
+    text-align: center;
 }
 
 .content {
@@ -107,7 +125,7 @@ html {
     flex-direction: column;
     justify-content: flex-end;
     opacity: 0.9;
-    min-height: 150px;
+    /*min-height: 150px;*/
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -127,6 +145,10 @@ html {
 
 .bottom-1-rem{
     margin-bottom: 1rem!important;
+}
+
+.margin-1-rem{
+    margin: 1rem!important;
 }
 
 
@@ -173,14 +195,20 @@ html {
 
 /*** COMPONENTS ***/
 
+.questionButton,
 .bottomButton {
     width: 80%;
     padding: 6px 20px!important;
-    margin-top: 10px!important;
+    /*margin-top: 10px!important;*/
     border-radius: 30px!important;
     align-self: center;
     font-family: 'srgssr-type-Rg', sans-serif!important;
     font-size: 1.25rem!important;
+}
+
+.questionButton {
+    font-size: 1rem!important;
+    text-transform: none!important;
 }
 
 .linkButton {
@@ -190,7 +218,7 @@ html {
     font-family: 'srgssr-type-Rg', sans-serif!important;
 }
 
-.centeredContent,
+.centered-content,
 .cardContent {
     display: flex;
     flex-direction: column;
@@ -199,7 +227,7 @@ html {
     margin: 1.1rem;
 }
 
-.centeredContent {
+.centered-content {
      justify-content: center;
  }
 
@@ -235,6 +263,7 @@ html {
     .backgroundPadding,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
+    .backgroundGradientBottomAspectRatio,
     .bottomZone,
     .bottomZonePromo,
     .swipeableViews {
@@ -280,6 +309,7 @@ html {
     .backgroundPadding,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
+    .backgroundGradientBottomAspectRatio,
     .bottomZone,
     .bottomZonePromo,
     .swipeableViews {
