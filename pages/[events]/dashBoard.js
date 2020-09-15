@@ -54,7 +54,8 @@ const useStyles = makeStyles({
     avatar: {
         width: 100,
         height: 100,
-        position: 'absolute'
+        position: 'absolute',
+        marginTop: '-25px'
     },
     rateIcon: {
         display: 'inline'
@@ -68,9 +69,8 @@ const useStyles = makeStyles({
         paddingLeft: '10px',
         paddingRight: '10px',
         marginBottom: '30px',
-        paddingTop: '20px',
-        paddingBottom: '10px',
-        alignItems: 'center'
+        paddingTop: '10px',
+        paddingBottom: '10px'
     },
     cardFooter: {
         display: 'flex',
