@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         fontSize: '5rem',
         maxWidth: '50px',
         maxHeight: '50px',
-        borderRadius: '100%'
+        borderRadius: '100%',
+        position: 'absolute'
     },
     lock: {
         position: 'absolute',
