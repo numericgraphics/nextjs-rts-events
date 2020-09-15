@@ -190,6 +190,7 @@ function Result (props) {
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
     }, [translation])
+
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
@@ -232,7 +233,7 @@ function Result (props) {
                             }
 
                         </Typography>
-                        {newUnlockedGifts.length ? <GiftResult gift={newUnlockedGifts} onClick={onStart} setGift={setGift} /> : null}
+                        {newUnlockedGifts.length ? <GiftResult translation={translation.challengeResultGiftText} gift={newUnlockedGifts} onClick={onStart} setGift={setGift} /> : null}
                     </ColorCardActions>
                 </ColorCard>
                 <Box className={classes.footer}>

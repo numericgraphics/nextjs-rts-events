@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         left: 0
     }
 }))
+// TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box
 
 function GiftResult (props) {
     const classes = useStyles()
@@ -61,7 +62,7 @@ function GiftResult (props) {
     function getGift (item) {
         return <IconButton color="primary" className={classes.gift} onClick={props.onClick} >
             {item.type === 'lottery' ? giftIcon({ className: classes.cadeau })
-                : medalIcon({ className: classes.medal })}
+                : medalIcon({ className: classes.cadeau })}
         </IconButton>
     }
 
@@ -69,7 +70,7 @@ function GiftResult (props) {
         <Box className={classes.container} onClick={props.onClick}>
             {gift ? getGift(gift) : null}
             <Typography className={classes.text}>
-                VOUS GAGNEZ UNE RECOMPENSE !
+                {props.translation}
             </Typography>
         </Box>
     )
