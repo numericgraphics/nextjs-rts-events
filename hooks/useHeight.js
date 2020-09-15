@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
 import UserContext from '../components/UserContext'
-
 export const useHeight = () => {
     const { dataProvider } = useContext(UserContext)
     const [height, setHeight] = useState(dataProvider.innerHeight)

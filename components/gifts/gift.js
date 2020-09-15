@@ -71,7 +71,6 @@ function getRandomInt (max) {
 }
 
 export default function Gift (props) {
-    console.log('Gift', props)
     const spintTitle = createRef()
     const { teaser, title, imageURL } = props.data
     const [spinInHandler] = useTweenMax(spintTitle, 1.2, {

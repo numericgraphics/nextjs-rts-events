@@ -4,7 +4,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 
 function VideoPlayer (props, videoRef) {
     const theme = useTheme()
-    const { videoSource, videoPoster, showVideo, blurVideo } = props
+    const { videoSource, showVideo, blurVideo } = props
 
     return (
         <Fade in={showVideo} timeout={500}>
@@ -14,7 +14,6 @@ function VideoPlayer (props, videoRef) {
                 src={videoSource}
                 loop
                 playsInline
-                poster={videoPoster}
                 className='backgroundVideo'
                 autoPlay
                 style={{ ...props.style, backgroundColor: theme.palette.background.default, filter: blurVideo ? 'blur(4px)' : 'none' }}

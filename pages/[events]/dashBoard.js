@@ -10,13 +10,14 @@ import { ColorCardContent } from '../../components/ui/ColorCardContent'
 import { ColorCard } from '../../components/ui/ColorCard'
 import { CustomDisabledButton } from '../../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/DashBoardChallengesProgress'
-// import { ColorBorderButton } from '../../components/ui/ColorBorderButton'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import { getTranslations } from '../../data/tools'
+import GiftsBox from '../../components/gifts/giftsBox'
+import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 
 const useStyles = makeStyles({
@@ -109,6 +110,7 @@ function DashBoard (props) {
     const [translation, setTranslation] = useState([])
     const [gameStats, setGameStats] = useState({})
     const [progress, setProgress] = useState(0)
+    const [gifts, setGifts] = useState()
     const [preCaching, setPreCaching] = useState([])
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [isPageReady, setPageReady] = useState(false)
@@ -144,6 +146,7 @@ function DashBoard (props) {
         setProgress(gameStatsService.getProgress())
         setGameStats(dataProvider.getGameStats())
         setTranslation(dataProvider.getTranslation())
+        setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
         setLoading(false)
@@ -151,6 +154,14 @@ function DashBoard (props) {
 
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
+    }
+
+    function onStart () {
+        props.openModal()
+    }
+
+    function setGift (gift) {
+        props.setGift(gift)
     }
 
     useEffect(() => {
@@ -175,7 +186,6 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-
     // TODO : translation "pts"
     return (
         <EventLayout >
@@ -236,7 +246,7 @@ function DashBoard (props) {
                                             </React.Fragment>
                                         }
                                     </Box>
-
+                                    <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} onClick={onStart} setGift={setGift} />
                                 </ColorCardContent>
                             </ColorCard>
                         </Fade>
@@ -257,7 +267,7 @@ function DashBoard (props) {
         </EventLayout>
     )
 }
-export default DashBoard
+export default giftsModal(DashBoard)
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()

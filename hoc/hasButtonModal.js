@@ -25,7 +25,13 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         outline: 'none',
         color: 'white',
-        margin: 10
+        margin: 10,
+        width: '100vw',
+        minHeight: '100vh',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'top',
+        backgroundSize: 'cover',
+        backgroundColor: 'black'
     },
     text: {
         fontFamily: 'srgssr-type-Rg',
@@ -63,6 +69,7 @@ const hasButtonModal = WrappedComponent => {
         const classes = useStyles()
         const [open, setOpen] = useState(false)
         const [status, setStatus] = useState(false)
+        const [poster, setPoster] = useState('')
         const [secondaryStatus, setSecondaryStatus] = useState(false)
 
         const startChallenge = () => {
@@ -75,7 +82,8 @@ const hasButtonModal = WrappedComponent => {
             startChallenge()
         }
 
-        function openModal () {
+        function openModal (image) {
+            setPoster(image)
             setOpen(true)
             setStatus(false)
         }
@@ -99,7 +107,7 @@ const hasButtonModal = WrappedComponent => {
                     tabIndex={-1}
                 >
                     <Fade in={open} timeout={1000}>
-                        <Box className={classes.container} >
+                        <Box className={classes.container} style={{ backgroundImage: `url(${poster})` }}>
                             <VolumeOffIcon className={classes.icon}/>
                             <Typography className={classes.text}>
                                 Pour une meilleure expérience du jeux veuillez activer le son.

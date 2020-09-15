@@ -159,7 +159,7 @@ function QuestionVideo (props) {
             props.setButtonModalCliked(true)
         } else {
             videoController.setVideoPoster(imageURL)
-            props.openModal()
+            props.openModal(imageURL)
         }
 
         return () => clearInterval(intervalId.current)

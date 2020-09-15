@@ -117,7 +117,7 @@ function SmsInput (props) {
     }
 
     return (
-        <Box className={classes.digits} >
+        <Box className={classes.digits}>
             {getInput()}
         </Box>
     )
