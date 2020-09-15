@@ -66,7 +66,7 @@ function GiftResult (props) {
     }
 
     return (
-        <Box className={classes.container}>
+        <Box className={classes.container} onClick={props.onClick}>
             {gift ? getGift(gift) : null}
             <Typography className={classes.text}>
                 VOUS GAGNEZ UNE RECOMPENSE !

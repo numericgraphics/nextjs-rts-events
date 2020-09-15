@@ -190,7 +190,6 @@ function Result (props) {
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
     }, [translation])
-
     return (
         <Fade in={showComponent} timeout={500}>
             <Box style={{ ...styles.containerOverlay, minHeight: height }} >
