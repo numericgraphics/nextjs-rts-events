@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginTop: '25px'
     },
     text: {
-        fontFamily: 'srgssr-type-Rg',
+        fontFamily: 'srgssr-type-Bd',
         fontSize: '1.10rem',
         textAlign: 'left',
         marginLeft: '15px',
@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         backgroundColor: theme.palette.primary.main,
         minHeight: '34px',
         minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
+        fontSize: '5rem',
         maxWidth: '50px',
         maxHeight: '50px',
         borderRadius: '100%'
@@ -41,7 +40,9 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginTop: '-20px'
     },
     gift: {
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        height: '3rem',
+        width: '3rem'
     },
     giftContainer: {
         display: 'flex',
