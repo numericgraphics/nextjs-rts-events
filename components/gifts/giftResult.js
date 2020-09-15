@@ -38,7 +38,9 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     lock: {
         position: 'absolute',
-        marginTop: '-20px'
+        marginTop: '-20px',
+        height: '32.4px',
+        width: '32.4px'
     },
     gift: {
         backgroundColor: theme.palette.primary.main,
