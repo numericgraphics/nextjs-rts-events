@@ -27,11 +27,17 @@ html {
 
 
 /*** BACKGROUNDS ***/
+.backgroundModal,
 .backgroundVideo,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     width: 100%;
     position: fixed;
     top: 0;
+}
+
+
+.backgroundVideo,
+.background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     z-index: -2;
 }
 
@@ -141,6 +147,26 @@ html {
     font-size: 1rem!important;
 }
 
+.regular-1-25 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1.25rem!important;
+}
+
+.regular-1-50 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1.50rem!important;
+}
+
+.regular-1-75 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1.75rem!important;
+}
+
+.regular-2 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 2rem!important;
+}
+
 .color-White {
     color: white!important;
 }
@@ -164,15 +190,22 @@ html {
     font-family: 'srgssr-type-Rg', sans-serif!important;
 }
 
+.centeredContent,
 .cardContent {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     padding: 0!important;
     margin: 1.1rem;
 }
 
+.centeredContent {
+     justify-content: center;
+ }
+
+.cardContent {
+    justify-content: flex-start;
+}
 
 /*** ANIMATION ***/
 
@@ -197,6 +230,8 @@ html {
     .container,
     .containerModal,
     .background,
+    .backgroundModal,
+    .backgroundVideo,
     .backgroundPadding,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
@@ -240,6 +275,8 @@ html {
     .container,
     .containerModal,
     .background,
+    .backgroundModal,
+    .backgroundVideo,
     .backgroundPadding,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,

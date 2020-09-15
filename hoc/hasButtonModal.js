@@ -8,6 +8,7 @@ import Fade from '@material-ui/core/Fade'
 import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
+import { useHeight } from '../hooks/useHeight'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -16,7 +17,6 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
         outline: 'none'
-
     },
     container: {
         display: 'flex',
@@ -24,41 +24,20 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
         outline: 'none',
+        textAlign: 'center',
         color: 'white',
-        margin: 10,
-        width: '100vw',
-        minHeight: '100vh',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top',
         backgroundSize: 'cover',
         backgroundColor: 'black'
     },
-    text: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '5vw',
-        textAlign: 'center',
-        lineHeight: '6vw',
-        marginBottom: '10vw'
-    },
-    button: {
-        width: '80vw',
-        padding: '6px 20px',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25rem',
-        marginBottom: '10vw'
-    },
     icon: {
-        fontSize: '18vw',
+        fontSize: '6rem',
         marginBottom: '10vw'
     },
     textButton: {
         textTransform: 'none',
-        color: 'white',
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '4vw'
+        color: 'white'
     }
 
 }))
@@ -67,6 +46,7 @@ const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
         const classes = useStyles()
+        const height = useHeight()
         const [open, setOpen] = useState(false)
         const [status, setStatus] = useState(false)
         const [poster, setPoster] = useState('')
@@ -107,26 +87,28 @@ const hasButtonModal = WrappedComponent => {
                     tabIndex={-1}
                 >
                     <Fade in={open} timeout={1000}>
-                        <Box className={classes.container} style={{ backgroundImage: `url(${poster})` }}>
-                            <VolumeOffIcon className={classes.icon}/>
-                            <Typography className={classes.text}>
-                                Pour une meilleure expérience du jeux veuillez activer le son.
-                            </Typography>
-                            <Button
-                                key={'continueGame'}
-                                color="primary"
-                                variant="contained"
-                                className={classes.button}
-                                onClick={startChallenge}
-                                startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
-                                activer le son
-                            </Button>
-                            <Button className={classes.textButton} onClick={mutedVideoPlayer}>
-                                Ne pas activer le son
-                            </Button>
+                        <Box className={['backgroundModal', classes.container].join(' ')}
+                            style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${poster})`, height: height }}>
+                            <Box className='centeredContent'>
+                                <VolumeOffIcon className={classes.icon}/>
+                                <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
+                                    Pour une meilleure expérience du jeux veuillez activer le son.
+                                </Typography>
+                                <Button
+                                    key={'continueGame'}
+                                    color="primary"
+                                    variant="contained"
+                                    className={['bottomButton', 'bottom-2-rem'].join(' ')}
+                                    onClick={startChallenge}
+                                    startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
+                                    activer le son
+                                </Button>
+                                <Button className={['regular-1-25 ', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
+                                    Ne pas activer le son
+                                </Button>
+                            </Box>
                         </Box>
                     </Fade>
-
                 </Modal>
             </Box>
         )
