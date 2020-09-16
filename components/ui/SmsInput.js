@@ -112,7 +112,7 @@ function SmsInput (props) {
                 onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
-                type="number"
+                type="numeric"
                 maxLength="1"
                 name={values[i][0]} />)
         }
