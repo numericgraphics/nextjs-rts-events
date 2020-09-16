@@ -107,7 +107,7 @@ html {
 }
 
 .topZone {
-    padding: 1rem 1rem 0 1rem;
+    padding: 1rem 0.7rem 0 0.7rem;
 }
 
 .topZone .text {
@@ -147,6 +147,10 @@ html {
     margin-bottom: 1rem!important;
 }
 
+.bottom-0-5-rem{
+    margin-bottom: 0.5rem!important;
+}
+
 .margin-1-rem{
     margin: 1rem!important;
 }
@@ -164,9 +168,29 @@ html {
     font-size: 1.75rem!important;
 }
 
+.bold-1-5 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.5rem!important;
+}
+
+.regular-0-825 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 0.825rem!important;
+}
+
 .regular-1 {
     font-family: 'srgssr-type-Rg', sans-serif!important;
     font-size: 1rem!important;
+}
+
+.regular-1-1 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1.1rem!important;
+}
+
+.regular-1-125 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1.125rem!important;
 }
 
 .regular-1-25 {
@@ -193,21 +217,28 @@ html {
     color: white!important;
 }
 
+.lineSpacing-1-2 {
+    line-height: 1.2;
+}
+
 /*** COMPONENTS ***/
 
 .questionButton,
 .bottomButton {
     width: 80%;
     padding: 6px 20px!important;
-    /*margin-top: 10px!important;*/
     border-radius: 30px!important;
     align-self: center;
-    font-family: 'srgssr-type-Rg', sans-serif!important;
+}
+
+.bottomButton {
     font-size: 1.25rem!important;
+    font-family: 'srgssr-type-Bd', sans-serif!important;
 }
 
 .questionButton {
     font-size: 1rem!important;
+    font-family: 'srgssr-type-Rg', sans-serif!important;
     text-transform: none!important;
 }
 
@@ -224,7 +255,7 @@ html {
     flex-direction: column;
     align-items: center;
     padding: 0!important;
-    margin: 1.1rem;
+    margin: 1.1rem 0.7rem 1.1rem 0.7rem;
 }
 
 .centered-content {

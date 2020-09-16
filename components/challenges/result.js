@@ -14,6 +14,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getTranslations } from '../../data/tools'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
+import GiftResult from '../gifts/giftResult'
+import giftsModal from '../../hoc/hasGiftsModal'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -130,7 +132,7 @@ const useStyles = makeStyles({
 })
 
 function Result (props) {
-    const { points, message, success, gameStats } = props.content
+    const { points, message, success, gameStats, newUnlockedGifts } = props.content
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
@@ -146,6 +148,14 @@ function Result (props) {
     async function gotoDashBoard () {
         setShowComponent(false)
         await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
+    }
+
+    function onStart () {
+        props.openModal()
+    }
+
+    function setGift (gift) {
+        props.setGift(gift)
     }
 
     useEffect(() => {
@@ -200,8 +210,16 @@ function Result (props) {
                                         : `${points} pts`
                                     : `+ ${gameStats.currentScore} pts`
                                 }
-
                             </Typography>
+                            {newUnlockedGifts.length
+                                ? <GiftResult
+                                    translation={translation.challengeResultGiftText}
+                                    gift={newUnlockedGifts}
+                                    onClick={onStart}
+                                    setGift={setGift}
+                                />
+                                : null
+                            }
                         </ColorCardActions>
                     </ColorCard>
                 </Box>
@@ -225,4 +243,4 @@ function Result (props) {
     )
 }
 
-export default withRouter(Result)
+export default giftsModal(withRouter(Result))

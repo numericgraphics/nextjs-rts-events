@@ -178,8 +178,8 @@ const hasGiftModal = WrappedComponent => {
                         <Box className={classes.modalContent}>
                             <Box className={classes.footer} style={{ height: height }}>
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                    <Typography className={classes.title} variant="h4" align={'center'}>{gift.title}</Typography>
-                                    <Typography className={classes.description} variant="h4" align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
+                                    <Typography className={classes.title} align={'center'}>{gift.title}</Typography>
+                                    <Typography className={classes.description} align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                                 </Box>
                                 <Box>
                                     {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
