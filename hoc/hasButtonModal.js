@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
+import UserContext from '../components/UserContext'
 
 const useStyles = makeStyles(() => ({
     icon: {
@@ -26,7 +27,9 @@ const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
         const classes = useStyles()
+        const { dataProvider } = useContext(UserContext)
         const height = useHeight()
+        const [translation, setTranslation] = useState([])
         const [open, setOpen] = useState(false)
         const [status, setStatus] = useState(false)
         const [poster, setPoster] = useState('')
@@ -47,6 +50,10 @@ const hasButtonModal = WrappedComponent => {
             setOpen(true)
             setStatus(false)
         }
+
+        useEffect(() => {
+            setTranslation(dataProvider.getTranslation())
+        }, [])
 
         return (
             <Box>
@@ -72,7 +79,7 @@ const hasButtonModal = WrappedComponent => {
                             <Box className='centered-content color-White'>
                                 <VolumeOffIcon className={classes.icon}/>
                                 <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
-                                    Pour une meilleure expérience du jeux veuillez activer le son.
+                                    {translation.challengeVideoTextUnMute}
                                 </Typography>
                                 <Button
                                     key={'continueGame'}
@@ -81,10 +88,10 @@ const hasButtonModal = WrappedComponent => {
                                     className={['bottomButton', 'bottom-2-rem'].join(' ')}
                                     onClick={startChallenge}
                                     startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
-                                    activer le son
+                                    {translation.challengeVideoButtonUnMute}
                                 </Button>
                                 <Button className={['regular-1-25 ', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
-                                    Ne pas activer le son
+                                    {translation.challengeVideoButtonMute}
                                 </Button>
                             </Box>
                         </Box>
