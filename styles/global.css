@@ -67,7 +67,7 @@ html {
 .backgroundGradientBottomAspectRatio {
     background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 90%);
     width: 100%;
-    padding-top: 200%;
+    padding-top: 200%; /* ratio ( width / height) * 100%  */
     position: fixed;
     top: 0;
     z-index: -1;
@@ -323,7 +323,7 @@ html {
     }
 }
 
-@media only screen and (max-height:550px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
+@media only screen and (max-height:450px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
 
     html, body {
         font-size: 0.9em;
