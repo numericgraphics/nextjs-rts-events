@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box'
 import { useTweenMaxWithRef } from '../hooks/useTweenMax'
 
 const useStyles = makeStyles({
-    containerProgress: {
+    container: {
         position: 'fixed',
         display: 'flex',
         zIndex: 10,
@@ -15,12 +15,6 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         backgroundColor: 'white',
         overflow: 'hidden'
-    },
-    textRegularCenter: {
-        color: 'white',
-        textAlign: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '2rem'
     }
 })
 
@@ -65,7 +59,7 @@ function SplashScreen (props) {
 
     const classes = useStyles()
     return (
-        <Box className={classes.containerProgress} style={{ height: height }}>
+        <Box className={classes.container} style={{ height: height }}>
             <Box >
                 <svg width="300" height="300" x="0px" y="0px" viewBox="0 0 841.89 595.28">
                     <g ref={animRef} opacity="0">

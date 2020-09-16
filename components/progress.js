@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeFactory from '../data/themeFactory'
-import InnerHeightLayout from './innerHeightLayout'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles({
-    containerProgress: {
+    container: {
+        position: 'fixed',
+        display: 'flex',
+        zIndex: 10,
         width: '100%',
+        height: '100vh',
         alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        overflow: 'hidden'
     }
 })
 
@@ -22,9 +28,9 @@ function Progress () {
     }, [])
 
     return (
-        <InnerHeightLayout class={classes.containerProgress} >
+        <Box className={classes.container} >
             <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.main : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
-        </InnerHeightLayout>
+        </Box>
     )
 }
 
