@@ -43,9 +43,9 @@ function PromoPage (props) {
         <React.Fragment>
             <div className='content'>
                 <div className='topZone'>
-                    <Fade in={!isLoading} timeout={500}>
+                    {promos.length > 1 && <Fade in={!isLoading} timeout={500}>
                         <PromosStepper steps={promos} activeStep={activeStep}/>
-                    </Fade>
+                    </Fade>}
                 </div>
                 <Fade in={!isLoading} timeout={500}>
                     <div className='bottomZonePromo'>
