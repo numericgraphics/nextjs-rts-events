@@ -66,14 +66,6 @@ const useStyles = makeStyles({
         minWidth: 275,
         minHeight: 300
     },
-    button: {
-        width: '80vw',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        textTransform: 'none'
-    },
     buttonWrapper: {
         position: 'relative',
         display: 'flex',
@@ -165,7 +157,6 @@ function QuestionVideo (props) {
                     <Box className={classes.counter}>
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
                         {props.content.videoURL && <VideoControler controls={true}/>}
-
                     </Box>
                     <Box className={[classes.header, 'color-White'].join(' ')} >
                         <Typography className={classes.HeaderTitle} align={'left'}>

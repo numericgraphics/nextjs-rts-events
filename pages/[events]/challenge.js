@@ -6,25 +6,13 @@ import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
-import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
 
 const styles = {
-    containerOverlay: {
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        zIndex: 3
-    },
     containerImage: {
-        position: 'absolute',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'white'
+        backgroundSize: 'auto 100%'
     }
 }
 const ChallengeStates = Object.freeze({
@@ -45,7 +33,6 @@ function Challenge () {
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
-    const height = useHeight()
     const [backgroundType, setBackgroundType] = useState('image')
 
     async function fetchQuestions () {
@@ -184,7 +171,7 @@ function Challenge () {
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
                     {backgroundType === 'image' &&
-                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
+                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
                 </React.Fragment>
             }
         </EventLayout>

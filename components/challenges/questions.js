@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import QuestionTimer from './questionTimer'
-import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -11,9 +10,6 @@ import VideoControler from '../ui/VideoController'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
 
 const useStyles = makeStyles({
-    containerGlobal: {
-        justifyContent: 'flex-start'
-    },
     counter: {
         display: 'flex',
         flexDirection: 'row',
@@ -69,47 +65,17 @@ const useStyles = makeStyles({
         minWidth: 275,
         minHeight: 300
     },
-    gradient: {
-        position: 'absolute',
-        width: '100vw',
-        height: '100vh',
-        flexGrow: 1,
-        zIndex: 2,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
-    },
-    button: {
-        width: '80vw',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        textTransform: 'none'
-    },
     buttonWrapper: {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 14,
-        paddingBottom: 0
+        justifyContent: 'center'
     },
     buttonProgress: {
         position: 'absolute'
     }
 })
-const styles = {
-    containerOverlay: {
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        zIndex: 3
-    }
-}
 
 function Question (props) {
     const classes = useStyles()
@@ -121,7 +87,6 @@ function Question (props) {
     const [disabled, setDisabled] = useState(false)
     const [answer, setAnswer] = useState(null)
     const intervalId = useRef()
-    const height = useHeight()
 
     function onAnswer (index) {
         if (progress > 0) {
@@ -165,25 +130,26 @@ function Question (props) {
 
     return (
         <Fade in={showComponent} timeout={500}>
-            <Box style={{ ...styles.containerOverlay, minHeight: height }} >
-                <Box className={classes.counter}>
-                    <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                    {props.content.videoURL && <VideoControler />}
-
+            <Box className='content' >
+                <Box className='topZone'>
+                    <Box className={classes.counter}>
+                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                        {props.content.videoURL && <VideoControler />}
+                    </Box>
+                    <Box className={[classes.header, 'color-White'].join(' ')}>
+                        <Typography className={classes.HeaderTitle} align={'left'}>
+                            {title}
+                        </Typography>
+                        <Typography className={classes.HeaderText} align={'left'}>
+                            {question}
+                        </Typography>
+                    </Box>
                 </Box>
-                <Box className={classes.header}>
-                    <Typography className={classes.HeaderTitle} align={'left'}>
-                        {title}
-                    </Typography>
-                    <Typography className={classes.HeaderText} align={'left'}>
-                        {question}
-                    </Typography>
-                </Box>
-                <Box className={classes.footer}>
+                <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={classes.buttonWrapper}>
-                                <CustomDisabledButton color="primary" variant="contained" className={classes.button} disabled={disabled} onClick={() => {
+                            <Box key={index} className={[classes.buttonWrapper, 'bottom-1-rem'].join(' ')} >
+                                <CustomDisabledButton color="primary" variant="contained" className='questionButton' disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}
@@ -194,6 +160,7 @@ function Question (props) {
                     }
                     )}
                 </Box>
+
             </Box>
         </Fade>
     )

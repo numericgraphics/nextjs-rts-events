@@ -262,7 +262,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <Box className={'backgroundGradientTopBottom'} />
+                    {(!isLoading && !isGlobalLoading) && <Box className={'backgroundGradientTopBottom'} />}
                 </Box>
             }
         </EventLayout>
