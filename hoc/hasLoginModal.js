@@ -67,6 +67,10 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center'
 
+    },
+    dropDown: {
+        textAlign: 'left',
+        maxWidth: '50vw'
     }
 }))
 const styles = {
@@ -250,6 +254,7 @@ const hasLoginModal = WrappedComponent => {
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
                             inputProps={ { style: styles.textField } }
+                            dropdownClass={classes.dropDown}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
