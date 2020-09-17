@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
-import { getTranslations } from '../../data/tools'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
@@ -132,12 +131,13 @@ const useStyles = makeStyles({
 })
 
 function Result (props) {
-    const { points, message, success, gameStats, newUnlockedGifts } = props.content
+    const { points, success, gameStats, newUnlockedGifts } = props.content
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
+    const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
-    const { dataProvider, store } = useContext(UserContext)
+    const { dataProvider, uiElementsService, store } = useContext(UserContext)
     const { eventName } = store
 
     async function continueGame () {
@@ -161,6 +161,7 @@ function Result (props) {
     useEffect(() => {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
+        setUiElements(uiElementsService.getUiElements())
         setUser(dataProvider.getUser())
     }, [])
 
@@ -179,24 +180,22 @@ function Result (props) {
                                 <div className={classes.iconType}>
                                     <CheckIcon fontSize="small" className={classes.rateIcon}/>
                                     <Typography className={classes.cardHeaderSuccess}>
-                                        {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
+                                        {uiElements.successChunk}
                                     </Typography>
                                 </div>
                                 <Avatar className={classes.avatar} src={user.avatarURL}/>
                                 <div className={classes.iconType}>
                                     <CloseIcon fontSize="small" className={classes.rateIcon}/>
                                     <Typography className={classes.cardHeaderWrong}>
-                                        {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
+                                        {uiElements.failChunk}
                                     </Typography>
                                 </div>
                             </Box>
                             <Typography className={classes.title}>
-                                {success
-                                    ? `${translation.challengeResultTitleGood} ${user.nickname}`
-                                    : `${translation.challengeResultTitleWrong} ${user.nickname}`}
+                                {uiElements.resultTitleChunk}
                             </Typography>
                             <Typography className={classes.subTitle}>
-                                {message}
+                                {uiElements.resultMessageChunk}
                             </Typography>
                             {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
                                 {translation.challengeResultInfoTitle}

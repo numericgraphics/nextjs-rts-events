@@ -72,6 +72,7 @@ function Challenge () {
 
             if (response.status === 200) {
                 const content = await response.json()
+                dataProvider.setData(content)
                 setResultContent(content)
             } else {
                 // TODO : manage response !== 200

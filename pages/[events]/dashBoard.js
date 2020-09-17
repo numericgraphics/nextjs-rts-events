@@ -247,7 +247,7 @@ function DashBoard (props) {
                                         {availableChallenges
                                             ? <Box className={classes.progressBarOverlay}>
                                                 <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
-                                                    {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
+                                                    {uiElements.progressBarMessageChunk}
                                                 </Typography>
                                                 <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                             </Box>
