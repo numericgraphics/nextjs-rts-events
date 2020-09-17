@@ -139,7 +139,6 @@ function DashBoard (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
-                console.log('content', content)
                 dataProvider.setData(content)
                 gameStatsService.init(dataProvider)
                 uiElementsService.init(dataProvider)
