@@ -20,6 +20,7 @@ import { getTranslations } from '../../data/tools'
 import GiftsBox from '../../components/gifts/giftsBox'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
+import GiftResult from '../../components/gifts/giftResult'
 
 const useStyles = makeStyles({
     containerGlobal: {
@@ -284,7 +285,7 @@ function DashBoard (props) {
                                         </Box>
                                     }
                                 </Box>
-                                <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} onClick={onStart} setGift={setGift} />
+                                { gifts && gifts.length === 1 ? <GiftResult translation={translation.challengeResultGiftText} gift={gifts} onClick={onStart} setGift={setGift} /> : <GiftsBox gifts={gifts} translation={translation.dashBoardGiftTitle} onClick={onStart} setGift={setGift} />}
 
                             </ColorCardContent>
                         </ColorCard>

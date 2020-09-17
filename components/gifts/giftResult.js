@@ -2,27 +2,27 @@ import React, { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { medalIcon, giftIcon } from '../../data/icon'
+import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     container: {
-        border: 'solid',
         display: 'flex',
         alignItems: 'center',
         borderRadius: '50px',
         padding: '3px',
-        borderWidth: '2px',
-        borderColor: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.secondary.light,
         marginBottom: '10px',
-        maxWidth: '70vw'
+        maxWidth: '70vw',
+        flexDirection: 'column',
+        marginTop: '25px'
     },
     text: {
-        fontFamily: 'srgssr-type-Rg',
+        fontFamily: 'srgssr-type-Bd',
         fontSize: '1.10rem',
         textAlign: 'left',
         marginLeft: '15px',
-        marginRight: '5px',
+        marginRight: '15px',
         lineHeight: 1
     },
     cadeau: {
@@ -30,23 +30,26 @@ const useStyles = makeStyles((theme = useTheme) => ({
         backgroundColor: theme.palette.primary.main,
         minHeight: '34px',
         minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
+        fontSize: '5rem',
         maxWidth: '50px',
         maxHeight: '50px',
-        borderRadius: '100%'
+        borderRadius: '100%',
+        position: 'absolute'
     },
-    medal: {
-        fill: theme.palette.primary.contrastText,
-        minHeight: '34px',
-        minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
-        maxWidth: '50px',
-        maxHeight: '50px',
+    lock: {
         position: 'absolute',
-        top: 0,
-        left: 0
+        marginTop: '-20px',
+        height: '32.4px',
+        width: '32.4px'
+    },
+    gift: {
+        backgroundColor: theme.palette.primary.main,
+        height: '3rem',
+        width: '3rem'
+    },
+    giftContainer: {
+        display: 'flex',
+        alignItems: 'center'
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box
@@ -68,10 +71,13 @@ function GiftResult (props) {
 
     return (
         <Box className={classes.container} onClick={props.onClick}>
-            {gift ? getGift(gift) : null}
-            <Typography className={classes.text}>
-                {props.translation}
-            </Typography>
+            {gift.locked && lockIcon({ className: classes.lock }) }
+            <Box className={classes.giftContainer}>
+                {gift ? getGift(gift) : null}
+                <Typography className={classes.text}>
+                    {props.translation}
+                </Typography>
+            </Box>
         </Box>
     )
 }
