@@ -15,7 +15,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
-import { getTranslations } from '../../data/tools'
 import GiftsBox from '../../components/gifts/giftsBox'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
@@ -48,7 +47,8 @@ const useStyles = makeStyles({
         minHeight: '15px',
         minWidth: '15px',
         maxHeight: '25px',
-        maxWidth: '25px'
+        maxWidth: '25px',
+        marginRight: '0.1rem'
     },
     cardAvatarHeader: {
         width: '100%',
@@ -120,12 +120,13 @@ function DashBoard (props) {
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
     const [gameStats, setGameStats] = useState({})
+    const [uiElements, setUiElements] = useState({})
     const [progress, setProgress] = useState(0)
     const [gifts, setGifts] = useState()
     const [preCaching, setPreCaching] = useState([])
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [isPageReady, setPageReady] = useState(false)
-    const { dataProvider, gameStatsService, store } = useContext(UserContext)
+    const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const theme = useTheme()
 
@@ -138,8 +139,10 @@ function DashBoard (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
+                console.log('content', content)
                 dataProvider.setData(content)
                 gameStatsService.init(dataProvider)
+                uiElementsService.init(dataProvider)
                 setPageReady(true)
             } else {
                 await Router.push('/[events]', {
@@ -155,6 +158,7 @@ function DashBoard (props) {
     function initPage () {
         setProgress(gameStatsService.getProgress())
         setGameStats(dataProvider.getGameStats())
+        setUiElements(uiElementsService.getUiElements())
         setTranslation(dataProvider.getTranslation())
         setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
@@ -221,18 +225,18 @@ function DashBoard (props) {
                                             <Box className={classes.cardHeaderSide}>
                                                 <Typography className={[classes.cardHeaderLeftSideText, 'regular-0-825'].join(' ')}>
                                                     <CheckIcon className={classes.rateIcon} />
-                                                    {`${gameStats.successChallengesCount} ${getTranslations(gameStats.successChallengesCount, translation, 'good')}`}
+                                                    {uiElements.successChunk}
                                                 </Typography>
                                                 <Typography className={[classes.cardHeaderLeftSideText, 'regular-0-825'].join(' ')}>
                                                     <CloseIcon className={classes.rateIcon} />
-                                                    {`${gameStats.failedChallengesCount} ${getTranslations(gameStats.failedChallengesCount, translation, 'wrong')}`}
+                                                    {uiElements.failChunk}
                                                 </Typography>
                                             </Box>
                                             <Avatar className={classes.avatar} src={user.avatarURL}/>
                                             <Box className={classes.cardAvatarHeaderBG} style={{ backgroundColor: theme.palette.secondary.light }}/>
                                             <Box className={classes.cardHeaderSide}>
                                                 <Typography className={[classes.cardHeaderRightSideText, 'bold-1-5'].join(' ')}>
-                                                    {`${gameStats.currentScore} pts`}
+                                                    {uiElements.scoreChunk}
                                                 </Typography>
                                             </Box>
                                         </Box>

@@ -9,9 +9,7 @@ class GameStatsServices {
     }
 
     getProgress () {
-        const total = this.gameStats().activeChallengesCount
-        const available = this.gameStats().availableChallengesCount
-        return 100 * (total - available) / total
+        return this.gameStats().progress
     }
 }
 

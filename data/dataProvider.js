@@ -9,7 +9,8 @@ class DataProvider {
             timeControl: {},
             translation: {},
             hasAvailableChallenges: true,
-            gameStats: {}
+            gameStats: {},
+            uiElements: {}
         }
     }
 
@@ -59,6 +60,10 @@ class DataProvider {
 
     getChallengesStates () {
         return this.data.challengesStates
+    }
+
+    getUiElements () {
+        return this.data.uiElements
     }
 
     hasAvailableChallenges () {

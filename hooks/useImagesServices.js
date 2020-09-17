@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+// TODO /* **** REFACTOR NEEDED ******* */ error management
+
 export function useImagesServices (eventData) {
     const [isImagesPreLoaded, setImagePreLoaded] = useState(false)
     const refArray = ['.jpg', '.png', '.jpeg', '.image?']

@@ -7,6 +7,7 @@ import 'react-phone-input-2/lib/style.css'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
 import GameStatsService from '../data/gameStats'
+import UiElementsServices from '../data/uiElements'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
@@ -122,7 +123,7 @@ function MyApp ({ Component, pageProps }) {
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, store }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, uiElementsService: UiElementsServices, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
             {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
