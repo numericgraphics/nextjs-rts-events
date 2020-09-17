@@ -17,15 +17,14 @@ const useStyles = makeStyles({
         alignItems: 'flex-end',
         width: '100%',
         flex: 1,
-        maxHeight: 100,
-        padding: 10
+        maxHeight: 100
     },
     header: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        padding: '10px 30px',
+        padding: '1rem 0.8rem',
         textAlign: 'center'
     },
     footer: {
@@ -48,14 +47,10 @@ const useStyles = makeStyles({
         margin: 20
     },
     HeaderText: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.5rem',
         lineHeight: 1.2,
         textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25rem',
         textShadow: '0px 3px 6px #00000040'
     },
     content: {
@@ -158,11 +153,11 @@ function QuestionVideo (props) {
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
                         {props.content.videoURL && <VideoControler controls={true}/>}
                     </Box>
-                    <Box className={[classes.header, 'color-White'].join(' ')} >
-                        <Typography className={classes.HeaderTitle} align={'left'}>
+                    <Box className={[classes.header, 'color-White'].join(' ')}>
+                        <Typography className={[classes.HeaderTitle, 'regular-1-125'].join(' ')} align={'left'}>
                             {title}
                         </Typography>
-                        <Typography className={classes.HeaderText} align={'left'}>
+                        <Typography className={[classes.HeaderText, 'bold-1-5'].join(' ')} align={'left'}>
                             {question}
                         </Typography>
                     </Box>

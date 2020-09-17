@@ -107,7 +107,7 @@ html {
 }
 
 .topZone {
-    padding: 1rem 0.7rem 0 0.7rem;
+    padding: 1rem 0.8rem 0 0.8rem;
 }
 
 .topZone .text {
@@ -237,6 +237,7 @@ html {
 }
 
 .questionButton {
+    width: 85%;
     font-size: 1rem!important;
     font-family: 'srgssr-type-Rg', sans-serif!important;
     text-transform: none!important;

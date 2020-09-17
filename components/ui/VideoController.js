@@ -12,13 +12,11 @@ import { storeInLocalStorage, UserStates, getDataFromLocalStorage } from '../../
 const useStyles = makeStyles({
     controlContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        marginLeft: 10
+        flexDirection: 'row'
     },
     button: {
         padding: 2,
-        paddingRight: 8,
-        paddingLeft: 8
+        paddingLeft: 12
     }
 })
 
