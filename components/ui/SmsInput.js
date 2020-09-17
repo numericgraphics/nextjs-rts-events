@@ -56,7 +56,10 @@ function SmsInput (props) {
     }
 
     const handleChange = (event) => {
-        if (/[^0-9]/.test(event.target.value)) return event.preventDefault()
+        if (event.target.value !== '') {
+            if (/[^0-9]/.test(event.target.value) || !/^\d{1}$/.test(event.target.value)) return event.preventDefault()
+        }
+
         for (let i = 0; i < values.length; i++) {
             if (values[i][0] === event.target.name) {
                 values[i][1] = event.target.value
@@ -109,7 +112,7 @@ function SmsInput (props) {
                 onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
-                type="number"
+                type="numeric"
                 maxLength="1"
                 name={values[i][0]} />)
         }
