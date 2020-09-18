@@ -133,7 +133,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
 function Result (props) {
     const { points, success, gameStats, newUnlockedGifts } = props.content
     const classes = useStyles()
-    const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
@@ -162,7 +161,6 @@ function Result (props) {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
-        setUser(dataProvider.getUser())
     }, [])
 
     // TODO : remove this local translation
