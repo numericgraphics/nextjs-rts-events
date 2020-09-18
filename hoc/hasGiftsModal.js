@@ -5,23 +5,11 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Box from '@material-ui/core/Box'
 import Slide from '@material-ui/core/Slide'
 import Typography from '@material-ui/core/Typography'
-import LazyImage from '../components/ui/LazyImage'
 import { useTheme } from '@material-ui/core/styles'
 import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 import { useHeight } from '../hooks/useHeight'
 
-const styles = {
-    image: {
-        position: 'absolute',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'white',
-        minHeight: '100vh'
-    }
-}
 const useStyles = makeStyles((theme = useTheme()) => ({
     modal: {
         display: 'flex',
@@ -76,10 +64,11 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '58px'
     },
     containerText: {
+        position: 'relative',
         paddingBottom: '7vh',
         paddingLeft: '20px',
         paddingRight: '20px',
-        width: '100%',
+        flexGrow: 0,
         border: 'solid',
         borderColor: theme.palette.secondary.main
     },
@@ -100,8 +89,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         }
     },
     gradient: {
-        width: '100vw',
-        height: '20vh'
+        flexGrow: 3
     },
     closeIcon: {
         position: 'absolute',
@@ -114,9 +102,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     footer: {
         display: 'flex',
-        flexDirection: 'column-reverse',
-        alignItems: 'flex-end',
-        width: '100vw',
+        flexDirection: 'column',
         zIndex: 2,
         position: 'absolute'
     }
@@ -165,7 +151,7 @@ const hasGiftModal = WrappedComponent => {
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    className={classes.modal}
+                    className='containerModal'
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
@@ -175,20 +161,18 @@ const hasGiftModal = WrappedComponent => {
                     }}
                 >
                     <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
-                        <Box className={classes.modalContent}>
+                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
+                            style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
                             <Box className={classes.footer} style={{ height: height }}>
+                                <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                     <Typography className={classes.title} align={'center'}>{gift.title}</Typography>
                                     <Typography className={classes.description} align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
                                 </Box>
-                                <Box>
-                                    {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
-                                        {lockIcon({ ref: lockIconRef, className: classes.lock })}
-                                    </Box> : null }
-                                    <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />
-                                </Box>
+                                {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
+                                    {lockIcon({ ref: lockIconRef, className: classes.lock })}
+                                </Box> : null }
                             </Box>
-                            <LazyImage style={{ ...styles.image, backgroundImage: `url(${gift.imageURL})` }}/>
                             <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
