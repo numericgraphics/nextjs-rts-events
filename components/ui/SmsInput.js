@@ -4,12 +4,10 @@ import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles({
     input: {
-        width: '42px',
-        height: '48px',
-        margin: '4px',
-        fontFamily: 'srgssr-type-Bd',
+        width: '2.1rem',
+        height: '2.5rem',
+        margin: '0.2rem',
         color: '#020202',
-        fontSize: '1.125rem',
         textAlign: 'center'
     }
 })
@@ -105,7 +103,7 @@ function SmsInput (props) {
             }
             inpTab.push(<input {...inputProps}
                 key={i}
-                className={classes.input}
+                className={[classes.input, 'bold-1-125'].join(' ')}
                 onKeyDown={KeyCheck}
                 autoComplete="one-time-code"
                 onInput={handleInput}

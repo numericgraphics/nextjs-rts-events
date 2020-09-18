@@ -157,6 +157,10 @@ html {
 
 
 /*** TYPO ***/
+.bold-1-125 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.125rem!important;
+}
 
 .bold-1-25 {
     font-family: 'srgssr-type-Bd', sans-serif!important;
