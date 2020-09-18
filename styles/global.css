@@ -55,6 +55,14 @@ html {
     z-index: -3;
 }
 
+.backgroundGradientByTheme {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
 .backgroundGradientBottom { /* Dégradé sur l'image, pas réussi à mettre ca dans le div background en multibackground... */
     background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 65%, rgba(0,0,0,1) 90%);
     height: 100vh;
@@ -297,6 +305,7 @@ html {
     .backgroundModal,
     .backgroundVideo,
     .backgroundPadding,
+    .backgroundGradientByTheme,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
     .backgroundGradientBottomAspectRatio,
@@ -343,6 +352,7 @@ html {
     .backgroundModal,
     .backgroundVideo,
     .backgroundPadding,
+    .backgroundGradientByTheme,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
     .backgroundGradientBottomAspectRatio,
@@ -353,6 +363,7 @@ html {
     }
 
     .background,
+    .backgroundGradientByTheme,
     .backgroundGradientTopBottom,
     .backgroundGradientBottom {
         max-height: 100vh;

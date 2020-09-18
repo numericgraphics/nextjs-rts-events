@@ -15,9 +15,6 @@ const styles = {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%'
-    },
-    gradient: {
-        height: '100vh'
     }
 }
 const ChallengeStates = Object.freeze({
@@ -178,7 +175,7 @@ function Challenge () {
                 ? null
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
-                    { challengeState === ChallengeStates.RESULT && <Box style={{ ...styles.gradient, background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />}
+                    { challengeState === ChallengeStates.RESULT && <Box className='backgroundGradientByTheme' style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />}
                     {backgroundType === 'image' &&
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
                 </React.Fragment>
