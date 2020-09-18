@@ -5,23 +5,11 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Box from '@material-ui/core/Box'
 import Slide from '@material-ui/core/Slide'
 import Typography from '@material-ui/core/Typography'
-import LazyImage from '../components/ui/LazyImage'
 import { useTheme } from '@material-ui/core/styles'
 import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 import { useHeight } from '../hooks/useHeight'
 
-const styles = {
-    image: {
-        // position: 'absolute',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        // width: '100vw',
-        backgroundColor: 'white'
-        // minHeight: '100vh'
-    }
-}
 const useStyles = makeStyles((theme = useTheme()) => ({
     modal: {
         display: 'flex',
@@ -81,7 +69,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         paddingLeft: '20px',
         paddingRight: '20px',
         flexGrow: 0,
-        // width: '100%',
         border: 'solid',
         borderColor: theme.palette.secondary.main
     },
@@ -116,9 +103,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     footer: {
         display: 'flex',
         flexDirection: 'column',
-        // flexDirection: 'column',
-        // alignItems: 'flex-end',
-        // width: '100vw',
         zIndex: 2,
         position: 'absolute'
     }
