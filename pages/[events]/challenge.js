@@ -7,7 +7,6 @@ import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { getAllEvents } from '../../lib/events'
-import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 
 const styles = {
@@ -36,7 +35,6 @@ function Challenge () {
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
     const [backgroundType, setBackgroundType] = useState('image')
-    const theme = useTheme()
 
     async function fetchQuestions () {
         try {
@@ -175,7 +173,7 @@ function Challenge () {
                 ? null
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
-                    { challengeState === ChallengeStates.RESULT && <Box className='backgroundGradientByTheme' style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />}
+                    { challengeState === ChallengeStates.RESULT && <Box className='backgroundGradientByTheme' style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.60) 100%)' }} />}
                     {backgroundType === 'image' &&
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
                 </React.Fragment>

@@ -32,14 +32,16 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         fontSize: '1.75rem',
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        color: theme.palette.secondary.main
     },
     subTitle: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1rem',
         textAlign: 'center',
         lineHeight: 1,
-        marginTop: 30
+        marginBottom: 100,
+        color: theme.palette.secondary.main
 
     },
     secondCardTitle: {
@@ -48,17 +50,21 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: 10,
-        marginTop: 30
+        marginTop: 30,
+        color: theme.palette.secondary.main
     },
     secondCardSubTitle: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1,125rem',
         lineHeight: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 5,
+        color: theme.palette.secondary.main
     },
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1,125rem'
+        fontSize: '1,125rem',
+        color: theme.palette.secondary.main
     },
     secondCardButton: {
         width: '80vw',
@@ -112,11 +118,11 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     winPointText: {
         fontFamily: 'srgssr-type-Bd',
-        color: 'black',
         fontSize: '2.5rem',
         padding: '6px 20px',
         textAlign: 'center',
-        marginTop: '15vh'
+        marginTop: '15vh',
+        color: theme.palette.secondary.main
     },
     iconType: {
         display: 'flex',
@@ -126,7 +132,15 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         fontSize: '40px'
     },
     giftContainer: {
-        display: 'block'
+        display: 'flex',
+        alignItems: 'center',
+        borderRadius: '50px',
+        padding: '3px',
+        backgroundColor: theme.palette.secondary.light,
+        marginBottom: '10px',
+        maxWidth: '70vw',
+        flexDirection: 'column',
+        marginTop: '10px'
     }
 }))
 
@@ -190,13 +204,16 @@ function Result (props) {
                             {translation.challengeResultInfoTitle}
                         </Typography> }
                         {newUnlockedGifts.length
-                            ? <GiftResult
-                                className={classes.gift}
-                                translation={translation.challengeResultGiftText}
-                                gift={newUnlockedGifts}
-                                onClick={onStart}
-                                setGift={setGift}
-                            />
+                            ? <React.Fragment>
+                                <Typography className={classes.secondCardText}>Tu gagnes une recompense !</Typography>
+                                <GiftResult
+                                    className={classes.giftContainer}
+                                    translation={translation.challengeResultGiftText}
+                                    gift={newUnlockedGifts}
+                                    onClick={onStart}
+                                    setGift={setGift}
+                                />
+                            </React.Fragment>
                             : null
                         }
                     </Box>
