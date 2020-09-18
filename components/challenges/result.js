@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1,125rem',
-        color: theme.palette.secondary.main
+        color: theme.palette.secondary.main,
+        marginTop: 30
     },
     secondCardButton: {
         width: '80vw',
