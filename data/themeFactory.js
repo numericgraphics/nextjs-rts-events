@@ -25,6 +25,10 @@ class ThemeFactory {
             error: {
                 main: error,
                 contrastText: onError
+            },
+            action: {
+                disabledBackground: 'gray',
+                disabled: 'white'
             }
         }
         // eslint-disable-next-line no-unused-vars

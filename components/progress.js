@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ThemeFactory from '../data/themeFactory'
 import Box from '@material-ui/core/Box'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     container: {
         position: 'fixed',
         display: 'flex',
@@ -14,10 +14,10 @@ const useStyles = makeStyles({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette ? theme.palette.background : 'white',
         overflow: 'hidden'
     }
-})
+}))
 
 function Progress () {
     const classes = useStyles()
