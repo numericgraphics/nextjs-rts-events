@@ -68,7 +68,7 @@ function GiftResult (props) {
                 : medalIcon({ className: classes.giftIcon })}
         </IconButton>
     }
-
+    // Refactoriser le bouton
     return (
         <Box className={props.className ? props.className : classes.container } onClick={props.onClick}>
             {gift.locked && lockIcon({ className: classes.lock }) }
