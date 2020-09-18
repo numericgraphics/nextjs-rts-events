@@ -1,22 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { withRouter } from 'next/router'
-import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../UserContext'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import { ColorCard } from '../ui/ColorCard'
-import { ColorCardContent } from '../ui/ColorCardContent'
-import { ColorCardActions } from '../ui/ColorCardAction'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
-import CloseIcon from '@material-ui/icons/Close'
-import CheckIcon from '@material-ui/icons/Check'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
         justifyContent: 'flex-start'
     },
@@ -44,7 +38,8 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1rem',
         textAlign: 'center',
-        lineHeight: 1
+        lineHeight: 1,
+        marginTop: 30
 
     },
     secondCardTitle: {
@@ -53,7 +48,7 @@ const useStyles = makeStyles({
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: 10,
-        marginTop: 20
+        marginTop: 30
     },
     secondCardSubTitle: {
         fontFamily: 'srgssr-type-Bd',
@@ -119,7 +114,9 @@ const useStyles = makeStyles({
         fontFamily: 'srgssr-type-Bd',
         color: 'black',
         fontSize: '2.5rem',
-        padding: '6px 20px'
+        padding: '6px 20px',
+        textAlign: 'center',
+        marginTop: '15vh'
     },
     iconType: {
         display: 'flex',
@@ -127,8 +124,11 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignSelf: 'center',
         fontSize: '40px'
+    },
+    giftContainer: {
+        display: 'block'
     }
-})
+}))
 
 function Result (props) {
     const { points, success, gameStats, newUnlockedGifts } = props.content
@@ -169,58 +169,39 @@ function Result (props) {
     useEffect(() => {
         translation.challengeResultButtonEnded = 'Voir vos scores du jour'
     }, [translation])
-
     return (
         <Fade in={showComponent} timeout={500}>
             <Box className='content' >
                 <Box className='topZone'>
-                    <ColorCard className={classes.card}>
-                        <ColorCardContent className={classes.content}>
-                            <Box className={classes.cardHeader}>
-                                <div className={classes.iconType}>
-                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                    <Typography className={classes.cardHeaderSuccess}>
-                                        {uiElements.successChunk}
-                                    </Typography>
-                                </div>
-                                <Avatar className={classes.avatar} src={user.avatarURL}/>
-                                <div className={classes.iconType}>
-                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                    <Typography className={classes.cardHeaderWrong}>
-                                        {uiElements.failChunk}
-                                    </Typography>
-                                </div>
-                            </Box>
-                            <Typography className={classes.title}>
-                                {uiElements.resultTitleChunk}
-                            </Typography>
-                            <Typography className={classes.subTitle}>
-                                {uiElements.resultMessageChunk}
-                            </Typography>
-                            {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
-                                {translation.challengeResultInfoTitle}
-                            </Typography> }
-                        </ColorCardContent>
-                        <ColorCardActions className={classes.cardFooter}>
-                            <Typography className={classes.winPointText}>
-                                {gameStats.hasAvailableChallenges
-                                    ? success
-                                        ? `+ ${points} pts` // TODO: Translation pts
-                                        : `${points} pts`
-                                    : `+ ${gameStats.currentScore} pts`
-                                }
-                            </Typography>
-                            {newUnlockedGifts.length
-                                ? <GiftResult
-                                    translation={translation.challengeResultGiftText}
-                                    gift={newUnlockedGifts}
-                                    onClick={onStart}
-                                    setGift={setGift}
-                                />
-                                : null
+                    <Box className={classes.content}>
+                        <Typography className={classes.winPointText}>
+                            {gameStats.hasAvailableChallenges
+                                ? success
+                                    ? `+ ${points} pts` // TODO: Translation pts
+                                    : `${points} pts`
+                                : `+ ${gameStats.currentScore} pts`
                             }
-                        </ColorCardActions>
-                    </ColorCard>
+                        </Typography>
+                        <Typography className={classes.title}>
+                            {uiElements.resultTitleChunk}
+                        </Typography>
+                        <Typography className={classes.subTitle}>
+                            {uiElements.resultMessageChunk}
+                        </Typography>
+                        {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
+                            {translation.challengeResultInfoTitle}
+                        </Typography> }
+                        {newUnlockedGifts.length
+                            ? <GiftResult
+                                className={classes.gift}
+                                translation={translation.challengeResultGiftText}
+                                gift={newUnlockedGifts}
+                                onClick={onStart}
+                                setGift={setGift}
+                            />
+                            : null
+                        }
+                    </Box>
                 </Box>
                 <Box className='bottomZone'>
                     {gameStats.hasAvailableChallenges

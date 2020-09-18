@@ -7,12 +7,17 @@ import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { getAllEvents } from '../../lib/events'
+import { useTheme } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box'
 
 const styles = {
     containerImage: {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%'
+    },
+    gradient: {
+        height: '100vh'
     }
 }
 const ChallengeStates = Object.freeze({
@@ -34,6 +39,7 @@ function Challenge () {
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
     const [backgroundType, setBackgroundType] = useState('image')
+    const theme = useTheme()
 
     async function fetchQuestions () {
         try {
@@ -165,12 +171,14 @@ function Challenge () {
             initGame()
         }
     }, [resultContent])
+
     return (
         <EventLayout>
             {isLoading
                 ? null
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
+                    { challengeState === ChallengeStates.RESULT && <Box style={{ ...styles.gradient, background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />}
                     {backgroundType === 'image' &&
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
                 </React.Fragment>

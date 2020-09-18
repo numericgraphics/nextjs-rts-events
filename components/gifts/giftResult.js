@@ -70,7 +70,7 @@ function GiftResult (props) {
     }
 
     return (
-        <Box className={classes.container} onClick={props.onClick}>
+        <Box className={props.className ? props.className : classes.container } onClick={props.onClick}>
             {gift.locked && lockIcon({ className: classes.lock }) }
             <Box className={classes.giftContainer}>
                 {gift ? getGift(gift) : null}
