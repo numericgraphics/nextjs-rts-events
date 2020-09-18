@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
@@ -34,7 +34,8 @@ const useStyles = makeStyles(() => ({
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#EAEAEA',
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
