@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     subTitle: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
+        fontSize: '1.2rem',
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: 100,
