@@ -92,7 +92,9 @@ const useStyles = makeStyles({
         alignItems: 'center'
     },
     cardHeaderRightSideText: {
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        lineHeight: '1.5rem',
+        textAlign: 'end'
     },
     textRegularCenter: {
         textAlign: 'center'

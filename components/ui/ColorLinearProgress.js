@@ -7,5 +7,8 @@ export const ColorLinearProgress = withStyles((theme) => ({
     },
     barColorPrimary: {
         backgroundColor: theme.palette.secondary.light
+    },
+    bar: {
+        borderRadius: 10
     }
 }))(LinearProgress)
