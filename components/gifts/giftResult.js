@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     text: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1rem',
+        fontSize: '1.10rem',
         textAlign: 'left',
-        marginLeft: '15px',
+        marginLeft: '5px',
         marginRight: '15px',
         lineHeight: 1,
         color: 'black'
@@ -52,8 +52,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center'
     },
     button: {
-        borderRadius: 30,
-        backgroundColor: theme.palette.secondary.light
+        borderRadius: 40,
+        backgroundColor: theme.palette.secondary.light,
+        paddingBottom: 5,
+        paddingLeft: 10,
+        paddingRight: 5,
+        textTransform: 'none!important',
+        boxShadow: 'none!important'
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box

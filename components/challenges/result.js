@@ -137,7 +137,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         alignItems: 'center',
         borderRadius: '50px',
         padding: '3px',
-        backgroundColor: theme.palette.secondary.light,
         marginBottom: '10px',
         maxWidth: '70vw',
         flexDirection: 'column',
