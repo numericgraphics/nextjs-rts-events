@@ -21,14 +21,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Progress () {
     const classes = useStyles()
+    const [height, setHeight] = useState()
     const [theme, setTheme] = useState({})
 
     useEffect(() => {
         setTheme(ThemeFactory.getCreatedTheme())
+        setHeight(window.innerHeight)
     }, [])
 
     return (
-        <Box className={classes.container} >
+        <Box className={classes.container} style={{ height: height }}>
             <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.main : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
         </Box>
     )
