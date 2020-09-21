@@ -90,6 +90,15 @@ html {
     z-index: -1;
 }
 
+.backgroundGradientTop {
+    background: linear-gradient(to bottom,rgba(0,0,0,0.8)0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 100%);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
 .bg-top-cover {
     background-repeat: no-repeat;
     background-position: top;
@@ -312,6 +321,7 @@ html {
     .backgroundGradientByTheme,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
+    .backgroundGradientTop,
     .backgroundGradientBottomAspectRatio,
     .bottomZone,
     .bottomZonePromo,
@@ -358,6 +368,7 @@ html {
     .backgroundPadding,
     .backgroundGradientByTheme,
     .backgroundGradientBottom,
+    .backgroundGradientTop,
     .backgroundGradientTopBottom,
     .backgroundGradientBottomAspectRatio,
     .bottomZone,
@@ -369,6 +380,7 @@ html {
     .background,
     .backgroundGradientByTheme,
     .backgroundGradientTopBottom,
+    .backgroundGradientTop,
     .backgroundGradientBottom {
         max-height: 100vh;
     }

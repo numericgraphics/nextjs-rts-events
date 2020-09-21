@@ -153,7 +153,7 @@ function Question (props) {
                     }
                     )}
                 </Box>
-
+                <Box className='backgroundGradientTop' />
             </Box>
         </Fade>
     )
