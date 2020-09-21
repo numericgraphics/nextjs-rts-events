@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginTop: '-20px',
         height: '32.4px',
         width: '32.4px',
-        zIndex: 1
+        zIndex: 2
     },
     gift: {
         backgroundColor: theme.palette.primary.main,
@@ -58,7 +58,10 @@ const useStyles = makeStyles((theme = useTheme) => ({
         paddingLeft: 10,
         paddingRight: 5,
         textTransform: 'none!important',
-        boxShadow: 'none!important'
+        boxShadow: 'none!important',
+        height: '100%',
+        width: '100%',
+        zIndex: 1
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box
@@ -77,7 +80,7 @@ function GiftResult (props) {
     }
     // Refactoriser le bouton
     return (
-        <Box className={props.className ? props.className : classes.container } onClick={props.onClick}>
+        <Box className={props.className ? props.className : classes.container }>
             {gift.locked && lockIcon({ className: classes.lock }) }
             <Button
                 variant="contained"
