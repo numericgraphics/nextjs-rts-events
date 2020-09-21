@@ -299,7 +299,7 @@ function DashBoard (props) {
                         </Fade>
                     </Box>
                     {(!isLoading && !isGlobalLoading) && <Box className={'backgroundGradientTopBottom'} />}
-                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: 'blur(4px)' }}/>
+                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>

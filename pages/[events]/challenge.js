@@ -110,11 +110,15 @@ function Challenge () {
                 ? <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
                 : <Question content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result content={resultContent} playGameCallBack={playGame}/>
+            return <Result content={resultContent} playGameCallBack={playGame} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
     async function gotoDashBoard () {
+        if (backgroundType === 'video') {
+            videoController.setVideoSource('')
+            videoController.setVideoVisible(false)
+        }
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
 

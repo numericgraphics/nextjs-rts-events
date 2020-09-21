@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Router, { withRouter } from 'next/router'
+import { withRouter } from 'next/router'
 import UserContext from '../UserContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -148,8 +148,7 @@ function Result (props) {
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
-    const { dataProvider, uiElementsService, store } = useContext(UserContext)
-    const { eventName } = store
+    const { dataProvider, uiElementsService } = useContext(UserContext)
 
     async function continueGame () {
         setShowComponent(false)
@@ -158,7 +157,7 @@ function Result (props) {
 
     async function gotoDashBoard () {
         setShowComponent(false)
-        await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
+        props.gotoDashBoard()
     }
 
     function onStart () {
