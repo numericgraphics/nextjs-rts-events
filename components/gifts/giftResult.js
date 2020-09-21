@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
+import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     container: {
@@ -10,7 +11,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center',
         borderRadius: '50px',
         padding: '3px',
-        backgroundColor: theme.palette.secondary.light,
         marginBottom: '10px',
         maxWidth: '70vw',
         flexDirection: 'column',
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         textAlign: 'left',
         marginLeft: '15px',
         marginRight: '15px',
-        lineHeight: 1
+        lineHeight: 1,
+        color: 'black'
     },
     giftIcon: {
         fill: theme.palette.primary.contrastText,
@@ -51,7 +52,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center'
     },
     button: {
-        borderRadius: 30
+        borderRadius: 30,
+        backgroundColor: theme.palette.secondary.light
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box
@@ -74,13 +76,14 @@ function GiftResult (props) {
             {gift.locked && lockIcon({ className: classes.lock }) }
             <Button
                 variant="contained"
-                color="primary"
                 size="small"
                 className={classes.button}
                 onClick={props.onClick}
                 startIcon={ gift ? getGift(gift) : null }
             >
-                {props.translation}
+                <Typography className={classes.text} >
+                    {props.translation}
+                </Typography>
             </Button>
         </Box>
     )
