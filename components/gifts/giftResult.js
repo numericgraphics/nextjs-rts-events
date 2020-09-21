@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     text: {
         fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.10rem',
+        fontSize: '1rem',
         textAlign: 'left',
         marginLeft: '15px',
         marginRight: '15px',
@@ -76,7 +76,6 @@ function GiftResult (props) {
             {gift.locked && lockIcon({ className: classes.lock }) }
             <Button
                 variant="contained"
-                size="small"
                 className={classes.button}
                 onClick={props.onClick}
                 startIcon={ gift ? getGift(gift) : null }
