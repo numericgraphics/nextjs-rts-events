@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
-import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     container: {
@@ -33,14 +32,14 @@ const useStyles = makeStyles((theme = useTheme) => ({
         fontSize: '5rem',
         maxWidth: '50px',
         maxHeight: '50px',
-        borderRadius: '100%',
-        position: 'absolute'
+        borderRadius: '100%'
     },
     lock: {
         position: 'absolute',
         marginTop: '-20px',
         height: '32.4px',
-        width: '32.4px'
+        width: '32.4px',
+        zIndex: 1
     },
     gift: {
         backgroundColor: theme.palette.primary.main,
@@ -50,6 +49,9 @@ const useStyles = makeStyles((theme = useTheme) => ({
     giftContainer: {
         display: 'flex',
         alignItems: 'center'
+    },
+    button: {
+        borderRadius: 30
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box
@@ -63,21 +65,23 @@ function GiftResult (props) {
     }, [gift])
 
     function getGift (item) {
-        return <IconButton color="primary" className={classes.gift} onClick={props.onClick} >
-            {item.type === 'lottery' ? giftIcon({ className: classes.giftIcon })
-                : medalIcon({ className: classes.giftIcon })}
-        </IconButton>
+        return item.type === 'lottery' ? giftIcon({ className: classes.giftIcon })
+            : medalIcon({ className: classes.giftIcon })
     }
     // Refactoriser le bouton
     return (
         <Box className={props.className ? props.className : classes.container } onClick={props.onClick}>
             {gift.locked && lockIcon({ className: classes.lock }) }
-            <Box className={classes.giftContainer}>
-                {gift ? getGift(gift) : null}
-                <Typography className={classes.text}>
-                    {props.translation}
-                </Typography>
-            </Box>
+            <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.button}
+                onClick={props.onClick}
+                startIcon={ gift ? getGift(gift) : null }
+            >
+                {props.translation}
+            </Button>
         </Box>
     )
 }
