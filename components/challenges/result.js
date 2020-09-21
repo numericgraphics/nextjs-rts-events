@@ -195,12 +195,8 @@ function Result (props) {
                                 : `+ ${gameStats.currentScore} pts`
                             }
                         </Typography>
-                        <Typography className={classes.title}>
-                            {uiElements.resultTitleChunk}
-                        </Typography>
-                        <Typography className={classes.subTitle}>
-                            {uiElements.resultMessageChunk}
-                        </Typography>
+                        <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
+                        <Typography className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
                             {translation.challengeResultInfoTitle}
                         </Typography> }

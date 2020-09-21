@@ -10,7 +10,6 @@ function Events (props) {
     const { eventData, router } = props
     const { content, events } = eventData
     const [isPageReady, setPageReady] = useState(false)
-
     const { dataProvider, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
 

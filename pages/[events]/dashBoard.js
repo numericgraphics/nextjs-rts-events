@@ -19,6 +19,7 @@ import GiftsBox from '../../components/gifts/giftsBox'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
+import LazyImage from '../../components/ui/LazyImage'
 
 const useStyles = makeStyles({
     header: {
@@ -112,6 +113,13 @@ const useStyles = makeStyles({
         justifyContent: 'center'
     }
 })
+const styles = {
+    containerImage: {
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%'
+    }
+}
 
 function DashBoard (props) {
     const router = useRouter()
@@ -128,6 +136,7 @@ function DashBoard (props) {
     const [preCaching, setPreCaching] = useState([])
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [isPageReady, setPageReady] = useState(false)
+    const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const theme = useTheme()
@@ -164,6 +173,7 @@ function DashBoard (props) {
         setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
+        setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
     }
 
@@ -293,6 +303,7 @@ function DashBoard (props) {
                         </Fade>
                     </Box>
                     {(!isLoading && !isGlobalLoading) && <Box className={'backgroundGradientTopBottom'} />}
+                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: 'blur(4px)' }}/>
                 </Box>
             }
         </EventLayout>
