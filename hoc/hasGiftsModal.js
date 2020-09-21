@@ -164,7 +164,7 @@ const hasGiftModal = WrappedComponent => {
                         <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                             style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
                             <Box className={classes.footer} style={{ height: height }}>
-                                <Box className={classes.gradient} style={{ background: `linear-gradient(to top, ${theme.palette.secondary.main} 10%,${theme.palette.secondary.main + '00'} 100%)` }} />
+                                <Box className={classes.gradient} style={{ background: `linear-gradient(${theme.palette.secondary.main + '00'} 0%, ${theme.palette.secondary.main + '00'} 80%,${theme.palette.secondary.main} 100%)` }} />
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                     <Typography className={classes.title} align={'center'}>{gift.title}</Typography>
                                     <Typography className={classes.description} align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>

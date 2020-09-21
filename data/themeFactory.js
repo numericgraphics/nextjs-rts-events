@@ -3,7 +3,11 @@ import { createMuiTheme } from '@material-ui/core'
 class ThemeFactory {
     constructor () {
         this.createdTheme = null
+        this.backgroundImageURL = null
         this.createTheme = this.createTheme.bind(this)
+        this.getCreatedTheme = this.getCreatedTheme.bind(this)
+        this.getBackgroundImageURL = this.getBackgroundImageURL.bind(this)
+        this.getDefaultTheme = this.getDefaultTheme.bind(this)
     }
 
     createTheme (importedTheme) {
@@ -45,12 +49,17 @@ class ThemeFactory {
                 }
             }
         }
+        this.backgroundImageURL = backgroundImageURL
         this.createdTheme = createMuiTheme({ palette })
         return this.createdTheme
     }
 
     getCreatedTheme () {
         return this.createdTheme
+    }
+
+    getBackgroundImageURL () {
+        return this.backgroundImageURL
     }
 
     getDefaultTheme () {

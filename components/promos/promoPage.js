@@ -58,7 +58,7 @@ function PromoPage (props) {
                     </div>
                 </Fade>
             </div>
-            <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack}/>
+            <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
         </React.Fragment>
     )
 }

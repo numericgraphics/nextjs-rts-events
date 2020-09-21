@@ -19,6 +19,7 @@ import GiftsBox from '../../components/gifts/giftsBox'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
+import LazyImage from '../../components/ui/LazyImage'
 
 const useStyles = makeStyles({
     header: {
@@ -36,18 +37,14 @@ const useStyles = makeStyles({
         marginBottom: 10
     },
     avatar: {
-        width: '6rem',
-        height: '6rem',
+        width: '5rem',
+        height: '5rem',
         zIndex: 2
     },
     rateIcon: {
         display: 'inline',
-        width: '3vw',
-        height: '3vw',
-        minHeight: '15px',
-        minWidth: '15px',
-        maxHeight: '25px',
-        maxWidth: '25px',
+        width: '1rem',
+        height: '1rem',
         marginRight: '0.1rem'
     },
     cardAvatarHeader: {
@@ -112,6 +109,13 @@ const useStyles = makeStyles({
         justifyContent: 'center'
     }
 })
+const styles = {
+    containerImage: {
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%'
+    }
+}
 
 function DashBoard (props) {
     const router = useRouter()
@@ -128,6 +132,7 @@ function DashBoard (props) {
     const [preCaching, setPreCaching] = useState([])
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [isPageReady, setPageReady] = useState(false)
+    const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const theme = useTheme()
@@ -164,6 +169,7 @@ function DashBoard (props) {
         setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
+        setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
     }
 
@@ -213,7 +219,7 @@ function DashBoard (props) {
                                 <Typography className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadTitle}
                                 </Typography>
-                                <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>
+                                <Typography className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadText}
                                 </Typography>
                             </Box>
@@ -293,6 +299,7 @@ function DashBoard (props) {
                         </Fade>
                     </Box>
                     {(!isLoading && !isGlobalLoading) && <Box className={'backgroundGradientTopBottom'} />}
+                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: 'blur(4px)' }}/>
                 </Box>
             }
         </EventLayout>
