@@ -70,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
     },
     dropDown: {
         textAlign: 'left',
-        maxWidth: '50vw'
+        maxWidth: '50vw',
+        color: 'black'
     }
 }))
 const styles = {
