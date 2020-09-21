@@ -48,7 +48,7 @@ function PromoPage (props) {
                     </Fade>}
                 </div>
                 <Fade in={!isLoading} timeout={500}>
-                    <div className='bottomZonePromo'>
+                    <div className='bottomZonePromo' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
                         <Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
                             {translation.startPageButtonText}
                         </Button>
