@@ -194,7 +194,7 @@ function Result (props) {
                         <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
                         <Typography className={[classes.subTitle, 'bottom-3-rem'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
-                            {translation.challengeResultInfoTitle}
+                            {translation.challengeResultInfoTitle} <br></br><br></br> {uiElements.noMoreChallengesChunk}
                         </Typography> }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
