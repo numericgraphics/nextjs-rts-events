@@ -194,7 +194,7 @@ function Result (props) {
                             }
                         </Typography>
                         <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography className={[classes.subTitle, 'bottom-3-rem']} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography className={[classes.subTitle, 'bottom-3-rem'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
                             {translation.challengeResultInfoTitle}
                         </Typography> }
