@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         backgroundColor: theme.palette.primary.main,
         minHeight: '34px',
         minWidth: '34px',
-        fontSize: '5rem',
+        fontSize: '5rem!important',
         maxWidth: '50px',
         maxHeight: '50px',
         borderRadius: '100%'
