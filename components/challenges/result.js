@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         fontSize: '1.2rem',
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 100,
         color: theme.palette.secondary.main
 
     },
@@ -64,8 +63,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1,125rem',
-        color: theme.palette.secondary.main,
-        marginTop: 30
+        color: theme.palette.secondary.main
     },
     secondCardButton: {
         width: '80vw',
@@ -196,7 +194,7 @@ function Result (props) {
                             }
                         </Typography>
                         <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography className={[classes.subTitle, 'bottom-3-rem']} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
                             {translation.challengeResultInfoTitle}
                         </Typography> }

@@ -156,6 +156,10 @@ html {
 
 /*** SPACING ***/
 
+.bottom-3-rem {
+    margin-bottom: 3rem!important;
+}
+
 .bottom-2-rem {
     margin-bottom: 2rem!important;
 }
