@@ -118,6 +118,7 @@ function QuestionVideo (props) {
         if (videoController.videoHasPlayed) {
             props.setButtonModalCliked(true)
         } else {
+            videoController.setVideoVisible(true)
             videoController.setVideoPoster(imageURL)
             props.openModal(imageURL)
         }
