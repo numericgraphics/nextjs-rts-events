@@ -37,18 +37,14 @@ const useStyles = makeStyles({
         marginBottom: 10
     },
     avatar: {
-        width: '6rem',
-        height: '6rem',
+        width: '5rem',
+        height: '5rem',
         zIndex: 2
     },
     rateIcon: {
         display: 'inline',
-        width: '3vw',
-        height: '3vw',
-        minHeight: '15px',
-        minWidth: '15px',
-        maxHeight: '25px',
-        maxWidth: '25px',
+        width: '1rem',
+        height: '1rem',
         marginRight: '0.1rem'
     },
     cardAvatarHeader: {
@@ -223,7 +219,7 @@ function DashBoard (props) {
                                 <Typography className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadTitle}
                                 </Typography>
-                                <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>
+                                <Typography className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadText}
                                 </Typography>
                             </Box>

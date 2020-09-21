@@ -229,8 +229,12 @@ html {
     color: white!important;
 }
 
+.lineSpacing-1 {
+    line-height: 1!important;
+}
+
 .lineSpacing-1-2 {
-    line-height: 1.2;
+    line-height: 1.2!important;
 }
 
 /*** COMPONENTS ***/
