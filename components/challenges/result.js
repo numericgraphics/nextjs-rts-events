@@ -174,10 +174,6 @@ function Result (props) {
         setUiElements(uiElementsService.getUiElements())
     }, [])
 
-    // TODO : remove this local translation
-    useEffect(() => {
-        translation.challengeResultButtonEnded = 'Voir vos scores du jour'
-    }, [translation])
     return (
         <Fade in={showComponent} timeout={500}>
             <Box className='content' >
