@@ -5,6 +5,9 @@ export default function PromoImage (props) {
     const { backgroundImageURL } = props.data
 
     return (
-        <Box className={'background'} style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${backgroundImageURL})` }} />
+        <React.Fragment>
+            <Box className={'backgroundGradientBottom'}/>
+            <Box className={'background'} style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${backgroundImageURL})` }} />
+        </React.Fragment>
     )
 }
