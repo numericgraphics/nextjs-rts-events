@@ -258,6 +258,10 @@ html {
     line-height: 1.5!important;
 }
 
+.lineSpacing-1-8 {
+    line-height: 1.8!important;
+}
+
 /*** COMPONENTS ***/
 
 .questionButton,
