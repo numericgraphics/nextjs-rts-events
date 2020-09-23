@@ -10,6 +10,7 @@ class ThemeFactory {
         this.getDefaultTheme = this.getDefaultTheme.bind(this)
     }
 
+    // TODO - add theme typo json model (yvain) - (scratch/theme-typo-json)
     createTheme (importedTheme) {
         const { primary, primaryVariant, onPrimary, secondary, secondaryVariant, onSecondary, background, error, onError, backgroundImageURL } = importedTheme
         const palette = {

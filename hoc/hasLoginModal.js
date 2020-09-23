@@ -89,6 +89,7 @@ const styles = {
         color: '#020202',
         border: 'none',
         width: '100%',
+        height: 'auto',
         backgroundColor: 'white'
     }
 }
