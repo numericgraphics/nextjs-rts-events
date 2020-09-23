@@ -216,8 +216,10 @@ function DashBoard (props) {
                     <Box className='topZone' >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
                             <Box className={classes.header}>
-                                <Typography className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')} align={'center'}>
-                                    {translation.dashBoardHeadTitle}
+                                <Typography
+                                    className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')}
+                                    align={'center'}
+                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadTitle }}>
                                 </Typography>
                                 <Typography className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')} align={'center'}>
                                     {translation.dashBoardHeadText}

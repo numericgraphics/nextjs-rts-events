@@ -49,15 +49,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: 10,
-        marginTop: 30,
-        color: theme.palette.secondary.main
-    },
-    secondCardSubTitle: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1,125rem',
-        lineHeight: 1,
-        marginBottom: 10,
-        marginTop: 5,
         color: theme.palette.secondary.main
     },
     secondCardText: {
