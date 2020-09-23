@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useStyles } from '../../styles/promo.style'
 import SwipeableViews from 'react-swipeable-views'
 import PromoLogo from './promoLogo'
 import PromoNoLogo from './promoNoLogo'
@@ -18,7 +17,6 @@ function getPromoTemplate (item, index, activeStep) {
 }
 
 function Promos (props) {
-    const styles = useStyles()
     const [activeStep, setActiveStep] = useState(0)
 
     useEffect(() => {
@@ -27,7 +25,7 @@ function Promos (props) {
 
     return (
         <SwipeableViews
-            className={['background', styles.promosAnimation].join(' ')}
+            className='background'
             style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
             enableMouseEvents
             onChangeIndex={(index) => {
