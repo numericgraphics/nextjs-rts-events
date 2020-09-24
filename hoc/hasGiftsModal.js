@@ -9,6 +9,7 @@ import { useTheme } from '@material-ui/core/styles'
 import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 import { useHeight } from '../hooks/useHeight'
+import { hexToRgbA } from '../data/tools'
 
 const useStyles = makeStyles((theme = useTheme()) => ({
     modal: {
@@ -143,19 +144,6 @@ const hasGiftModal = WrappedComponent => {
 
         const handleClose = () => {
             setOpen(false)
-        }
-
-        function hexToRgbA (hex, A) {
-            var c
-            if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-                c = hex.substring(1).split('')
-                if (c.length === 3) {
-                    c = [c[0], c[0], c[1], c[1], c[2], c[2]]
-                }
-                c = '0x' + c.join('')
-                return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',' + A + ')'
-            }
-            throw new Error('Bad Hex')
         }
 
         return (
