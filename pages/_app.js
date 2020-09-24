@@ -13,10 +13,11 @@ import SplashScreen from '../components/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
-// eslint-disable-next-line no-unused-vars
 import VideoPlayer from '../components/ui/VideoPlayer'
+import useDeviceDetect from '../hooks/useDeviceDetect'
 
 function MyApp ({ Component, pageProps }) {
+    const deviceDetection = useDeviceDetect()
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
@@ -38,7 +39,7 @@ function MyApp ({ Component, pageProps }) {
     const [blurVideo, setBlurVideo] = useState(false)
     /* eslint-enable */
     const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
-    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection }
     const router = useRouter()
 
     function startedCallBack () {

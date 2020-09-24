@@ -107,7 +107,6 @@ function QuestionVideo (props) {
     function canPlay () {
         setShowComponent(true)
         if (!videoController.videoHasPlayed) {
-            videoController.player.current.play()
             videoController.player.current.muted = props.secondaryButtonClicked
         }
         startTimer()
