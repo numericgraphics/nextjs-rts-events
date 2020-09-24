@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import UserContext from '../UserContext'
 import { storeInLocalStorage, UserStates, getDataFromLocalStorage } from '../../data/tools'
 
+const iconFontSize = 33
 const useStyles = makeStyles({
     controlContainer: {
         display: 'flex',
@@ -16,13 +17,11 @@ const useStyles = makeStyles({
     },
     button: {
         paddingLeft: 12,
-        width: 33,
-        height: 33,
+        width: iconFontSize,
+        height: iconFontSize,
         marginLeft: 2
     }
 })
-
-const iconFontSize = 33
 
 function VideoController (props) {
     const classes = useStyles()
@@ -96,12 +95,12 @@ function VideoController (props) {
             {controls
                 ? <Box className={classes.controlContainer} >
                     <IconButton onClick={onPauseClick} color="primary" className={classes.button}>
-                        {pause ? <PlayCircleOutlineIcon style={{ fontSize: iconFontSize }} />
-                            : <PauseCircleOutlineIcon style={{ fontSize: iconFontSize }} />}
+                        {pause ? <PlayCircleOutlineIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />
+                            : <PauseCircleOutlineIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />}
                     </IconButton>
                     <IconButton onClick={onVolumeClick} color="primary" className={classes.button}>
-                        {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize }} />
-                            : <VolumeUpIcon style={{ fontSize: iconFontSize }} />}
+                        {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />
+                            : <VolumeUpIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />}
                     </IconButton>
                 </Box>
                 : null}
