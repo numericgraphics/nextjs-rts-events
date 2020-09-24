@@ -15,12 +15,14 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginRight: '10px',
         maxWidth: '50px',
         maxHeight: '50px',
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        marginTop: 10
     },
     gifts: {
         display: 'flex',
         margin: '10px',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexWrap: 'wrap'
     },
     textRegularCenter: {
         textAlign: 'center',
