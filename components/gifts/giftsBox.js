@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         maxHeight: '50px',
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        zIndex: 1
     },
     medal: {
         fill: theme.palette.primary.contrastText,
@@ -49,7 +50,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         maxHeight: '50px',
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        zIndex: 1
     },
     lock: {
         position: 'absolute',
@@ -61,7 +63,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         maxHeight: '25px',
         width: '7.5vw',
         height: '7.5vw',
-        fill: 'white'
+        fill: 'white',
+        zIndex: 1
     }
 }))
 
