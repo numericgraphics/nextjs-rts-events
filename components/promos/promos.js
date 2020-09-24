@@ -23,10 +23,11 @@ function Promos (props) {
         setActiveStep(0)
     }, [])
 
+    // TODO - remove blur for testing
     return (
         <SwipeableViews
             className='background'
-            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+            // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
             enableMouseEvents
             onChangeIndex={(index) => {
                 setActiveStep(index)

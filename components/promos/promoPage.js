@@ -39,6 +39,7 @@ function PromoPage (props) {
         handleUrlQuery()
     }, [])
 
+    // TODO - remove blur for testing
     return (
         <React.Fragment>
             <div className='content'>
@@ -48,7 +49,8 @@ function PromoPage (props) {
                     </Fade>}
                 </div>
                 <Fade in={!isLoading} timeout={500}>
-                    <div className='bottomZonePromo' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+                    {/* <div className='bottomZonePromo' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}> */}
+                    <div className='bottomZonePromo'>
                         <Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
                             {translation.startPageButtonText}
                         </Button>
