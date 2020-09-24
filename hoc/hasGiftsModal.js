@@ -90,7 +90,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         }
     },
     gradient: {
-        flexGrow: 3
+        flexGrow: 3,
+        width: '100vw'
     },
     closeIcon: {
         position: 'absolute',
