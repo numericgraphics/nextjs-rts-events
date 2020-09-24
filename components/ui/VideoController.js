@@ -16,15 +16,10 @@ const useStyles = makeStyles({
         flexDirection: 'row'
     },
     button: {
-<<<<<<< HEAD
         paddingLeft: 12,
         width: iconFontSize,
         height: iconFontSize,
         marginLeft: 2
-=======
-        padding: 2,
-        paddingLeft: 12
->>>>>>> 4f5ec40ea0f4fa3f6ccbfe44ee7891eae31c17cf
     }
 })
 
