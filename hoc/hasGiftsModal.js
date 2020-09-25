@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     gradient: {
         flexGrow: 3,
-        width: '100vw'
+        width: '100%'
     },
     closeIcon: {
         position: 'absolute',
