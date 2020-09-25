@@ -106,7 +106,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         display: 'flex',
         flexDirection: 'column',
         zIndex: 2,
-        position: 'absolute'
+        position: 'absolute',
+        width: '100%'
     }
 }))
 
