@@ -25,7 +25,7 @@ export default function PromoNoLogo (props) {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     backgroundImage: `linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%), url(${backgroundImageURL})`,
-                    height: height
+                    height: '100vh'
                 }} />
         </Box>
     )
