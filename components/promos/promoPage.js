@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react'
 import Fade from '@material-ui/core/Fade/Fade'
 import PromosStepper from './promosStepper'
@@ -42,14 +43,22 @@ function PromoPage (props) {
     // TODO - remove blur for testing
     return (
         <React.Fragment>
-            <div className='content'>
+            <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+        </React.Fragment>
+    )
+}
+
+export default hasLoginModal(PromoPage)
+
+
+/*   <div className='content'>
                 <div className='topZone'>
                     {promos.length > 1 && <Fade in={!isLoading} timeout={500}>
                         <PromosStepper steps={promos} activeStep={activeStep}/>
                     </Fade>}
                 </div>
                 <Fade in={!isLoading} timeout={500}>
-                    {/* <div className='bottomZonePromo' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}> */}
+                    <div className='bottomZonePromo' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
                     <div className='bottomZonePromo'>
                         <Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
                             {translation.startPageButtonText}
@@ -59,10 +68,6 @@ function PromoPage (props) {
                         </Link>
                     </div>
                 </Fade>
-            </div>
-            <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
-        </React.Fragment>
-    )
-}
+            </div> */
 
-export default hasLoginModal(PromoPage)
+/* eslint-enable */

@@ -27,6 +27,8 @@ function Promos (props) {
     return (
         <SwipeableViews
             className='background'
+            axis={'y'}
+            animateHeight={true}
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
             enableMouseEvents
             onChangeIndex={(index) => {

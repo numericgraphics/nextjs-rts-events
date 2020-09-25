@@ -17,6 +17,7 @@ export const useStyles = makeStyles({
         padding: 0
     },
     subContent: {
+        position: 'absolute',
         display: 'flex',
         width: '100%',
         flexDirection: 'column',
@@ -51,5 +52,18 @@ export const useStyles = makeStyles({
         alignSelf: 'center',
         padding: '10px 30px',
         width: '100%'
+    },
+    contentSwipeableView: {
+        position: 'relative'
+    },
+    backgroundSwipeableView: {
+        width: '100%',
+        zIndex: -2
+    },
+    gradientSwipeableView: {
+        position: 'absolute',
+        width: '100%',
+        zIndex: -1,
+        background: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)'
     }
 })

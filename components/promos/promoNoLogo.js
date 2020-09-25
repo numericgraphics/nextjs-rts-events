@@ -10,7 +10,7 @@ export default function PromoNoLogo (props) {
     const { description, title, backgroundImageURL } = props.data
 
     return (
-        <React.Fragment>
+        <Box className={styles.contentSwipeableView}>
             <Box className={styles.subContent} style={{ height: height }}>
                 <Box className={styles.subBottomZone}>
                     <Box className={styles.text}>
@@ -19,8 +19,14 @@ export default function PromoNoLogo (props) {
                     </Box>
                 </Box>
             </Box>
-            <Box className={'backgroundGradientBottom'}/>
-            <Box className={'background'} style={{ background: `url(${backgroundImageURL}) no-repeat center center`, backgroundSize: 'auto 100%' }} />
-        </React.Fragment>
+            <Box className={styles.backgroundSwipeableView}
+                style={{
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%), url(${backgroundImageURL})`,
+                    height: height
+                }} />
+        </Box>
     )
 }
