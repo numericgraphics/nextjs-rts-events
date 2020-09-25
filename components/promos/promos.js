@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import PromoLogo from './promoLogo'
-import PromoNoLogo from './promoNoLogo'
+// import PromoLogo from './promoLogo'
+// import PromoNoLogo from './promoNoLogo'
 import PromoImage from './promoImage'
 
 function getPromoTemplate (item, index, activeStep) {
     const dynamicProps = { key: index, data: item, selected: (activeStep === index) }
-    switch (item.type) {
-    case 'Logo':
-        return <PromoLogo {...dynamicProps} />
-    case 'NoLogo':
-        return <PromoNoLogo {...dynamicProps}/>
-    case 'Image':
-        return <PromoImage {...dynamicProps}/>
-    }
+    return <PromoImage {...dynamicProps}/>
+    // switch (item.type) {
+    // case 'Logo':
+    //     return <PromoLogo {...dynamicProps} />
+    // case 'NoLogo':
+    //     return <PromoNoLogo {...dynamicProps}/>
+    // case 'Image':
+    //     return <PromoImage {...dynamicProps}/>
+    // }
 }
 
 function Promos (props) {
