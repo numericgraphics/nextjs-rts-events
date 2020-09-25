@@ -88,7 +88,7 @@ const hasButtonModal = WrappedComponent => {
                                 ? <Box className='centered-content color-White'>
                                     <VolumeOffIcon className={classes.icon}/>
                                     <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
-                                        {translation.challengeVideoTextUnMute}
+                                        {translation.challengeVideoTextStartMuted}
                                     </Typography>
                                     <Button
                                         key={'continueGame'}
