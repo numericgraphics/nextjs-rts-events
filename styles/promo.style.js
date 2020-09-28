@@ -58,6 +58,7 @@ export const useStyles = makeStyles({
     },
     backgroundSwipeableView: {
         width: '100%',
+        height: '100vh',
         zIndex: -2
     },
     gradientSwipeableView: {

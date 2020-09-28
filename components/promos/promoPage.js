@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Promos from './promos'
 import UserContext from '../UserContext'
 import hasLoginModal from '../../hoc/hasLoginModal'
+import SlideShow from './slideShow'
 
 function PromoPage (props) {
     const [activeStep, setActiveStep] = useState(0)
@@ -44,6 +45,7 @@ function PromoPage (props) {
     return (
         <React.Fragment>
             <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+            <SlideShow slides={promos} activeSlide={activeStep}/>
         </React.Fragment>
     )
 }

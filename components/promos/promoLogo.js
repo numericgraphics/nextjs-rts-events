@@ -8,7 +8,7 @@ import { useHeight } from '../../hooks/useHeight'
 export default function PromoLogo (props) {
     const styles = useStyles()
     const height = useHeight()
-    const { description, title, backgroundImageURL, logoURL } = props.data
+    const { description, title, logoURL } = props.data
 
     return (
         <Box className={styles.contentSwipeableView}>
@@ -28,14 +28,7 @@ export default function PromoLogo (props) {
                     </Box>
                 </Box>
             </Box>
-            <Box className={styles.backgroundSwipeableView}
-                style={{
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%), url(${backgroundImageURL})`,
-                    height: '100vh'
-                }} />
+            <Box className={styles.backgroundSwipeableView} />
         </Box>
     )
 }
