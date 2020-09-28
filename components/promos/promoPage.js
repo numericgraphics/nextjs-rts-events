@@ -1,21 +1,50 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react'
-import Fade from '@material-ui/core/Fade/Fade'
-import PromosStepper from './promosStepper'
 import Button from '@material-ui/core/Button'
-import Link from '@material-ui/core/Link'
-import Typography from '@material-ui/core/Typography'
 import Promos from './promos'
 import UserContext from '../UserContext'
 import hasLoginModal from '../../hoc/hasLoginModal'
 import SlideShow from './slideShow'
+import { Box } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { ArrowIcon } from '../../data/icon'
+import { useHeight } from '../../hooks/useHeight'
+
+const useStyles = makeStyles({
+    containerIcon: {
+        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        width: '100%',
+
+
+    },
+    icon: {
+        width: '100%',
+        zIndex: -2
+    },
+    slide: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        opacity: 0,
+        transition: '.3s ease'
+    },
+    slideActive: {
+        opacity: 1,
+        transitionDuration: '.2s'
+    }
+})
 
 function PromoPage (props) {
+    const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])
     const [translation, setTranslation] = useState([])
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading } = store
+    const height = useHeight()
 
     function onStart () {
         props.openModal()
@@ -45,6 +74,17 @@ function PromoPage (props) {
     return (
         <React.Fragment>
             <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+            <Box className='content'>
+                <Box className='bottomZonePromo'>
+                    {activeStep === promos.length -1
+                        ?<Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
+                            {translation.startPageButtonText}
+                        </Button>
+                        : <ArrowIcon/>}
+
+
+                </Box>
+            </Box>
             <SlideShow slides={promos} activeSlide={activeStep}/>
         </React.Fragment>
     )

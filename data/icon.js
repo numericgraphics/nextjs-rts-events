@@ -83,3 +83,29 @@ export function closeIcon (props) {
         </SvgIcon>
     )
 }
+
+export function ArrowIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 34 34" {...props}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28.639" height="30.313" viewBox="0 0 28.639 30.313">
+                <g transform="translate(-175.104 -626.384)">
+                    <path d="M.129,0,12.9,12.776,0,25.811"
+                        transform="translate(176.519 640.284) rotate(-90)"
+                        strokeLinecap='round'
+                        fill='rgba(255,255,255,0)'
+                        stroke='#fff'
+                        strokeLinejoin='round'
+                        strokeWidth='2px'
+                    />
+                    <path d="M.129,0,12.9,12.776,0,25.811"
+                        transform="translate(176.519 655.284) rotate(-90)"
+                        strokeLinecap='round'
+                        fill='rgba(255,255,255,0)'
+                        stroke='#fff'
+                        strokeLinejoin='round'
+                        strokeWidth='2px'/>
+                </g>
+            </svg>
+        </SvgIcon>
+    )
+}

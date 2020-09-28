@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     },
     backgroundSwipeableView: {
         width: '100%',
-        zIndex: -2
+        zIndex: -3
     },
     slide: {
         position: 'absolute',
