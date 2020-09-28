@@ -66,7 +66,8 @@ export async function getStaticProps ({ params }) {
     const eventData = await getEventsData(params.events)
     return {
         props: {
-            eventData
+            eventData,
+            revalidate: 1
         }
     }
 }
