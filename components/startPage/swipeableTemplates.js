@@ -7,7 +7,7 @@ import PromoImage from './promoImage'
 
 const EnhancedSwipeableViews = bindKeyboard(SwipeableViews)
 
-function Promos (props) {
+function SwipeableTemplates (props) {
     const [activeStep, setActiveStep] = useState(0)
     const [isMoving, setMoving] = useState(false)
 
@@ -48,4 +48,4 @@ function Promos (props) {
     )
 }
 
-export default Promos
+export default SwipeableTemplates

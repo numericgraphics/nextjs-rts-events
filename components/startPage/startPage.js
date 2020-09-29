@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
-import Promos from './promos'
+import SwipeableTemplates from './swipeableTemplates'
 import UserContext from '../UserContext'
 import hasLoginModal from '../../hoc/hasLoginModal'
 import SlideShow from './slideShow'
@@ -17,9 +17,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        width: '100%',
-
-
+        width: '100%'
     },
     icon: {
         width: '100%',
@@ -38,7 +36,7 @@ const useStyles = makeStyles({
     }
 })
 
-function PromoPage (props) {
+function StartPage (props) {
     const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])
@@ -74,7 +72,7 @@ function PromoPage (props) {
     // TODO - remove blur for testing
     return (
         <React.Fragment>
-            <Promos className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+            <SwipeableTemplates className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
             <Box className='content'>
                 <Box className='bottomZonePromo'>
                     {activeStep === promos.length -1
@@ -96,4 +94,4 @@ function PromoPage (props) {
     )
 }
 
-export default hasLoginModal(PromoPage)
+export default hasLoginModal(StartPage)
