@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import SwipeableViews from 'react-swipeable-views'
+import { bindKeyboard } from 'react-swipeable-views-utils'
 import PromoLogo from './promoLogo'
 import PromoNoLogo from './promoNoLogo'
 import PromoImage from './promoImage'
+
+const EnhancedSwipeableViews = bindKeyboard(SwipeableViews)
 
 function Promos (props) {
     const [activeStep, setActiveStep] = useState(0)
@@ -26,7 +29,7 @@ function Promos (props) {
 
     // TODO - remove blur for testing
     return (
-        <SwipeableViews
+        <EnhancedSwipeableViews
             className='background'
             // className={['background', { backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }].join(' ')}
             // style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }}
@@ -46,7 +49,7 @@ function Promos (props) {
             }}
         >
             {props.data.map((item, index) => getPromoTemplate(item, index, activeStep, isMoving))}
-        </SwipeableViews>
+        </EnhancedSwipeableViews>
     )
 }
 
