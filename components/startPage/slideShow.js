@@ -32,7 +32,7 @@ export default function SlideShow (props) {
     }, [])
 
     return (
-        <Box className={classes.contentSwipeableView}>
+        <Box className={classes.contentSwipeableView} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
             {slides.map((slide, index) => {
                 return <Box key={index} className={index === activeSlide ? [classes.slide, classes.slideActive].join(' ') : classes.slide}
                     style={{

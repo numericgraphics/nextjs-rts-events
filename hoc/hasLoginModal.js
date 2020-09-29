@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
+import Checkbox from '@material-ui/core/Checkbox'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { useTheme } from '@material-ui/core/styles'
@@ -12,6 +13,7 @@ import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
+import { checkedBoxIco, uncheckedBoxIco } from '../data/icon'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -72,6 +74,23 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         maxWidth: '50vw',
         color: 'black'
+    },
+    CGUContent: {
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    CGUBox: {
+        color: 'rgba(0,0,0, 0)!important',
+        stroke: theme.palette.primary.main
+    },
+    CGUBoxCheck: {
+        color: 'rgba(0,0,0, 0)!important',
+        stroke: theme.palette.primary.contrastText
+    },
+    link: {
+        color: theme.palette.primary.contrastText,
+        textDecoration: 'underline'
     }
 }))
 const styles = {
@@ -114,6 +133,8 @@ const hasLoginModal = WrappedComponent => {
         const [disabled, setDisabled] = useState(true)
         const [code, setCode] = useState()
         const smsSubmit = useRef()
+        const checkBox = useRef()
+        const [checked, setChecked] = useState(false)
 
         const handleOpen = () => {
             setOpen(true)
@@ -132,8 +153,8 @@ const hasLoginModal = WrappedComponent => {
         }, [code])
 
         useEffect(() => {
-            setDisabled(userData.phone.length === 0)
-        }, [userData.phone])
+            checked ? setDisabled(userData.phone.length === 0) : setDisabled(true)
+        }, [userData.phone, checked])
 
         useEffect(() => {
             setDisabled(userData.code.length === 0)
@@ -228,7 +249,6 @@ const hasLoginModal = WrappedComponent => {
             }
         }
 
-        // TODO :  add translation for envoyer
         // TODO :  add error message centered and with right design
         function getLoginContent (state) {
             switch (state) {
@@ -240,7 +260,7 @@ const hasLoginModal = WrappedComponent => {
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
                         <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
-                            Envoyer
+                            {translation.send}
                         </Button>
                     </form>
                 </Box>
@@ -254,6 +274,21 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
+                        <Box className={classes.CGUContent}>
+                            <Checkbox
+                                classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                inputRef={checkBox}
+                                icon={uncheckedBoxIco()}
+                                checkedIcon={checkedBoxIco()}
+                                onChange={ () => setChecked(checkBox.current.checked) } />
+                            <Typography>
+                                <a href="https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html"
+                                    className={classes.link}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >{translation.lireCGUText}</a>
+                            </Typography>
+                        </Box>
                         <ReactPhoneInput
                             inputProps={ { style: styles.textField } }
                             dropdownClass={classes.dropDown}
@@ -277,7 +312,7 @@ const hasLoginModal = WrappedComponent => {
                             onKeyDown={KeyCheck}
                         />
                         <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
-                            Envoyer
+                            {translation.send}
                         </Button>
                     </form>
                 </Box>

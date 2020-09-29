@@ -31,8 +31,6 @@ function Promos (props) {
     return (
         <EnhancedSwipeableViews
             className='background'
-            // className={['background', { backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }].join(' ')}
-            // style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }}
             axis={'y'}
             animateHeight={true}
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
@@ -43,9 +41,6 @@ function Promos (props) {
             }}
             onSwitching={(index, type) => {
                 setMoving(type === 'move')
-            }}
-            onTransitionEnd={() => {
-                console.log('onTransitionEnd')
             }}
         >
             {props.data.map((item, index) => getPromoTemplate(item, index, activeStep, isMoving))}

@@ -4,7 +4,7 @@ import UserContext from '../components/UserContext'
 import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
 import EventLayout from '../components/eventLayout'
-import PromoPage from '../components/promos/promoPage'
+import PromoPage from '../components/startPage/promoPage'
 
 function Events (props) {
     const { eventData, router } = props
@@ -41,7 +41,6 @@ function Events (props) {
             setLoading(false)
         }
     }, [isGlobalLoading, isPageReady])
-
     return (
         <EventLayout>
             {isLoading
@@ -63,6 +62,7 @@ export async function getStaticPaths () {
 }
 
 export async function getStaticProps ({ params }) {
+    console.log('log', params.events)
     const eventData = await getEventsData(params.events)
     return {
         props: {
