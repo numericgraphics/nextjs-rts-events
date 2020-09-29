@@ -9,6 +9,7 @@ import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { ArrowIcon } from '../../data/icon'
 import { useHeight } from '../../hooks/useHeight'
+import Slide from '@material-ui/core/Slide/Slide'
 
 const useStyles = makeStyles({
     containerIcon: {
@@ -77,9 +78,11 @@ function PromoPage (props) {
             <Box className='content'>
                 <Box className='bottomZonePromo'>
                     {activeStep === promos.length -1
-                        ?<Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
-                            {translation.startPageButtonText}
-                        </Button>
+                        ? <Slide direction="up" in={activeStep === promos.length -1} timeout={300} mountOnEnter unmountOnExit>
+                            <Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
+                                {translation.startPageButtonText}
+                             </Button>
+                        </Slide>
                         : <ArrowIcon/>}
 
 

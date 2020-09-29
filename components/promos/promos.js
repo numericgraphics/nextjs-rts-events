@@ -27,8 +27,9 @@ function Promos (props) {
     // TODO - remove blur for testing
     return (
         <SwipeableViews
-            className={['background', { backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }].join(' ')}
-            style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }}
+            className='background'
+            // className={['background', { backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }].join(' ')}
+            // style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)' }}
             axis={'y'}
             animateHeight={true}
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
