@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -20,12 +20,8 @@ export default function SlideShow (props) {
     const classes = useStyles()
     const { slides, activeSlide } = props
 
-    useEffect(() => {
-        console.log('slide', slides)
-    }, [])
-
     return (
-        <Box {...props} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+        <Box className='backgroundSlideShow' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
             {slides.map((slide, index) => {
                 return <Box key={index} className={index === activeSlide ? [classes.slide, classes.slideActive].join(' ') : classes.slide}
                     style={{

@@ -45,6 +45,7 @@ function StartPage (props) {
     const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
     const [startPageElements, setStartPageElements] = useState([])
+    const { length } = startPageElements
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
 
@@ -66,7 +67,7 @@ function StartPage (props) {
     }
 
     function isLastTemplate () {
-        return activeStep === startPageElements.length - 1
+        return activeStep === (length - 1 <= 0 ? 0 : length - 1)
     }
 
     useEffect(() => {
@@ -76,13 +77,12 @@ function StartPage (props) {
         handleUrlQuery()
     }, [])
 
-    // TODO - remove blur for testing
     return (
         <React.Fragment>
             <Box className='content'>
                 <Box className={['bottomZonePromo', classes.button].join(' ')}>
                     {isLastTemplate() &&
-                    <Slide direction="up" in={activeStep === startPageElements.length - 1} timeout={300} mountOnEnter unmountOnExit>
+                    <Slide direction="up" in={isLastTemplate()} timeout={300} mountOnEnter unmountOnExit>
                         <Button color="primary"
                             variant="contained"
                             className={['bottomButton', 'bottom-1-rem', classes.button].join(' ')}
@@ -93,7 +93,6 @@ function StartPage (props) {
                     </Slide>
                     }
                 </Box>
-                <SwipeableTemplates className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
                 <Box className='bottomZonePromo'>
                     {!isLastTemplate() &&
                     <Box className={classes.arrowSwipeDown}>
@@ -102,13 +101,17 @@ function StartPage (props) {
                     </Box>
                     }
                 </Box>
-
             </Box>
-            <SlideShow className='backgroundSlideShow'
-                slides={startPageElements}
-                activeSlide={activeStep}
-                isModalOpen={props.isModalOpen}
-            />
+            {length > 0 &&
+            <React.Fragment>
+                <SwipeableTemplates className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+                <SlideShow
+                    slides={startPageElements}
+                    activeSlide={activeStep}
+                    isModalOpen={props.isModalOpen}
+                />
+            </React.Fragment>
+            }
         </React.Fragment>
     )
 }
