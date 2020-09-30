@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { isBrowser, isMobile } from 'react-device-detect'
 import Button from '@material-ui/core/Button'
 import SwipeableTemplates from './swipeableTemplates'
 import UserContext from '../UserContext'
@@ -9,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { ArrowIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import Typography from '@material-ui/core/Typography'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 const useStyles = makeStyles({
     containerIcon: {
@@ -22,8 +24,13 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        alignItems: 'center',
+        alignItems: 'center'
+    },
+    arrowSwipeDownMobile: {
         zIndex: -2
+    },
+    arrowSwipeDownDesktop: {
+        zIndex: 2
     },
     button: {
         zIndex: 2
@@ -38,8 +45,29 @@ const useStyles = makeStyles({
     slideActive: {
         opacity: 1,
         transitionDuration: '.2s'
+    },
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
+    label: {
+        position: 'relative',
+        color: 'white'
     }
+
 })
+
+const CustomSvgButton = props => {
+    const classes = useStyles()
+    return (
+        <div className={classes.root}>
+            <ArrowIcon/>
+            <Typography className={[classes.label, 'regular-1', 'color-White'].join(' ')} align={'center'}>{props.label}</Typography>
+        </div>
+    )
+}
 
 function StartPage (props) {
     const classes = useStyles()
@@ -70,6 +98,10 @@ function StartPage (props) {
         return activeStep === (length - 1 <= 0 ? 0 : length - 1)
     }
 
+    function onSwipe () {
+        setActiveStep(activeStep => activeStep + 1)
+    }
+
     useEffect(() => {
         setStartPageElements(dataProvider.getStartPageElements())
         setTranslation(dataProvider.getTranslation())
@@ -80,7 +112,7 @@ function StartPage (props) {
     return (
         <React.Fragment>
             <Box className='content'>
-                <Box className={['bottomZonePromo', classes.button].join(' ')}>
+                <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {isLastTemplate() &&
                     <Slide direction="up" in={isLastTemplate()} timeout={300} mountOnEnter unmountOnExit>
                         <Button color="primary"
@@ -93,18 +125,27 @@ function StartPage (props) {
                     </Slide>
                     }
                 </Box>
-                <Box className='bottomZonePromo'>
+                {isMobile &&
+                    <Box className='bottomZonePromo'>
+                        {!isLastTemplate() &&
+                        <Box className={[classes.arrowSwipeDown, classes.arrowSwipeDownMobile].join(' ')}>
+                            <ArrowIcon/>
+                            <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                        </Box>
+                        }
+                    </Box>}
+                {isBrowser &&
+                <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {!isLastTemplate() &&
-                    <Box className={classes.arrowSwipeDown}>
-                        <ArrowIcon/>
-                        <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
-                    </Box>
+                    <ButtonBase disableRipple={true} onClick={onSwipe}>
+                        <CustomSvgButton label={translation.startPageArrowDown} />
+                    </ButtonBase>
                     }
-                </Box>
+                </Box>}
             </Box>
             {length > 0 &&
             <React.Fragment>
-                <SwipeableTemplates className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+                <SwipeableTemplates index={activeStep} className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
                 <SlideShow
                     slides={startPageElements}
                     activeSlide={activeStep}

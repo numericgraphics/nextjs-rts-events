@@ -14,25 +14,29 @@ function SwipeableTemplates (props) {
         return <LayoutPromo {...dynamicProps}/>
     }
 
+    function handleChangeIndex (index) {
+        setActiveStep(index)
+        props.indexCallBack(index)
+    }
+
+    function handleSwitching (index, type) {
+        setMoving(type === 'move')
+    }
+
     useEffect(() => {
         setActiveStep(0)
     }, [])
 
-    // TODO - remove blur for testing
     return (
         <EnhancedSwipeableViews
+            enableMouseEvents
+            index={props.index}
+            onChangeIndex={handleChangeIndex}
             className='backgroundSwipeableView'
             axis={'y'}
             animateHeight={true}
             style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
-            enableMouseEvents
-            onChangeIndex={(index) => {
-                setActiveStep(index)
-                props.indexCallBack(index)
-            }}
-            onSwitching={(index, type) => {
-                setMoving(type === 'move')
-            }}
+            onSwitching={handleSwitching}
         >
             {props.data.map((item, index) => getPromoTemplate(item, index, activeStep, isMoving))}
         </EnhancedSwipeableViews>

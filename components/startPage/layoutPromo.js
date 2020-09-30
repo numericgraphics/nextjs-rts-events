@@ -1,4 +1,5 @@
 import React from 'react'
+import { isBrowser, isMobile } from 'react-device-detect'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -11,32 +12,37 @@ export default function LayoutPromo (props) {
     const height = useHeight()
     const { description, title, logoURL } = props.data
 
+    function getComponent () {
+        return <Box className={styles.subContent} style={{ height: height }}>
+            <Box className={styles.subBottomZone}>
+                {logoURL && <Box className={styles.image}>
+                    <CardMedia
+                        component="img"
+                        alt={description}
+                        image={logoURL}
+                        title={title}
+                    />
+                </Box>}
+                <Box className={styles.text}>
+                    <Typography
+                        className={styles.title}
+                        align={'center'}
+                        dangerouslySetInnerHTML={{ __html: title }}/>
+                    <Typography
+                        className={styles.subTitle}
+                        align={'center'}
+                        dangerouslySetInnerHTML={{ __html: description }}/>
+                </Box>
+            </Box>
+        </Box>
+    }
+
     return (
         <Box className={styles.contentSwipeableView}>
-            <Fade in={!props.isMoving && props.selected} timeout={300}>
-                <Box className={styles.subContent} style={{ height: height }}>
-                    <Box className={styles.subBottomZone}>
-                        {logoURL && <Box className={styles.image}>
-                            <CardMedia
-                                component="img"
-                                alt={description}
-                                image={logoURL}
-                                title={title}
-                            />
-                        </Box>}
-                        <Box className={styles.text}>
-                            <Typography
-                                className={styles.title}
-                                align={'center'}
-                                dangerouslySetInnerHTML={{ __html: title }}/>
-                            <Typography
-                                className={styles.subTitle}
-                                align={'center'}
-                                dangerouslySetInnerHTML={{ __html: description }}/>
-                        </Box>
-                    </Box>
-                </Box>
-            </Fade>
+            {isMobile && <Fade in={!props.isMoving && props.selected} timeout={300}>
+                {getComponent()}
+            </Fade>}
+            {isBrowser && getComponent()}
             <Box className={styles.backgroundSwipeableView} />
         </Box>
     )
