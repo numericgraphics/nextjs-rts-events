@@ -21,7 +21,7 @@ function SwipeableTemplates (props) {
     // TODO - remove blur for testing
     return (
         <EnhancedSwipeableViews
-            className='background'
+            className='backgroundSwipeableView'
             axis={'y'}
             animateHeight={true}
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}

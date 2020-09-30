@@ -28,6 +28,8 @@ html {
 
 
 /*** BACKGROUNDS ***/
+.backgroundSlideShow,
+.backgroundSwipeableView,
 .backgroundModal,
 .backgroundVideo,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
@@ -42,6 +44,15 @@ html {
     z-index: -2;
 }
 
+.backgroundSwipeableView {
+    z-index: 1!important;
+}
+
+.backgroundSlideShow {
+    z-index: -3!important;
+}
+
+.backgroundSwipeableView,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     height: 100vh;
 }
@@ -337,6 +348,8 @@ html {
     .container,
     .containerModal,
     .background,
+    .backgroundSwipeableView,
+    .backgroundSlideShow,
     .backgroundModal,
     .backgroundVideo,
     .backgroundPadding,
@@ -385,6 +398,8 @@ html {
     .container,
     .containerModal,
     .background,
+    .backgroundSwipeableView,
+    .backgroundSlideShow,
     .backgroundModal,
     .backgroundVideo,
     .backgroundPadding,

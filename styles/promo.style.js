@@ -32,21 +32,24 @@ export const useStyles = makeStyles({
     },
     text: {
         color: 'white',
-        padding: '10px 30px'
+        padding: '10px 30px',
+        overflowWrap: 'break-word'
     },
     title: {
         fontFamily: 'srgssr-type-Rg!important',
         fontSize: '2.5rem!important',
         lineHeight: '2.5rem!important',
         marginBottom: '12px!important',
-        textShadow: '0px 3px 6px #000000a8'
+        textShadow: '0px 3px 6px #000000a8',
+        overflowWrap: 'break-word'
     },
     subTitle: {
         fontFamily: 'srgssr-type-Bd',
         lineHeight: '1.5rem',
         fontSize: '1.5rem',
         marginBottom: 12,
-        textShadow: '0px 3px 6px #00000040'
+        textShadow: '0px 3px 6px #00000040',
+        overflowWrap: 'break-word'
     },
     image: {
         alignSelf: 'center',

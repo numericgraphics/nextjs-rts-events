@@ -20,9 +20,15 @@ const useStyles = makeStyles({
         alignItems: 'center',
         width: '100%'
     },
-    icon: {
-        width: '100%',
+    arrowSwipeDown: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
         zIndex: -2
+    },
+    button: {
+        zIndex: 2
     },
     slide: {
         position: 'absolute',
@@ -64,6 +70,10 @@ function StartPage (props) {
         }
     }
 
+    function isLastTemplate () {
+       return activeStep === startPageElements.length -1
+    }
+
     useEffect(() => {
         setStartPageElements(dataProvider.getStartPageElements())
         setPromos(dataProvider.getPromos())
@@ -75,28 +85,32 @@ function StartPage (props) {
     // TODO - remove blur for testing
     return (
         <React.Fragment>
-            <SwipeableTemplates className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
-            <Box className='content'>
-                <Box className='bottomZonePromo'>
-                    {activeStep === startPageElements.length -1
-                        ? <Slide direction="up" in={activeStep === startPageElements.length -1} timeout={300} mountOnEnter unmountOnExit>
-                            <Button color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={onStart}>
-                                {translation.startPageButtonText}
-                             </Button>
-                        </Slide>
-                        : <React.Fragment>
-                            <ArrowIcon/>
-                            <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>Défiler</Typography>
-                        </React.Fragment>
-                    }
-
-
-                </Box>
+        <Box className='content'>
+            <Box className={['bottomZonePromo', classes.button].join(' ')}>
+                {isLastTemplate()
+                    && <Slide direction="up" in={activeStep === startPageElements.length -1} timeout={300} mountOnEnter unmountOnExit>
+                        <Button color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem', classes.button].join(' ')} onClick={onStart}>
+                            {translation.startPageButtonText}
+                        </Button>
+                    </Slide>
+                }
             </Box>
-            <SlideShow slides={startPageElements}
-                       activeSlide={activeStep}
-                       isModalOpen={props.isModalOpen}
-                       />
+            <SwipeableTemplates className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+            <Box className='bottomZonePromo'>
+                {!isLastTemplate()
+                && <Box className={classes.arrowSwipeDown}>
+                        <ArrowIcon/>
+                        <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>Défiler</Typography>
+                    </Box>
+                }
+            </Box>
+
+        </Box>
+        <SlideShow className='backgroundSlideShow'
+            slides={startPageElements}
+            activeSlide={activeStep}
+            isModalOpen={props.isModalOpen}
+        />
         </React.Fragment>
     )
 }

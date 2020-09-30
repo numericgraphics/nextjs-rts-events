@@ -25,8 +25,14 @@ export default function LayoutPromo (props) {
                             />
                         </Box>}
                         <Box className={styles.text}>
-                            <Typography className={styles.title} align={'center'}>{title}</Typography>
-                            <Typography className={styles.subTitle} align={'center'}>{description}</Typography>
+                            <Typography
+                                className={styles.title}
+                                align={'center'}
+                                dangerouslySetInnerHTML={{ __html: title }}/>
+                            <Typography
+                                className={styles.subTitle}
+                                align={'center'}
+                                dangerouslySetInnerHTML={{ __html: description }}/>
                         </Box>
                     </Box>
                 </Box>

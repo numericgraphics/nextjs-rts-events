@@ -3,13 +3,6 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
-    contentSwipeableView: {
-        position: 'relative'
-    },
-    backgroundSwipeableView: {
-        width: '100%',
-        zIndex: -3
-    },
     slide: {
         position: 'absolute',
         top: 0,
@@ -32,7 +25,7 @@ export default function SlideShow (props) {
     }, [])
 
     return (
-        <Box className={classes.contentSwipeableView} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+        <Box {...props} style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
             {slides.map((slide, index) => {
                 return <Box key={index} className={index === activeSlide ? [classes.slide, classes.slideActive].join(' ') : classes.slide}
                     style={{
