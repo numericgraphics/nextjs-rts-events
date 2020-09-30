@@ -15,11 +15,11 @@ const useStyles = makeStyles({
         top: 0,
         left: 0,
         opacity: 0,
-        transition: '.3s ease'
+        transition: '.6s ease'
     },
     slideActive: {
         opacity: 1,
-        transitionDuration: '.2s'
+        transitionDuration: '.5s'
     }
 })
 

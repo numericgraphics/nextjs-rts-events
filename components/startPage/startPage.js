@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { ArrowIcon } from '../../data/icon'
 import { useHeight } from '../../hooks/useHeight'
 import Slide from '@material-ui/core/Slide/Slide'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles({
     containerIcon: {
@@ -40,6 +41,7 @@ function StartPage (props) {
     const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
     const [promos, setPromos] = useState([])
+    const [startPageElements, setStartPageElements] = useState([])
     const [translation, setTranslation] = useState([])
     const { dataProvider, store } = useContext(UserContext)
     const { isLoading } = store
@@ -63,6 +65,7 @@ function StartPage (props) {
     }
 
     useEffect(() => {
+        setStartPageElements(dataProvider.getStartPageElements())
         setPromos(dataProvider.getPromos())
         setTranslation(dataProvider.getTranslation())
         setActiveStep(0)
@@ -72,21 +75,25 @@ function StartPage (props) {
     // TODO - remove blur for testing
     return (
         <React.Fragment>
-            <SwipeableTemplates className='fadeInAnimation' data={promos} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+            <SwipeableTemplates className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
             <Box className='content'>
                 <Box className='bottomZonePromo'>
-                    {activeStep === promos.length -1
-                        ? <Slide direction="up" in={activeStep === promos.length -1} timeout={300} mountOnEnter unmountOnExit>
-                            <Button color="primary" variant="contained" className={['bottomButton', 'bottom-2-rem'].join(' ')} onClick={onStart}>
+                    {activeStep === startPageElements.length -1
+                        ? <Slide direction="up" in={activeStep === startPageElements.length -1} timeout={300} mountOnEnter unmountOnExit>
+                            <Button color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={onStart}>
                                 {translation.startPageButtonText}
                              </Button>
                         </Slide>
-                        : <ArrowIcon/>}
+                        : <React.Fragment>
+                            <ArrowIcon/>
+                            <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>Défiler</Typography>
+                        </React.Fragment>
+                    }
 
 
                 </Box>
             </Box>
-            <SlideShow slides={promos}
+            <SlideShow slides={startPageElements}
                        activeSlide={activeStep}
                        isModalOpen={props.isModalOpen}
                        />

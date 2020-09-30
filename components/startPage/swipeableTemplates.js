@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import { bindKeyboard } from 'react-swipeable-views-utils'
-import PromoLogo from './promoLogo'
-import PromoNoLogo from './promoNoLogo'
-import PromoImage from './promoImage'
+// import PromoLogo from './promoLogo'
+// import PromoNoLogo from './promoNoLogo'
+// import PromoImage from './promoImage'
+import LayoutPromo from './layoutPromo'
 
 const EnhancedSwipeableViews = bindKeyboard(SwipeableViews)
 
@@ -13,14 +14,16 @@ function SwipeableTemplates (props) {
 
     function getPromoTemplate (item, index, activeStep) {
         const dynamicProps = { key: index, data: item, selected: (activeStep === index), isMoving: isMoving }
-        switch (item.type) {
-        case 'Logo':
-            return <PromoLogo {...dynamicProps} />
-        case 'NoLogo':
-            return <PromoNoLogo {...dynamicProps}/>
-        case 'Image':
-            return <PromoImage {...dynamicProps}/>
-        }
+        return <LayoutPromo {...dynamicProps}/>
+
+        // switch (item.type) {
+        // case 'Logo':
+        //     return <PromoLogo {...dynamicProps} />
+        // case 'NoLogo':
+        //     return <PromoNoLogo {...dynamicProps}/>
+        // case 'Image':
+        //     return <PromoImage {...dynamicProps}/>
+        // }
     }
 
     useEffect(() => {

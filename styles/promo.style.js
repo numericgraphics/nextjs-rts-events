@@ -43,7 +43,7 @@ export const useStyles = makeStyles({
     },
     subTitle: {
         fontFamily: 'srgssr-type-Bd',
-        lineHeight: '1rem',
+        lineHeight: '1.5rem',
         fontSize: '1.5rem',
         marginBottom: 12,
         textShadow: '0px 3px 6px #00000040'
