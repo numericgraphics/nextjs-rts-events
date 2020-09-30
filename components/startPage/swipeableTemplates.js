@@ -24,7 +24,7 @@ function SwipeableTemplates (props) {
             className='backgroundSwipeableView'
             axis={'y'}
             animateHeight={true}
-            // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
             enableMouseEvents
             onChangeIndex={(index) => {
                 setActiveStep(index)

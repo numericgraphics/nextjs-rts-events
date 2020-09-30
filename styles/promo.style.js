@@ -38,17 +38,17 @@ export const useStyles = makeStyles({
     title: {
         fontFamily: 'srgssr-type-Rg!important',
         fontSize: '2.5rem!important',
-        lineHeight: '2.5rem!important',
+        lineHeight: '2.6rem!important',
         marginBottom: '12px!important',
-        textShadow: '0px 1px 6px #000000a8',
+        textShadow: '0px 1px 6px #000000',
         overflowWrap: 'break-word'
     },
     subTitle: {
         fontFamily: 'srgssr-type-Bd',
-        lineHeight: '1.5rem',
+        lineHeight: '2rem',
         fontSize: '1.5rem',
         marginBottom: 12,
-        textShadow: '0px 1px 6px #00000040',
+        textShadow: '0px 1px 4px #000000',
         overflowWrap: 'break-word'
     },
     image: {
