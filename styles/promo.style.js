@@ -40,7 +40,7 @@ export const useStyles = makeStyles({
         fontSize: '2.5rem!important',
         lineHeight: '2.5rem!important',
         marginBottom: '12px!important',
-        textShadow: '0px 3px 6px #000000a8',
+        textShadow: '0px 1px 6px #000000a8',
         overflowWrap: 'break-word'
     },
     subTitle: {
@@ -48,7 +48,7 @@ export const useStyles = makeStyles({
         lineHeight: '1.5rem',
         fontSize: '1.5rem',
         marginBottom: 12,
-        textShadow: '0px 3px 6px #00000040',
+        textShadow: '0px 1px 6px #00000040',
         overflowWrap: 'break-word'
     },
     image: {
