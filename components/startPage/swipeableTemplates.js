@@ -29,7 +29,7 @@ function SwipeableTemplates (props) {
 
     return (
         <EnhancedSwipeableViews
-            enableMouseEvents
+            enableMouseEvents={true}
             index={props.index}
             onChangeIndex={handleChangeIndex}
             className='backgroundSwipeableView'

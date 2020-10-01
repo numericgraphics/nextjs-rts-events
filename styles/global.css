@@ -279,6 +279,10 @@ html {
     line-height: 1.8!important;
 }
 
+.unselectable-text {
+    user-select: none;
+}
+
 /*** COMPONENTS ***/
 
 .questionButton,
