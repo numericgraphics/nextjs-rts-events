@@ -66,7 +66,8 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: '100%'
     },
     buttonProgress: {
         position: 'absolute'
