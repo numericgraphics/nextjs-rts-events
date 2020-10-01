@@ -1,5 +1,5 @@
 import React from 'react'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isBrowser, isMobile, isTablet } from 'react-device-detect'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -42,7 +42,7 @@ export default function LayoutPromo (props) {
             {isMobile && <Fade in={!props.isMoving && props.selected} timeout={400}>
                 {getComponent()}
             </Fade>}
-            {isBrowser && getComponent()}
+            {(isBrowser && !isTablet) && getComponent()}
             <Box className={styles.backgroundSwipeableView} />
         </Box>
     )

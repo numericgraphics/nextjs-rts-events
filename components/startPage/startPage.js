@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isBrowser, isMobile, isTablet } from 'react-device-detect'
 import Button from '@material-ui/core/Button'
 import SwipeableTemplates from './swipeableTemplates'
 import UserContext from '../UserContext'
@@ -134,7 +134,7 @@ function StartPage (props) {
                         </Box>
                         }
                     </Box>}
-                {isBrowser &&
+                {(isBrowser && !isTablet) &&
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {!isLastTemplate() &&
                     <ButtonBase disableRipple={true} onClick={onSwipe}>
