@@ -125,7 +125,6 @@ function DashBoard (props) {
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [translation, setTranslation] = useState([])
-    const [gameStats, setGameStats] = useState({})
     const [uiElements, setUiElements] = useState({})
     const [progress, setProgress] = useState(0)
     const [gifts, setGifts] = useState()
@@ -163,7 +162,6 @@ function DashBoard (props) {
 
     function initPage () {
         setProgress(gameStatsService.getProgress())
-        setGameStats(dataProvider.getGameStats())
         setUiElements(uiElementsService.getUiElements())
         setTranslation(dataProvider.getTranslation())
         setGifts(dataProvider.getGifts())
@@ -207,7 +205,7 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-    // TODO : translation "pts"
+
     return (
         <EventLayout >
             {isLoading && isGlobalLoading
@@ -262,14 +260,11 @@ function DashBoard (props) {
                                                 <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                             </Box>
                                             : <React.Fragment>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}>
-                                                    {`${gameStats.totalChallengesCount} ${translation.dashBoardChallengesOfTheDay}`}
+                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
                                                 </Typography>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}>
-                                                    {`${translation.score} ${gameStats.currentScore}`}
-                                                </Typography>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}>
-                                                    {`${translation.bestScore} ${gameStats.topScore}`}
+                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                                 </Typography>
                                             </React.Fragment>
                                         }
