@@ -10,9 +10,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import { ArrowIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import Typography from '@material-ui/core/Typography'
-import ButtonBase from '@material-ui/core/ButtonBase'
+import IconButton from '@material-ui/core/IconButton'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     containerIcon: {
         position: 'absolute',
         display: 'flex',
@@ -31,6 +31,11 @@ const useStyles = makeStyles({
     },
     arrowSwipeDownDesktop: {
         zIndex: 2
+    },
+    buttonSwipeDownDesktop: {
+        '&:hover': {
+            backgroundColor: theme.palette.primary.main
+        }
     },
     button: {
         zIndex: 2
@@ -57,7 +62,7 @@ const useStyles = makeStyles({
         color: 'white'
     }
 
-})
+}))
 
 const CustomSvgButton = props => {
     const classes = useStyles()
@@ -137,9 +142,9 @@ function StartPage (props) {
                 {(isBrowser && !isTablet) &&
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {!isLastTemplate() &&
-                    <ButtonBase disableRipple={true} onClick={onSwipe}>
+                    <IconButton disableRipple={true} onClick={onSwipe} className={classes.buttonSwipeDownDesktop}>
                         <CustomSvgButton label={translation.startPageArrowDown} />
-                    </ButtonBase>
+                    </IconButton>
                     }
                 </Box>}
             </Box>
