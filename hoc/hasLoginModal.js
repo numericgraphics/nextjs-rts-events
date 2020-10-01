@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette.background.default,
-        color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.secondary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
@@ -77,19 +77,25 @@ const useStyles = makeStyles((theme) => ({
     },
     CGUContent: {
         display: 'flex',
+        width: '100%',
         alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        textAlign: 'left',
         marginBottom: 10
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.primary.main
+        stroke: theme.palette.primary.main,
+        paddingRight: 20
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.primary.contrastText
+        stroke: theme.palette.secondary.contrastText
     },
     link: {
-        color: theme.palette.primary.contrastText,
+        color: theme.palette.secondary.contrastText,
+        lineHeight: '1.1rem',
         textDecoration: 'underline'
     }
 }))
@@ -109,7 +115,10 @@ const styles = {
         border: 'none',
         width: '100%',
         height: 'auto',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem'
     }
 }
 const ModalStates = Object.freeze({
@@ -283,7 +292,7 @@ const hasLoginModal = WrappedComponent => {
                                 onChange={ () => setChecked(checkBox.current.checked) } />
                             <Typography>
                                 <a href="https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html"
-                                    className={classes.link}
+                                    className={[classes.link, 'regular-1', 'lineSpacing-1'].join(' ')}
                                     rel="noopener noreferrer"
                                     target="_blank"
                                 >{translation.lireCGUText}</a>
@@ -296,8 +305,7 @@ const hasLoginModal = WrappedComponent => {
                                 name: 'phone',
                                 required: true,
                                 autoFocus: true,
-                                enableSearch: true,
-                                style: styles.textField
+                                enableSearch: true
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
