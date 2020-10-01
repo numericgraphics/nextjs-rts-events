@@ -31,7 +31,7 @@ function Progress () {
 
     return (
         <Box className={classes.container} style={{ height: height }}>
-            <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.main : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
+            <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.contrastText : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
         </Box>
     )
 }

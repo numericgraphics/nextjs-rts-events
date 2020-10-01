@@ -82,11 +82,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         flexDirection: 'row',
         textAlign: 'left',
-        marginBottom: 10
+        marginBottom: '0.8rem'
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.primary.main,
+        stroke: theme.palette.secondary.contrastText,
         paddingRight: 20
     },
     CGUBoxCheck: {
@@ -275,7 +275,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress style={{ color: theme.palette.secondary.main }}/>
+                    <CircularProgress style={{ color: theme.palette.secondary.contrastText }}/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
