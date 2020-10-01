@@ -39,7 +39,7 @@ export default function LayoutPromo (props) {
 
     return (
         <Box className={styles.contentSwipeableView}>
-            {isMobile && <Fade in={!props.isMoving && props.selected} timeout={300}>
+            {isMobile && <Fade in={!props.isMoving && props.selected} timeout={400}>
                 {getComponent()}
             </Fade>}
             {isBrowser && getComponent()}
