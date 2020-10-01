@@ -19,6 +19,7 @@ html, body {
     font-size: 2.2vh; /* Relative à la hauteur du viewPort (bloque le zoom?) */
     font-family: sans-serif;
     -webkit-text-size-adjust:none;
+    overscroll-behavior: contain; /* prevent pull to refresh on mobile browsers */
 }
 
 html {
@@ -27,6 +28,8 @@ html {
 
 
 /*** BACKGROUNDS ***/
+.backgroundSlideShow,
+.backgroundSwipeableView,
 .backgroundModal,
 .backgroundVideo,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
@@ -41,6 +44,15 @@ html {
     z-index: -2;
 }
 
+.backgroundSwipeableView {
+    z-index: 1!important;
+}
+
+.backgroundSlideShow {
+    z-index: -3!important;
+}
+
+.backgroundSwipeableView,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     height: 100vh;
 }
@@ -141,6 +153,7 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: center;
     opacity: 0.9;
     /*min-height: 150px;*/
     width: 100%;
@@ -266,6 +279,10 @@ html {
     line-height: 1.8!important;
 }
 
+.unselectable-text {
+    user-select: none;
+}
+
 /*** COMPONENTS ***/
 
 .questionButton,
@@ -335,6 +352,8 @@ html {
     .container,
     .containerModal,
     .background,
+    .backgroundSwipeableView,
+    .backgroundSlideShow,
     .backgroundModal,
     .backgroundVideo,
     .backgroundPadding,
@@ -383,6 +402,8 @@ html {
     .container,
     .containerModal,
     .background,
+    .backgroundSwipeableView,
+    .backgroundSlideShow,
     .backgroundModal,
     .backgroundVideo,
     .backgroundPadding,
@@ -398,6 +419,8 @@ html {
     }
 
     .background,
+    .backgroundSwipeableView,
+    .backgroundSlideShow,
     .backgroundGradientByTheme,
     .backgroundGradientTopBottom,
     .backgroundGradientTop,
