@@ -22,8 +22,10 @@ function VideoPlayer (props, videoRef) {
                 >
                 </video>
             </Fade>
-            <Box className="backgroundGradientBottomAspectRatio"/>
-            <Box className="backgroundVideoPlayer"/>
+            {showVideo && <React.Fragment>
+                <Box className="backgroundGradientBottomAspectRatio"/>
+                <Box className="backgroundVideoPlayer"/>
+            </React.Fragment>}
         </Box>
     )
 }
