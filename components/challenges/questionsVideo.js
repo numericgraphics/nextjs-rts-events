@@ -98,11 +98,11 @@ function QuestionVideo (props) {
     }
 
     function startTimer () {
-        // let count = duration
-        // intervalId.current = setInterval(() => {
-        //     setTimeLeft(Math.round(count--))
-        //     setProgress(prevProgress => prevProgress + 100 / duration)
-        // }, 1000)
+        let count = duration
+        intervalId.current = setInterval(() => {
+            setTimeLeft(Math.round(count--))
+            setProgress(prevProgress => prevProgress + 100 / duration)
+        }, 1000)
     }
 
     function canPlay () {
