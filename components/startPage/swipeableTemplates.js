@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import { bindKeyboard } from 'react-swipeable-views-utils'
 import LayoutPromo from './layoutPromo'
+import LayoutInfo from './layoutInfo'
 
 const EnhancedSwipeableViews = bindKeyboard(SwipeableViews)
 
@@ -11,7 +12,12 @@ function SwipeableTemplates (props) {
 
     function getPromoTemplate (item, index, activeStep) {
         const dynamicProps = { key: index, data: item, selected: (activeStep === index), isMoving: isMoving }
-        return <LayoutPromo {...dynamicProps}/>
+        switch (item.layout) {
+        case 'EventInfo':
+            return <LayoutInfo {...dynamicProps} />
+        case 'Promo':
+            return <LayoutPromo {...dynamicProps}/>
+        }
     }
 
     function handleChangeIndex (index) {

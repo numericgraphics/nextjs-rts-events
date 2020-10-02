@@ -279,7 +279,7 @@ html {
     line-height: 1.8!important;
 }
 
-.unselectable-text {
+.unselectable-element {
     user-select: none;
 }
 

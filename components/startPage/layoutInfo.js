@@ -7,14 +7,14 @@ import { useStyles } from '../../styles/promo.style'
 import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade'
 
-export default function LayoutPromo (props) {
+export default function LayoutInfo (props) {
     const styles = useStyles()
     const height = useHeight()
     const { description, title, logoURL } = props.data
 
     function getComponent () {
-        return <Box className={styles.subContent} style={{ height: height }}>
-            <Box className={styles.subBottomZone}>
+        return <Box className={styles.layoutInfoSubContent} style={{ height: height }}>
+            <Box className={styles.layoutInfoSubBottomZone}>
                 {logoURL && <Box className={styles.image}>
                     <CardMedia
                         className='unselectable-element'

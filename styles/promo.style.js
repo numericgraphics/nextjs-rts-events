@@ -30,6 +30,20 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-end'
     },
+    layoutInfoSubContent: {
+        position: 'absolute',
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    layoutInfoSubBottomZone: {
+        width: '100%',
+        margin: '0 0 7rem 0',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
     text: {
         color: 'white',
         padding: '10px 30px',
