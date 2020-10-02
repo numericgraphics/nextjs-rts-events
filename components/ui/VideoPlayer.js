@@ -22,6 +22,7 @@ function VideoPlayer (props, videoRef) {
                 >
                 </video>
                 <Box className="backgroundGradientBottomAspectRatio"/>
+                <Box className="backgroundVideoPlayer"/>
             </Box>
         </Fade>
     )

@@ -67,6 +67,15 @@ html {
     z-index: -3;
 }
 
+.backgroundVideoPlayer {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -3;
+    background-color: black;
+}
+
 .backgroundGradientByTheme {
     height: 100vh;
     width: 100%;
@@ -87,6 +96,7 @@ html {
 .backgroundGradientBottomAspectRatio {
     background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 90%);
     width: 100%;
+    max-height: 100%!important;
     padding-top: 200%; /* ratio ( width / height) * 100%  */
     position: fixed;
     top: 0;
@@ -362,6 +372,7 @@ html {
     .backgroundGradientTopBottom,
     .backgroundGradientTop,
     .backgroundGradientBottomAspectRatio,
+    .backgroundVideoPlayer,
     .bottomZone,
     .bottomZonePromo,
     .swipeableViews {
@@ -375,6 +386,10 @@ html {
     .container,
     .containerModal {
         margin: 0 auto;
+    }
+
+    .backgroundGradientBottomAspectRatio {
+        padding-top: 952px;
     }
 
     .backgroundLimiter {
@@ -412,6 +427,7 @@ html {
     .backgroundGradientTop,
     .backgroundGradientTopBottom,
     .backgroundGradientBottomAspectRatio,
+    .backgroundVideoPlayer,
     .bottomZone,
     .bottomZonePromo,
     .swipeableViews {
