@@ -116,7 +116,7 @@ export function ArrowIcon (props) {
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
                 <g transform="translate(-169 -621.385)">
                     <rect width="40" height="40" transform="translate(169 621.385)" fill="none" opacity="0.291"/>
-                    <g transform="translate(1.5 3.245)">
+                    <g transform="translate(1.5 1)">
                         <path d="M.087,0,8.664,8.581,0,17.336"
                             transform="translate(176.67 636.804) rotate(-90)"
                             fill="rgba(255,255,255,0)"

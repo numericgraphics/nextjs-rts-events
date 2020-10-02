@@ -64,16 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const CustomSvgButton = props => {
-    const classes = useStyles()
-    return (
-        <div className={classes.root}>
-            <ArrowIcon/>
-            <Typography className={[classes.label, 'regular-1', 'color-White'].join(' ')} align={'center'}>{props.label}</Typography>
-        </div>
-    )
-}
-
 function StartPage (props) {
     const classes = useStyles()
     const [activeStep, setActiveStep] = useState(0)
@@ -142,9 +132,12 @@ function StartPage (props) {
                 {(isBrowser && !isTablet) &&
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {!isLastTemplate() &&
-                    <IconButton disableRipple={true} onClick={onSwipe} className={classes.buttonSwipeDownDesktop}>
-                        <CustomSvgButton label={translation.startPageArrowDown} />
-                    </IconButton>
+                        <React.Fragment>
+                            <IconButton disableRipple={true} onClick={onSwipe} className={classes.buttonSwipeDownDesktop}>
+                                <ArrowIcon fontSize="large"/>
+                            </IconButton>
+                            <Typography className={[classes.label, 'regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                        </React.Fragment>
                     }
                 </Box>}
             </Box>
