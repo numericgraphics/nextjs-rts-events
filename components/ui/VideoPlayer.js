@@ -8,8 +8,8 @@ function VideoPlayer (props, videoRef) {
     const { videoSource, showVideo, blurVideo } = props
 
     return (
-        <Fade in={showVideo} timeout={500}>
-            <Box className='container'>
+        <Box className='container'>
+            <Fade in={showVideo} timeout={500}>
                 <video
                     ref={videoRef}
                     preload={'auto'}
@@ -21,10 +21,10 @@ function VideoPlayer (props, videoRef) {
                     style={{ ...props.style, backgroundColor: theme.palette.background.default, filter: blurVideo ? 'blur(4px)' : 'none' }}
                 >
                 </video>
-                <Box className="backgroundGradientBottomAspectRatio"/>
-                <Box className="backgroundVideoPlayer"/>
-            </Box>
-        </Fade>
+            </Fade>
+            <Box className="backgroundGradientBottomAspectRatio"/>
+            <Box className="backgroundVideoPlayer"/>
+        </Box>
     )
 }
 
