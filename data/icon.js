@@ -113,23 +113,25 @@ export function closeIcon (props) {
 export function ArrowIcon (props) {
     return (
         <SvgIcon viewBox="0 0 34 34" {...props}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28.639" height="30.313" viewBox="0 0 28.639 30.313">
-                <g transform="translate(-175.104 -626.384)">
-                    <path d="M.129,0,12.9,12.776,0,25.811"
-                        transform="translate(176.519 640.284) rotate(-90)"
-                        strokeLinecap='round'
-                        fill='rgba(255,255,255,0)'
-                        stroke='#fff'
-                        strokeLinejoin='round'
-                        strokeWidth='2px'
-                    />
-                    <path d="M.129,0,12.9,12.776,0,25.811"
-                        transform="translate(176.519 655.284) rotate(-90)"
-                        strokeLinecap='round'
-                        fill='rgba(255,255,255,0)'
-                        stroke='#fff'
-                        strokeLinejoin='round'
-                        strokeWidth='2px'/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+                <g transform="translate(-169 -621.385)">
+                    <rect width="40" height="40" transform="translate(169 621.385)" fill="none" opacity="0.291"/>
+                    <g transform="translate(1.5 3.245)">
+                        <path d="M.087,0,8.664,8.581,0,17.336"
+                            transform="translate(176.67 636.804) rotate(-90)"
+                            fill="rgba(255,255,255,0)"
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"/>
+                        <path d="M.087,0,8.664,8.581,0,17.336"
+                            transform="translate(176.67 646.878) rotate(-90)"
+                            fill="rgba(255,255,255,0)"
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"/>
+                    </g>
                 </g>
             </svg>
         </SvgIcon>
