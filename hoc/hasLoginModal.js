@@ -97,6 +97,10 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.contrastText,
         lineHeight: '1.1rem',
         textDecoration: 'underline'
+    },
+    container: {
+        width: '80%',
+        minWidth: 173
     }
 }))
 const styles = {
@@ -121,6 +125,7 @@ const styles = {
         margin: '0.2rem'
     }
 }
+
 const ModalStates = Object.freeze({
     PHONE_NUMBER: 'phoneNumber',
     NUMBER_RECEIVE: 'numberReceive',
@@ -303,8 +308,9 @@ const hasLoginModal = WrappedComponent => {
                             </Typography>
                         </Box>
                         <ReactPhoneInput
-                            inputProps={ { style: styles.textField } }
+                            inputProps={{ style: styles.textField }}
                             dropdownClass={classes.dropDown}
+                            containerClass={classes.container}
                             disabled={!checked}
                             inputExtraProps={{
                                 name: 'phone',
