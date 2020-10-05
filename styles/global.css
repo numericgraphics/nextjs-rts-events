@@ -26,6 +26,28 @@ html {
     /*background-color: red;*/
 }
 
+/*
+image - video :     z-index = -2
+gradient effect :   z-index = -1
+content :   z-index = 0
+
+ */
+
+
+.z-index-media {
+    position: relative;
+    z-index: -2!important;
+}
+
+.z-index-effect {
+    z-index: -1!important;
+}
+
+.z-index-content {
+    position: relative;
+    z-index: 0!important;
+}
+
 
 /*** BACKGROUNDS ***/
 .backgroundSlideShow,
@@ -38,8 +60,12 @@ html {
     top: 0;
 }
 
+.backgroundVideo { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
+    z-index: 0;
+}
 
-.backgroundVideo,
+
+/*.backgroundVideo,*/
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     z-index: -2;
 }
@@ -72,7 +98,7 @@ html {
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: -3;
+    z-index: -1;
     background-color: black;
 }
 
@@ -100,7 +126,7 @@ html {
     padding-top: 200%; /* ratio ( width / height) * 100%  */
     position: fixed;
     top: 0;
-    z-index: -1;
+    z-index: 1;
 }
 
 .backgroundGradientTopBottom {
@@ -206,7 +232,6 @@ html {
 .margin-1-7-rem{
     margin: 1.7rem!important;
 }
-
 
 /*** TYPO ***/
 .bold-1-125 {

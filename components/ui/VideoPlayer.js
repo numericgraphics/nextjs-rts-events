@@ -1,31 +1,29 @@
 import React, { forwardRef } from 'react'
-import { useTheme } from '@material-ui/core/styles'
 import Fade from '@material-ui/core/Fade/Fade'
 import { Box } from '@material-ui/core'
 
 function VideoPlayer (props, videoRef) {
-    const theme = useTheme()
     const { videoSource, showVideo, blurVideo } = props
 
     return (
-        <Box className='container'>
+        <Box className={['container', 'z-index-media'].join(' ')}>
             <Fade in={showVideo} timeout={500}>
-                <video
-                    ref={videoRef}
-                    preload={'auto'}
-                    src={videoSource}
-                    loop
-                    playsInline
-                    className='backgroundVideo'
-                    autoPlay
-                    style={{ ...props.style, backgroundColor: theme.palette.background.default, filter: blurVideo ? 'blur(4px)' : 'none' }}
-                >
-                </video>
+                <React.Fragment>
+                    <video
+                        ref={videoRef}
+                        preload={'auto'}
+                        src={videoSource}
+                        loop
+                        playsInline
+                        className='backgroundVideo'
+                        autoPlay
+                        style={{ ...props.style, backgroundColor: 'black', filter: blurVideo ? 'blur(4px)' : 'none' }}
+                    >
+                    </video>
+                    <Box className="backgroundGradientBottomAspectRatio"/>
+                    <Box className="backgroundVideoPlayer"/>
+                </React.Fragment>
             </Fade>
-            {showVideo && <React.Fragment>
-                <Box className="backgroundGradientBottomAspectRatio"/>
-                <Box className="backgroundVideoPlayer"/>
-            </React.Fragment>}
         </Box>
     )
 }
