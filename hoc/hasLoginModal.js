@@ -75,6 +75,12 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '50vw',
         color: 'black'
     },
+    dropDownDisabled: {
+        textAlign: 'left',
+        maxWidth: '50vw',
+        color: 'grey',
+        backgroundColor: 'grey'
+    },
     CGUContent: {
         display: 'flex',
         width: '100%',
@@ -120,6 +126,18 @@ const styles = {
         width: '100%',
         height: 'auto',
         backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem'
+    },
+    textFieldDisabled: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.125rem',
+        color: '#020202',
+        border: 'none',
+        width: '100%',
+        height: 'auto',
+        backgroundColor: 'grey',
         paddingTop: '0.4rem',
         paddingBottom: '0.4rem',
         margin: '0.2rem'
@@ -308,8 +326,9 @@ const hasLoginModal = WrappedComponent => {
                             </Typography>
                         </Box>
                         <ReactPhoneInput
-                            inputProps={{ style: styles.textField }}
+                            inputProps={ checked ? { style: styles.textField } : { style: styles.textFieldDisabled } }
                             dropdownClass={classes.dropDown}
+                            buttonStyle={ !checked ? { backgroundColor: 'grey', border: 'none' } : null }
                             containerClass={classes.container}
                             disabled={!checked}
                             inputExtraProps={{
