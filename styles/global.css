@@ -172,6 +172,8 @@ content :   z-index = 0
 }
 
 .topZone {
+    position: relative;
+    z-index: 0;
     padding: 1rem 0.8rem 0 0.8rem;
 }
 
@@ -200,7 +202,7 @@ content :   z-index = 0
 }
 
 .bottomZone {
-    height: 16rem;
+    z-index: 1;
 }
 
 /*** SPACING ***/
