@@ -120,7 +120,7 @@ content :   z-index = 0
 }
 
 .backgroundGradientBottomAspectRatio {
-    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 90%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgb(0, 0, 0) 90%);
     width: 100%;
     max-height: 100%!important;
     padding-top: 200%; /* ratio ( width / height) * 100%  */
@@ -406,17 +406,14 @@ content :   z-index = 0
         max-width: 480px;
     }
 
-    /*.containerModal {*/
-    /*    max-width: 450px;*/
-    /*}*/
-
     .container,
     .containerModal {
         margin: 0 auto;
     }
 
     .backgroundGradientBottomAspectRatio {
-        padding-top: 952px;
+        padding-top: inherit;
+        height: calc(480px * 1.77);   /*aspect ratio for 480*1.77 */
     }
 
     .backgroundLimiter {
@@ -469,6 +466,11 @@ content :   z-index = 0
     .backgroundGradientTop,
     .backgroundGradientBottom {
         max-height: 100vh;
+    }
+
+    .backgroundGradientBottomAspectRatio {
+        padding-top: inherit;
+        height: calc(55vh * 1.77); /*  aspect ratio for 600*1.77 */
     }
 }
 
