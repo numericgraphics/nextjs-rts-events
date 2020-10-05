@@ -66,9 +66,14 @@ export function checkedBoxIco (props) {
 export function uncheckedBoxIco (props) {
     return (
         <SvgIcon viewBox="0 0 25 25"{...props} >
-            <g id="Rectangle_2189" data-name="Rectangle 2189" strokeWidth="2">
-                <rect width="25" height="25" />
-                <rect x="1" y="1" width="23" height="23" />
+            <g id="Groupe_9595" data-name="Groupe 9595" transform="translate(-66 -604)">
+                <g id="Rectangle_2189" data-name="Rectangle 2189" transform="translate(66 604)" strokeWidth="2">
+                    <rect width="25" height="25" />
+                    <rect x="1" y="1" width="23" height="23" />
+                </g>
+                <g id="Illustration_47" data-name="Illustration 47" transform="translate(155.921 665.731)">
+                    <path id="Tracé_55107" data-name="Tracé 55107" d="M0,4.6l5.466,5.466L15.529,0" transform="translate(-84.8 -54.95)" strokeMiterlimit="10" strokeWidth="2" opacity="0.5"/>
+                </g>
             </g>
         </SvgIcon>
     )

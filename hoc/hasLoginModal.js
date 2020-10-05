@@ -305,6 +305,7 @@ const hasLoginModal = WrappedComponent => {
                         <ReactPhoneInput
                             inputProps={ { style: styles.textField } }
                             dropdownClass={classes.dropDown}
+                            disabled={!checked}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
