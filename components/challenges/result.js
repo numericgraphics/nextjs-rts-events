@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
         textAlign: 'center',
-        lineHeight: 1,
+        lineHeight: '1.8rem',
         marginBottom: 10,
         color: theme.palette.secondary.main
     },
@@ -183,7 +183,7 @@ function Result (props) {
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
-                                dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle}  ${uiElements.noMoreChallengesChunk}` }}/>
+                                dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
                         }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
