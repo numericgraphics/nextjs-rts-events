@@ -170,7 +170,7 @@ const hasGiftModal = WrappedComponent => {
                                 <Box className={classes.gradient} style={{ background: `linear-gradient(${hexToRgbA(theme.palette.secondary.main, 0)} 0%, ${hexToRgbA(theme.palette.secondary.main, 0)} 80%,${theme.palette.secondary.main} 100%)` }} />
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
                                     <Typography className={classes.title} align={'center'}>{gift.title}</Typography>
-                                    <Typography className={classes.description} align={'center'}>{gift.locked ? gift.lockedMessage : gift.message}</Typography>
+                                    <Typography className={classes.description} align={'center'}>{gift.message}</Typography>
                                 </Box>
                                 {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
                                     {lockIcon({ ref: lockIconRef, className: classes.lock })}
