@@ -290,12 +290,16 @@ const hasLoginModal = WrappedComponent => {
                                 icon={uncheckedBoxIco()}
                                 checkedIcon={checkedBoxIco()}
                                 onChange={ () => setChecked(checkBox.current.checked) } />
-                            <Typography>
+                            <Typography>J’accepte les
                                 <a href="https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html"
                                     className={[classes.link, 'regular-1', 'lineSpacing-1'].join(' ')}
                                     rel="noopener noreferrer"
                                     target="_blank"
-                                >{translation.lireCGUText}</a>
+                                > conditions générales</a> et la <a href="https://www.rts.ch/entreprise/a-propos/8994006-charte-de-confidentialite.html"
+                                    className={[classes.link, 'regular-1', 'lineSpacing-1'].join(' ')}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >politique de protection des données</a>
                             </Typography>
                         </Box>
                         <ReactPhoneInput

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import { useTweenMaxWithRef } from '../hooks/useTweenMax'
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
 const useStyles = makeStyles({
     container: {
@@ -14,16 +15,22 @@ const useStyles = makeStyles({
         alignContent: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
+        flexDirection: 'column',
         overflow: 'hidden'
+    },
+    progress: {
+        position: 'absolute'
     }
 })
 
 function SplashScreen (props) {
     const [height, setHeight] = useState()
+    const [isLoading, setLoading] = useState(false)
     const animRef = useRef()
 
     function animCallback () {
         props.startedCallBack()
+        setLoading(true)
     }
 
     function animEndedCallback () {
@@ -51,6 +58,7 @@ function SplashScreen (props) {
 
     useEffect(() => {
         if (props.animationState) {
+            setLoading(false)
             endAnimHandler()
         } else {
             startAnimHandler()
@@ -78,6 +86,7 @@ function SplashScreen (props) {
                     </g>
                 </svg>
             </Box>
+            {isLoading && <CircularProgress className={classes.progress} style={{ color: '#af001e' }}/>}
         </Box>
     )
 }
