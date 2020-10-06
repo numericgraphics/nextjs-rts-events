@@ -26,6 +26,28 @@ html {
     /*background-color: red;*/
 }
 
+/*
+image - video :     z-index = -2
+gradient effect :   z-index = -1
+content :   z-index = 0
+
+ */
+
+
+.z-index-media {
+    position: relative;
+    z-index: -2!important;
+}
+
+.z-index-effect {
+    z-index: -1!important;
+}
+
+.z-index-content {
+    position: relative;
+    z-index: 0!important;
+}
+
 
 /*** BACKGROUNDS ***/
 .backgroundSlideShow,
@@ -38,8 +60,12 @@ html {
     top: 0;
 }
 
+.backgroundVideo { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
+    z-index: 0;
+}
 
-.backgroundVideo,
+
+/*.backgroundVideo,*/
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     z-index: -2;
 }
@@ -72,7 +98,7 @@ html {
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: -3;
+    z-index: -1;
     background-color: black;
 }
 
@@ -94,13 +120,13 @@ html {
 }
 
 .backgroundGradientBottomAspectRatio {
-    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 90%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgb(0, 0, 0) 90%);
     width: 100%;
     max-height: 100%!important;
     padding-top: 200%; /* ratio ( width / height) * 100%  */
     position: fixed;
     top: 0;
-    z-index: -1;
+    z-index: 1;
 }
 
 .backgroundGradientTopBottom {
@@ -146,6 +172,8 @@ html {
 }
 
 .topZone {
+    position: relative;
+    z-index: 0;
     padding: 1rem 0.8rem 0 0.8rem;
 }
 
@@ -174,7 +202,7 @@ html {
 }
 
 .bottomZone {
-    height: 16rem;
+    z-index: 1;
 }
 
 /*** SPACING ***/
@@ -206,7 +234,6 @@ html {
 .margin-1-7-rem{
     margin: 1.7rem!important;
 }
-
 
 /*** TYPO ***/
 .bold-1-125 {
@@ -379,17 +406,14 @@ html {
         max-width: 480px;
     }
 
-    /*.containerModal {*/
-    /*    max-width: 450px;*/
-    /*}*/
-
     .container,
     .containerModal {
         margin: 0 auto;
     }
 
     .backgroundGradientBottomAspectRatio {
-        padding-top: 952px;
+        padding-top: inherit;
+        height: calc(480px * 1.77);   /*aspect ratio for 480*1.77 */
     }
 
     .backgroundLimiter {
@@ -442,6 +466,11 @@ html {
     .backgroundGradientTop,
     .backgroundGradientBottom {
         max-height: 100vh;
+    }
+
+    .backgroundGradientBottomAspectRatio {
+        padding-top: inherit;
+        height: calc(55vh * 1.77); /*  aspect ratio for 600*1.77 */
     }
 }
 

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ThemeFactory from '../data/themeFactory'
 import Box from '@material-ui/core/Box'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
         position: 'fixed',
         display: 'flex',
@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette ? theme.palette.background : 'white',
         overflow: 'hidden'
     }
 }))

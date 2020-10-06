@@ -31,7 +31,7 @@ export default function SlideShow (props) {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%), url(${slide.backgroundImageURL})`
+                        backgroundImage: `linear-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%), url(${slide.backgroundImageURL})`
                     }} />
             })}
         </Box>

@@ -17,7 +17,7 @@ export default function EventLayout ({ children, home }) {
     }, [])
 
     return (
-        <div className={'container'} >
+        <div className={['container', 'z-index-content '].join(' ')} >
             <Head>
                 <link rel="icon" href="/favicon.ico" />
                 < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>

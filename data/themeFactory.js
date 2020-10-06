@@ -25,6 +25,7 @@ class ThemeFactory {
                 contrastText: onSecondary
             },
             background: {
+                // default: 'black'
                 default: background
             },
             error: {
@@ -51,6 +52,7 @@ class ThemeFactory {
             }
         }
         this.backgroundImageURL = backgroundImageURL
+        console.log('palette', palette)
         this.createdTheme = createMuiTheme({ palette })
         return this.createdTheme
     }
