@@ -360,7 +360,7 @@ const hasLoginModal = WrappedComponent => {
                             }
                             onKeyDown={KeyCheck}
                         />
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={!phoneVerif} >
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || !checked)} >
                             {translation.send}
                         </Button>
                     </form>
