@@ -164,7 +164,6 @@ const hasLoginModal = WrappedComponent => {
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
-        // const [disabled, setDisabled] = useState(true)
         const [code, setCode] = useState()
         const smsSubmit = useRef()
         const checkBox = useRef()
