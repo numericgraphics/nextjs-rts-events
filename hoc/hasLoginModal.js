@@ -110,14 +110,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 const styles = {
-    caseStyle: {
-        width: '42px',
-        height: '48px',
-        margin: '4px',
-        fontFamily: 'srgssr-type-Bd',
-        color: '#020202',
-        fontSize: '1.125rem'
-    },
     textField: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.125rem',
