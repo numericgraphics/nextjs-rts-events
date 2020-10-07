@@ -159,43 +159,47 @@ const hasLoginModal = WrappedComponent => {
         const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
+        const uiElement = dataProvider.getUiElements()
+        const { agreementsChunks } = uiElement
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
         const [disabled, setDisabled] = useState(true)
         const [code, setCode] = useState()
         const smsSubmit = useRef()
-        const checkBox = useRef()
-        const [checked, setChecked] = useState(false)
+        const [counter, setCounter] = useState(0)
 
         const handleOpen = () => {
             setOpen(true)
         }
 
         useEffect(() => {
+            if (agreementsChunks === undefined || agreementsChunks.length === 0) {
+                setDisabled(false)
+            }
             setTranslation(dataProvider.getTranslation())
         }, [])
 
         useEffect(() => {
-            // eslint-disable-next-line no-unused-expressions
-            code
-                ? setUserData(
-                    Object.assign({}, userData, { code: code })
-                ) : null
+            if (code) {
+                setUserData(Object.assign({}, userData, { code: code }))
+            }
         }, [code])
 
         useEffect(() => {
-            checked ? setDisabled(userData.phone.length === 0) : setDisabled(true)
-        }, [userData.phone, checked])
-
-        useEffect(() => {
-            setDisabled(userData.code.length === 0)
-        }, [userData.code])
+            if (agreementsChunks && agreementsChunks.length > 0) {
+                setDisabled(counter !== agreementsChunks.length)
+            }
+        }, [counter])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
             setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
+        }
+
+        function checkBoxes (event) {
+            setCounter(counter => event.target.checked ? counter + 1 : counter - 1)
         }
 
         function OpenModal () {
@@ -219,7 +223,6 @@ const hasLoginModal = WrappedComponent => {
 
         async function handleSubmitPhoneNumber (event) {
             event.preventDefault()
-            setDisabled(true)
             setUserData({ ...userData, error: '' })
             setLoginState(ModalStates.LOADING)
             const phone = userData.phone
@@ -306,31 +309,21 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        <Box className={classes.CGUContent}>
-                            <Checkbox
-                                classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
-                                inputRef={checkBox}
-                                icon={uncheckedBoxIco()}
-                                checkedIcon={checkedBoxIco()}
-                                onChange={ () => setChecked(checkBox.current.checked) } />
-                            <Typography>J’accepte les
-                                <a href="https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html"
-                                    className={[classes.link, 'regular-1', 'lineSpacing-1'].join(' ')}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                > conditions générales</a> et la <a href="https://www.rts.ch/entreprise/a-propos/8994006-charte-de-confidentialite.html"
-                                    className={[classes.link, 'regular-1', 'lineSpacing-1'].join(' ')}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                >politique de protection des données</a>
-                            </Typography>
-                        </Box>
+                        {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
+                            return (
+                                <Box key={index} className={classes.CGUContent}>
+                                    <Checkbox
+                                        classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                        icon={uncheckedBoxIco()}
+                                        checkedIcon={checkedBoxIco()}
+                                        onChange={checkBoxes} />
+                                    <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: data }}/>
+                                </Box>
+                            )
+                        })}
                         <ReactPhoneInput
-                            inputProps={ checked ? { style: styles.textField } : { style: styles.textFieldDisabled } }
                             dropdownClass={classes.dropDown}
-                            buttonStyle={ !checked ? { backgroundColor: 'grey', border: 'none' } : null }
                             containerClass={classes.container}
-                            disabled={!checked}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
