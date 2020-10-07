@@ -87,8 +87,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        textAlign: 'left',
-        marginBottom: '0.8rem'
+        textAlign: 'left'
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
@@ -98,6 +97,13 @@ const useStyles = makeStyles((theme) => ({
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
         stroke: theme.palette.secondary.contrastText
+    },
+    CGU: {
+        width: '100%',
+        marginTop: 20
+    },
+    CGUText: {
+        fontSize: '0.9rem!important'
     },
     link: {
         color: theme.palette.secondary.contrastText,
@@ -308,18 +314,6 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
-                            return (
-                                <Box key={index} className={classes.CGUContent}>
-                                    <Checkbox
-                                        classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
-                                        icon={uncheckedBoxIcon()}
-                                        checkedIcon={checkedBoxIcon()}
-                                        onChange={checkBoxes} />
-                                    <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: data }}/>
-                                </Box>
-                            )
-                        })}
                         <ReactPhoneInput
                             inputProps={ { style: styles.textField } }
                             dropdownClass={classes.dropDown}
@@ -344,6 +338,20 @@ const hasLoginModal = WrappedComponent => {
                             }
                             onKeyDown={KeyCheck}
                         />
+                        <Box className={classes.CGU}>
+                            {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
+                                return (
+                                    <Box key={index} className={classes.CGUContent}>
+                                        <Checkbox
+                                            classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                            icon={uncheckedBoxIcon()}
+                                            checkedIcon={checkedBoxIcon()}
+                                            onChange={checkBoxes} />
+                                        <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
+                                    </Box>
+                                )
+                            })}
+                        </Box>
                         <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
                             {translation.send}
                         </Button>
