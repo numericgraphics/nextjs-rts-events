@@ -47,7 +47,7 @@ export function medalIcon (props) {
     )
 }
 
-export function checkedBoxIco (props) {
+export function checkedBoxIcon (props) {
     return (
         <SvgIcon viewBox="0 0 25 25"{...props} >
             <g id="Groupe_9595" data-name="Groupe 9595" transform="translate(-66 -604)">
@@ -63,7 +63,7 @@ export function checkedBoxIco (props) {
     )
 }
 
-export function uncheckedBoxIco (props) {
+export function uncheckedBoxIcon (props) {
     return (
         <SvgIcon viewBox="0 0 25 25"{...props} >
             <g id="Groupe_9595" data-name="Groupe 9595" transform="translate(-66 -604)">

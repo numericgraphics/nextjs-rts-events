@@ -13,7 +13,7 @@ import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
-import { checkedBoxIco, uncheckedBoxIco } from '../data/icon'
+import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -196,6 +196,8 @@ const hasLoginModal = WrappedComponent => {
             setLoginState(ModalStates.PHONE_NUMBER)
             setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
+            setDisabled(true)
+            setCounter(0)
         }
 
         function checkBoxes (event) {
@@ -314,8 +316,8 @@ const hasLoginModal = WrappedComponent => {
                                 <Box key={index} className={classes.CGUContent}>
                                     <Checkbox
                                         classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
-                                        icon={uncheckedBoxIco()}
-                                        checkedIcon={checkedBoxIco()}
+                                        icon={uncheckedBoxIcon()}
+                                        checkedIcon={checkedBoxIcon()}
                                         onChange={checkBoxes} />
                                     <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: data }}/>
                                 </Box>
