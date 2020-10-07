@@ -187,7 +187,7 @@ function Result (props) {
                         }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
-                                <Typography className={classes.secondCardText}>Tu gagnes une recompense !</Typography>
+                                <Typography className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
                                 <GiftResult
                                     className={classes.giftContainer}
                                     translation={translation.challengeResultGiftText}
