@@ -178,6 +178,7 @@ function QuestionVideo (props) {
                     }
                     )}
                 </Box>
+                <Box className='backgroundGradientTop' />
             </Box>
         </Fade>
     )

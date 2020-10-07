@@ -474,7 +474,7 @@ content :   z-index = 0
     }
 }
 
-@media only screen and (max-height:450px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
+@media only screen and (max-height:550px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
 
     html, body {
         font-size: 0.9em;
@@ -494,12 +494,6 @@ content :   z-index = 0
     .bottomZone {
         position: relative;
         height: 16rem!important;
-    }
-}
-
-@media only screen and (max-height:550px) and (min-height:450px){ /* Sur les écrans courts intermediaire... */
-    .bottomZone {
-        height: auto;
     }
 }
 

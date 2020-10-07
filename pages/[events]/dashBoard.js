@@ -217,11 +217,11 @@ function DashBoard (props) {
                                 <Typography
                                     className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')}
                                     align={'center'}
-                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadTitle }}>
-                                </Typography>
-                                <Typography className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')} align={'center'}>
-                                    {translation.dashBoardHeadText}
-                                </Typography>
+                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadTitle }}/>
+                                <Typography
+                                    className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')}
+                                    align={'center'}
+                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
                             </Box>
                         </Fade>
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
