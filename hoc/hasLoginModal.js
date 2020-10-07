@@ -12,7 +12,9 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
-import ReactPhoneInput from 'react-phone-input-2'
+// import ReactPhoneInput from 'react-phone-input-2'
+import ReactPhoneInput from 'react-phone-input-material-ui'
+import { TextField } from '@material-ui/core'
 import { checkedBoxIco, uncheckedBoxIco } from '../data/icon'
 
 const useStyles = makeStyles((theme) => ({
@@ -162,11 +164,27 @@ const hasLoginModal = WrappedComponent => {
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
-        const [disabled, setDisabled] = useState(true)
+        // const [disabled, setDisabled] = useState(true)
         const [code, setCode] = useState()
         const smsSubmit = useRef()
         const checkBox = useRef()
         const [checked, setChecked] = useState(false)
+        const [phoneVerif, setPhoneVerif] = useState(false)
+
+        function phoneVerification (data) {
+            const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
+            const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+            const belgiumReg = /^(\+32)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+            const italianReg = /^(\+39)(\d{3})(\d{7})$/
+            const liechtensteinReg = /^(\+423)(\d{3})(\d{3})(\d{3})(\d{3})$/
+
+            data = '+' + data
+            if ((swissReg.test(data)) || (franceReg.test(data)) || (belgiumReg.test(data)) || (italianReg.test(data)) || liechtensteinReg.test(data)) {
+                setPhoneVerif(true)
+            } else {
+                setPhoneVerif(false)
+            }
+        }
 
         const handleOpen = () => {
             setOpen(true)
@@ -183,14 +201,6 @@ const hasLoginModal = WrappedComponent => {
                     Object.assign({}, userData, { code: code })
                 ) : null
         }, [code])
-
-        useEffect(() => {
-            checked ? setDisabled(userData.phone.length === 0) : setDisabled(true)
-        }, [userData.phone, checked])
-
-        useEffect(() => {
-            setDisabled(userData.code.length === 0)
-        }, [userData.code])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -219,7 +229,6 @@ const hasLoginModal = WrappedComponent => {
 
         async function handleSubmitPhoneNumber (event) {
             event.preventDefault()
-            setDisabled(true)
             setUserData({ ...userData, error: '' })
             setLoginState(ModalStates.LOADING)
             const phone = userData.phone
@@ -331,6 +340,7 @@ const hasLoginModal = WrappedComponent => {
                             buttonStyle={ !checked ? { backgroundColor: 'grey', border: 'none' } : null }
                             containerClass={classes.container}
                             disabled={!checked}
+                            component={TextField}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
@@ -343,13 +353,15 @@ const hasLoginModal = WrappedComponent => {
                             placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
+                                phoneVerification(data)
                                 setUserData(
                                     Object.assign({}, userData, { phone: data })
                                 )
-                            } }
+                            }
+                            }
                             onKeyDown={KeyCheck}
                         />
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={!phoneVerif} >
                             {translation.send}
                         </Button>
                     </form>
