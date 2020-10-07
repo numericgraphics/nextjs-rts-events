@@ -12,9 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
-// import ReactPhoneInput from 'react-phone-input-2'
-import ReactPhoneInput from 'react-phone-input-material-ui'
-import { TextField } from '@material-ui/core'
+import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIco, uncheckedBoxIco } from '../data/icon'
 
 const useStyles = makeStyles((theme) => ({
@@ -205,6 +203,7 @@ const hasLoginModal = WrappedComponent => {
             setLoginState(ModalStates.PHONE_NUMBER)
             setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
+            setChecked(false)
         }
 
         function OpenModal () {
@@ -339,7 +338,6 @@ const hasLoginModal = WrappedComponent => {
                             buttonStyle={ !checked ? { backgroundColor: 'grey', border: 'none' } : null }
                             containerClass={classes.container}
                             disabled={!checked}
-                            component={TextField}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
