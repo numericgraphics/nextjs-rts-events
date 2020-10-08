@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
     title: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.25em',
-        letterSpacing: '0em'
+        letterSpacing: '0em',
+        lineHeight: 1.4
     },
     button: {
         position: 'relative',
@@ -107,7 +108,8 @@ const useStyles = makeStyles((theme) => ({
     },
     CGUText: {
         fontSize: '0.9rem!important',
-        letterSpacing: '0.00238em'
+        letterSpacing: '0.00238em',
+        lineHeight: 1.2
     },
     link: {
         color: theme.palette.secondary.contrastText,
