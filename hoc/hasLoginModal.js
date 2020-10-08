@@ -118,6 +118,9 @@ const useStyles = makeStyles((theme) => ({
     container: {
         width: '80%',
         minWidth: 173
+    },
+    iconClass: {
+        height: 'unset'
     }
 }))
 const styles = {
@@ -349,8 +352,8 @@ const hasLoginModal = WrappedComponent => {
                                     <Box key={index} className={classes.CGUContent}>
                                         <Checkbox
                                             classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
-                                            icon={uncheckedBoxIcon()}
-                                            checkedIcon={checkedBoxIcon()}
+                                            icon={uncheckedBoxIcon({ className: classes.iconClass })}
+                                            checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
                                             onChange={checkBoxes} />
                                         <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
