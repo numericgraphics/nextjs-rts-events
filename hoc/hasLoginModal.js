@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             border: 'none'
+        },
+        '& .a': {
+            color: 'black'
         }
     },
     textFieldContainer: {
@@ -103,7 +106,8 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20
     },
     CGUText: {
-        fontSize: '0.9rem!important'
+        fontSize: '0.9rem!important',
+        letterSpacing: '0.00238em'
     },
     link: {
         color: theme.palette.secondary.contrastText,

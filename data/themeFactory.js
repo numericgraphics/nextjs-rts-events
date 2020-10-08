@@ -41,19 +41,23 @@ class ThemeFactory {
         const overrides = {
             MuiCssBaseline: {
                 '@global': {
-                    body: {
+                    /* body: {
                         backgroundImage: `url(${backgroundImageURL})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: 'auto 100%',
                         opacity: 1
+                    }, */
+                    a: {
+                        color: palette.primary.contrastText + '!important'
                     }
                 }
             }
         }
+
         this.backgroundImageURL = backgroundImageURL
         console.log('palette', palette)
-        this.createdTheme = createMuiTheme({ palette })
+        this.createdTheme = createMuiTheme({ palette, overrides })
         return this.createdTheme
     }
 

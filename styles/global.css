@@ -504,8 +504,7 @@ content :   z-index = 0
 }
 
 a {
-    color: #0070f3;
-    text-decoration: none;
+    text-decoration: underline;
 }
 a:hover {
     text-decoration: underline;
