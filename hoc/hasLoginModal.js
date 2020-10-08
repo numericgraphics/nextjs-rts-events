@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
         stroke: theme.palette.secondary.contrastText,
-        padding: '12px 5px 12px 0px'
+        padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
