@@ -20,6 +20,7 @@ import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
+import { ImportantDevices } from '@material-ui/icons'
 
 const useStyles = makeStyles({
     header: {
@@ -91,7 +92,8 @@ const useStyles = makeStyles({
     cardHeaderRightSideText: {
         alignSelf: 'flex-end',
         lineHeight: '1.5rem',
-        textAlign: 'end'
+        textAlign: 'center',
+        width: '100%'
     },
     textRegularCenter: {
         textAlign: 'center'
@@ -107,6 +109,17 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    headerScore: {
+        height: 30,
+        width: '100%'
+    },
+    scoreCardContent: {
+        display: 'flex',
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingTop: 5,
+        paddingBottom: '5px!important'
     }
 })
 const styles = {
@@ -205,7 +218,8 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-
+    console.log('uiEl', uiElements)
+    console.log('translation', translation)
     return (
         <EventLayout >
             {isLoading && isGlobalLoading
@@ -213,62 +227,54 @@ function DashBoard (props) {
                 : <Box className='content' >
                     <Box className='topZone' >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
-                            <Box className={classes.header}>
-                                <Typography
-                                    className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')}
-                                    align={'center'}
-                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadTitle }}/>
-                                <Typography
-                                    className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')}
-                                    align={'center'}
-                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
-                            </Box>
-                        </Fade>
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
-                            <ColorCard>
-                                <ColorCardContent className='cardContent'>
-                                    <Box className={classes.cardAvatarHeader} >
-                                        <Box className={[classes.cardAvatarHeaderData, 'bottom-1-rem'].join(' ')} >
-                                            <Box className={classes.cardHeaderSide}>
-                                                <Typography className={[classes.cardHeaderLeftSideText, 'regular-0-825'].join(' ')}>
-                                                    <CheckIcon className={classes.rateIcon} />
-                                                    {uiElements.successChunk}
-                                                </Typography>
-                                                <Typography className={[classes.cardHeaderLeftSideText, 'regular-0-825'].join(' ')}>
-                                                    <CloseIcon className={classes.rateIcon} />
-                                                    {uiElements.failChunk}
-                                                </Typography>
-                                            </Box>
-                                            <Avatar className={classes.avatar} src={user.avatarURL}/>
-                                            <Box className={classes.cardAvatarHeaderBG} style={{ backgroundColor: theme.palette.secondary.light }}/>
-                                            <Box className={classes.cardHeaderSide}>
-                                                <Typography className={[classes.cardHeaderRightSideText, 'bold-1-5'].join(' ')}>
-                                                    {uiElements.scoreChunk}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                    </Box>
+                            <React.Fragment>
+                                <Box className={classes.header}>
+                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
                                     <Typography className={[classes.title, 'bold-1-75'].join(' ')}>
                                         {user.nickname}
                                     </Typography>
-                                    <Box className={classes.cardFooter}>
-                                        {availableChallenges
-                                            ? <Box className={classes.progressBarOverlay}>
-                                                <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
-                                                    {uiElements.progressBarMessageChunk}
-                                                </Typography>
-                                                <DashBoardChallengesProgress variant="determinate" progress={progress} />
-                                            </Box>
-                                            : <React.Fragment>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
-                                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                                </Typography>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
-                                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                                </Typography>
-                                            </React.Fragment>
-                                        }
-                                    </Box>
+                                    <Typography
+                                        className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')}
+                                        align={'center'}
+                                        dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
+                                    {availableChallenges
+                                        ? <Box className={classes.progressBarOverlay}>
+                                            <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
+                                                {uiElements.progressBarMessageChunk}
+                                            </Typography>
+                                            <DashBoardChallengesProgress variant="determinate" progress={progress} />
+                                        </Box>
+                                        : <React.Fragment>
+                                            <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                                dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
+                                            </Typography>
+                                            <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                                dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
+                                            </Typography>
+                                        </React.Fragment>
+                                    }
+                                </Box>
+                                <ColorCard className={classes.colorCardScore}>
+                                    <ColorCardContent className={classes.scoreCardContent}>
+                                        <Typography className={[classes.cardHeaderRightSideText, 'bold-1-5'].join(' ')}>
+                                            {uiElements.scoreChunk}
+                                        </Typography>
+                                    </ColorCardContent>
+                                </ColorCard>
+                                <ColorCard className={classes.colorCardRate}>
+                                    <ColorCardContent className={classes.rateCardContent}>
+                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                            dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
+                                        </Typography>
+                                    </ColorCardContent>
+                                </ColorCard>
+                            </React.Fragment>
+                        </Fade>
+                    </Box>
+                    <Box className={'bottomZone'} >
+                        <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
+                            <ColorCard>
+                                <ColorCardContent className='cardContent'>
                                     { gifts && gifts.length === 1
                                         ? <GiftResult
                                             translation={translation.challengeResultGiftText}
@@ -284,8 +290,6 @@ function DashBoard (props) {
                                 </ColorCardContent>
                             </ColorCard>
                         </Fade>
-                    </Box>
-                    <Box className={'bottomZone'} >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}
