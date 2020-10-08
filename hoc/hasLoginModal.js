@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
     containerTitle: {
         position: 'relative',
-        paddingBottom: 12
+        paddingBottom: 30
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
@@ -67,8 +67,6 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     textFieldContainer: {
-        paddingTop: 10,
-        paddingBottom: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -105,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     },
     CGU: {
         width: '100%',
-        marginTop: 20
+        marginTop: 30
     },
     CGUText: {
         fontSize: '0.9rem!important',
