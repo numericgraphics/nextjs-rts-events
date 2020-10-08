@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
-// push prblm
+
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
         stroke: theme.palette.secondary.contrastText,
-        paddingRight: 20
+        padding: '12px 5px 12px 0px'
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
