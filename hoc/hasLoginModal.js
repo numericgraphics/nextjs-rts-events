@@ -67,7 +67,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     textFieldContainer: {
-        padding: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
