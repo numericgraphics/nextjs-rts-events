@@ -5,7 +5,7 @@ import { useTweenMaxWithRef } from '../hooks/useTweenMax'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
 const useStyles = makeStyles({
-    container: {
+    splashScreen: {
         position: 'fixed',
         display: 'flex',
         zIndex: 10,
@@ -67,7 +67,7 @@ function SplashScreen (props) {
 
     const classes = useStyles()
     return (
-        <Box className={classes.container} style={{ height: height }}>
+        <Box className={classes.splashScreen} style={{ height: height }}>
             <Box >
                 <svg width="300" height="300" x="0px" y="0px" viewBox="0 0 841.89 595.28">
                     <g ref={animRef} opacity="0">
