@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles /* , useTheme */ } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
@@ -20,7 +20,7 @@ import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
-import { ImportantDevices } from '@material-ui/icons'
+// import { ImportantDevices } from '@material-ui/icons'
 
 const useStyles = makeStyles({
     header: {
@@ -120,6 +120,20 @@ const useStyles = makeStyles({
         paddingRight: 5,
         paddingTop: 5,
         paddingBottom: '5px!important'
+    },
+    rateBox: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    goodRateBox: {
+        width: '50%',
+        height: 20,
+        backgroundColor: 'green'
+    },
+    badRateBox: {
+        width: '50%',
+        height: 20,
+        backgroundColor: 'red'
     }
 })
 const styles = {
@@ -147,7 +161,7 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
-    const theme = useTheme()
+    // const theme = useTheme()
 
     async function fetchData () {
         try {
@@ -266,12 +280,24 @@ function DashBoard (props) {
                                         <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                         </Typography>
+                                        <Box className={classes.rateBox}>
+                                            <Box className={classes.goodRateBox}>
+                                                <Typography className={classes.cardHeaderLeftSideText}>
+                                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                                    {uiElements.successChunk}
+                                                </Typography>
+                                            </Box>
+                                            <Box className={classes.badRateBox}>
+                                                <Typography className={classes.cardHeaderLeftSideText}>
+                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    {uiElements.failChunk}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
                                     </ColorCardContent>
                                 </ColorCard>
                             </React.Fragment>
                         </Fade>
-                    </Box>
-                    <Box className={'bottomZone'} >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
                             <ColorCard>
                                 <ColorCardContent className='cardContent'>
@@ -290,6 +316,8 @@ function DashBoard (props) {
                                 </ColorCardContent>
                             </ColorCard>
                         </Fade>
+                    </Box>
+                    <Box className={'bottomZoneDashboard'} >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}

@@ -187,7 +187,7 @@ content :   z-index = 0
 
 }
 
-.bottomZone, .bottomZonePromo { /* Zone des boutons fixée en bas de page */
+.bottomZone, .bottomZonePromo, .bottomZoneDashboard { /* Zone des boutons fixée en bas de page */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -203,6 +203,10 @@ content :   z-index = 0
 
 .bottomZone {
     z-index: 1;
+}
+
+.bottomZoneDashboard {
+
 }
 
 /*** SPACING ***/
