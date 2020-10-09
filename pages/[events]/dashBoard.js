@@ -156,6 +156,9 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     remainingTime: {
         color: theme.palette.secondary.contrastText
+    },
+    dashboardBottomBtn: {
+        position: 'relative'
     }
 }))
 const styles = {
@@ -342,7 +345,7 @@ function DashBoard (props) {
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}
                             {/* </ColorBorderButton> */}
-                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="primary" variant="contained" className={[classes.dashboardBottomBtn, 'bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
