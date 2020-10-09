@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
-import { makeStyles /* , useTheme */ } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
@@ -22,24 +22,27 @@ import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 // import { ImportantDevices } from '@material-ui/icons'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme = useTheme) => ({
     header: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        padding: '10px 30px',
+        padding: '0px 30px',
         maxHeight: 200,
-        textAlign: 'center'
+        textAlign: 'center',
+        alignItems: 'center'
     },
     title: {
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        color: theme.palette.secondary.contrastText
     },
     avatar: {
-        width: '5rem',
-        height: '5rem',
+        width: '6rem',
+        height: '6rem',
+        marginBottom: 10,
         zIndex: 2
     },
     rateIcon: {
@@ -87,21 +90,25 @@ const useStyles = makeStyles({
         textAlign: 'left',
         display: 'flex',
         flexWrap: 'wrap',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     cardHeaderRightSideText: {
         alignSelf: 'flex-end',
         lineHeight: '1.5rem',
         textAlign: 'center',
-        width: '100%'
+        width: '100%',
+        color: theme.palette.secondary.contrastText
     },
     textRegularCenter: {
-        textAlign: 'center'
+        textAlign: 'center',
+        color: theme.palette.secondary.contrastText
     },
     textRegularCenterOverlay: {
         position: 'absolute',
         zIndex: 2,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: theme.palette.secondary.contrastText
     },
     progressBarOverlay: {
         position: 'relative',
@@ -115,11 +122,7 @@ const useStyles = makeStyles({
         width: '100%'
     },
     scoreCardContent: {
-        display: 'flex',
-        paddingLeft: 5,
-        paddingRight: 5,
-        paddingTop: 5,
-        paddingBottom: '5px!important'
+
     },
     rateBox: {
         display: 'flex',
@@ -127,15 +130,38 @@ const useStyles = makeStyles({
     },
     goodRateBox: {
         width: '50%',
-        height: 20,
-        backgroundColor: 'green'
+        backgroundColor: '#00B445',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     badRateBox: {
         width: '50%',
-        height: 20,
-        backgroundColor: 'red'
+        backgroundColor: '#FF0000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    colorCard: {
+        marginBottom: 5
+    },
+    bottomBtnDashboard: {
+        position: 'fixed',
+        bottom: 20
+    },
+    backgroundBlur: {
+        background: theme.palette.secondary.main + '9e',
+        backdropFilter: 'blur(4px)',
+        height: '100vh',
+        width: '100%',
+        position: 'fixed',
+        top: 0,
+        zIndex: '-1'
+    },
+    remainingTime: {
+        color: theme.palette.secondary.contrastText
     }
-})
+}))
 const styles = {
     containerImage: {
         backgroundRepeat: 'no-repeat',
@@ -161,7 +187,7 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
-    // const theme = useTheme()
+    const theme = useTheme()
 
     async function fetchData () {
         try {
@@ -232,8 +258,7 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-    console.log('uiEl', uiElements)
-    console.log('translation', translation)
+
     return (
         <EventLayout >
             {isLoading && isGlobalLoading
@@ -248,48 +273,48 @@ function DashBoard (props) {
                                         {user.nickname}
                                     </Typography>
                                     <Typography
-                                        className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')}
+                                        className={[classes.remainingTime, 'regular-1', 'lineSpacing-1-2'].join(' ')}
                                         align={'center'}
                                         dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
-                                    {availableChallenges
-                                        ? <Box className={classes.progressBarOverlay}>
-                                            <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
-                                                {uiElements.progressBarMessageChunk}
-                                            </Typography>
-                                            <DashBoardChallengesProgress variant="determinate" progress={progress} />
-                                        </Box>
-                                        : <React.Fragment>
-                                            <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
-                                                dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                            </Typography>
-                                            <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
-                                                dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                            </Typography>
-                                        </React.Fragment>
-                                    }
                                 </Box>
-                                <ColorCard className={classes.colorCardScore}>
+                                {availableChallenges
+                                    ? <Box className={classes.progressBarOverlay}>
+                                        <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
+                                            {uiElements.progressBarMessageChunk}
+                                        </Typography>
+                                        <DashBoardChallengesProgress variant="determinate" progress={progress} />
+                                    </Box>
+                                    : <React.Fragment>
+                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                            dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
+                                        </Typography>
+                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                            dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
+                                        </Typography>
+                                    </React.Fragment>
+                                }
+                                <ColorCard className={classes.colorCard}>
                                     <ColorCardContent className={classes.scoreCardContent}>
-                                        <Typography className={[classes.cardHeaderRightSideText, 'bold-1-5'].join(' ')}>
+                                        <Typography className={[classes.cardHeaderRightSideText, 'bold-2-5'].join(' ')}>
                                             {uiElements.scoreChunk}
                                         </Typography>
                                     </ColorCardContent>
                                 </ColorCard>
-                                <ColorCard className={classes.colorCardRate}>
+                                <ColorCard className={classes.colorCard}>
                                     <ColorCardContent className={classes.rateCardContent}>
-                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                        <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                         </Typography>
                                         <Box className={classes.rateBox}>
                                             <Box className={classes.goodRateBox}>
+                                                <CheckIcon fontSize="small" className={classes.rateIcon}/>
                                                 <Typography className={classes.cardHeaderLeftSideText}>
-                                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
                                                     {uiElements.successChunk}
                                                 </Typography>
                                             </Box>
                                             <Box className={classes.badRateBox}>
+                                                <CloseIcon fontSize="small" className={classes.rateIcon}/>
                                                 <Typography className={classes.cardHeaderLeftSideText}>
-                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
                                                     {uiElements.failChunk}
                                                 </Typography>
                                             </Box>
@@ -322,12 +347,12 @@ function DashBoard (props) {
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}
                             {/* </ColorBorderButton> */}
-                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="primary" variant="contained" className={[classes.bottomBtnDashboard, 'bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {(!isLoading && !isGlobalLoading) && <Box className={'backgroundGradientTopBottom'} />}
+                    {(!isLoading && !isGlobalLoading) && <Box className={classes.backgroundBlur} />}
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }

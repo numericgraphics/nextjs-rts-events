@@ -206,7 +206,9 @@ content :   z-index = 0
 }
 
 .bottomZoneDashboard {
-
+    position: relative;
+    z-index: 0;
+    padding: 1rem 0.8rem 0 0.8rem;
 }
 
 /*** SPACING ***/
@@ -258,6 +260,11 @@ content :   z-index = 0
 .bold-1-5 {
     font-family: 'srgssr-type-Bd', sans-serif!important;
     font-size: 1.5rem!important;
+}
+
+.bold-2-5 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 2.5rem!important;
 }
 
 .regular-0-825 {
