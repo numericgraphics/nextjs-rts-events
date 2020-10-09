@@ -42,12 +42,13 @@ const useStyles = makeStyles((theme) => ({
     },
     containerTitle: {
         position: 'relative',
-        paddingBottom: 12
+        paddingBottom: 30
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.25em',
-        letterSpacing: '0em'
+        letterSpacing: '0em',
+        lineHeight: 1.4
     },
     button: {
         position: 'relative',
@@ -60,10 +61,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             border: 'none'
+        },
+        '& .a': {
+            color: 'black'
         }
     },
     textFieldContainer: {
-        padding: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -87,17 +90,25 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        textAlign: 'left',
-        marginBottom: '0.8rem'
+        textAlign: 'left'
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
         stroke: theme.palette.secondary.contrastText,
-        paddingRight: 20
+        padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
         stroke: theme.palette.secondary.contrastText
+    },
+    CGU: {
+        width: '100%',
+        marginTop: 30
+    },
+    CGUText: {
+        fontSize: '0.9rem!important',
+        letterSpacing: '0.00238em',
+        lineHeight: 1.2
     },
     link: {
         color: theme.palette.secondary.contrastText,
@@ -107,17 +118,12 @@ const useStyles = makeStyles((theme) => ({
     container: {
         width: '80%',
         minWidth: 173
+    },
+    iconClass: {
+        height: 'unset'
     }
 }))
 const styles = {
-    caseStyle: {
-        width: '42px',
-        height: '48px',
-        margin: '4px',
-        fontFamily: 'srgssr-type-Bd',
-        color: '#020202',
-        fontSize: '1.125rem'
-    },
     textField: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.125rem',
@@ -126,18 +132,6 @@ const styles = {
         width: '100%',
         height: 'auto',
         backgroundColor: 'white',
-        paddingTop: '0.4rem',
-        paddingBottom: '0.4rem',
-        margin: '0.2rem'
-    },
-    textFieldDisabled: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.125rem',
-        color: '#020202',
-        border: 'none',
-        width: '100%',
-        height: 'auto',
-        backgroundColor: 'grey',
         paddingTop: '0.4rem',
         paddingBottom: '0.4rem',
         margin: '0.2rem'
@@ -164,9 +158,25 @@ const hasLoginModal = WrappedComponent => {
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
-        const [disabled, setDisabled] = useState(true)
         const [code, setCode] = useState()
         const smsSubmit = useRef()
+        const [checked, setChecked] = useState(false)
+        const [phoneVerif, setPhoneVerif] = useState(false)
+
+        function phoneVerification (data) {
+            const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
+            const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+            const belgiumReg = /^(\+32)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+            const italianReg = /^(\+39)(\d{3})(\d{7})$/
+            const liechtensteinReg = /^(\+423)(\d{3})(\d{3})(\d{3})(\d{3})$/
+
+            data = '+' + data
+            if ((swissReg.test(data)) || (franceReg.test(data)) || (belgiumReg.test(data)) || (italianReg.test(data)) || liechtensteinReg.test(data)) {
+                setPhoneVerif(true)
+            } else {
+                setPhoneVerif(false)
+            }
+        }
         const [counter, setCounter] = useState(0)
 
         const handleOpen = () => {
@@ -175,7 +185,7 @@ const hasLoginModal = WrappedComponent => {
 
         useEffect(() => {
             if (agreementsChunks === undefined || agreementsChunks.length === 0) {
-                setDisabled(false)
+                setChecked(false)
             }
             setTranslation(dataProvider.getTranslation())
         }, [])
@@ -188,7 +198,7 @@ const hasLoginModal = WrappedComponent => {
 
         useEffect(() => {
             if (agreementsChunks && agreementsChunks.length > 0) {
-                setDisabled(counter !== agreementsChunks.length)
+                setChecked(counter !== agreementsChunks.length)
             }
         }, [counter])
 
@@ -196,7 +206,8 @@ const hasLoginModal = WrappedComponent => {
             setLoginState(ModalStates.PHONE_NUMBER)
             setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
-            setDisabled(true)
+            setChecked(false)
+            setPhoneVerif(false)
             setCounter(0)
         }
 
@@ -311,19 +322,8 @@ const hasLoginModal = WrappedComponent => {
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
-                        {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
-                            return (
-                                <Box key={index} className={classes.CGUContent}>
-                                    <Checkbox
-                                        classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
-                                        icon={uncheckedBoxIcon()}
-                                        checkedIcon={checkedBoxIcon()}
-                                        onChange={checkBoxes} />
-                                    <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: data }}/>
-                                </Box>
-                            )
-                        })}
                         <ReactPhoneInput
+                            inputProps={ { style: styles.textField } }
                             dropdownClass={classes.dropDown}
                             containerClass={classes.container}
                             inputExtraProps={{
@@ -338,13 +338,29 @@ const hasLoginModal = WrappedComponent => {
                             placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
+                                phoneVerification(data)
                                 setUserData(
                                     Object.assign({}, userData, { phone: data })
                                 )
-                            } }
+                            }
+                            }
                             onKeyDown={KeyCheck}
                         />
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
+                        <Box className={classes.CGU}>
+                            {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
+                                return (
+                                    <Box key={index} className={classes.CGUContent}>
+                                        <Checkbox
+                                            classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                            icon={uncheckedBoxIcon({ className: classes.iconClass })}
+                                            checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
+                                            onChange={checkBoxes} />
+                                        <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
+                                    </Box>
+                                )
+                            })}
+                        </Box>
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
                             {translation.send}
                         </Button>
                     </form>
