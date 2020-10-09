@@ -145,10 +145,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
     colorCard: {
         marginBottom: 5
     },
-    bottomBtnDashboard: {
-        position: 'fixed',
-        bottom: 20
-    },
     backgroundBlur: {
         background: theme.palette.secondary.main + '9e',
         backdropFilter: 'blur(4px)',
@@ -187,7 +183,6 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
-    const theme = useTheme()
 
     async function fetchData () {
         try {
@@ -347,7 +342,7 @@ function DashBoard (props) {
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}
                             {/* </ColorBorderButton> */}
-                            <CustomDisabledButton color="primary" variant="contained" className={[classes.bottomBtnDashboard, 'bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>

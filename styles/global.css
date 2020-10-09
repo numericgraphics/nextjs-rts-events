@@ -206,9 +206,7 @@ content :   z-index = 0
 }
 
 .bottomZoneDashboard {
-    position: relative;
-    z-index: 0;
-    padding: 1rem 0.8rem 0 0.8rem;
+    z-index: 1;
 }
 
 /*** SPACING ***/
@@ -412,6 +410,7 @@ content :   z-index = 0
     .backgroundGradientBottomAspectRatio,
     .backgroundVideoPlayer,
     .bottomZone,
+    .bottomZoneDashboard,
     .bottomZonePromo,
     .swipeableViews {
         max-width: 480px;
@@ -505,6 +504,11 @@ content :   z-index = 0
     .bottomZone {
         position: relative;
         height: 16rem!important;
+    }
+
+    .bottomZoneDashboard {
+        position: relative;
+        height: 5rem!important;
     }
 }
 

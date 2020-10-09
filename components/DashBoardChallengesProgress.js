@@ -9,8 +9,8 @@ const useStyles = makeStyles({
         margin: 10
     },
     linearProgress: {
-        height: 23,
-        borderRadius: 10
+        height: 30,
+        borderRadius: 16
     }
 })
 
