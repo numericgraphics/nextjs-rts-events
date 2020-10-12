@@ -212,10 +212,9 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
-
     return (
         <EventLayout >
-            {isLoading && isGlobalLoading
+            {!(!isLoading && !isGlobalLoading)
                 ? null
                 : <Box className='content' >
                     <Box className='topZoneDashboard' >
@@ -306,8 +305,12 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {(!isLoading && !isGlobalLoading) && <Box className={classes.backgroundBlur} />}
-                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
+                    {(!isLoading && !isGlobalLoading) &&
+                    <React.Fragment>
+                        <Box className={classes.backgroundBlur} />
+                        <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
+                    </React.Fragment>
+                    }
                 </Box>
             }
         </EventLayout>
