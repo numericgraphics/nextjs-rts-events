@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         textAlign: 'center',
         alignItems: 'center'
     },
-    title: {
+    nickname: {
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: 10,
@@ -51,41 +51,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         height: '1rem',
         marginRight: '0.1rem'
     },
-    cardAvatarHeader: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    cardAvatarHeaderData: {
-        position: 'relative',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        paddingLeft: '10px',
-        paddingRight: '10px'
-    },
-    cardAvatarHeaderBG: {
-        position: 'absolute',
-        width: '100%',
-        height: '4rem',
-        borderRadius: '10px',
-        zIndex: 1
-    },
-    cardFooter: {
-        width: '100%'
-    },
-    cardHeaderSide: {
-        flex: 1,
-        zIndex: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-    cardHeaderLeftSideText: {
+    rateText: {
         alignSelf: 'left',
         textAlign: 'left',
         display: 'flex',
@@ -93,7 +59,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    cardHeaderRightSideText: {
+    scoreChunkText: {
         alignSelf: 'flex-end',
         lineHeight: '1.5rem',
         textAlign: 'center',
@@ -116,13 +82,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    headerScore: {
-        height: 30,
-        width: '100%'
-    },
-    scoreCardContent: {
-
     },
     rateBox: {
         display: 'flex',
@@ -156,9 +115,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     remainingTime: {
         color: theme.palette.secondary.contrastText
-    },
-    dashboardBottomBtn: {
-        position: 'relative'
     }
 }))
 const styles = {
@@ -262,12 +218,12 @@ function DashBoard (props) {
             {isLoading && isGlobalLoading
                 ? null
                 : <Box className='content' >
-                    <Box className='topZone' >
+                    <Box className='topZoneDashboard' >
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
                             <React.Fragment>
                                 <Box className={classes.header}>
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>
-                                    <Typography className={[classes.title, 'bold-1-75'].join(' ')}>
+                                    <Typography className={[classes.nickname, 'bold-1-75'].join(' ')}>
                                         {user.nickname}
                                     </Typography>
                                     <Typography
@@ -293,7 +249,7 @@ function DashBoard (props) {
                                 }
                                 <ColorCard className={classes.colorCard}>
                                     <ColorCardContent className={classes.scoreCardContent}>
-                                        <Typography className={[classes.cardHeaderRightSideText, 'bold-2-5'].join(' ')}>
+                                        <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
                                             {uiElements.scoreChunk}
                                         </Typography>
                                     </ColorCardContent>
@@ -306,13 +262,13 @@ function DashBoard (props) {
                                         <Box className={classes.rateBox}>
                                             <Box className={classes.goodRateBox}>
                                                 <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                                <Typography className={classes.cardHeaderLeftSideText}>
+                                                <Typography className={classes.rateText}>
                                                     {uiElements.successChunk}
                                                 </Typography>
                                             </Box>
                                             <Box className={classes.badRateBox}>
                                                 <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                                <Typography className={classes.cardHeaderLeftSideText}>
+                                                <Typography className={classes.rateText}>
                                                     {uiElements.failChunk}
                                                 </Typography>
                                             </Box>
@@ -345,7 +301,7 @@ function DashBoard (props) {
                             {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
                             {/*    {`${translation.dashBoardSharingButton}`} */}
                             {/* </ColorBorderButton> */}
-                            <CustomDisabledButton color="primary" variant="contained" className={[classes.dashboardBottomBtn, 'bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
