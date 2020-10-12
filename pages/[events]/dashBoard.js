@@ -212,6 +212,7 @@ function DashBoard (props) {
         }
         fetchData().then()
     }, [])
+
     return (
         <EventLayout >
             {!(!isLoading && !isGlobalLoading)
@@ -246,18 +247,25 @@ function DashBoard (props) {
                                         </Typography>
                                     </React.Fragment>
                                 }
+
+                                {(uiElements.scoreChunk && uiElements.scoreChunk.replace(/[^\d]/g, '') !== '0')
+                                    ? <ColorCard className={classes.colorCard}>
+                                        <ColorCardContent className={classes.cardContent}>
+                                            <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
+                                                {uiElements.scoreChunk}
+                                            </Typography>
+                                        </ColorCardContent>
+                                    </ColorCard> : null
+                                }
+                                {parseInt(uiElements.successChunk) + parseInt(uiElements.failChunk) + parseInt(uiElements.sumChunk.replace(/[^\d]/g, '')) !== 0 &&
                                 <ColorCard className={classes.colorCard}>
                                     <ColorCardContent className={classes.cardContent}>
-                                        <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
-                                            {uiElements.scoreChunk}
-                                        </Typography>
-                                    </ColorCardContent>
-                                </ColorCard>
-                                <ColorCard className={classes.colorCard}>
-                                    <ColorCardContent className={classes.cardContent}>
+                                        {(uiElements.sumChunk.replace(/[^\d]/g, '') !== '0') &&
                                         <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                         </Typography>
+                                        }
+                                        {parseInt(uiElements.successChunk) + parseInt(uiElements.failChunk) !== 0 &&
                                         <Box className={classes.rateBox}>
                                             <Box className={classes.goodRateBox}>
                                                 <CheckIcon fontSize="small" className={classes.rateIcon}/>
@@ -272,8 +280,10 @@ function DashBoard (props) {
                                                 </Typography>
                                             </Box>
                                         </Box>
+                                        }
                                     </ColorCardContent>
                                 </ColorCard>
+                                }
                             </React.Fragment>
                         </Fade>
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
