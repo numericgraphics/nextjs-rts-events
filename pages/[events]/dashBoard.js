@@ -104,24 +104,19 @@ const useStyles = makeStyles((theme = useTheme) => ({
     colorCard: {
         marginBottom: 5
     },
-    backgroundBlur: {
-        background: theme.palette.secondary.main + '9e',
-        backdropFilter: 'blur(4px)',
-        height: '100vh',
-        width: '100%',
-        position: 'fixed',
-        top: 0,
-        zIndex: '-1'
-    },
     remainingTime: {
         color: theme.palette.secondary.contrastText
+    },
+    backgroudGradientTopBottom: {
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important'
     }
 }))
 const styles = {
     containerImage: {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'auto 100%'
+        backgroundSize: 'auto 100%',
+        filter: 'blur(4px)'
     }
 }
 
@@ -306,11 +301,11 @@ function DashBoard (props) {
                         </Fade>
                     </Box>
                     {(!isLoading && !isGlobalLoading) &&
+                    <Box className={[classes.backgroudGradientTopBottom, 'backgroundGradientTopBottom'].join(' ')} />
+                    }
                     <React.Fragment>
-                        <Box className={classes.backgroundBlur} />
                         <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                     </React.Fragment>
-                    }
                 </Box>
             }
         </EventLayout>
