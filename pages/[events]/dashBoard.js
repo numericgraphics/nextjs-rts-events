@@ -121,8 +121,7 @@ const styles = {
     containerImage: {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        filter: 'blur(4px)'
+        backgroundSize: 'auto 100%'
     }
 }
 
