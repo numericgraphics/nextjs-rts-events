@@ -110,7 +110,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         color: theme.palette.secondary.contrastText
     },
     backgroudGradientTopBottom: {
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important'
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important',
+        zIndex: 0
     },
     cardContent: {
         margin: '0px!important',
