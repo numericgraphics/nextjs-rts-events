@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         display: 'inline',
         width: '1rem',
         height: '1rem',
-        marginRight: '0.1rem'
+        marginRight: '0.2rem'
     },
     rateText: {
         alignSelf: 'left',
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     scoreChunkText: {
         alignSelf: 'flex-end',
-        lineHeight: '1.5rem',
         textAlign: 'center',
         width: '100%',
         color: theme.palette.secondary.contrastText
@@ -81,11 +80,14 @@ const useStyles = makeStyles((theme = useTheme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 10,
+        marginBottom: 10
     },
     rateBox: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: 10
     },
     goodRateBox: {
         width: '50%',
@@ -109,6 +111,10 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     backgroudGradientTopBottom: {
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important'
+    },
+    cardContent: {
+        margin: '0px!important',
+        padding: '10px!important'
     }
 }))
 const styles = {
@@ -242,14 +248,14 @@ function DashBoard (props) {
                                     </React.Fragment>
                                 }
                                 <ColorCard className={classes.colorCard}>
-                                    <ColorCardContent className={classes.scoreCardContent}>
+                                    <ColorCardContent className={classes.cardContent}>
                                         <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
                                             {uiElements.scoreChunk}
                                         </Typography>
                                     </ColorCardContent>
                                 </ColorCard>
                                 <ColorCard className={classes.colorCard}>
-                                    <ColorCardContent className={classes.rateCardContent}>
+                                    <ColorCardContent className={classes.cardContent}>
                                         <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                         </Typography>
@@ -273,7 +279,7 @@ function DashBoard (props) {
                         </Fade>
                         <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
                             <ColorCard>
-                                <ColorCardContent className='cardContent'>
+                                <ColorCardContent className={classes.cardContent}>
                                     { gifts && gifts.length === 1
                                         ? <GiftResult
                                             translation={translation.challengeResultGiftText}
