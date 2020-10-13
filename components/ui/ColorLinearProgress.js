@@ -9,6 +9,6 @@ export const ColorLinearProgress = withStyles((theme) => ({
         backgroundColor: theme.palette.secondary.light
     },
     bar: {
-        borderRadius: 16
+        borderRadius: 0
     }
 }))(LinearProgress)

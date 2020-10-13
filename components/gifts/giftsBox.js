@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         backgroundColor: theme.palette.primary.main,
         marginTop: 10,
         '&:hover': {
-            backgroundColor: theme.palette.primary.light
+            backgroundColor: theme.palette.primary.dark
         }
     },
     gifts: {
