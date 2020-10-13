@@ -1,24 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
-import InnerHeightLayout from './innerHeightLayout'
+import ThemeFactory from '../data/themeFactory'
+import Box from '@material-ui/core/Box'
 
-const useStyles = makeStyles({
-    containerProgress: {
+const useStyles = makeStyles(() => ({
+    container: {
+        position: 'fixed',
+        display: 'flex',
+        zIndex: 10,
         width: '100%',
-        minHeight: '100vh',
+        height: '100vh',
         alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        overflow: 'hidden'
     }
-})
+}))
 
 function Progress () {
     const classes = useStyles()
+    const [height, setHeight] = useState()
+    const [theme, setTheme] = useState({})
+
+    useEffect(() => {
+        setTheme(ThemeFactory.getCreatedTheme())
+        setHeight(window.innerHeight)
+    }, [])
+
     return (
-        <InnerHeightLayout class={classes.containerProgress} >
-            <CircularProgress />
-        </InnerHeightLayout>
+        <Box className={classes.container} style={{ height: height }}>
+            <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.contrastText : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
+        </Box>
     )
 }
 

@@ -3,6 +3,6 @@ import CardContent from '@material-ui/core/CardContent'
 
 export const ColorCardContent = withStyles(() => ({
     root: {
-        minHeight: '250px!important'
+        minHeight: '0px!important'
     }
 }))(CardContent)

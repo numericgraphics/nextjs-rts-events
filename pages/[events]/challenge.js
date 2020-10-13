@@ -1,111 +1,19 @@
-import React, { createRef, useContext, useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../components/UserContext'
 import EventLayout from '../../components/eventLayout'
-import Box from '@material-ui/core/Box'
-import InnerHeightLayout from '../../components/innerHeightLayout'
-import hasCountDownModal from '../../hoc/hasCountDownModal'
 import Question from '../../components/challenges/questions'
+import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
-import { useHeight } from '../../hooks/useHeight'
 import { getAllEvents } from '../../lib/events'
+import Box from '@material-ui/core/Box'
 
-const useStyles = makeStyles({
-    containerGlobal: {
-        justifyContent: 'flex-start'
-    },
-    counter: {
-        display: 'flex',
-        alignItems: 'flex-end',
-        width: '100%',
-        flex: 1,
-        maxHeight: 120,
-        padding: 10
-    },
-    header: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        padding: '10px 30px',
-        paddingTop: '10%',
-        textAlign: 'center'
-    },
-    footer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        flex: 2,
-        textAlign: 'center',
-        bottom: 30
-    },
-    avatar: {
-        width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
-    },
-    card: {
-        minWidth: 275,
-        minHeight: 300,
-        margin: 20
-    },
-    HeaderText: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem',
-        textShadow: '0px 3px 6px #00000040'
-    },
-    HeaderTitle: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        textShadow: '0px 3px 6px #00000040'
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 275,
-        minHeight: 300
-    },
-    button: {
-        bottom: 50,
-        width: '80vw',
-        padding: '6px 20px',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
-        marginTop: 10,
-        textTransform: 'none'
-    },
-    gradient: {
-        position: 'absolute',
-        width: '100vw',
-        height: '100vh',
-        flexGrow: 1,
-        zIndex: 2,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%)'
-    }
-})
 const styles = {
-    containerOverlay: {
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        zIndex: 3
-    },
     containerImage: {
-        position: 'absolute',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'white'
+        backgroundSize: 'auto 100%'
     }
 }
 const ChallengeStates = Object.freeze({
@@ -116,19 +24,17 @@ const ChallengeStates = Object.freeze({
     ERROR: 'error'
 })
 
-function Challenge (props) {
+function Challenge () {
     const router = useRouter()
     const { events } = router.query
-    const classes = useStyles()
-    const layoutRef = createRef()
     const { dataProvider, store } = useContext(UserContext)
-    const { isGlobalLoading, isLoading, setLoading, setEventName } = store
+    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
-    const [imageURL, setImageURL] = React.useState()
-    const height = useHeight()
+    const [imageURL, setImageURL] = useState()
+    const [backgroundType, setBackgroundType] = useState('image')
 
     async function fetchQuestions () {
         try {
@@ -167,6 +73,7 @@ function Challenge (props) {
 
             if (response.status === 200) {
                 const content = await response.json()
+                dataProvider.setData(content)
                 setResultContent(content)
             } else {
                 // TODO : manage response !== 200
@@ -189,6 +96,7 @@ function Challenge (props) {
     // Callback for Result component to keep playing game
     function playGame () {
         setLoading(true)
+        videoController.setShowVideo(false)
         fetchQuestions().then()
     }
 
@@ -198,19 +106,23 @@ function Challenge (props) {
         switch (state) {
         case ChallengeStates.LOADING:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer}/>
+            return backgroundType === 'video'
+                ? <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
+                : <Question content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result content={resultContent} playGameCallBack={playGame}/>
-        case ChallengeStates.COUNTDOWN:
-            return null
+            return <Result content={resultContent} playGameCallBack={playGame} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
     async function gotoDashBoard () {
+        if (backgroundType === 'video') {
+            videoController.setVideoSource('')
+            videoController.setVideoVisible(false)
+        }
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
 
-    // Call through question component callBack
+    // Call through question component callBack when user answered question
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS) {
             setChallengeState(ChallengeStates.LOADING)
@@ -235,18 +147,22 @@ function Challenge (props) {
                 setLoading(false)
             }
             const { imageURL } = questionsContent
-            setImageURL(imageURL)
-            setChallengeState(ChallengeStates.COUNTDOWN)
-            props.openCountDownModal()
-            props.startCountDown()
+            const { videoURL } = questionsContent
+            if (videoURL) {
+                videoController.setShowVideo(true)
+                setBackgroundType('video')
+            } else {
+                videoController.setShowVideo(false)
+                setImageURL(imageURL)
+                setBackgroundType('image')
+            }
+            setChallengeState(ChallengeStates.QUESTIONS)
         }
     }, [questionsContent])
 
     useEffect(() => {
-        if (props.status) {
-            setChallengeState(ChallengeStates.QUESTIONS)
-        }
-    }, [props.status])
+        videoController.setVideoVisible(backgroundType === 'video')
+    }, [backgroundType])
 
     // Back from fetchQuizzResult
     useEffect(() => {
@@ -260,19 +176,18 @@ function Challenge (props) {
         <EventLayout>
             {isLoading
                 ? null
-                : <InnerHeightLayout ref={layoutRef} className={classes.containerGlobal}>
+                : <React.Fragment>
                     {getChallengeContent(challengeState)}
-                    {challengeState === ChallengeStates.QUESTIONS
-                        ? <Box className={classes.gradient}/>
-                        : null}
-                    <LazyImage style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, minHeight: height, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>
-                </InnerHeightLayout>
+                    { challengeState === ChallengeStates.RESULT && <Box className='backgroundGradientByTheme' style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.60) 100%)' }} />}
+                    {backgroundType === 'image' &&
+                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
+                </React.Fragment>
             }
         </EventLayout>
     )
 }
 
-export default hasCountDownModal(Challenge)
+export default Challenge
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()

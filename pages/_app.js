@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
 import 'react-phone-input-2/lib/style.css'
-import 'typeface-roboto'
 import UserContext from '../components/UserContext'
 import DataProvider from '../data/dataProvider'
-import ScoreService from '../data/scoreServices'
-import Progress from '../components/progress'
+import GameStatsService from '../data/gameStats'
+import UiElementsServices from '../data/uiElements'
 import { useRouter } from 'next/router'
 import SplashScreen from '../components/splashScreen'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
+import Progress from '../components/progress'
+import VideoPlayer from '../components/ui/VideoPlayer'
+import useDeviceDetect from '../hooks/useDeviceDetect'
 
 function MyApp ({ Component, pageProps }) {
+    const deviceDetection = useDeviceDetect()
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
@@ -25,7 +28,18 @@ function MyApp ({ Component, pageProps }) {
     const [error, setError] = useState(false)
     const [eventName, setEventName] = useState('')
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
-    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData }
+    const player = useRef()
+    /* eslint-disable */
+    const [videoSource, setVideoSource] = useState('')
+    const [videoPoster, setVideoPoster] = useState('')
+    const [videoVisible, setVideoVisible] = useState(false)
+    const [videoAutoPlay, setVideoAutoPlay] = useState(true)
+    const [videoHasPlayed, setVideoPlayed] = useState(false)
+    const [showVideo, setShowVideo] = useState(false)
+    const [blurVideo, setBlurVideo] = useState(false)
+    /* eslint-enable */
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection }
     const router = useRouter()
 
     function startedCallBack () {
@@ -45,7 +59,22 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({ remp: { prefix: `rtsEvents/${shortName}` }, comscore: { prefix: `rtsEvents/${shortName}` } })
+            RTS.stats.send({
+                remp: {
+                    prefix: `rtschallenge`
+                },
+                comscore: {
+                    prefix: `rtschallenge`
+                },
+                tc: {
+                    navigation_environment:`preprod`,
+                    prefix:``,
+                    content_category_1:`rtschallenge`,
+                    content_category_2:`${shortName}`,
+                    navigation_app_sitename:`www.rts.ch`,
+                    navigation_level_0:``
+                }
+            })
             /* eslint-enable */
         } catch (e) {
             console.log('_app - Stats - ERROR', e)
@@ -66,7 +95,7 @@ function MyApp ({ Component, pageProps }) {
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])
 
-    // Each page should trigger loading false after his initizialisation throught the store.setLoading
+    // Each page should trigger loading false after his initialisation through the store.setLoading
     useEffect(() => {
         if (routeChange) {
             setLoading(true)
@@ -95,13 +124,22 @@ function MyApp ({ Component, pageProps }) {
     }, [])
 
     return (
-        <UserContext.Provider value={{ dataProvider: DataProvider, scoreService: ScoreService, store }}>
+        <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, uiElementsService: UiElementsServices, store }}>
             {(isLoading && !isGlobalLoading) && <Progress/> }
-            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
+            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
-            </ThemeProvider>}
+                <VideoPlayer
+                    ref={player}
+                    videoSource={videoSource}
+                    videoPoster={videoPoster}
+                    autoPlay={videoAutoPlay}
+                    showVideo={showVideo}
+                    blurVideo={blurVideo}
+                    style={{ visibility: videoVisible ? 'visible' : 'hidden' }}
+                />
+            </ThemeProvider> }
         </UserContext.Provider>
     )
 }

@@ -1,21 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Router, { withRouter } from 'next/router'
-import Avatar from '@material-ui/core/Avatar'
+import { withRouter } from 'next/router'
 import UserContext from '../UserContext'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import { ColorCard } from '../ui/ColorCard'
-import { ColorCardContent } from '../ui/ColorCardContent'
-import { ColorCardActions } from '../ui/ColorCardAction'
-import { useHeight } from '../../hooks/useHeight'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
-import CloseIcon from '@material-ui/icons/Close'
-import CheckIcon from '@material-ui/icons/Check'
-import { getTranslations } from '../../data/tools'
+import { ColorBorderButton } from '../ui/ColorBorderButton'
+import GiftResult from '../gifts/giftResult'
+import giftsModal from '../../hoc/hasGiftsModal'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
         justifyContent: 'flex-start'
     },
@@ -25,9 +20,8 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
         flex: 2,
         textAlign: 'center',
-        marginBottom: 50
+        marginBottom: 30
     },
-
     card: {
         minWidth: 275,
         minHeight: 200,
@@ -38,32 +32,29 @@ const useStyles = makeStyles({
         fontSize: '1.75rem',
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        color: theme.palette.secondary.main
     },
     subTitle: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem',
+        fontSize: '1.2rem',
         textAlign: 'center',
-        lineHeight: 1
+        lineHeight: 1,
+        color: theme.palette.secondary.main
 
     },
     secondCardTitle: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
         textAlign: 'center',
-        lineHeight: 1,
+        lineHeight: '1.8rem',
         marginBottom: 10,
-        marginTop: 20
-    },
-    secondCardSubTitle: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1,125rem',
-        lineHeight: 1,
-        marginBottom: 10
+        color: theme.palette.secondary.main
     },
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
-        fontSize: '1,125rem'
+        fontSize: '1,125rem',
+        color: theme.palette.secondary.main
     },
     secondCardButton: {
         width: '80vw',
@@ -113,15 +104,15 @@ const useStyles = makeStyles({
     },
     avatar: {
         width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
+        height: 100
     },
     winPointText: {
         fontFamily: 'srgssr-type-Bd',
-        color: 'black',
         fontSize: '2.5rem',
-        padding: '6px 20px'
+        padding: '6px 20px',
+        textAlign: 'center',
+        marginTop: '15vh',
+        color: theme.palette.secondary.main
     },
     iconType: {
         display: 'flex',
@@ -129,37 +120,26 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignSelf: 'center',
         fontSize: '40px'
-    }
-})
-const styles = {
-    containerOverlay: {
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        width: '100vw',
-        zIndex: 3
     },
-    containerImage: {
-        position: 'absolute',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%',
-        width: '100vw',
-        backgroundColor: 'gray',
-        filter: 'blur(4px)'
+    giftContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        borderRadius: '50px',
+        padding: '3px',
+        marginBottom: '10px',
+        maxWidth: '70vw',
+        flexDirection: 'column',
+        marginTop: '10px'
     }
-}
+}))
 
 function Result (props) {
-    const { points, score, message, success, hasAvailableChallenges } = props.content
+    const { points, success, gameStats, newUnlockedGifts } = props.content
     const classes = useStyles()
-    const [user, setUser] = useState({})
     const [translation, setTranslation] = useState([])
+    const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
-    const { dataProvider, store } = useContext(UserContext)
-    const { eventName } = store
-    const height = useHeight()
+    const { dataProvider, uiElementsService } = useContext(UserContext)
 
     async function continueGame () {
         setShowComponent(false)
@@ -168,76 +148,69 @@ function Result (props) {
 
     async function gotoDashBoard () {
         setShowComponent(false)
-        await Router.push('/[events]/dashBoard', `/${eventName}/dashBoard`)
+        props.gotoDashBoard()
+    }
+
+    function onStart () {
+        props.openModal()
+    }
+
+    function setGift (gift) {
+        props.setGift(gift)
     }
 
     useEffect(() => {
         setShowComponent(true)
         setTranslation(dataProvider.getTranslation())
-        setUser(dataProvider.getUser())
+        setUiElements(uiElementsService.getUiElements())
     }, [])
-
-    // TODO : remove this local translation
-    useEffect(() => {
-        translation.challengeResultButtonEnded = 'Voir vos scores du jour'
-    }, [translation])
 
     return (
         <Fade in={showComponent} timeout={500}>
-            <Box style={{ ...styles.containerOverlay, minHeight: height }} >
-                <ColorCard className={classes.card}>
-                    <ColorCardContent className={classes.content}>
-                        <Box className={classes.cardHeader}>
-                            <div className={classes.iconType}>
-                                <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                <Typography className={classes.cardHeaderSuccess}>
-                                    {`${score.success} ${getTranslations(score.success, translation, 'good')}`}
-                                </Typography>
-                            </div>
-                            <Avatar className={classes.avatar} src={user.avatarURL}/>
-                            <div className={classes.iconType}>
-                                <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                <Typography className={classes.cardHeaderWrong}>
-                                    {`${score.failure} ${getTranslations(score.failure, translation, 'wrong')}`}
-                                </Typography>
-                            </div>
-                        </Box>
-                        <Typography className={classes.title}>
-                            {success
-                                ? `${translation.challengeResultTitleGood} ${user.nickname}`
-                                : `${translation.challengeResultTitleWrong} ${user.nickname}`}
-                        </Typography>
-                        <Typography className={classes.subTitle}>
-                            {message}
-                        </Typography>
-                        {!hasAvailableChallenges && <Typography className={classes.secondCardTitle}>
-                            {translation.challengeResultInfoTitle}
-                        </Typography> }
-                    </ColorCardContent>
-                    <ColorCardActions className={classes.cardFooter}>
+            <Box className='content' >
+                <Box className='topZone'>
+                    <Box className={classes.content}>
                         <Typography className={classes.winPointText}>
-
-                            {hasAvailableChallenges
+                            {gameStats.hasAvailableChallenges
                                 ? success
-                                    ? `+ ${points} pts`
+                                    ? `+ ${points} pts` // TODO: Translation pts
                                     : `${points} pts`
-                                : `+ ${score.totalPoints} pts`
+                                : `+ ${gameStats.currentScore} pts`
                             }
-
                         </Typography>
-                    </ColorCardActions>
-                </ColorCard>
-                <Box className={classes.footer}>
-                    {hasAvailableChallenges
-                        ? <Box>
-                            <Button key={'gotoDashBoard'} color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                        <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
+                        <Typography className={[classes.subTitle, 'bottom-3-rem'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        {!gameStats.hasAvailableChallenges &&
+                            <Typography
+                                className={classes.secondCardTitle}
+                                dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
+                        }
+                        {newUnlockedGifts.length
+                            ? <React.Fragment>
+                                <Typography className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
+                                <GiftResult
+                                    className={classes.giftContainer}
+                                    translation={translation.challengeResultGiftText}
+                                    gift={newUnlockedGifts}
+                                    onClick={onStart}
+                                    setGift={setGift}
+                                />
+                            </React.Fragment>
+                            : null
+                        }
+                    </Box>
+                </Box>
+                <Box className='bottomZone'>
+                    {gameStats.hasAvailableChallenges
+                        ? <React.Fragment>
+                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
-                            </Button>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={classes.button} onClick={continueGame}>
+                            </ColorBorderButton>
+                            <Button key={'continueGame'} color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
-                        </Box>
-                        : <Button color="primary" variant="contained" className={classes.button} onClick={gotoDashBoard}>
+                        </React.Fragment>
+                        : <Button color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
                             {`${translation.challengeResultButtonEnded}`}
                         </Button>
                     }
@@ -247,4 +220,4 @@ function Result (props) {
     )
 }
 
-export default withRouter(Result)
+export default giftsModal(withRouter(Result))

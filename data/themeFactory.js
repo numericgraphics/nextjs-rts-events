@@ -3,9 +3,14 @@ import { createMuiTheme } from '@material-ui/core'
 class ThemeFactory {
     constructor () {
         this.createdTheme = null
+        this.backgroundImageURL = null
         this.createTheme = this.createTheme.bind(this)
+        this.getCreatedTheme = this.getCreatedTheme.bind(this)
+        this.getBackgroundImageURL = this.getBackgroundImageURL.bind(this)
+        this.getDefaultTheme = this.getDefaultTheme.bind(this)
     }
 
+    // TODO - add theme typo json model (yvain) - (scratch/theme-typo-json)
     createTheme (importedTheme) {
         const { primary, primaryVariant, onPrimary, secondary, secondaryVariant, onSecondary, background, error, onError, backgroundImageURL } = importedTheme
         const palette = {
@@ -20,33 +25,48 @@ class ThemeFactory {
                 contrastText: onSecondary
             },
             background: {
+                // default: 'black'
                 default: background
             },
             error: {
                 main: error,
                 contrastText: onError
+            },
+            action: {
+                disabledBackground: 'gray',
+                disabled: 'white'
             }
         }
         // eslint-disable-next-line no-unused-vars
         const overrides = {
             MuiCssBaseline: {
                 '@global': {
-                    body: {
+                    /* body: {
                         backgroundImage: `url(${backgroundImageURL})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: 'auto 100%',
                         opacity: 1
+                    }, */
+                    a: {
+                        color: palette.primary.contrastText + '!important'
                     }
                 }
             }
         }
-        this.createdTheme = createMuiTheme({ palette })
+
+        this.backgroundImageURL = backgroundImageURL
+        console.log('palette', palette)
+        this.createdTheme = createMuiTheme({ palette, overrides })
         return this.createdTheme
     }
 
     getCreatedTheme () {
         return this.createdTheme
+    }
+
+    getBackgroundImageURL () {
+        return this.backgroundImageURL
     }
 
     getDefaultTheme () {
@@ -77,29 +97,3 @@ class ThemeFactory {
 const ThemeFactoryInstance = new ThemeFactory()
 
 export default ThemeFactoryInstance
-
-
-/*
-accentColor: "#00A8C7"
-actionColor: "#AF001E"
-background: "#006978"
-backgroundColor: "#F0F0F0"
-backgroundImageURL: "https://storage.pixteller.com/designs/designs-images/2019-03-27/05/simple-background-backgrounds-passion-simple-1-5c9b95c3a34f9.png"
-cardColor: "#FFFFFE"
-error: "#FF0000"
-foregroundAccentColor: "#333333"
-foregroundActionColor: "#FFFFFF"
-foregroundCardColor: "#382929"
-foregroundColor: "#222222"
-onBackground: "#B6FFAC"
-onError: "#FFFFFF"
-onPrimary: "#FFFFFE"
-onSecondary: "#FFFDFD"
-onSurface: "#000000"
-primary: "#C62828"
-primaryVariant: "#F05545"
-secondary: "#0097A7"
-secondaryVariant: "#56C8D8"
-surface: "#EAEAEA"
-
-*/

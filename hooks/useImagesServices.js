@@ -2,59 +2,67 @@ import { useState, useEffect } from 'react'
 
 export function useImagesServices (eventData) {
     const [isImagesPreLoaded, setImagePreLoaded] = useState(false)
-    const refArray = ['.jpg', '.png', '.jpeg']
-    const imagesArray = []
+    const [counter, setCounter] = useState(0)
+    const [numImageToPreload, setNumImageToPreload] = useState(-1)
+    const refArray = ['.jpg', '.png', '.jpeg', '.image?']
+    let imagesArray = []
 
-    function getAllImagesFromJSON (data) {
-        let found = false
+    function getAllImagesFromJSON (data, dataArray) {
         for (const i in data) {
             if (typeof data[i] === 'object') {
-                getAllImagesFromJSON(data[i])
-                if (found) {
-                    break
-                }
+                getAllImagesFromJSON(data[i], dataArray)
             } else {
                 if (refArray.some(substring => String(data[i]).includes(substring))) {
-                    imagesArray.push(data[i])
-                    found = true
-                    break
+                    dataArray.push(data[i])
                 }
             }
         }
-
-        return imagesArray
+        return dataArray
     }
 
     function preloadImages (images) {
-        let i = 0
-        let counter = 0
-        function completed () {
-            counter++
-            if (counter === images.length) {
-                setImagePreLoaded(true)
-                counter = 0
-                i = 0
-            }
+        if (images.length < 1) {
+            setImagePreLoaded(true)
         }
-        function error () {
-            console.log('IMAGE PRELOADED ERROR')
-            counter++
+        images.map(image => loadImage(image))
+    }
+
+    function loadImage (url) {
+        const img = new Image()
+
+        function callBack () {
+            setCounter(counter => counter + 1)
+            cleanup()
         }
-        function load () {
-            for (i = 0; i < images.length; i++) {
-                const image = new Image()
-                image.onerror = error
-                image.onload = completed
-                image.src = images[i]
-            }
+
+        function onerror (e) {
+            callBack()
+            console.log('IMAGE PRELOADED ERROR', e)
         }
-        load()
+
+        function cleanup () {
+            img.removeEventListener('load', callBack)
+            img.removeEventListener('error', onerror)
+        }
+
+        img.addEventListener('load', callBack)
+        img.addEventListener('error', onerror)
+        img.src = url
     }
 
     useEffect(() => {
         if (Object.keys(eventData).length !== 0) {
-            preloadImages(getAllImagesFromJSON(eventData))
+            imagesArray = getAllImagesFromJSON(eventData, [])
+            setNumImageToPreload(imagesArray.length)
+            preloadImages(imagesArray)
         }
     }, [eventData])
+
+    useEffect(() => {
+        if (counter === numImageToPreload) {
+            setImagePreLoaded(true)
+        }
+    }, [counter, numImageToPreload])
+
     return isImagesPreLoaded
 }

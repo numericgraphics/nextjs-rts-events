@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
+import Checkbox from '@material-ui/core/Checkbox'
 import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { useTheme } from '@material-ui/core/styles'
@@ -10,34 +11,44 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import UserContext from '../components/UserContext'
 import Button from '@material-ui/core/Button'
-import ReactCodeInput from 'react-code-input'
+import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
+import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
-    modalContent: {
+    modalContainer: {
         display: 'flex',
         flexDirection: 'column',
-        width: '90vw',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    modalContent: {
+        position: 'absolute',
+        display: 'flex',
+        flexDirection: 'column',
+        width: '95%',
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#EAEAEA',
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.secondary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
     containerTitle: {
         position: 'relative',
-        paddingBottom: 12
+        paddingBottom: 30
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.25em',
-        letterSpacing: '0em'
+        letterSpacing: '0em',
+        lineHeight: 1.4
     },
     button: {
         position: 'relative',
@@ -50,43 +61,89 @@ const useStyles = makeStyles(() => ({
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             border: 'none'
+        },
+        '& .a': {
+            color: 'black'
         }
     },
     textFieldContainer: {
-        padding: 20,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
 
+    },
+    dropDown: {
+        textAlign: 'left',
+        maxWidth: '50vw',
+        color: 'black'
+    },
+    dropDownDisabled: {
+        textAlign: 'left',
+        maxWidth: '50vw',
+        color: 'grey',
+        backgroundColor: 'grey'
+    },
+    CGUContent: {
+        display: 'flex',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        textAlign: 'left'
+    },
+    CGUBox: {
+        color: 'rgba(0,0,0, 0)!important',
+        stroke: theme.palette.secondary.contrastText,
+        padding: '12px 15px 12px 0px'
+    },
+    CGUBoxCheck: {
+        color: 'rgba(0,0,0, 0)!important',
+        stroke: theme.palette.secondary.contrastText
+    },
+    CGU: {
+        width: '100%',
+        marginTop: 30
+    },
+    CGUText: {
+        fontSize: '0.9rem!important',
+        letterSpacing: '0.00238em',
+        lineHeight: 1.2
+    },
+    link: {
+        color: theme.palette.secondary.contrastText,
+        lineHeight: '1.1rem',
+        textDecoration: 'underline'
+    },
+    container: {
+        width: '80%',
+        minWidth: 173
+    },
+    iconClass: {
+        height: 'unset'
     }
 }))
-const ModalStates = Object.freeze({
-    PHONE_NUMBER: 'phoneNumber',
-    NUMBER_RECEIVE: 'numberReceive',
-    LOADING: 'loading',
-    ERROR: 'error'
-})
-
 const styles = {
-    caseStyle: {
-        width: '42px',
-        height: '48px',
-        margin: '4px',
-        paddingLeft: '12px',
-        fontFamily: 'srgssr-type-Bd',
-        color: '#020202',
-        fontSize: '1.125rem'
-    },
     textField: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.125rem',
         color: '#020202',
         border: 'none',
         width: '100%',
-        backgroundColor: 'white'
+        height: 'auto',
+        backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem'
     }
 }
+
+const ModalStates = Object.freeze({
+    PHONE_NUMBER: 'phoneNumber',
+    NUMBER_RECEIVE: 'numberReceive',
+    LOADING: 'loading',
+    ERROR: 'error'
+})
 
 const hasLoginModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
@@ -96,31 +153,66 @@ const hasLoginModal = WrappedComponent => {
         const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
+        const uiElement = dataProvider.getUiElements()
+        const { agreementsChunks } = uiElement
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
-        const [disabled, setDisabled] = useState(true)
+        const [code, setCode] = useState()
+        const smsSubmit = useRef()
+        const [checked, setChecked] = useState(false)
+        const [phoneVerif, setPhoneVerif] = useState(false)
+
+        function phoneVerification (data) {
+            const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
+            const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+            const belgiumReg = /^(\+32)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+            const italianReg = /^(\+39)(\d{3})(\d{7})$/
+            const liechtensteinReg = /^(\+423)(\d{3})(\d{3})(\d{3})(\d{3})$/
+
+            data = '+' + data
+            if ((swissReg.test(data)) || (franceReg.test(data)) || (belgiumReg.test(data)) || (italianReg.test(data)) || liechtensteinReg.test(data)) {
+                setPhoneVerif(true)
+            } else {
+                setPhoneVerif(false)
+            }
+        }
+        const [counter, setCounter] = useState(0)
 
         const handleOpen = () => {
             setOpen(true)
         }
 
         useEffect(() => {
+            if (agreementsChunks === undefined || agreementsChunks.length === 0) {
+                setChecked(false)
+            }
             setTranslation(dataProvider.getTranslation())
         }, [])
 
         useEffect(() => {
-            setDisabled(userData.phone.length === 0)
-        }, [userData.phone])
+            if (code) {
+                setUserData(Object.assign({}, userData, { code: code }))
+            }
+        }, [code])
 
         useEffect(() => {
-            setDisabled(userData.code.length === 0)
-        }, [userData.code])
+            if (agreementsChunks && agreementsChunks.length > 0) {
+                setChecked(counter !== agreementsChunks.length)
+            }
+        }, [counter])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
             setUserData({ phone: '', code: '', error: '' })
             setOpen(false)
+            setChecked(false)
+            setPhoneVerif(false)
+            setCounter(0)
+        }
+
+        function checkBoxes (event) {
+            setCounter(counter => event.target.checked ? counter + 1 : counter - 1)
         }
 
         function OpenModal () {
@@ -135,9 +227,15 @@ const hasLoginModal = WrappedComponent => {
             }, 5000)
         }
 
+        function KeyCheck (event) {
+            var KeyID = event.keyCode
+            if (KeyID === 13) {
+                smsSubmit.current.focus()
+            }
+        }
+
         async function handleSubmitPhoneNumber (event) {
             event.preventDefault()
-            setDisabled(true)
             setUserData({ ...userData, error: '' })
             setLoginState(ModalStates.LOADING)
             const phone = userData.phone
@@ -198,7 +296,7 @@ const hasLoginModal = WrappedComponent => {
                 setUserData({ ...userData, error: error.message })
             }
         }
-        // TODO :  add translation for envoyer
+
         // TODO :  add error message centered and with right design
         function getLoginContent (state) {
             switch (state) {
@@ -207,21 +305,16 @@ const hasLoginModal = WrappedComponent => {
                     <Box className={classes.containerTitle}>
                         <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
-                    <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitNumberReceive}>
-                        <ReactCodeInput inputMode={'numeric'} type='number' fields={4} inputStyle={styles.caseStyle} className={classes.reactCodeInput} id="numberReceive" value={userData.code} onChange={(data) => {
-                            setUserData(
-                                Object.assign({}, userData, { code: data })
-                            )
-                        }
-                        } name={'login'}/>
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled}>
-                            Envoyer
+                    <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
+                        <SmsInput onChange={ setCode } />
+                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
+                            {translation.send}
                         </Button>
                     </form>
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress />
+                    <CircularProgress style={{ color: theme.palette.secondary.contrastText }}/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
@@ -231,12 +324,13 @@ const hasLoginModal = WrappedComponent => {
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
                             inputProps={ { style: styles.textField } }
+                            dropdownClass={classes.dropDown}
+                            containerClass={classes.container}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
                                 autoFocus: true,
-                                enableSearch: true,
-                                style: styles.textField
+                                enableSearch: true
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
@@ -244,13 +338,30 @@ const hasLoginModal = WrappedComponent => {
                             placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
+                                phoneVerification(data)
                                 setUserData(
                                     Object.assign({}, userData, { phone: data })
                                 )
-                            } }
+                            }
+                            }
+                            onKeyDown={KeyCheck}
                         />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={disabled} >
-                            Envoyer
+                        <Box className={classes.CGU}>
+                            {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
+                                return (
+                                    <Box key={index} className={classes.CGUContent}>
+                                        <Checkbox
+                                            classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                            icon={uncheckedBoxIcon({ className: classes.iconClass })}
+                                            checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
+                                            onChange={checkBoxes} />
+                                        <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
+                                    </Box>
+                                )
+                            })}
+                        </Box>
+                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
+                            {translation.send}
                         </Button>
                     </form>
                 </Box>
@@ -261,31 +372,30 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             }
         }
-
         return (
-            <Box>
+            <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
+
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    className={classes.modal}
+                    className={'containerModal'}
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                        timeout: 500,
-                        style: {
-                            backgroundColor: theme.palette.secondary.main,
-                            opacity: '0.8'
-                        }
+                        timeout: 500
                     }}
                 >
                     <Fade in={open}>
-                        {getLoginContent(loginState)}
+                        <Box className={classes.modal} >
+                            {getLoginContent(loginState)}
+                        </Box>
                     </Fade>
                 </Modal>
-            </Box>
+
+            </React.Fragment>
         )
     }
 }

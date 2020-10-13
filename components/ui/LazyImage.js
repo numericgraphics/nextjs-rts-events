@@ -18,7 +18,7 @@ function LazyImage (props) {
     const classes = useStyles()
 
     return (
-        <Box ref={imageRef} {...props} className={classes.imageAnim}/>
+        <Box ref={imageRef} {...props} className={[props.className, classes.imageAnim].join(' ')}/>
     )
 }
 

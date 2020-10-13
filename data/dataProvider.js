@@ -3,15 +3,15 @@ class DataProvider {
         this.data = {
             user: {},
             challenge: {},
-            challenges: [],
             gifts: [],
             promos: [],
             theme: {},
             timeControl: {},
             translation: {},
-            challengesStates: [],
             hasAvailableChallenges: true,
-            score: {}
+            gameStats: {},
+            uiElements: {},
+            startPageElements: []
         }
     }
 
@@ -23,8 +23,8 @@ class DataProvider {
         return this.data
     }
 
-    getScore () {
-        return this.data.score
+    getGameStats () {
+        return this.data.gameStats
     }
 
     getTheme () {
@@ -63,8 +63,16 @@ class DataProvider {
         return this.data.challengesStates
     }
 
+    getUiElements () {
+        return this.data.uiElements
+    }
+
+    getStartPageElements () {
+        return this.data.startPageElements
+    }
+
     hasAvailableChallenges () {
-        return this.data.hasAvailableChallenges
+        return this.data.gameStats.hasAvailableChallenges
     }
 }
 
