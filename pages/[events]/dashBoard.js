@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     backgroudGradientTopBottom: {
         background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important',
-        zIndex: 0
+        zIndex: -1
     },
     cardContent: {
         margin: '0px!important',
@@ -249,7 +249,7 @@ function DashBoard (props) {
                                     </React.Fragment>
                                 }
 
-                                {(uiElements.scoreChunk && uiElements.scoreChunk.replace(/[^\d]/g, '') !== '0')
+                                {(preCaching.currentScore && preCaching.currentScore !== 0)
                                     ? <ColorCard className={classes.colorCard}>
                                         <ColorCardContent className={classes.cardContent}>
                                             <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
@@ -258,10 +258,10 @@ function DashBoard (props) {
                                         </ColorCardContent>
                                     </ColorCard> : null
                                 }
-                                {parseInt(uiElements.successChunk) + parseInt(uiElements.failChunk) + parseInt(uiElements.sumChunk.replace(/[^\d]/g, '')) !== 0 &&
+                                {preCaching.uiSuccessCount + preCaching.uiFailedCount + preCaching.uiSumCount !== 0 &&
                                 <ColorCard className={classes.colorCard}>
                                     <ColorCardContent className={classes.cardContent}>
-                                        {(uiElements.sumChunk.replace(/[^\d]/g, '') !== '0') &&
+                                        {(preCaching.uiSumCount !== 0) &&
                                         <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                         </Typography>
