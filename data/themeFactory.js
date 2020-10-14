@@ -56,7 +56,6 @@ class ThemeFactory {
         }
 
         this.backgroundImageURL = backgroundImageURL
-        console.log('palette', palette)
         this.createdTheme = createMuiTheme({ palette, overrides })
         return this.createdTheme
     }
