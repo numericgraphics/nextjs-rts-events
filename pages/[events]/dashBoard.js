@@ -20,7 +20,6 @@ import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
-// import { ImportantDevices } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -133,13 +132,14 @@ function DashBoard (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
+    const [availableScores, setAvailableScores] = useState(false)
+    const [availableResults, setAvailableResults] = useState(false)
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
     const [progress, setProgress] = useState(0)
     const [gifts, setGifts] = useState()
     const [preCaching, setPreCaching] = useState([])
     const isImagesPreLoaded = useImagesServices(preCaching)
-    const [isPageReady, setPageReady] = useState(false)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
@@ -153,10 +153,7 @@ function DashBoard (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
-                dataProvider.setData(content)
-                gameStatsService.init(dataProvider)
-                uiElementsService.init(dataProvider)
-                setPageReady(true)
+                initGame(content)
             } else {
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
@@ -168,6 +165,15 @@ function DashBoard (props) {
         }
     }
 
+    // initialize the all game, with user information, score,
+    // result and start precaching service by sended gameStats with next imageChallengeUrl
+    function initGame (content) {
+        dataProvider.setData(content)
+        gameStatsService.init(dataProvider)
+        uiElementsService.init(dataProvider)
+        setPreCaching(dataProvider.getGameStats())
+    }
+
     function initPage () {
         setProgress(gameStatsService.getProgress())
         setUiElements(uiElementsService.getUiElements())
@@ -175,6 +181,8 @@ function DashBoard (props) {
         setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
+        setAvailableScores(dataProvider.getGameStats().currentScore > 0)
+        setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
     }
@@ -191,19 +199,14 @@ function DashBoard (props) {
         props.setGift(gift)
     }
 
-    useEffect(() => {
-        if (isPageReady) {
-            setPreCaching(dataProvider.getGameStats())
-        }
-    }, [isPageReady])
-
+    // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
         if (isImagesPreLoaded) {
             initPage()
         }
     }, [isImagesPreLoaded])
 
-    // check if the page was reloaded and  fetchData
+    // check if the page was reloaded and fetchData
     useEffect(() => {
         if (isGlobalLoading) {
             setEventData(eventData.content)
@@ -216,12 +219,11 @@ function DashBoard (props) {
 
     return (
         <EventLayout >
-            {!(!isLoading && !isGlobalLoading)
-                ? null
-                : <Box className='content' >
+            {!(isLoading && isGlobalLoading) &&
+                <Box className='content' >
                     <Box className='topZoneDashboard' >
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
-                            <React.Fragment>
+                        <Fade in={!isLoading} timeout={500}>
+                            <Box>
                                 <Box className={classes.header}>
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>
                                     <Typography className={[classes.nickname, 'bold-1-75'].join(' ')}>
@@ -248,80 +250,66 @@ function DashBoard (props) {
                                         </Typography>
                                     </React.Fragment>
                                 }
-
-                                {(preCaching.currentScore && preCaching.currentScore !== 0)
-                                    ? <ColorCard className={classes.colorCard}>
+                                {availableScores &&
+                                    <ColorCard className={classes.colorCard}>
                                         <ColorCardContent className={classes.cardContent}>
                                             <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
                                                 {uiElements.scoreChunk}
                                             </Typography>
                                         </ColorCardContent>
-                                    </ColorCard> : null
+                                    </ColorCard>
                                 }
-                                {preCaching.uiSuccessCount + preCaching.uiFailedCount + preCaching.uiSumCount !== 0 &&
-                                <ColorCard className={classes.colorCard}>
+                                {availableResults &&
+                                    <ColorCard className={classes.colorCard}>
+                                        <ColorCardContent className={classes.cardContent}>
+                                            <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
+                                                dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
+                                            </Typography>
+                                            <Box className={classes.rateBox}>
+                                                <Box className={classes.goodRateBox}>
+                                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <Typography className={classes.rateText}>
+                                                        {uiElements.successChunk}
+                                                    </Typography>
+                                                </Box>
+                                                <Box className={classes.badRateBox}>
+                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <Typography className={classes.rateText}>
+                                                        {uiElements.failChunk}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                        </ColorCardContent>
+                                    </ColorCard>
+                                }
+                                <ColorCard>
                                     <ColorCardContent className={classes.cardContent}>
-                                        {(preCaching.uiSumCount !== 0) &&
-                                        <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
-                                            dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
-                                        </Typography>
-                                        }
-                                        {parseInt(uiElements.successChunk) + parseInt(uiElements.failChunk) !== 0 &&
-                                        <Box className={classes.rateBox}>
-                                            <Box className={classes.goodRateBox}>
-                                                <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                                <Typography className={classes.rateText}>
-                                                    {uiElements.successChunk}
-                                                </Typography>
-                                            </Box>
-                                            <Box className={classes.badRateBox}>
-                                                <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                                <Typography className={classes.rateText}>
-                                                    {uiElements.failChunk}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
+                                        { gifts && gifts.length === 1
+                                            ? <GiftResult
+                                                translation={translation.challengeResultGiftText}
+                                                gift={gifts}
+                                                onClick={onStart}
+                                                setGift={setGift} />
+                                            : <GiftsBox
+                                                gifts={gifts}
+                                                translation={translation.dashBoardGiftTitle}
+                                                onClick={onStart}
+                                                setGift={setGift} />
                                         }
                                     </ColorCardContent>
                                 </ColorCard>
-                                }
-                            </React.Fragment>
-                        </Fade>
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
-                            <ColorCard>
-                                <ColorCardContent className={classes.cardContent}>
-                                    { gifts && gifts.length === 1
-                                        ? <GiftResult
-                                            translation={translation.challengeResultGiftText}
-                                            gift={gifts}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                        : <GiftsBox
-                                            gifts={gifts}
-                                            translation={translation.dashBoardGiftTitle}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                    }
-                                </ColorCardContent>
-                            </ColorCard>
+                            </Box>
                         </Fade>
                     </Box>
                     <Box className={'bottomZoneDashboard'} >
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
-                            {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
-                            {/*    {`${translation.dashBoardSharingButton}`} */}
-                            {/* </ColorBorderButton> */}
+                        <Fade in={!isLoading} timeout={500}>
                             <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {(!isLoading && !isGlobalLoading) &&
-                    <Box className={[classes.backgroudGradientTopBottom, 'backgroundGradientTopBottom'].join(' ')} />
-                    }
-                    <React.Fragment>
-                        <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
-                    </React.Fragment>
+                    {!isLoading && <Box className={'backgroundGradientTopBottom'} />}
+                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>
