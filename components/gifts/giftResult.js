@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginLeft: '5px',
         marginRight: '15px',
         lineHeight: 1,
-        color: 'black'
+        color: theme.palette.secondary.contrastText
     },
     giftIcon: {
         fill: theme.palette.primary.contrastText,
@@ -61,7 +61,11 @@ const useStyles = makeStyles((theme = useTheme) => ({
         boxShadow: 'none!important',
         height: '100%',
         width: '100%',
-        zIndex: 1
+        zIndex: 1,
+        '&:hover':
+            {
+                backgroundColor: theme.palette.secondary.dark
+            }
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box

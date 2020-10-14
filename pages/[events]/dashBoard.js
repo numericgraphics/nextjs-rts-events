@@ -21,94 +21,102 @@ import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme = useTheme) => ({
     header: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        padding: '10px 30px',
+        padding: '0px 30px',
         maxHeight: 200,
-        textAlign: 'center'
+        textAlign: 'center',
+        alignItems: 'center'
     },
-    title: {
+    nickname: {
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 10
+        marginBottom: 10,
+        color: theme.palette.secondary.contrastText
     },
     avatar: {
-        width: '5rem',
-        height: '5rem',
+        width: '6rem',
+        height: '6rem',
+        marginBottom: 10,
         zIndex: 2
     },
     rateIcon: {
         display: 'inline',
         width: '1rem',
         height: '1rem',
-        marginRight: '0.1rem'
+        marginRight: '0.2rem'
     },
-    cardAvatarHeader: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    cardAvatarHeaderData: {
-        position: 'relative',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        paddingLeft: '10px',
-        paddingRight: '10px'
-    },
-    cardAvatarHeaderBG: {
-        position: 'absolute',
-        width: '100%',
-        height: '4rem',
-        borderRadius: '10px',
-        zIndex: 1
-    },
-    cardFooter: {
-        width: '100%'
-    },
-    cardHeaderSide: {
-        flex: 1,
-        zIndex: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-    cardHeaderLeftSideText: {
+    rateText: {
         alignSelf: 'left',
         textAlign: 'left',
         display: 'flex',
         flexWrap: 'wrap',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    cardHeaderRightSideText: {
+    scoreChunkText: {
         alignSelf: 'flex-end',
-        lineHeight: '1.5rem',
-        textAlign: 'end'
+        textAlign: 'center',
+        width: '100%',
+        color: theme.palette.secondary.contrastText
     },
     textRegularCenter: {
-        textAlign: 'center'
+        textAlign: 'center',
+        color: theme.palette.secondary.contrastText
     },
     textRegularCenterOverlay: {
         position: 'absolute',
         zIndex: 2,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: theme.palette.secondary.contrastText
     },
     progressBarOverlay: {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginBottom: 10
+    },
+    rateBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 10
+    },
+    goodRateBox: {
+        width: '50%',
+        backgroundColor: '#00B445',
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center'
+    },
+    badRateBox: {
+        width: '50%',
+        backgroundColor: '#FF0000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    colorCard: {
+        marginBottom: 5
+    },
+    remainingTime: {
+        color: theme.palette.secondary.contrastText
+    },
+    backgroudGradientTopBottom: {
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important',
+        zIndex: -1
+    },
+    cardContent: {
+        margin: '0px!important',
+        padding: '10px!important'
     }
-})
+}))
 const styles = {
     containerImage: {
         backgroundRepeat: 'no-repeat',
@@ -124,17 +132,17 @@ function DashBoard (props) {
     const classes = useStyles()
     const [user, setUser] = useState({})
     const [availableChallenges, setAvailableChallenges] = useState(true)
+    const [availableScores, setAvailableScores] = useState(false)
+    const [availableResults, setAvailableResults] = useState(false)
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
     const [progress, setProgress] = useState(0)
     const [gifts, setGifts] = useState()
     const [preCaching, setPreCaching] = useState([])
     const isImagesPreLoaded = useImagesServices(preCaching)
-    const [isPageReady, setPageReady] = useState(false)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
-    const theme = useTheme()
 
     async function fetchData () {
         try {
@@ -145,10 +153,7 @@ function DashBoard (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
-                dataProvider.setData(content)
-                gameStatsService.init(dataProvider)
-                uiElementsService.init(dataProvider)
-                setPageReady(true)
+                initGame(content)
             } else {
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
@@ -160,6 +165,15 @@ function DashBoard (props) {
         }
     }
 
+    // initialize the all game, with user information, score,
+    // result and start precaching service by sended gameStats with next imageChallengeUrl
+    function initGame (content) {
+        dataProvider.setData(content)
+        gameStatsService.init(dataProvider)
+        uiElementsService.init(dataProvider)
+        setPreCaching(dataProvider.getGameStats())
+    }
+
     function initPage () {
         setProgress(gameStatsService.getProgress())
         setUiElements(uiElementsService.getUiElements())
@@ -167,6 +181,8 @@ function DashBoard (props) {
         setGifts(dataProvider.getGifts())
         setUser(dataProvider.getUser())
         setAvailableChallenges(dataProvider.hasAvailableChallenges())
+        setAvailableScores(dataProvider.getGameStats().currentScore > 0)
+        setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
     }
@@ -183,19 +199,14 @@ function DashBoard (props) {
         props.setGift(gift)
     }
 
-    useEffect(() => {
-        if (isPageReady) {
-            setPreCaching(dataProvider.getGameStats())
-        }
-    }, [isPageReady])
-
+    // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
         if (isImagesPreLoaded) {
             initPage()
         }
     }, [isImagesPreLoaded])
 
-    // check if the page was reloaded and  fetchData
+    // check if the page was reloaded and fetchData
     useEffect(() => {
         if (isGlobalLoading) {
             setEventData(eventData.content)
@@ -208,94 +219,96 @@ function DashBoard (props) {
 
     return (
         <EventLayout >
-            {isLoading && isGlobalLoading
-                ? null
-                : <Box className='content' >
-                    <Box className='topZone' >
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={1200}>
-                            <Box className={classes.header}>
-                                <Typography
-                                    className={['bold-1-25', 'color-White', 'lineSpacing-1-2', 'bottom-0-5-rem'].join(' ')}
-                                    align={'center'}
-                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadTitle }}/>
-                                <Typography
-                                    className={['regular-1', 'color-White', 'lineSpacing-1-2'].join(' ')}
-                                    align={'center'}
-                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
-                            </Box>
-                        </Fade>
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={1000}>
-                            <ColorCard>
-                                <ColorCardContent className='cardContent'>
-                                    <Box className={classes.cardAvatarHeader} >
-                                        <Box className={[classes.cardAvatarHeaderData, 'bottom-1-rem'].join(' ')} >
-                                            <Box className={classes.cardHeaderSide}>
-                                                <Typography className={[classes.cardHeaderLeftSideText, 'regular-0-825'].join(' ')}>
-                                                    <CheckIcon className={classes.rateIcon} />
-                                                    {uiElements.successChunk}
-                                                </Typography>
-                                                <Typography className={[classes.cardHeaderLeftSideText, 'regular-0-825'].join(' ')}>
-                                                    <CloseIcon className={classes.rateIcon} />
-                                                    {uiElements.failChunk}
-                                                </Typography>
-                                            </Box>
-                                            <Avatar className={classes.avatar} src={user.avatarURL}/>
-                                            <Box className={classes.cardAvatarHeaderBG} style={{ backgroundColor: theme.palette.secondary.light }}/>
-                                            <Box className={classes.cardHeaderSide}>
-                                                <Typography className={[classes.cardHeaderRightSideText, 'bold-1-5'].join(' ')}>
-                                                    {uiElements.scoreChunk}
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                    </Box>
-                                    <Typography className={[classes.title, 'bold-1-75'].join(' ')}>
+            {!(isLoading && isGlobalLoading) &&
+                <Box className='content' >
+                    <Box className='topZoneDashboard' >
+                        <Fade in={!isLoading} timeout={500}>
+                            <Box>
+                                <Box className={classes.header}>
+                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                    <Typography className={[classes.nickname, 'bold-1-75'].join(' ')}>
                                         {user.nickname}
                                     </Typography>
-                                    <Box className={classes.cardFooter}>
-                                        {availableChallenges
-                                            ? <Box className={classes.progressBarOverlay}>
-                                                <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
-                                                    {uiElements.progressBarMessageChunk}
-                                                </Typography>
-                                                <DashBoardChallengesProgress variant="determinate" progress={progress} />
-                                            </Box>
-                                            : <React.Fragment>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
-                                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                                </Typography>
-                                                <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
-                                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                                </Typography>
-                                            </React.Fragment>
-                                        }
+                                    <Typography
+                                        className={[classes.remainingTime, 'regular-1', 'lineSpacing-1-2'].join(' ')}
+                                        align={'center'}
+                                        dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
+                                </Box>
+                                {availableChallenges
+                                    ? <Box className={classes.progressBarOverlay}>
+                                        <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
+                                            {uiElements.progressBarMessageChunk}
+                                        </Typography>
+                                        <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                     </Box>
-                                    { gifts && gifts.length === 1
-                                        ? <GiftResult
-                                            translation={translation.challengeResultGiftText}
-                                            gift={gifts}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                        : <GiftsBox
-                                            gifts={gifts}
-                                            translation={translation.dashBoardGiftTitle}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                    }
-                                </ColorCardContent>
-                            </ColorCard>
+                                    : <React.Fragment>
+                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                            dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
+                                        </Typography>
+                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                            dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
+                                        </Typography>
+                                    </React.Fragment>
+                                }
+                                {availableScores &&
+                                    <ColorCard className={classes.colorCard}>
+                                        <ColorCardContent className={classes.cardContent}>
+                                            <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
+                                                {uiElements.scoreChunk}
+                                            </Typography>
+                                        </ColorCardContent>
+                                    </ColorCard>
+                                }
+                                {availableResults &&
+                                    <ColorCard className={classes.colorCard}>
+                                        <ColorCardContent className={classes.cardContent}>
+                                            <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
+                                                dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
+                                            </Typography>
+                                            <Box className={classes.rateBox}>
+                                                <Box className={classes.goodRateBox}>
+                                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <Typography className={classes.rateText}>
+                                                        {uiElements.successChunk}
+                                                    </Typography>
+                                                </Box>
+                                                <Box className={classes.badRateBox}>
+                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <Typography className={classes.rateText}>
+                                                        {uiElements.failChunk}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                        </ColorCardContent>
+                                    </ColorCard>
+                                }
+                                <ColorCard>
+                                    <ColorCardContent className={classes.cardContent}>
+                                        { gifts && gifts.length === 1
+                                            ? <GiftResult
+                                                translation={translation.challengeResultGiftText}
+                                                gift={gifts}
+                                                onClick={onStart}
+                                                setGift={setGift} />
+                                            : <GiftsBox
+                                                gifts={gifts}
+                                                translation={translation.dashBoardGiftTitle}
+                                                onClick={onStart}
+                                                setGift={setGift} />
+                                        }
+                                    </ColorCardContent>
+                                </ColorCard>
+                            </Box>
                         </Fade>
                     </Box>
-                    <Box className={'bottomZone'} >
-                        <Fade in={!isLoading && !isGlobalLoading} timeout={500}>
-                            {/* <ColorBorderButton variant="outlined" className={classes.button}> */}
-                            {/*    {`${translation.dashBoardSharingButton}`} */}
-                            {/* </ColorBorderButton> */}
+                    <Box className={'bottomZoneDashboard'} >
+                        <Fade in={!isLoading} timeout={500}>
                             <CustomDisabledButton color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {(!isLoading && !isGlobalLoading) && <Box className={'backgroundGradientTopBottom'} />}
+                    {!isLoading && <Box className={'backgroundGradientTopBottom'} />}
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
