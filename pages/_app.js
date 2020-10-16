@@ -90,7 +90,7 @@ function MyApp ({ Component, pageProps }) {
 
     // wait for preloading service and animated splashscreen
     useEffect(() => {
-        if (isImagesPreLoaded && isStartAnimationEnded) {
+        if (isImagesPreLoaded.ready && isStartAnimationEnded) {
             setIsEndedAnimationStart(true)
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])

@@ -201,7 +201,7 @@ function DashBoard (props) {
 
     // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
-        if (isImagesPreLoaded) {
+        if (isImagesPreLoaded.ready) {
             initPage()
         }
     }, [isImagesPreLoaded])

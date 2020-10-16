@@ -13,9 +13,11 @@
   "dependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
+    "canvas": "^2.6.1",
     "cookie": "0.4.1",
     "date-fns": "^2.14.0",
     "dotenv": "8.2.0",
+    "eslint-plugin-jest": "^24.1.0",
     "framer-motion": "^1.11.0",
     "gray-matter": "^4.0.2",
     "gsap": "^3.3.1",
@@ -35,12 +37,10 @@
     "remark-html": "^11.0.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.1.0",
-    "@testing-library/react": "^9.4.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/react-hooks": "^3.4.2",
     "babel-jest": "^25.1.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^25.5.4",
-    "react-test-renderer": "^16.12.0",
     "eslint": "^7.1.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
@@ -48,7 +48,10 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^4.2.5"
+    "husky": "^4.2.5",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^25.5.4",
+    "react-test-renderer": "^16.12.0"
   },
   "husky": {
     "hooks": {

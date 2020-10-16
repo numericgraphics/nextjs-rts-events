@@ -39,3 +39,39 @@ export function hexToRgbA (hex, A) {
     }
     throw new Error('Bad Hex')
 }
+
+export function getAllImagesFromJSON (data, results, refs) {
+    for (const i in data) {
+        if (typeof data[i] === 'object') {
+            getAllImagesFromJSON(data[i], results, refs)
+        } else {
+            if (refs.some(substring => String(data[i]).includes(substring))) {
+                results.push(data[i])
+            }
+        }
+    }
+    return results
+}
+
+export function loadImage (url, callBack) {
+    const img = new Image()
+
+    function onLoaded () {
+        callBack(true)
+        cleanup()
+    }
+
+    function onerror (e) {
+        callBack(false)
+        console.log('IMAGE PRELOADED ERROR', e)
+    }
+
+    function cleanup () {
+        img.removeEventListener('load', onLoaded, false)
+        img.removeEventListener('error', onerror, false)
+    }
+
+    img.addEventListener('load', onLoaded)
+    img.addEventListener('error', onerror)
+    img.src = url
+}
