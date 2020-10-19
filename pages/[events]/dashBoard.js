@@ -62,11 +62,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignSelf: 'flex-end',
         textAlign: 'center',
         width: '100%',
+        padding: '5px 0px 5px 0px',
         color: theme.palette.secondary.contrastText
     },
     textRegularCenter: {
         textAlign: 'center',
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.secondary.contrastText,
+        paddingBottom: 10
     },
     textRegularCenterOverlay: {
         position: 'absolute',
@@ -106,7 +108,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: 5
     },
     remainingTime: {
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.secondary.contrastText,
+        marginBottom: 10
     },
     backgroudGradientTopBottom: {
         background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)!important',
