@@ -136,6 +136,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
 
 function Result (props) {
     const { points, success, gameStats, newUnlockedGifts } = props.content
+    const { nextAvailableChallengeImageURL } = gameStats
     const classes = useStyles()
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
@@ -167,7 +168,7 @@ function Result (props) {
     }
 
     useEffect(() => {
-        preLoadImage(gameStats.nextAvailableChallengeImageURL, imagePreCacheCallBack)
+        preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
