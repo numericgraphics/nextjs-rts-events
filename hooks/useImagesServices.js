@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getAllImagesFromJSON, loadImage } from '../data/tools'
+import { getAllImagesFromJSON, preLoadImage } from '../data/tools'
 
 export function useImagesServices (eventData) {
     const [isImagesPreLoaded, setImagePreLoaded] = useState({})
@@ -18,7 +18,7 @@ export function useImagesServices (eventData) {
         if (images.length < 1) {
             setImagePreLoaded(prevState => ({ ...prevState, ready: true }))
         }
-        images.map(image => loadImage(image, loadingImageCallBack))
+        images.map(image => preLoadImage(image, loadingImageCallBack))
     }
 
     useEffect(() => {

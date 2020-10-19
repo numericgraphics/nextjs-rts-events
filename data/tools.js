@@ -53,7 +53,7 @@ export function getAllImagesFromJSON (data, results, refs) {
     return results
 }
 
-export function loadImage (url, callBack) {
+export function preLoadImage (url, callBack) {
     const img = new Image()
 
     function onLoaded () {
@@ -63,7 +63,7 @@ export function loadImage (url, callBack) {
 
     function onerror (e) {
         callBack(false)
-        console.log('IMAGE PRELOADED ERROR', e)
+        console.log('IMAGE PRE-CACHED ERROR', e)
     }
 
     function cleanup () {

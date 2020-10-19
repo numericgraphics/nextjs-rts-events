@@ -1,4 +1,4 @@
-import { getAllImagesFromJSON, loadImage } from '../data/tools'
+import { getAllImagesFromJSON, preLoadImage } from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
@@ -14,6 +14,6 @@ test('preload image', () => {
     })
     const url = 'https://cdn.rts.ch/rtschallengeassets/events/tdr/logo_les-defis-du-Tour.png'
     const mockCallBack = jest.fn()
-    loadImage(url, mockCallBack)
+    preLoadImage(url, mockCallBack)
     expect(mockCallBack).toHaveBeenCalled()
 })

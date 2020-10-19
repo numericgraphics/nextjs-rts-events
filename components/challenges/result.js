@@ -9,6 +9,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
+import { preLoadImage } from '../../data/tools'
 
 const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
@@ -159,10 +160,17 @@ function Result (props) {
         props.setGift(gift)
     }
 
+    function imagePreCacheCallBack (result) {
+        if (!result) {
+            console.log('IMAGE PRE-CACHED ERROR - RESULT COMPONENT')
+        }
+    }
+
     useEffect(() => {
-        setShowComponent(true)
+        preLoadImage(gameStats.nextAvailableChallengeImageURL, imagePreCacheCallBack)
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
+        setShowComponent(true)
     }, [])
 
     return (

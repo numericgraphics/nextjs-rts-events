@@ -172,6 +172,7 @@ function DashBoard (props) {
         gameStatsService.init(dataProvider)
         uiElementsService.init(dataProvider)
         setPreCaching(dataProvider.getGameStats())
+        console.log('test content', dataProvider.getGameStats())
     }
 
     function initPage () {
