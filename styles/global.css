@@ -338,6 +338,7 @@ content :   z-index = 0
 .bottomButton {
     font-size: 1.25rem!important;
     font-family: 'srgssr-type-Bd', sans-serif!important;
+    box-shadow: none!important;
 }
 
 .questionButton {

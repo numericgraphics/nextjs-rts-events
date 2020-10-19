@@ -109,12 +109,16 @@ const useStyles = makeStyles((theme = useTheme) => ({
         color: theme.palette.secondary.contrastText
     },
     backgroudGradientTopBottom: {
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)!important',
         zIndex: -1
     },
     cardContent: {
         margin: '0px!important',
         padding: '10px!important'
+    },
+    giftContent: {
+        paddingBottom: 10,
+        paddingTop: 10
     }
 }))
 const styles = {
@@ -262,7 +266,7 @@ function DashBoard (props) {
                                 {availableResults &&
                                     <ColorCard className={classes.colorCard}>
                                         <ColorCardContent className={classes.cardContent}>
-                                            <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
+                                            <Typography className={[classes.textRegularCenter, 'regular-1-25'].join(' ')}
                                                 dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                             </Typography>
                                             <Box className={classes.rateBox}>
@@ -284,18 +288,20 @@ function DashBoard (props) {
                                 }
                                 <ColorCard>
                                     <ColorCardContent className={classes.cardContent}>
-                                        { gifts && gifts.length === 1
-                                            ? <GiftResult
-                                                translation={translation.challengeResultGiftText}
-                                                gift={gifts}
-                                                onClick={onStart}
-                                                setGift={setGift} />
-                                            : <GiftsBox
-                                                gifts={gifts}
-                                                translation={translation.dashBoardGiftTitle}
-                                                onClick={onStart}
-                                                setGift={setGift} />
-                                        }
+                                        <Box className={classes.giftContent}>
+                                            { gifts && gifts.length === 1
+                                                ? <GiftResult
+                                                    translation={translation.challengeResultGiftText}
+                                                    gift={gifts}
+                                                    onClick={onStart}
+                                                    setGift={setGift} />
+                                                : <GiftsBox
+                                                    gifts={gifts}
+                                                    translation={translation.dashBoardGiftTitle}
+                                                    onClick={onStart}
+                                                    setGift={setGift} />
+                                            }
+                                        </Box>
                                     </ColorCardContent>
                                 </ColorCard>
                             </Box>
@@ -308,7 +314,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {!isLoading && <Box className={'backgroundGradientTopBottom'} />}
+                    {!isLoading && <Box className={[classes.backgroudGradientTopBottom, 'backgroundGradientTopBottom'].join(' ')} />}
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
