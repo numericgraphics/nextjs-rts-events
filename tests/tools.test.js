@@ -1,4 +1,4 @@
-import { getAllImagesFromJSON, preLoadImage } from '../data/tools'
+import { getAllImagesFromJSON, preLoadImage, phoneVerification } from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
@@ -16,4 +16,11 @@ test('preload image', () => {
     const mockCallBack = jest.fn()
     preLoadImage(url, mockCallBack)
     expect(mockCallBack).toHaveBeenCalled()
+})
+
+test('phone verification', () => {
+    const testSwissNumber = phoneVerification(41799116118)
+    const testWrongNumber = phoneVerification(23232)
+    expect(testSwissNumber).toBe(true)
+    expect(testWrongNumber).toBe(false)
 })
