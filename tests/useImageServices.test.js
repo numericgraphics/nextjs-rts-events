@@ -4,7 +4,7 @@ import * as tools from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('should precache image with useImagesServices', () => {
-    const mockLoadImage = jest.spyOn(tools, 'loadImage')
+    const mockLoadImage = jest.spyOn(tools, 'preLoadImage')
     const mockGetAllImages = jest.spyOn(tools, 'getAllImagesFromJSON')
     // eslint-disable-next-line standard/no-callback-literal
     tools.preLoadImage.mockImplementation((image, callback) => { callback(true) })
