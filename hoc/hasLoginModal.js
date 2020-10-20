@@ -122,6 +122,14 @@ const useStyles = makeStyles((theme) => ({
     },
     iconClass: {
         height: 'unset'
+    },
+    shakeMe: {
+        WebkitAnimationName: 'shake',
+        WebkitAnimationDuration: '0.82s',
+        WebkitAnimationTimingFunction: 'cubic-bezier(.36,.07,.19,.97)',
+        WebkitAnimationFillMode: 'both',
+        transform: 'translate3d(0, 0, 0)',
+        WebkitAnimationDelay: '1s'
     }
 }))
 const styles = {
@@ -337,7 +345,7 @@ const hasLoginModal = WrappedComponent => {
                                 return (
                                     <Box key={index} className={classes.CGUContent}>
                                         <Checkbox
-                                            classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                            classes={{ root: [classes.CGUBox, classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
                                             checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
                                             onChange={checkBoxes} />
