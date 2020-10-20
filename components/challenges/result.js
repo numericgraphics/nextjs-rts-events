@@ -168,7 +168,9 @@ function Result (props) {
     }
 
     useEffect(() => {
-        preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
+        if (nextAvailableChallengeImageURL) {
+            preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
+        }
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
