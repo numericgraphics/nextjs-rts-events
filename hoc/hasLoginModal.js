@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
+import { phoneVerification } from '../data/tools'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -162,21 +163,6 @@ const hasLoginModal = WrappedComponent => {
         const smsSubmit = useRef()
         const [checked, setChecked] = useState(false)
         const [phoneVerif, setPhoneVerif] = useState(false)
-
-        function phoneVerification (data) {
-            const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
-            const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
-            const belgiumReg = /^(\+32)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
-            const italianReg = /^(\+39)(\d{3})(\d{7})$/
-            const liechtensteinReg = /^(\+423)(\d{3})(\d{3})(\d{3})(\d{3})$/
-
-            data = '+' + data
-            if ((swissReg.test(data)) || (franceReg.test(data)) || (belgiumReg.test(data)) || (italianReg.test(data)) || liechtensteinReg.test(data)) {
-                setPhoneVerif(true)
-            } else {
-                setPhoneVerif(false)
-            }
-        }
         const [counter, setCounter] = useState(0)
 
         const handleOpen = () => {
@@ -338,7 +324,7 @@ const hasLoginModal = WrappedComponent => {
                             placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
-                                phoneVerification(data)
+                                setPhoneVerif(phoneVerification(data))
                                 setUserData(
                                     Object.assign({}, userData, { phone: data })
                                 )

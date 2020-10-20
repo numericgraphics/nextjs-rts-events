@@ -75,3 +75,18 @@ export function preLoadImage (url, callBack) {
     img.addEventListener('error', onerror)
     img.src = url
 }
+
+export function phoneVerification (data) {
+    const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
+    const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+    const belgiumReg = /^(\+32)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
+    const italianReg = /^(\+39)(\d{3})(\d{7})$/
+    const liechtensteinReg = /^(\+423)(\d{3})(\d{3})(\d{3})(\d{3})$/
+
+    data = '+' + data
+    if ((swissReg.test(data)) || (franceReg.test(data)) || (belgiumReg.test(data)) || (italianReg.test(data)) || liechtensteinReg.test(data)) {
+        return true
+    } else {
+        return false
+    }
+}
