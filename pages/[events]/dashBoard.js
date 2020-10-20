@@ -62,11 +62,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignSelf: 'flex-end',
         textAlign: 'center',
         width: '100%',
+        padding: '5px 0px 5px 0px',
         color: theme.palette.secondary.contrastText
     },
     textRegularCenter: {
         textAlign: 'center',
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.secondary.contrastText,
+        paddingBottom: 10
     },
     textRegularCenterOverlay: {
         position: 'absolute',
@@ -106,15 +108,16 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: 5
     },
     remainingTime: {
-        color: theme.palette.secondary.contrastText
-    },
-    backgroudGradientTopBottom: {
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, ' + theme.palette.secondary.dark + ' 100%)!important',
-        zIndex: -1
+        color: theme.palette.secondary.contrastText,
+        marginBottom: 10
     },
     cardContent: {
         margin: '0px!important',
         padding: '10px!important'
+    },
+    giftContent: {
+        paddingBottom: 10,
+        paddingTop: 10
     }
 }))
 const styles = {
@@ -262,7 +265,7 @@ function DashBoard (props) {
                                 {availableResults &&
                                     <ColorCard className={classes.colorCard}>
                                         <ColorCardContent className={classes.cardContent}>
-                                            <Typography className={[classes.textRegularCenter, 'regular-1-50'].join(' ')}
+                                            <Typography className={[classes.textRegularCenter, 'regular-1-25'].join(' ')}
                                                 dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                             </Typography>
                                             <Box className={classes.rateBox}>
@@ -284,18 +287,20 @@ function DashBoard (props) {
                                 }
                                 <ColorCard>
                                     <ColorCardContent className={classes.cardContent}>
-                                        { gifts && gifts.length === 1
-                                            ? <GiftResult
-                                                translation={translation.challengeResultGiftText}
-                                                gift={gifts}
-                                                onClick={onStart}
-                                                setGift={setGift} />
-                                            : <GiftsBox
-                                                gifts={gifts}
-                                                translation={translation.dashBoardGiftTitle}
-                                                onClick={onStart}
-                                                setGift={setGift} />
-                                        }
+                                        <Box className={classes.giftContent}>
+                                            { gifts && gifts.length === 1
+                                                ? <GiftResult
+                                                    translation={translation.challengeResultGiftText}
+                                                    gift={gifts}
+                                                    onClick={onStart}
+                                                    setGift={setGift} />
+                                                : <GiftsBox
+                                                    gifts={gifts}
+                                                    translation={translation.dashBoardGiftTitle}
+                                                    onClick={onStart}
+                                                    setGift={setGift} />
+                                            }
+                                        </Box>
                                     </ColorCardContent>
                                 </ColorCard>
                             </Box>
@@ -308,7 +313,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {!isLoading && <Box className={'backgroundGradientTopBottom'} />}
+                    {!isLoading && <Box className={'backgroundGradientTopBottomDashBoard'} />}
                     <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }

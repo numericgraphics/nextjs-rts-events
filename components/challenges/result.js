@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1,125rem',
+        textAlign: 'center',
         color: theme.palette.secondary.main
     },
     secondCardButton: {

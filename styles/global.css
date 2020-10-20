@@ -138,6 +138,15 @@ content :   z-index = 0
     z-index: -1;
 }
 
+.backgroundGradientTopBottomDashBoard {
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)!important;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
 .backgroundGradientTop {
     background: linear-gradient(to bottom,rgba(0,0,0,0.8)0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 100%);
     height: 100vh;
@@ -338,6 +347,7 @@ content :   z-index = 0
 .bottomButton {
     font-size: 1.25rem!important;
     font-family: 'srgssr-type-Bd', sans-serif!important;
+    box-shadow: none!important;
 }
 
 .questionButton {
@@ -402,6 +412,7 @@ content :   z-index = 0
     .backgroundGradientByTheme,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
+    .backgroundGradientTopBottomDashBoard,
     .backgroundGradientTop,
     .backgroundGradientBottomAspectRatio,
     .backgroundVideoPlayer,
@@ -456,6 +467,7 @@ content :   z-index = 0
     .backgroundGradientBottom,
     .backgroundGradientTop,
     .backgroundGradientTopBottom,
+    .backgroundGradientTopBottomDashBoard,
     .backgroundGradientBottomAspectRatio,
     .backgroundVideoPlayer,
     .bottomZone,
@@ -470,6 +482,7 @@ content :   z-index = 0
     .backgroundSlideShow,
     .backgroundGradientByTheme,
     .backgroundGradientTopBottom,
+    .backgroundGradientTopBottomDashBoard,
     .backgroundGradientTop,
     .backgroundGradientBottom {
         max-height: 100vh;
