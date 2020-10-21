@@ -4,7 +4,7 @@ import UserContext from '../components/UserContext'
 import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
 import EventLayout from '../components/eventLayout'
-import PromoPage from '../components/promos/promoPage'
+import StartPage from '../components/startPage/startPage'
 
 function Events (props) {
     const { eventData, router } = props
@@ -41,12 +41,11 @@ function Events (props) {
             setLoading(false)
         }
     }, [isGlobalLoading, isPageReady])
-
     return (
         <EventLayout>
             {isLoading
                 ? null
-                : <PromoPage/>
+                : <StartPage/>
             }
         </EventLayout>
     )

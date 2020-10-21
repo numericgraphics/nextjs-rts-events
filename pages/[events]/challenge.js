@@ -95,8 +95,8 @@ function Challenge () {
 
     // Callback for Result component to keep playing game
     function playGame () {
-        videoController.setShowVideo(false)
         setLoading(true)
+        videoController.setShowVideo(false)
         fetchQuestions().then()
     }
 
@@ -152,6 +152,7 @@ function Challenge () {
                 videoController.setShowVideo(true)
                 setBackgroundType('video')
             } else {
+                videoController.setShowVideo(false)
                 setImageURL(imageURL)
                 setBackgroundType('image')
             }

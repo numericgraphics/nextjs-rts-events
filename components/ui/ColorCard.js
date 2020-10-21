@@ -5,7 +5,8 @@ export const ColorCard = withStyles((theme) => ({
     root: {
         background: `${theme.palette.secondary.main}!important`,
         color: `${theme.palette.secondary.contrastText}!important`,
-        borderRadius: '16px',
+        // Changement du border Radius fait globalement depuis la révision de la dasboard. avant 16px
+        borderRadius: '6px',
         minHeight: '0px!important',
         boxShadow: 'none'
     }

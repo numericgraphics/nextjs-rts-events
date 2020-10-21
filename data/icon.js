@@ -47,6 +47,37 @@ export function medalIcon (props) {
     )
 }
 
+export function checkedBoxIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 25 25"{...props} >
+            <g id="Groupe_9595" data-name="Groupe 9595" transform="translate(-66 -604)">
+                <g id="Rectangle_2189" data-name="Rectangle 2189" transform="translate(66 604)" strokeWidth="2">
+                    <rect width="25" height="25" />
+                    <rect x="1" y="1" width="23" height="23" />
+                </g>
+                <g id="Illustration_47" data-name="Illustration 47" transform="translate(155.921 665.731)">
+                    <path id="Tracé_55107" data-name="Tracé 55107" d="M0,4.6l5.466,5.466L15.529,0" transform="translate(-84.8 -54.95)" strokeMiterlimit="10" strokeWidth="2"/>
+                </g>
+            </g>
+        </SvgIcon>
+    )
+}
+
+export function uncheckedBoxIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 25 25"{...props} >
+            <g id="Groupe_9595" data-name="Groupe 9595" transform="translate(-66 -604)">
+                <g id="Rectangle_2189" data-name="Rectangle 2189" transform="translate(66 604)" strokeWidth="2">
+                    <rect width="25" height="25" />
+                    <rect x="1" y="1" width="23" height="23" />
+                </g>
+                <g id="Illustration_47" data-name="Illustration 47" transform="translate(155.921 665.731)">
+                    <path id="Tracé_55107" data-name="Tracé 55107" d="M0,4.6l5.466,5.466L15.529,0" transform="translate(-84.8 -54.95)" strokeMiterlimit="10" strokeWidth="2" opacity="0.5"/>
+                </g>
+            </g>
+        </SvgIcon>
+    )
+}
 export function disabledMedalIcon (props) {
     return (
         <SvgIcon viewBox="0 0 34 34" {...props}>
@@ -78,6 +109,34 @@ export function closeIcon (props) {
                     <line id="Ligne_26" data-name="Ligne 26" x2="13.752" y2="13.752" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/>
                     <line id="Ligne_27" data-name="Ligne 27" y1="13.752" x2="13.752" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/>
                     <rect id="Rectangle_2168" data-name="Rectangle 2168" width="30" height="30" transform="translate(-8.24 -7.836)" fill="none" stroke="none" opacity="0.357"/>
+                </g>
+            </svg>
+        </SvgIcon>
+    )
+}
+
+export function ArrowIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 34 34" {...props}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+                <g transform="translate(-169 -621.385)">
+                    <rect width="40" height="40" transform="translate(169 621.385)" fill="none" opacity="0.291"/>
+                    <g transform="translate(1.5 1)">
+                        <path d="M.087,0,8.664,8.581,0,17.336"
+                            transform="translate(176.67 636.804) rotate(-90)"
+                            fill="rgba(255,255,255,0)"
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"/>
+                        <path d="M.087,0,8.664,8.581,0,17.336"
+                            transform="translate(176.67 646.878) rotate(-90)"
+                            fill="rgba(255,255,255,0)"
+                            stroke="#fff"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"/>
+                    </g>
                 </g>
             </svg>
         </SvgIcon>

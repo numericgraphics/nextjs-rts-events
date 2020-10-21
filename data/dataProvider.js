@@ -10,7 +10,8 @@ class DataProvider {
             translation: {},
             hasAvailableChallenges: true,
             gameStats: {},
-            uiElements: {}
+            uiElements: {},
+            startPageElements: []
         }
     }
 
@@ -64,6 +65,10 @@ class DataProvider {
 
     getUiElements () {
         return this.data.uiElements
+    }
+
+    getStartPageElements () {
+        return this.data.startPageElements
     }
 
     hasAvailableChallenges () {

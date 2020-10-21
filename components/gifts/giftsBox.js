@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme = useTheme) => ({
         maxWidth: '50px',
         maxHeight: '50px',
         backgroundColor: theme.palette.primary.main,
-        marginTop: 10
+        marginTop: 10,
+        '&:hover': {
+            backgroundColor: theme.palette.primary.dark
+        }
     },
     gifts: {
         display: 'flex',

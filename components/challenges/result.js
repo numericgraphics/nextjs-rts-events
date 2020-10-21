@@ -9,6 +9,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 import { ColorBorderButton } from '../ui/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
+import { preLoadImage } from '../../data/tools'
 
 const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
@@ -47,13 +48,14 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
         textAlign: 'center',
-        lineHeight: 1,
+        lineHeight: '1.8rem',
         marginBottom: 10,
         color: theme.palette.secondary.main
     },
     secondCardText: {
         fontFamily: 'srgssr-type-Rg',
         fontSize: '1,125rem',
+        textAlign: 'center',
         color: theme.palette.secondary.main
     },
     secondCardButton: {
@@ -135,6 +137,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
 
 function Result (props) {
     const { points, success, gameStats, newUnlockedGifts } = props.content
+    const { nextAvailableChallengeImageURL } = gameStats
     const classes = useStyles()
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
@@ -159,10 +162,19 @@ function Result (props) {
         props.setGift(gift)
     }
 
+    function imagePreCacheCallBack (result) {
+        if (!result) {
+            console.log('IMAGE PRE-CACHED ERROR - RESULT COMPONENT')
+        }
+    }
+
     useEffect(() => {
-        setShowComponent(true)
+        if (nextAvailableChallengeImageURL) {
+            preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
+        }
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
+        setShowComponent(true)
     }, [])
 
     return (
@@ -183,11 +195,11 @@ function Result (props) {
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
-                                dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle}  ${uiElements.noMoreChallengesChunk}` }}/>
+                                dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
                         }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
-                                <Typography className={classes.secondCardText}>Tu gagnes une recompense !</Typography>
+                                <Typography className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
                                 <GiftResult
                                     className={classes.giftContainer}
                                     translation={translation.challengeResultGiftText}
