@@ -123,6 +123,10 @@ const useStyles = makeStyles((theme) => ({
     iconClass: {
         height: 'unset'
     },
+    iconClassChecked: {
+        height: 'unset',
+        stroke: '#00FF14'
+    },
     shakeMe: {
         WebkitAnimationName: 'shake',
         WebkitAnimationDuration: '0.82s',
@@ -130,22 +134,11 @@ const useStyles = makeStyles((theme) => ({
         WebkitAnimationFillMode: 'both',
         transform: 'translate3d(0, 0, 0)',
         WebkitAnimationDelay: '1s'
+    },
+    phoneInputBorder: {
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
     }
 }))
-const styles = {
-    textField: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.125rem',
-        color: '#020202',
-        border: 'none',
-        width: '100%',
-        height: 'auto',
-        backgroundColor: 'white',
-        paddingTop: '0.4rem',
-        paddingBottom: '0.4rem',
-        margin: '0.2rem'
-    }
-}
 
 const ModalStates = Object.freeze({
     PHONE_NUMBER: 'phoneNumber',
@@ -317,19 +310,32 @@ const hasLoginModal = WrappedComponent => {
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
-                            inputProps={ { style: styles.textField } }
+                            inputProps={ {
+                                style: {
+                                    fontFamily: 'srgssr-type-Bd',
+                                    fontSize: '1.125rem',
+                                    color: '#020202',
+                                    border: 'none',
+                                    width: '100%',
+                                    height: 'auto',
+                                    backgroundColor: 'white',
+                                    paddingTop: '0.4rem',
+                                    paddingBottom: '0.4rem',
+                                    margin: '0.2rem',
+                                    boxShadow: phoneVerif ? '0 0 0 0.2rem rgba(0, 255, 20, 0.9)' : 'none'
+                                },
+                                autoFocus: true
+                            } }
                             dropdownClass={classes.dropDown}
                             containerClass={classes.container}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
-                                autoFocus: true,
                                 enableSearch: true
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
                             countryCodeEditable={false}
-                            placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
                                 setPhoneVerif(phoneVerification(data))
@@ -347,7 +353,7 @@ const hasLoginModal = WrappedComponent => {
                                         <Checkbox
                                             classes={{ root: [classes.CGUBox, classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
-                                            checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
+                                            checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />
                                         <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
