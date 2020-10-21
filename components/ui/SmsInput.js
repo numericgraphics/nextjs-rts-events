@@ -6,9 +6,11 @@ const useStyles = makeStyles({
     input: {
         width: '2.1rem',
         height: '2.5rem',
-        margin: '0.2rem',
+        margin: '0.3rem',
         color: '#020202',
-        textAlign: 'center'
+        textAlign: 'center',
+        border: 'none!important',
+        borderRadius: 2
     }
 })
 
@@ -86,6 +88,7 @@ function SmsInput (props) {
         props.onChange(!/\d{4}/.test(pasted) ? values[0][1] + values[1][1] + values[2][1] + values[3][1] : pasted)
     }
 
+    // TODO loop for refactoring to map function
     function getInput () {
         // eslint-disable-next-line prefer-const
         let inputProps = {
@@ -110,6 +113,7 @@ function SmsInput (props) {
                 onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
+                style={{ boxShadow: values[i][1].length > 0 ? '0 0 0 0.2rem rgba(0, 255, 20, 0.9)' : 'none' }}
                 type="number"
                 maxLength="1"
                 name={values[i][0]} />)
