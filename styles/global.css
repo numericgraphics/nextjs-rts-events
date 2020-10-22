@@ -557,7 +557,7 @@ input:focus ,
     box-shadow: 0 0 0 0.2rem rgba(0, 255, 20, 0.9)!important;
     outline: none;
 }
-
+.react-tel-input .selected-flag,
 .react-tel-input .selected-flag:focus:before,
 .react-tel-input .selected-flag.open:before {
     border: none!important;
