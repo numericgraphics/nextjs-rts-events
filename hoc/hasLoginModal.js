@@ -139,6 +139,36 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
     }
 }))
+const styles = {
+    textFieldValidated: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.125rem',
+        color: '#020202',
+        border: 'none',
+        width: '100%',
+        height: 'auto',
+        backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem',
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
+        webkitAppearance: 'none'
+    },
+    textFieldNotValidated: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.125rem',
+        color: '#020202',
+        border: 'none',
+        width: '100%',
+        height: 'auto',
+        backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem',
+        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
+        webkitAppearance: 'none'
+    }
+}
 
 const ModalStates = Object.freeze({
     PHONE_NUMBER: 'phoneNumber',
@@ -165,6 +195,7 @@ const hasLoginModal = WrappedComponent => {
         const [checked, setChecked] = useState(false)
         const [phoneVerif, setPhoneVerif] = useState(false)
         const [counter, setCounter] = useState(0)
+        const [colorInput, setColorInput] = useState(styles.textFieldNotValidated)
 
         const handleOpen = () => {
             setOpen(true)
@@ -188,6 +219,10 @@ const hasLoginModal = WrappedComponent => {
                 setChecked(counter !== agreementsChunks.length)
             }
         }, [counter])
+
+        useEffect(() => {
+            setColorInput(phoneVerif ? styles.textFieldValidated : styles.textFieldNotValidated)
+        }, [phoneVerif])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -311,19 +346,7 @@ const hasLoginModal = WrappedComponent => {
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
                             inputProps={ {
-                                style: {
-                                    fontFamily: 'srgssr-type-Bd',
-                                    fontSize: '1.125rem',
-                                    color: '#020202',
-                                    border: 'none',
-                                    width: '100%',
-                                    height: 'auto',
-                                    backgroundColor: 'white',
-                                    paddingTop: '0.4rem',
-                                    paddingBottom: '0.4rem',
-                                    margin: '0.2rem',
-                                    boxShadow: phoneVerif ? '0 0 0 0.2rem rgba(0, 255, 20, 1)' : '0 0 0 0.2rem rgba(255, 112, 0, 1)'
-                                },
+                                style: colorInput,
                                 autoFocus: true
                             } }
                             dropdownClass={classes.dropDown}

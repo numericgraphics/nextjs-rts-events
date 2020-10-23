@@ -14,6 +14,17 @@ const useStyles = makeStyles({
     }
 })
 
+const styles = {
+    textFieldValidated: {
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
+        webkitAppearance: 'none'
+    },
+    textFieldNotValidated: {
+        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
+        webkitAppearance: 'none'
+    }
+}
+
 const digitState = () => {
     const init = [
         ['digit1', ''],
@@ -113,7 +124,7 @@ function SmsInput (props) {
                 onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
-                style={{ boxShadow: values[i][1].length > 0 ? '0 0 0 0.2rem rgba(0, 255, 20, 1)' : '0 0 0 0.2rem rgba(255, 112, 0, 1)' }}
+                style={(values[i][1].length > 0) ? styles.textFieldValidated : styles.textFieldNotValidated }
                 type="number"
                 maxLength="1"
                 name={values[i][0]} />)
