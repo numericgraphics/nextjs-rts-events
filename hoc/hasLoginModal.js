@@ -122,10 +122,25 @@ const useStyles = makeStyles((theme) => ({
     },
     iconClass: {
         height: 'unset'
+    },
+    iconClassChecked: {
+        height: 'unset',
+        stroke: '#00FF14'
+    },
+    shakeMe: {
+        WebkitAnimationName: 'shake',
+        WebkitAnimationDuration: '0.82s',
+        WebkitAnimationTimingFunction: 'cubic-bezier(.36,.07,.19,.97)',
+        WebkitAnimationFillMode: 'both',
+        transform: 'translate3d(0, 0, 0)',
+        WebkitAnimationDelay: '1s'
+    },
+    phoneInputBorder: {
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
     }
 }))
 const styles = {
-    textField: {
+    textFieldValidated: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.125rem',
         color: '#020202',
@@ -135,7 +150,23 @@ const styles = {
         backgroundColor: 'white',
         paddingTop: '0.4rem',
         paddingBottom: '0.4rem',
-        margin: '0.2rem'
+        margin: '0.2rem',
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
+        webkitAppearance: 'none'
+    },
+    textFieldNotValidated: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.125rem',
+        color: '#020202',
+        border: 'none',
+        width: '100%',
+        height: 'auto',
+        backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem',
+        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
+        webkitAppearance: 'none'
     }
 }
 
@@ -164,6 +195,7 @@ const hasLoginModal = WrappedComponent => {
         const [checked, setChecked] = useState(false)
         const [phoneVerif, setPhoneVerif] = useState(false)
         const [counter, setCounter] = useState(0)
+        const [colorInput, setColorInput] = useState(styles.textFieldNotValidated)
 
         const handleOpen = () => {
             setOpen(true)
@@ -187,6 +219,10 @@ const hasLoginModal = WrappedComponent => {
                 setChecked(counter !== agreementsChunks.length)
             }
         }, [counter])
+
+        useEffect(() => {
+            setColorInput(phoneVerif ? styles.textFieldValidated : styles.textFieldNotValidated)
+        }, [phoneVerif])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -309,19 +345,20 @@ const hasLoginModal = WrappedComponent => {
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
-                            inputProps={ { style: styles.textField } }
+                            inputProps={ {
+                                style: colorInput,
+                                autoFocus: true
+                            } }
                             dropdownClass={classes.dropDown}
                             containerClass={classes.container}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
-                                autoFocus: true,
                                 enableSearch: true
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
                             countryCodeEditable={false}
-                            placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
                                 setPhoneVerif(phoneVerification(data))
@@ -337,9 +374,9 @@ const hasLoginModal = WrappedComponent => {
                                 return (
                                     <Box key={index} className={classes.CGUContent}>
                                         <Checkbox
-                                            classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                            classes={{ root: [classes.CGUBox, phoneVerif && classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
-                                            checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
+                                            checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />
                                         <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>

@@ -552,3 +552,14 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+input:focus ,
+.react-tel-input .form-control:focus {
+    outline: none;
+}
+.react-tel-input .selected-flag,
+.react-tel-input .selected-flag:focus:before,
+.react-tel-input .selected-flag.open:before {
+    border: none!important;
+    box-shadow: none!important;
+    outline: none!important;
+}
