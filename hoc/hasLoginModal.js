@@ -322,7 +322,7 @@ const hasLoginModal = WrappedComponent => {
                                     paddingTop: '0.4rem',
                                     paddingBottom: '0.4rem',
                                     margin: '0.2rem',
-                                    boxShadow: phoneVerif ? '0 0 0 0.2rem rgba(0, 255, 20, 0.9)' : 'none'
+                                    boxShadow: phoneVerif ? '0 0 0 0.2rem rgba(0, 255, 20, 1)' : '0 0 0 0.2rem rgba(255, 112, 0, 1)'
                                 },
                                 autoFocus: true
                             } }
@@ -351,7 +351,7 @@ const hasLoginModal = WrappedComponent => {
                                 return (
                                     <Box key={index} className={classes.CGUContent}>
                                         <Checkbox
-                                            classes={{ root: [classes.CGUBox, classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
+                                            classes={{ root: [classes.CGUBox, phoneVerif && classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
                                             checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />

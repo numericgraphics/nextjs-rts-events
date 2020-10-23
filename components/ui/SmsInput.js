@@ -113,7 +113,7 @@ function SmsInput (props) {
                 onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
-                style={{ boxShadow: values[i][1].length > 0 ? '0 0 0 0.2rem rgba(0, 255, 20, 0.9)' : 'none' }}
+                style={{ boxShadow: values[i][1].length > 0 ? '0 0 0 0.2rem rgba(0, 255, 20, 1)' : '0 0 0 0.2rem rgba(255, 112, 0, 1)' }}
                 type="number"
                 maxLength="1"
                 name={values[i][0]} />)
