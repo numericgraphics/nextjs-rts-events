@@ -16,8 +16,12 @@ import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
 import VideoPlayer from '../components/ui/VideoPlayer'
 import useDeviceDetect from '../hooks/useDeviceDetect'
+import useNetwork from '../hooks/useNetwork'
+import useAppVisibility from '../hooks/useAppVisivility'
 
 function MyApp ({ Component, pageProps }) {
+    const netWorkStatus = useNetwork()
+    const appVisibilityStatus = useAppVisibility()
     const deviceDetection = useDeviceDetect()
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
@@ -104,6 +108,14 @@ function MyApp ({ Component, pageProps }) {
             setRouteChange(false)
         }
     }, [routeChange])
+
+    useEffect(() => {
+        console.log('NETWORK STATUS --> ', netWorkStatus)
+    }, [netWorkStatus])
+
+    useEffect(() => {
+        console.log('APP VISIBILITY STATUS --> ', appVisibilityStatus)
+    }, [appVisibilityStatus])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
