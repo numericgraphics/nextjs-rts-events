@@ -109,7 +109,8 @@ const useStyles = makeStyles((theme) => ({
     CGUText: {
         fontSize: '0.9rem!important',
         letterSpacing: '0.00238em',
-        lineHeight: 1.2
+        lineHeight: 1.2,
+        color: theme.palette.secondary.contrastText
     },
     link: {
         color: theme.palette.secondary.contrastText,

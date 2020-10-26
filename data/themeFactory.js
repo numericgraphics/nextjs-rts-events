@@ -49,7 +49,7 @@ class ThemeFactory {
                         opacity: 1
                     }, */
                     a: {
-                        color: palette.primary.contrastText + '!important'
+                        color: palette.secondary.contrastText + '!important'
                     }
                 }
             }
