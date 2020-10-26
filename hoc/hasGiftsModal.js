@@ -71,7 +71,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         paddingRight: '20px',
         flexGrow: 0,
         border: 'solid',
-        borderColor: theme.palette.secondary.main
+        borderColor: theme.palette.secondary.main,
+        color: theme.palette.secondary.contrastText
     },
     title: {
         fontFamily: 'srgssr-type-Bd',
@@ -169,8 +170,12 @@ const hasGiftModal = WrappedComponent => {
                             <Box className={classes.footer} style={{ height: height }}>
                                 <Box className={classes.gradient} style={{ background: `linear-gradient(${hexToRgbA(theme.palette.secondary.main, 0)} 0%, ${hexToRgbA(theme.palette.secondary.main, 0)} 80%,${theme.palette.secondary.main} 100%)` }} />
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                    <Typography className={classes.title} align={'center'}>{gift.title}</Typography>
-                                    <Typography className={classes.description} align={'center'}>{gift.message}</Typography>
+                                    <Typography className={classes.title} align={'center'}
+                                        dangerouslySetInnerHTML={{ __html: gift.title }}>
+                                    </Typography>
+                                    <Typography className={classes.description} align={'center'}
+                                        dangerouslySetInnerHTML={{ __html: gift.message }}>
+                                    </Typography>
                                 </Box>
                                 {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
                                     {lockIcon({ ref: lockIconRef, className: classes.lock })}
