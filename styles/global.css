@@ -200,7 +200,7 @@ content :   z-index = 0
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     /*min-height: 150px;*/
     width: 100%;
     position: fixed;
@@ -212,12 +212,6 @@ content :   z-index = 0
 .bottomZone, .bottomZoneDashboard {
     z-index: 1;
 }
-
-.bottomZoneDashboard {
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    padding: 2rem 0;
-}
-
 
 /*** SPACING ***/
 

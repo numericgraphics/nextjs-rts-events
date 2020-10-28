@@ -21,6 +21,13 @@ import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 
+function hexToRGBA (hex, alpha = 1) {
+    var r = parseInt(hex.slice(1, 3), 16)
+    var g = parseInt(hex.slice(3, 5), 16)
+    var b = parseInt(hex.slice(5, 7), 16)
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')'
+}
+
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
         flex: 1,
@@ -118,6 +125,10 @@ const useStyles = makeStyles((theme = useTheme) => ({
     giftContent: {
         // paddingBottom: 10,
         // paddingTop: 10
+    },
+    bottomZoneDashboard: {
+        background: 'linear-gradient(to bottom, ' + hexToRGBA(theme.palette.secondary.main, 0) + ' 0%,  ' + hexToRGBA(theme.palette.secondary.main, 0.7) + ' 20%, ' + hexToRGBA(theme.palette.secondary.main, 1) + ' 100%)',
+        padding: '2rem 0'
     }
 }))
 const styles = {
@@ -306,14 +317,14 @@ function DashBoard (props) {
                             </Box>
                         </Fade>
                     </Box>
-                    <Box className={'bottomZoneDashboard'} >
+                    <Box className={[classes.bottomZoneDashboard, 'bottomZoneDashboard'].join(' ')} >
                         <Fade in={!isLoading} timeout={500}>
                             <CustomDisabledButton color="primary" variant="contained" className={'bottomButton'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage className={['background'].join(' ')} style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>
