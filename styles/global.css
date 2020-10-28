@@ -245,7 +245,7 @@ content :   z-index = 0
 }
 
 /*** TYPO ***/
-.bold-1-125 {
+/* .bold-1-125 {
     font-family: 'srgssr-type-Bd', sans-serif!important;
     font-size: 1.125rem!important;
 }
@@ -308,7 +308,44 @@ content :   z-index = 0
 .regular-2 {
     font-family: 'srgssr-type-Rg', sans-serif!important;
     font-size: 2rem!important;
+} */
+
+.H1Title {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 2.4rem!important;
 }
+
+.H2Title {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.75rem!important;
+}
+
+.H3Title {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.5rem!important;
+}
+
+.text1 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1.25rem!important;
+}
+
+.text2 {
+    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-size: 1rem!important;
+}
+
+.text3 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 1rem!important;
+}
+
+.text4 {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-size: 0.75rem!important;
+}
+
+/*END*/
 
 .color-White {
     color: white!important;

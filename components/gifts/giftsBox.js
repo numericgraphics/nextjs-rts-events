@@ -96,7 +96,7 @@ function GiftsBox (props) {
 
     return (
         <Box className={classes.container}>
-            <Typography className={classes.textRegularCenter}>
+            <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}>
                 {props.translation}
             </Typography>
             <Box className={classes.gifts}>
