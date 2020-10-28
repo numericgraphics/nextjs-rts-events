@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: 30
     },
     title: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25em',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '1.25em',
         letterSpacing: '0em',
         lineHeight: 1.4
     },
@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 30
     },
     CGUText: {
-        fontSize: '0.9rem!important',
+        // fontSize: '0.9rem!important',
         letterSpacing: '0.00238em',
         lineHeight: 1.2,
         color: theme.palette.secondary.contrastText
@@ -326,7 +326,7 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.NUMBER_RECEIVE:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
+                        <Typography className={[classes.title, 'H3Title'].join(' ')} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
@@ -342,7 +342,7 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
+                        <Typography className={[classes.title, 'H3Title'].join(' ')} align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
@@ -379,7 +379,7 @@ const hasLoginModal = WrappedComponent => {
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
                                             checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />
-                                        <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
+                                        <Typography className={[classes.CGUText, 'text4'].join(' ')} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
                                 )
                             })}
@@ -391,7 +391,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
-                    <Typography className={classes.title} variant="h4" align={'center'}>Erreur</Typography>
+                    <Typography className={[classes.title, 'H3title'].join(' ')} align={'center'}>Erreur</Typography>
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </Box>
             }

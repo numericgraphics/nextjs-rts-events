@@ -245,10 +245,10 @@ function DashBoard (props) {
                                         <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                     </Box>
                                     : <React.Fragment>
-                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                        <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
                                         </Typography>
-                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                        <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                         </Typography>
                                     </React.Fragment>
@@ -271,12 +271,12 @@ function DashBoard (props) {
                                             <Box className={classes.rateBox}>
                                                 <Box className={classes.goodRateBox}>
                                                     <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                                    <Typography className={classes.rateText}>
+                                                    <Typography className={[classes.rateText, 'text3'].join(' ')}>
                                                         {uiElements.successChunk}
                                                     </Typography>
                                                 </Box>
                                                 <Box className={classes.badRateBox}>
-                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <CloseIcon fontSize="small" className={[classes.rateText, 'text3'].join(' ')}/>
                                                     <Typography className={classes.rateText}>
                                                         {uiElements.failChunk}
                                                     </Typography>

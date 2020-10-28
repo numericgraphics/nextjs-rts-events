@@ -117,7 +117,7 @@ function SmsInput (props) {
             }
             inpTab.push(<input {...inputProps}
                 key={i}
-                className={[classes.input, 'bold-1-125'].join(' ')}
+                className={[classes.input, 'text1'].join(' ')}
                 onKeyDown={KeyCheck}
                 autoComplete="one-time-code"
                 onInput={handleInput}
