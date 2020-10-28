@@ -215,14 +215,14 @@ function Result (props) {
                 <Box className='bottomZone'>
                     {gameStats.hasAvailableChallenges
                         ? <React.Fragment>
-                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
+                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={['button2', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={continueGame}>
+                            <Button key={'continueGame'} color="primary" variant="contained" className={['button1', 'bottom-1-rem'].join(' ')} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
-                        : <Button color="primary" variant="contained" className={['bottomButton', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
+                        : <Button color="primary" variant="contained" className={['button1', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
                             {`${translation.challengeResultButtonEnded}`}
                         </Button>
                     }

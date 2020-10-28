@@ -94,7 +94,7 @@ const hasButtonModal = WrappedComponent => {
                                         key={'continueGame'}
                                         color="primary"
                                         variant="contained"
-                                        className={['bottomButton', 'bottom-2-rem'].join(' ')}
+                                        className={['button1', 'bottom-2-rem'].join(' ')}
                                         onClick={mutedVideoPlayer}
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonStartMuted}
@@ -109,7 +109,7 @@ const hasButtonModal = WrappedComponent => {
                                         key={'continueGame'}
                                         color="primary"
                                         variant="contained"
-                                        className={['bottomButton', 'bottom-2-rem'].join(' ')}
+                                        className={['button1', 'bottom-2-rem'].join(' ')}
                                         onClick={startChallenge}
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonUnMute}

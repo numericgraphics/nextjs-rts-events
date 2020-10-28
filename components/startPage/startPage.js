@@ -112,7 +112,7 @@ function StartPage (props) {
                     <Slide direction="up" in={isLastTemplate()} timeout={300} mountOnEnter unmountOnExit>
                         <Button color="primary"
                             variant="contained"
-                            className={['bottomButton', 'bottom-1-rem', classes.button].join(' ')}
+                            className={['button1', 'bottom-1-rem', classes.button].join(' ')}
                             onClick={onStart}
                             style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
                             {translation.startPageButtonText}

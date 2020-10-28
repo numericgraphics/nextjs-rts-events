@@ -10,6 +10,10 @@
     font-family: 'srgssr-type-Rg';
     src: url(../assets/fonts/SRGSSRType_Rg.ttf);
 }
+@font-face {
+    font-family: 'srgssr-type-Md';
+    src: url(../assets/fonts/SRGSSRType_Md.ttf);
+}
 
 
 
@@ -374,16 +378,23 @@ content :   z-index = 0
 /*** COMPONENTS ***/
 
 .questionButton,
-.bottomButton {
+.button1,
+.button2 {
     width: 80%;
     padding: 6px 20px!important;
     border-radius: 30px!important;
     align-self: center;
 }
 
-.bottomButton {
+.button1 {
     font-size: 1.25rem!important;
-    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-family: 'srgssr-type-Md', sans-serif!important;
+    box-shadow: none!important;
+}
+
+.button2 {
+    font-size: 1.25rem!important;
+    font-family: 'srgssr-type-Rg', sans-serif!important;
     box-shadow: none!important;
 }
 
