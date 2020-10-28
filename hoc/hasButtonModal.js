@@ -87,7 +87,7 @@ const hasButtonModal = WrappedComponent => {
                             {isOldDevice
                                 ? <Box className='centered-content color-White'>
                                     <VolumeOffIcon className={classes.icon}/>
-                                    <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
+                                    <Typography className={['H3Title', 'bottom-2-rem'].join(' ')}>
                                         {translation.challengeVideoTextStartMuted}
                                     </Typography>
                                     <Button
@@ -102,7 +102,7 @@ const hasButtonModal = WrappedComponent => {
                                 </Box>
                                 : <Box className='centered-content color-White'>
                                     <VolumeOffIcon className={classes.icon}/>
-                                    <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
+                                    <Typography className={['H3Title', 'bottom-2-rem'].join(' ')}>
                                         {translation.challengeVideoTextUnMute}
                                     </Typography>
                                     <Button
@@ -114,7 +114,7 @@ const hasButtonModal = WrappedComponent => {
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonUnMute}
                                     </Button>
-                                    <Button className={['regular-1-25 ', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
+                                    <Button className={['text2', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
                                         {translation.challengeVideoButtonMute}
                                     </Button>
                                 </Box>}

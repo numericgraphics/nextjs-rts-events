@@ -29,16 +29,16 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         margin: 20
     },
     title: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.75rem',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '1.75rem',
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: 10,
         color: theme.palette.secondary.main
     },
     subTitle: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.2rem',
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1.2rem',
         textAlign: 'center',
         lineHeight: 1,
         color: theme.palette.secondary.main
@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         color: theme.palette.secondary.main
     },
     secondCardText: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1,125rem',
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1,125rem',
         textAlign: 'center',
         color: theme.palette.secondary.main
     },
@@ -109,8 +109,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         height: 100
     },
     winPointText: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '2.5rem',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '2.5rem',
         padding: '6px 20px',
         textAlign: 'center',
         marginTop: '15vh',
@@ -182,7 +182,7 @@ function Result (props) {
             <Box className='content' >
                 <Box className='topZone'>
                     <Box className={classes.content}>
-                        <Typography className={classes.winPointText}>
+                        <Typography className={[classes.winPointText, 'H1Title'].join(' ')}>
                             {gameStats.hasAvailableChallenges
                                 ? success
                                     ? `+ ${points} pts` // TODO: Translation pts
@@ -190,8 +190,8 @@ function Result (props) {
                                 : `+ ${gameStats.currentScore} pts`
                             }
                         </Typography>
-                        <Typography className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography className={[classes.subTitle, 'bottom-3-rem'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography className={[classes.title, 'H1Title'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
+                        <Typography className={[classes.subTitle, 'bottom-3-rem', 'text1'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
@@ -199,7 +199,7 @@ function Result (props) {
                         }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
-                                <Typography className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
+                                <Typography className={[classes.secondCardText, 'H3Title'].join(' ')} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
                                 <GiftResult
                                     className={classes.giftContainer}
                                     translation={translation.challengeResultGiftText}

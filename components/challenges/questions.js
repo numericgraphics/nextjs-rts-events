@@ -131,10 +131,10 @@ function Question (props) {
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
                     </Box>
                     <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography className={[classes.HeaderTitle, 'regular-1-125'].join(' ')} align={'left'}>
+                        <Typography className={[classes.HeaderTitle, 'text1'].join(' ')} align={'left'}>
                             {title}
                         </Typography>
-                        <Typography className={[classes.HeaderText, 'bold-1-5'].join(' ')} align={'left'}>
+                        <Typography className={[classes.HeaderText, 'H3Title'].join(' ')} align={'left'}>
                             {question}
                         </Typography>
                     </Box>
@@ -143,7 +143,7 @@ function Question (props) {
                     {answers.map((item, index) => {
                         return (
                             <Box key={index} className={[classes.buttonWrapper, 'bottom-1-rem'].join(' ')} >
-                                <CustomDisabledButton color="primary" variant="contained" className='questionButton' disabled={disabled} onClick={() => {
+                                <CustomDisabledButton color="primary" variant="contained" className={['questionButton', 'text2'].join(' ')} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}
