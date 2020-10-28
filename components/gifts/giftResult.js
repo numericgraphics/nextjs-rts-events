@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     button: {
         borderRadius: 40,
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.secondary.main,
         paddingBottom: 5,
         paddingLeft: 10,
         paddingRight: 5,

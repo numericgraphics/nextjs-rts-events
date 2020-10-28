@@ -27,21 +27,20 @@ const useStyles = makeStyles((theme = useTheme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        padding: '0px 30px',
-        maxHeight: 200,
+        padding: '0 2rem',
         textAlign: 'center',
         alignItems: 'center'
     },
     nickname: {
         textAlign: 'center',
         lineHeight: 1,
-        marginBottom: 10,
+        marginBottom: '0.5rem',
         color: theme.palette.secondary.contrastText
     },
     avatar: {
         width: '6rem',
         height: '6rem',
-        marginBottom: 10,
+        marginBottom: '0.5rem',
         zIndex: 2
     },
     rateIcon: {
@@ -62,13 +61,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignSelf: 'flex-end',
         textAlign: 'center',
         width: '100%',
-        padding: '5px 0px 5px 0px',
+        // padding: '1rem 0 1rem 0',
         color: theme.palette.secondary.contrastText
     },
     textRegularCenter: {
         textAlign: 'center',
         color: theme.palette.secondary.contrastText,
-        paddingBottom: 10
+        marginBottom: '0.5rem'
     },
     textRegularCenterOverlay: {
         position: 'absolute',
@@ -82,13 +81,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
-        marginBottom: 10
+        marginTop: '0.8rem',
+        marginBottom: '0.8rem'
     },
     rateBox: {
         display: 'flex',
         flexDirection: 'row',
-        marginTop: 10
+        marginTop: '0.8rem'
     },
     goodRateBox: {
         width: '50%',
@@ -105,19 +104,20 @@ const useStyles = makeStyles((theme = useTheme) => ({
         justifyContent: 'center'
     },
     colorCard: {
-        marginBottom: 5
+        marginBottom: '0.4rem',
+        borderRadius: '0.5rem'
     },
     remainingTime: {
         color: theme.palette.secondary.contrastText,
-        marginBottom: 10
+        marginBottom: '0.8rem'
     },
     cardContent: {
-        margin: '0px!important',
-        padding: '10px!important'
+        margin: '0!important',
+        padding: '0.8rem!important'
     },
     giftContent: {
-        paddingBottom: 10,
-        paddingTop: 10
+        // paddingBottom: 10,
+        // paddingTop: 10
     }
 }))
 const styles = {
@@ -285,7 +285,7 @@ function DashBoard (props) {
                                         </ColorCardContent>
                                     </ColorCard>
                                 }
-                                <ColorCard>
+                                <ColorCard className={classes.colorCard}>
                                     <ColorCardContent className={classes.cardContent}>
                                         <Box className={classes.giftContent}>
                                             { gifts && gifts.length === 1
