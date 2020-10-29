@@ -75,14 +75,14 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         color: theme.palette.secondary.contrastText
     },
     title: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.75em',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '1.75em',
         letterSpacing: '0em',
         paddingBottom: '15px'
     },
     description: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25em',
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1.25em',
         letterSpacing: '0em'
     },
     root: {
@@ -170,10 +170,10 @@ const hasGiftModal = WrappedComponent => {
                             <Box className={classes.footer} style={{ height: height }}>
                                 <Box className={classes.gradient} style={{ background: `linear-gradient(${hexToRgbA(theme.palette.secondary.main, 0)} 0%, ${hexToRgbA(theme.palette.secondary.main, 0)} 80%,${theme.palette.secondary.main} 100%)` }} />
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                    <Typography className={classes.title} align={'center'}
+                                    <Typography className={[classes.title, 'H2Title'].join(' ')} align={'center'}
                                         dangerouslySetInnerHTML={{ __html: gift.title }}>
                                     </Typography>
-                                    <Typography className={classes.description} align={'center'}
+                                    <Typography className={[classes.description, 'text3'].join(' ')} align={'center'}
                                         dangerouslySetInnerHTML={{ __html: gift.message }}>
                                     </Typography>
                                 </Box>

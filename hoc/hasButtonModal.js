@@ -97,14 +97,14 @@ const hasButtonModal = WrappedComponent => {
                             {isOldDevice
                                 ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />
-                                    <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
+                                    <Typography className={'H3Title'}>
                                         {translation.challengeVideoTextStartMuted}
                                     </Typography>
                                     <Button
                                         key={'continueGame'}
                                         color="primary"
                                         variant="contained"
-                                        className={['bottomButton', 'bottom-2-rem'].join(' ')}
+                                        className={'button'}
                                         onClick={mutedVideoPlayer}
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonStartMuted}
@@ -112,19 +112,19 @@ const hasButtonModal = WrappedComponent => {
                                 </Box>
                                 : <Box className={[classes.text, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />
-                                    <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
+                                    <Typography className={'H3Title'}>
                                         {translation.challengeVideoTextUnMute}
                                     </Typography>
                                     <Button
                                         key={'continueGame'}
                                         color="primary"
                                         variant="contained"
-                                        className={['bottomButton', 'bottom-2-rem'].join(' ')}
+                                        className={'button'}
                                         onClick={startChallenge}
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonUnMute}
                                     </Button>
-                                    <Button className={['regular-1-25 ', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
+                                    <Button className={['text2', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
                                         {translation.challengeVideoButtonMute}
                                     </Button>
                                 </Box>}

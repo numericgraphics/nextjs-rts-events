@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 function CustomBackDrop (props) {
     const { open } = props
     const classes = useStyles()
+
     return (
         <Backdrop className={classes.backdrop} open={open} >
             <CircularProgress />

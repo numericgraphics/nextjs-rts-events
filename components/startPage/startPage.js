@@ -112,7 +112,7 @@ function StartPage (props) {
                     <Slide direction="up" in={isLastTemplate()} timeout={300} mountOnEnter unmountOnExit>
                         <Button color="primary"
                             variant="contained"
-                            className={['bottomButton', 'bottom-1-rem', classes.button].join(' ')}
+                            className={['button', classes.button].join(' ')}
                             onClick={onStart}
                             style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
                             {translation.startPageButtonText}
@@ -125,7 +125,7 @@ function StartPage (props) {
                         {!isLastTemplate() &&
                         <Box className={[classes.arrowSwipeDown, classes.arrowSwipeDownMobile].join(' ')}>
                             <ArrowIcon/>
-                            <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                            <Typography className={['text3', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
                         </Box>
                         }
                     </Box>}
@@ -136,7 +136,7 @@ function StartPage (props) {
                             <IconButton disableRipple={true} onClick={onSwipe} className={classes.buttonSwipeDownDesktop}>
                                 <ArrowIcon fontSize="large"/>
                             </IconButton>
-                            <Typography className={[classes.label, 'regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                            <Typography className={[classes.label, 'text3', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
                         </React.Fragment>
                     }
                 </Box>}

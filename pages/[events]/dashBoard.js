@@ -231,26 +231,26 @@ function DashBoard (props) {
                             <Box>
                                 <Box className={classes.header}>
                                     <Avatar className={classes.avatar} src={user.avatarURL}/>
-                                    <Typography className={[classes.nickname, 'bold-1-75'].join(' ')}>
+                                    <Typography className={[classes.nickname, 'H2Title'].join(' ')}>
                                         {user.nickname}
                                     </Typography>
                                     <Typography
-                                        className={[classes.remainingTime, 'regular-1', 'lineSpacing-1-2'].join(' ')}
+                                        className={[classes.remainingTime, 'text1'].join(' ')}
                                         align={'center'}
                                         dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
                                 </Box>
                                 {availableChallenges
                                     ? <Box className={classes.progressBarOverlay}>
-                                        <Typography className={[classes.textRegularCenterOverlay, 'regular-1-125'].join(' ')}>
+                                        <Typography className={[classes.textRegularCenterOverlay, 'text1'].join(' ')}>
                                             {uiElements.progressBarMessageChunk}
                                         </Typography>
                                         <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                     </Box>
                                     : <React.Fragment>
-                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                        <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
                                         </Typography>
-                                        <Typography className={[classes.textRegularCenter, 'regular-1-1'].join(' ')}
+                                        <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                         </Typography>
                                     </React.Fragment>
@@ -258,7 +258,7 @@ function DashBoard (props) {
                                 {availableScores &&
                                     <ColorCard className={classes.colorCard}>
                                         <ColorCardContent className={classes.cardContent}>
-                                            <Typography className={[classes.scoreChunkText, 'bold-2-5'].join(' ')}>
+                                            <Typography className={[classes.scoreChunkText, 'H1Title'].join(' ')}>
                                                 {uiElements.scoreChunk}
                                             </Typography>
                                         </ColorCardContent>
@@ -267,18 +267,18 @@ function DashBoard (props) {
                                 {availableResults &&
                                     <ColorCard className={classes.colorCard}>
                                         <ColorCardContent className={classes.cardContent}>
-                                            <Typography className={[classes.textRegularCenter, 'regular-1-25'].join(' ')}
+                                            <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
                                                 dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                             </Typography>
                                             <Box className={classes.rateBox}>
                                                 <Box className={classes.goodRateBox}>
                                                     <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                                    <Typography className={classes.rateText}>
+                                                    <Typography className={[classes.rateText, 'text3'].join(' ')}>
                                                         {uiElements.successChunk}
                                                     </Typography>
                                                 </Box>
                                                 <Box className={classes.badRateBox}>
-                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <CloseIcon fontSize="small" className={[classes.rateText, 'text3'].join(' ')}/>
                                                     <Typography className={classes.rateText}>
                                                         {uiElements.failChunk}
                                                     </Typography>
@@ -310,7 +310,7 @@ function DashBoard (props) {
                     </Box>
                     <Box className={[stylesGlobal.bottomZoneDashboard, 'bottomZoneDashboard'].join(' ')} >
                         <Fade in={!isLoading} timeout={500}>
-                            <CustomDisabledButton color="primary" variant="contained" className={'bottomButton'} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="primary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>

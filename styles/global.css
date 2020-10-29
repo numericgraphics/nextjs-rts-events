@@ -10,6 +10,10 @@
     font-family: 'srgssr-type-Rg';
     src: url(../assets/fonts/SRGSSRType_Rg.ttf);
 }
+@font-face {
+    font-family: 'srgssr-type-Md';
+    src: url(../assets/fonts/SRGSSRType_Md.ttf);
+}
 
 
 
@@ -183,7 +187,7 @@ content :   z-index = 0
 .topZone, .topZoneDashboard {
     position: relative;
     z-index: 0;
-    padding: 1rem 0.8rem 0 0.8rem;
+    padding: 3vw;
 }
 
 /*.topZone .text {*/
@@ -213,120 +217,47 @@ content :   z-index = 0
     z-index: 1;
 }
 
-/*** SPACING ***/
-
-.bottom-3-rem {
-    margin-bottom: 3rem!important;
-}
-
-.bottom-2-rem {
-    margin-bottom: 2rem!important;
-}
-
-.bottom-1-rem{
-    margin-bottom: 1rem!important;
-}
-
-.bottom-0-5-rem{
-    margin-bottom: 0.5rem!important;
-}
-
-.margin-1-rem{
-    margin: 1rem!important;
-}
-
-.margin-1-5-rem{
-    margin: 1.5rem!important;
-}
-
-.margin-1-7-rem{
-    margin: 1.7rem!important;
-}
 
 /*** TYPO ***/
-.bold-1-125 {
+.H1Title {
     font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.125rem!important;
+    font-size: 2.4rem!important;
 }
 
-.bold-1-25 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.25rem!important;
-}
-
-.bold-1-75 {
+.H2Title {
     font-family: 'srgssr-type-Bd', sans-serif!important;
     font-size: 1.75rem!important;
 }
 
-.bold-1-5 {
+.H3Title {
     font-family: 'srgssr-type-Bd', sans-serif!important;
     font-size: 1.5rem!important;
 }
 
-.bold-2-5 {
+.text1 {
+    font-family: 'srgssr-type-Md', sans-serif!important;
+    font-size: 1.25rem!important;
+}
+
+.text2 {
     font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 2.5rem!important;
+    font-size: 1rem!important;
 }
 
-.regular-0-825 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 0.825rem!important;
-}
-
-.regular-1 {
+.text3 {
     font-family: 'srgssr-type-Rg', sans-serif!important;
     font-size: 1rem!important;
 }
 
-.regular-1-1 {
+.text4 {
     font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.1rem!important;
+    font-size: 0.75rem!important;
 }
 
-.regular-1-125 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.125rem!important;
-}
-
-.regular-1-25 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.25rem!important;
-}
-
-.regular-1-50 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.50rem!important;
-}
-
-.regular-1-75 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.75rem!important;
-}
-
-.regular-2 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 2rem!important;
-}
+/*END*/
 
 .color-White {
     color: white!important;
-}
-
-.lineSpacing-1 {
-    line-height: 1!important;
-}
-
-.lineSpacing-1-2 {
-    line-height: 1.2!important;
-}
-
-.lineSpacing-1-5 {
-    line-height: 1.5!important;
-}
-
-.lineSpacing-1-8 {
-    line-height: 1.8!important;
 }
 
 .unselectable-element {
@@ -336,23 +267,33 @@ content :   z-index = 0
 /*** COMPONENTS ***/
 
 .questionButton,
-.bottomButton {
+.button,
+.buttonAlt {
     width: 80%;
     padding: 6px 20px!important;
     border-radius: 30px!important;
     align-self: center;
 }
 
-.bottomButton {
+.button, .buttonAlt {
     font-size: 1.25rem!important;
-    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-family: 'srgssr-type-Md', sans-serif!important;
     box-shadow: none!important;
+    margin-bottom: 1rem!important;
+}
+
+.backgroundModal .button, .backgroundModal .H3Title {
+    margin-bottom: 2rem!important;
+}
+
+.buttonAlt {
+    font-family: 'srgssr-type-Rg', sans-serif!important;
 }
 
 .questionButton {
     width: 85%;
-    font-size: 1rem!important;
-    font-family: 'srgssr-type-Rg', sans-serif!important;
+    /* font-size: 1rem!important;
+    font-family: 'srgssr-type-Rg', sans-serif!important; */
     text-transform: none!important;
 }
 
@@ -379,7 +320,6 @@ content :   z-index = 0
 .cardContent {
     justify-content: flex-start;
 }
-
 /*** ANIMATION ***/
 
 .fadeInAnimation {

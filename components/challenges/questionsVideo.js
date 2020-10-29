@@ -67,7 +67,8 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
+        marginBottom: '1rem!important'
     },
     buttonProgress: {
         position: 'absolute'
@@ -155,10 +156,10 @@ function QuestionVideo (props) {
                         {props.content.videoURL && <VideoControler controls={true}/>}
                     </Box>
                     <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography className={[classes.HeaderTitle, 'regular-1-125'].join(' ')} align={'left'}>
+                        <Typography className={[classes.HeaderTitle, 'text1'].join(' ')} align={'left'}>
                             {title}
                         </Typography>
-                        <Typography className={[classes.HeaderText, 'bold-1-5'].join(' ')} align={'left'}>
+                        <Typography className={[classes.HeaderText, 'H3Title'].join(' ')} align={'left'}>
                             {question}
                         </Typography>
                     </Box>
@@ -166,8 +167,8 @@ function QuestionVideo (props) {
                 <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={[classes.buttonWrapper, 'bottom-1-rem'].join(' ')} >
-                                <CustomDisabledButton color="primary" variant="contained" className='questionButton' disabled={disabled} onClick={() => {
+                            <Box key={index} className={classes.buttonWrapper} >
+                                <CustomDisabledButton color="primary" variant="contained" className={['questionButton', 'text2'].join(' ')} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}

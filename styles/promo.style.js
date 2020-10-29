@@ -50,17 +50,17 @@ export const useStyles = makeStyles({
         overflowWrap: 'break-word'
     },
     title: {
-        fontFamily: 'srgssr-type-Rg!important',
-        fontSize: '2.5rem!important',
-        lineHeight: '2.6rem!important',
+        // fontFamily: 'srgssr-type-Rg!important',
+        // fontSize: '2.5rem!important',
+        lineHeight: '1.2!important',
         marginBottom: '12px!important',
         textShadow: '0px 1px 6px #000000',
         overflowWrap: 'break-word'
     },
     subTitle: {
-        fontFamily: 'srgssr-type-Bd',
+        // fontFamily: 'srgssr-type-Bd',
         lineHeight: '2rem',
-        fontSize: '1.5rem',
+        // fontSize: '1.5rem',
         marginBottom: 12,
         textShadow: '0px 1px 4px #000000',
         overflowWrap: 'break-word'
