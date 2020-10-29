@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: '0.5rem',
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.secondary.main
     },
     avatar: {
         width: '6rem',
@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         borderRadius: '0.5rem'
     },
     remainingTime: {
-        color: theme.palette.secondary.contrastText,
+        color: theme.palette.secondary.main,
         marginBottom: '0.8rem'
     },
     cardContent: {
