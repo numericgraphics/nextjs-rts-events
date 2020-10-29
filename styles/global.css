@@ -218,36 +218,6 @@ content :   z-index = 0
 }
 
 
-/*** SPACING ***/
-
-.bottom-3-rem {
-    margin-bottom: 3rem!important;
-}
-
-.bottom-2-rem {
-    margin-bottom: 2rem!important;
-}
-
-.bottom-1-rem{
-    margin-bottom: 1rem!important;
-}
-
-.bottom-0-5-rem{
-    margin-bottom: 0.5rem!important;
-}
-
-.margin-1-rem{
-    margin: 1rem!important;
-}
-
-.margin-1-5-rem{
-    margin: 1.5rem!important;
-}
-
-.margin-1-7-rem{
-    margin: 1.7rem!important;
-}
-
 /*** TYPO ***/
 .H1Title {
     font-family: 'srgssr-type-Bd', sans-serif!important;
@@ -290,22 +260,6 @@ content :   z-index = 0
     color: white!important;
 }
 
-.lineSpacing-1 {
-    line-height: 1!important;
-}
-
-.lineSpacing-1-2 {
-    line-height: 1.2!important;
-}
-
-.lineSpacing-1-5 {
-    line-height: 1.5!important;
-}
-
-.lineSpacing-1-8 {
-    line-height: 1.8!important;
-}
-
 .unselectable-element {
     user-select: none;
 }
@@ -313,24 +267,38 @@ content :   z-index = 0
 /*** COMPONENTS ***/
 
 .questionButton,
-.button1,
-.button2 {
+.button,
+.buttonAlt {
     width: 80%;
     padding: 6px 20px!important;
     border-radius: 30px!important;
     align-self: center;
 }
 
-.button1 {
+.button, .buttonAlt {
     font-size: 1.25rem!important;
     font-family: 'srgssr-type-Md', sans-serif!important;
     box-shadow: none!important;
 }
 
-.button2 {
-    font-size: 1.25rem!important;
+.bottomZoneDashboard .button, .buttonAlt {
+    margin-bottom: 1rem!important;
+}
+
+.bottomZone .button, .buttonAlt {
+    margin-bottom: 1rem!important;
+}
+
+.bottomZonePromo .button, .buttonAlt {
+    margin-bottom: 1rem!important;
+}
+
+.backgroundModal .button, .H3Title {
+    margin-bottom: 2rem!important;
+}
+
+.buttonAlt {
     font-family: 'srgssr-type-Rg', sans-serif!important;
-    box-shadow: none!important;
 }
 
 .questionButton {
@@ -363,7 +331,6 @@ content :   z-index = 0
 .cardContent {
     justify-content: flex-start;
 }
-
 /*** ANIMATION ***/
 
 .fadeInAnimation {

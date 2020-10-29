@@ -52,7 +52,7 @@ export const useStyles = makeStyles({
     title: {
         // fontFamily: 'srgssr-type-Rg!important',
         // fontSize: '2.5rem!important',
-        lineHeight: '2.6rem!important',
+        lineHeight: '1.2!important',
         marginBottom: '12px!important',
         textShadow: '0px 1px 6px #000000',
         overflowWrap: 'break-word'

@@ -65,7 +65,8 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
+        marginBottom: '1rem!important'
     },
     buttonProgress: {
         position: 'absolute'
@@ -142,7 +143,7 @@ function Question (props) {
                 <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={[classes.buttonWrapper, 'bottom-1-rem'].join(' ')} >
+                            <Box key={index} className={classes.buttonWrapper} >
                                 <CustomDisabledButton color="primary" variant="contained" className={['questionButton', 'text2'].join(' ')} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>

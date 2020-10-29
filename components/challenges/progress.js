@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 function Progress () {
     const classes = useStyles()
     const height = useHeight()
+
     return (
         <Box class={classes.containerProgress} style={{ minHeight: height }}>
             <CircularProgress />

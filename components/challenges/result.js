@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontSize: '1.2rem',
         textAlign: 'center',
         lineHeight: 1,
-        color: theme.palette.secondary.main
+        color: theme.palette.secondary.main,
+        marginBottom: '3rem!important'
 
     },
     secondCardTitle: {
@@ -191,7 +192,7 @@ function Result (props) {
                             }
                         </Typography>
                         <Typography className={[classes.title, 'H1Title'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography className={[classes.subTitle, 'bottom-3-rem', 'text1'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography className={[classes.subTitle, 'text1'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
@@ -215,14 +216,14 @@ function Result (props) {
                 <Box className='bottomZone'>
                     {gameStats.hasAvailableChallenges
                         ? <React.Fragment>
-                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={['button2', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
+                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={'buttonAlt'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={['button1', 'bottom-1-rem'].join(' ')} onClick={continueGame}>
+                            <Button key={'continueGame'} color="primary" variant="contained" className={'button'} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
-                        : <Button color="primary" variant="contained" className={['button1', 'bottom-1-rem'].join(' ')} onClick={gotoDashBoard}>
+                        : <Button color="primary" variant="contained" className={'button'} onClick={gotoDashBoard}>
                             {`${translation.challengeResultButtonEnded}`}
                         </Button>
                     }

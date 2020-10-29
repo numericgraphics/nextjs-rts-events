@@ -87,14 +87,14 @@ const hasButtonModal = WrappedComponent => {
                             {isOldDevice
                                 ? <Box className='centered-content color-White'>
                                     <VolumeOffIcon className={classes.icon}/>
-                                    <Typography className={['H3Title', 'bottom-2-rem'].join(' ')}>
+                                    <Typography className={'H3Title'}>
                                         {translation.challengeVideoTextStartMuted}
                                     </Typography>
                                     <Button
                                         key={'continueGame'}
                                         color="primary"
                                         variant="contained"
-                                        className={['button1', 'bottom-2-rem'].join(' ')}
+                                        className={'button'}
                                         onClick={mutedVideoPlayer}
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonStartMuted}
@@ -102,14 +102,14 @@ const hasButtonModal = WrappedComponent => {
                                 </Box>
                                 : <Box className='centered-content color-White'>
                                     <VolumeOffIcon className={classes.icon}/>
-                                    <Typography className={['H3Title', 'bottom-2-rem'].join(' ')}>
+                                    <Typography className={'H3Title'}>
                                         {translation.challengeVideoTextUnMute}
                                     </Typography>
                                     <Button
                                         key={'continueGame'}
                                         color="primary"
                                         variant="contained"
-                                        className={['button1', 'bottom-2-rem'].join(' ')}
+                                        className={'button'}
                                         onClick={startChallenge}
                                         startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                         {translation.challengeVideoButtonUnMute}
