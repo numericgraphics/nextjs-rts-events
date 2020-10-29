@@ -10,6 +10,7 @@ import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
 import UserContext from '../components/UserContext'
+import { useStylesGlobal } from '../styles/global.style'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     icon: {
@@ -25,16 +26,20 @@ const useStyles = makeStyles((theme = useTheme) => ({
         color: theme.palette.secondary.main
     },
     overImage: {
+        position: 'absolute',
         height: '100%',
-        width: '100%',
-        backgroundColor: theme.palette.secondary.contrastText,
-        opacity: '0.9'
+        width: '100%'
+    },
+    backgroundImage: {
+        height: '100%',
+        width: '100%'
     }
 }))
 
 const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
+        const stylesGlobal = useStylesGlobal()
         const classes = useStyles()
         const { dataProvider, store } = useContext(UserContext)
         const { deviceDetection } = store
@@ -88,9 +93,10 @@ const hasButtonModal = WrappedComponent => {
                     }}
                     tabIndex={-1}
                 >
-                    <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
-                        style={{ backgroundImage: `url(${poster})`, height: height }}>
-                        <Box className={[classes.overImage, 'containerModal'].join(' ')}></Box>
+                    <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
+                        <Box className={[classes.backgroundImage].join(' ')}
+                            style={{ backgroundImage: `url(${poster})`, height: height }}></Box>
+                        <Box className={[stylesGlobal.overImage, classes.overImage, 'containerModal'].join(' ')}></Box>
                         {isOldDevice
                             ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                 <VolumeOffIcon className={classes.icon} />
