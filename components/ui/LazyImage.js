@@ -11,10 +11,11 @@ const useStyles = makeStyles((theme = useTheme) => ({
         WebkitAnimationDelay: 2,
         WebkitAnimationFillMode: 'forwards'
     },
+
     colorOverImage: {
         height: '100%',
-        backgroundColor: theme.palette.secondary.contrastText,
-        opacity: 0.8
+        backgroundColor: theme.palette.onSecondary,
+        opacity: 0.9
     }
 }))
 

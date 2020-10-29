@@ -35,7 +35,8 @@ class ThemeFactory {
             action: {
                 disabledBackground: 'gray',
                 disabled: 'white'
-            }
+            },
+            onSecondary: onSecondary // @Rinaldo: Et pourquoi on pourrait pas faire ça???
         }
         // eslint-disable-next-line no-unused-vars
         const overrides = {
