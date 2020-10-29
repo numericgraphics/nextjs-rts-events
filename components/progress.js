@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import ThemeFactory from '../data/themeFactory'
 import Box from '@material-ui/core/Box'
+import EventLayout from './eventLayout'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme = useTheme) => ({
     container: {
-        position: 'fixed',
+        // position: 'fixed',
         display: 'flex',
         zIndex: 10,
         width: '100%',
@@ -29,9 +30,13 @@ function Progress () {
     }, [])
 
     return (
-        <Box className={classes.container} style={{ height: height }}>
-            <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.contrastText : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
-        </Box>
+        <EventLayout >
+            <Box className='content' >
+                <Box className={classes.container} style={{ height: height, backgroundColor: theme.palette ? theme.palette.secondary.contrastText : ThemeFactory.getDefaultTheme().palette.secondary.contrastText }}>
+                    <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.main : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
+                </Box>
+            </Box>
+        </EventLayout>
     )
 }
 

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
 
     colorOverImage: {
         height: '100%',
-        backgroundColor: theme.palette.onSecondary,
+        backgroundColor: theme.palette.secondary.contrastText,
         opacity: 0.9
     }
 }))
