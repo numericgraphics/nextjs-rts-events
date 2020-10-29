@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
-        width: '95%',
+        width: '90%',
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',

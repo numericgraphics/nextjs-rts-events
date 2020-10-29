@@ -279,21 +279,10 @@ content :   z-index = 0
     font-size: 1.25rem!important;
     font-family: 'srgssr-type-Md', sans-serif!important;
     box-shadow: none!important;
-}
-
-.bottomZoneDashboard .button, .buttonAlt {
     margin-bottom: 1rem!important;
 }
 
-.bottomZone .button, .buttonAlt {
-    margin-bottom: 1rem!important;
-}
-
-.bottomZonePromo .button, .buttonAlt {
-    margin-bottom: 1rem!important;
-}
-
-.backgroundModal .button, .H3Title {
+.backgroundModal .button, .backgroundModal .H3Title {
     margin-bottom: 2rem!important;
 }
 
