@@ -78,8 +78,6 @@ const hasButtonModal = WrappedComponent => {
                 <Modal
                     disableAutoFocus={true}
                     disableEnforceFocus
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
                     className='containerModal'
                     open={open}
                     closeAfterTransition
@@ -90,47 +88,45 @@ const hasButtonModal = WrappedComponent => {
                     }}
                     tabIndex={-1}
                 >
-                    <Fade in={open} timeout={1000}>
-                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
-                            style={{ backgroundImage: `url(${poster})`, height: height }}>
-                            <Box className={[classes.overImage, 'containerModal'].join(' ')}></Box>
-                            {isOldDevice
-                                ? <Box className={[classes.text, 'centered-content'].join(' ')}>
-                                    <VolumeOffIcon className={classes.icon} />
-                                    <Typography className={'H3Title'}>
-                                        {translation.challengeVideoTextStartMuted}
-                                    </Typography>
-                                    <Button
-                                        key={'continueGame'}
-                                        color="primary"
-                                        variant="contained"
-                                        className={'button'}
-                                        onClick={mutedVideoPlayer}
-                                        startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
-                                        {translation.challengeVideoButtonStartMuted}
-                                    </Button>
-                                </Box>
-                                : <Box className={[classes.text, 'centered-content'].join(' ')}>
-                                    <VolumeOffIcon className={classes.icon} />
-                                    <Typography className={'H3Title'}>
-                                        {translation.challengeVideoTextUnMute}
-                                    </Typography>
-                                    <Button
-                                        key={'continueGame'}
-                                        color="primary"
-                                        variant="contained"
-                                        className={'button'}
-                                        onClick={startChallenge}
-                                        startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
-                                        {translation.challengeVideoButtonUnMute}
-                                    </Button>
-                                    <Button className={['text2', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
-                                        {translation.challengeVideoButtonMute}
-                                    </Button>
-                                </Box>}
+                    <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
+                        style={{ backgroundImage: `url(${poster})`, height: height }}>
+                        <Box className={[classes.overImage, 'containerModal'].join(' ')}></Box>
+                        {isOldDevice
+                            ? <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                <VolumeOffIcon className={classes.icon} />
+                                <Typography className={'H3Title'}>
+                                    {translation.challengeVideoTextStartMuted}
+                                </Typography>
+                                <Button
+                                    key={'continueGame'}
+                                    color="primary"
+                                    variant="contained"
+                                    className={'button'}
+                                    onClick={mutedVideoPlayer}
+                                    startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
+                                    {translation.challengeVideoButtonStartMuted}
+                                </Button>
+                            </Box>
+                            : <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                <VolumeOffIcon className={classes.icon} />
+                                <Typography className={'H3Title'}>
+                                    {translation.challengeVideoTextUnMute}
+                                </Typography>
+                                <Button
+                                    key={'continueGame'}
+                                    color="primary"
+                                    variant="contained"
+                                    className={'button'}
+                                    onClick={startChallenge}
+                                    startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
+                                    {translation.challengeVideoButtonUnMute}
+                                </Button>
+                                <Button className={['text2', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
+                                    {translation.challengeVideoButtonMute}
+                                </Button>
+                            </Box>}
 
-                        </Box>
-                    </Fade>
+                    </Box>
                 </Modal>
             </Box>
         )
