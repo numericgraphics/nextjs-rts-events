@@ -20,6 +20,7 @@ import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
+import { useStylesGlobal } from '../../styles/global.style'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: '0.5rem',
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.secondary.main
     },
     avatar: {
         width: '6rem',
@@ -108,7 +109,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         borderRadius: '0.5rem'
     },
     remainingTime: {
-        color: theme.palette.secondary.contrastText,
+        color: theme.palette.secondary.main,
         marginBottom: '0.8rem'
     },
     cardContent: {
@@ -129,6 +130,7 @@ const styles = {
 }
 
 function DashBoard (props) {
+    const stylesGlobal = useStylesGlobal()
     const router = useRouter()
     const { eventData } = props
     const { events } = router.query
@@ -306,15 +308,14 @@ function DashBoard (props) {
                             </Box>
                         </Fade>
                     </Box>
-                    <Box className={'bottomZoneDashboard'} >
+                    <Box className={[stylesGlobal.bottomZoneDashboard, 'bottomZoneDashboard'].join(' ')} >
                         <Fade in={!isLoading} timeout={500}>
                             <CustomDisabledButton color="primary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    {!isLoading && <Box className={'backgroundGradientTopBottomDashBoard'} />}
-                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage className={'background'} style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>
