@@ -187,7 +187,7 @@ content :   z-index = 0
 .topZone, .topZoneDashboard {
     position: relative;
     z-index: 0;
-    padding: 1rem 0.8rem 0 0.8rem;
+    padding: 3vw;
 }
 
 /*.topZone .text {*/
@@ -235,7 +235,7 @@ content :   z-index = 0
 }
 
 .text1 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-family: 'srgssr-type-Md', sans-serif!important;
     font-size: 1.25rem!important;
 }
 
