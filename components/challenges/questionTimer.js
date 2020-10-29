@@ -46,7 +46,7 @@ function QuestionTimer (props) {
             <LinearProgress variant="determinate" color={'secondary'} value={progress} className={classes.linearProgress}/>
             <Box className={classes.content}>
                 <TimerIcon style={styles.icon}/>
-                <Typography className={[classes.text, 'regular-1'].join(' ')} >
+                <Typography className={[classes.text, 'text3'].join(' ')} >
                     {`${Math.round(timeLeft)} ${translation.challengeQuestionTimeRemaining}`}
                 </Typography>
             </Box>
