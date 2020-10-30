@@ -9,13 +9,6 @@ import LazyImage from '../../components/ui/LazyImage'
 import { getAllEvents } from '../../lib/events'
 import Box from '@material-ui/core/Box'
 
-const styles = {
-    containerImage: {
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%'
-    }
-}
 const ChallengeStates = Object.freeze({
     COUNTDOWN: 'countDown',
     QUESTIONS: 'questions',
@@ -172,15 +165,17 @@ function Challenge () {
         }
     }, [resultContent])
 
+    const addBlur = challengeState === ChallengeStates.QUESTIONS ? 'false' : 'true'
+    const addColor = challengeState === ChallengeStates.RESULT ? 'true' : 'false'
+
     return (
         <EventLayout>
             {isLoading
                 ? null
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
-                    { challengeState === ChallengeStates.RESULT && <Box className='backgroundGradientByTheme' style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.60) 100%)' }} />}
                     {backgroundType === 'image' &&
-                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
+                    <LazyImage addblur={ addBlur } addcolor={ addColor} className='background' style={{ backgroundImage: `url(${imageURL})` }}/>}
                 </React.Fragment>
             }
         </EventLayout>

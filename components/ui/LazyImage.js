@@ -32,8 +32,12 @@ function LazyImage (props) {
 
     return (
         <Box ref={imageRef} {...props} className={[props.className, classes.imageAnim, classes.containerImage].join(' ')}>
-            <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
-            <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
+            {props.addblur === 'true' &&
+                <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
+            }
+            {props.addcolor === 'true' &&
+                <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
+            }
         </Box>
     )
 }
