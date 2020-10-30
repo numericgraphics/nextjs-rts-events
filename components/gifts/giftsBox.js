@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         maxHeight: '25px',
         width: '7.5vw',
         height: '7.5vw',
-        fill: 'white',
+        fill: theme.palette.primary.contrastText,
         zIndex: 1
     }
 }))

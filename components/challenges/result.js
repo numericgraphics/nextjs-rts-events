@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '1.75rem',
         textAlign: 'center',
-        lineHeight: 1,
+        // lineHeight: 1.2,
         marginBottom: 10,
         color: theme.palette.secondary.main
     },
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1.2rem',
         textAlign: 'center',
-        lineHeight: 1,
+        // lineHeight: 1.2,
         color: theme.palette.secondary.main,
         marginBottom: '3rem!important'
 
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.5rem',
         textAlign: 'center',
-        lineHeight: '1.8rem',
+        // lineHeight: '1.8rem',
         marginBottom: 10,
         color: theme.palette.secondary.main
     },
