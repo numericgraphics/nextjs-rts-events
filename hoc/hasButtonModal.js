@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     overImage: {
         position: 'absolute',
+        top: 0,
         height: '100%',
         width: '100%'
     },
@@ -96,7 +97,8 @@ const hasButtonModal = WrappedComponent => {
                     <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
                         <Box className={[classes.backgroundImage].join(' ')}
                             style={{ backgroundImage: `url(${poster})`, height: height }}></Box>
-                        <Box className={[stylesGlobal.overImage, classes.overImage, 'containerModal'].join(' ')}></Box>
+                        <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}></Box>
+                        <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}></Box>
                         {isOldDevice
                             ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                 <VolumeOffIcon className={classes.icon} />
