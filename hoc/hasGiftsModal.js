@@ -78,7 +78,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '1.75em',
         letterSpacing: '0em',
-        paddingBottom: '15px'
+        paddingBottom: '15px',
+        lineHeight: 1.2
     },
     description: {
         // fontFamily: 'srgssr-type-Rg',

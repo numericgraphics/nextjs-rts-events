@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
 import UserContext from '../UserContext'
+import useAppVisibility from '../../hooks/useAppVisivility'
 
 const useStyles = makeStyles({
     counter: {
@@ -77,6 +78,7 @@ const useStyles = makeStyles({
 
 function QuestionVideo (props) {
     const classes = useStyles()
+    const appVisibilityStatus = useAppVisibility()
     const { quiz, title, duration, imageURL, videoURL } = props.content
     const { question, answers } = quiz
     const { store } = useContext(UserContext)
@@ -138,6 +140,7 @@ function QuestionVideo (props) {
     }, [props.buttonModalCliked])
 
     useEffect(() => {
+        console.log(progress)
         if (progress >= 100) {
             setTimeLeft(0)
             setProgress(0)
@@ -145,7 +148,7 @@ function QuestionVideo (props) {
             props.answerCallBack(-1)
             setDisabled(true)
         }
-    }, [progress])
+    }, [progress, appVisibilityStatus])
 
     return (
         <Fade in={showComponent} timeout={500}>

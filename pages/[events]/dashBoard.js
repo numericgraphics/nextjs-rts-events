@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         display: 'inline',
         width: '1rem',
         height: '1rem',
-        marginRight: '0.2rem'
+        marginRight: '0.2rem',
+        color: '#FFF!important'
     },
     rateText: {
         alignSelf: 'left',
@@ -56,7 +57,8 @@ const useStyles = makeStyles((theme = useTheme) => ({
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        color: '#FFF!important'
     },
     scoreChunkText: {
         alignSelf: 'flex-end',
@@ -278,7 +280,7 @@ function DashBoard (props) {
                                                     </Typography>
                                                 </Box>
                                                 <Box className={classes.badRateBox}>
-                                                    <CloseIcon fontSize="small" className={[classes.rateText, 'text3'].join(' ')}/>
+                                                    <CloseIcon fontSize="small" className={[classes.rateIcon, 'text3'].join(' ')}/>
                                                     <Typography className={classes.rateText}>
                                                         {uiElements.failChunk}
                                                     </Typography>
