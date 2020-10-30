@@ -309,8 +309,10 @@ content :   z-index = 0
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0!important;
-    margin: 1.1rem 0.7rem 1.1rem 0.7rem;
+    /* padding: 0!important; */
+    /* margin: 1.1rem 0.7rem 1.1rem 0.7rem; /* safari bug : https://stackoverflow.com/questions/44697888/flex-auto-margins-behave-differently-in-chrome-and-safari */
+    margin: 0;
+    padding: 1.1rem 0.7rem;
 }
 
 .centered-content {
