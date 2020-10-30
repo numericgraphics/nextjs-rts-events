@@ -123,13 +123,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
         // paddingTop: 10
     }
 }))
-const styles = {
-    containerImage: {
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%'
-    }
-}
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -317,7 +310,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage className={'background'} style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>
