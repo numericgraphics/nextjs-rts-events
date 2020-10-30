@@ -7,7 +7,6 @@ import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { getAllEvents } from '../../lib/events'
-import Box from '@material-ui/core/Box'
 
 const ChallengeStates = Object.freeze({
     COUNTDOWN: 'countDown',
