@@ -12,6 +12,11 @@ const useStyles = makeStyles((theme = useTheme) => ({
         WebkitAnimationDelay: 2,
         WebkitAnimationFillMode: 'forwards'
     },
+    containerImage: {
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'auto 100%'
+    },
     overImage: {
         position: 'absolute',
         top: 0,
@@ -26,7 +31,7 @@ function LazyImage (props) {
     const classes = useStyles()
 
     return (
-        <Box ref={imageRef} {...props} className={[props.className, classes.imageAnim].join(' ')}>
+        <Box ref={imageRef} {...props} className={[props.className, classes.imageAnim, classes.containerImage].join(' ')}>
             <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
             <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
         </Box>
