@@ -59,14 +59,14 @@ class ThemeFactory {
         const props = {
             MuiTypography: {
                 variantMapping: {
-                    h1: 'h1',
-                    h2: 'h2',
-                    h3: 'h3',
-                    h4: 'h4',
-                    h5: 'h5',
-                    h6: 'h6',
-                    subtitle1: 'div',
-                    subtitle2: 'div',
+                    h1: 'p',
+                    h2: 'p',
+                    h3: 'p',
+                    h4: 'p',
+                    h5: 'p',
+                    h6: 'p',
+                    subtitle1: 'p',
+                    subtitle2: 'p',
                     body1: 'span',
                     body2: 'span'
                 }
