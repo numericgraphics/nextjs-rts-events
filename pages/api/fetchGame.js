@@ -8,8 +8,22 @@ export default async (req, res) => {
     let cookies = null
 
     try {
-        const { eventName } = await req.body
+        const { eventName, date, time } = await req.body
         const cookieName = `rtsevents-${eventName}`
+
+        const today = new Date()
+        const euDate = date.split('-')
+        const jour = euDate[0]
+        const month = euDate[1]
+        const year = euDate[2]
+        const hour = time ? time.slice(0, 2) : today.getHours()
+        const min = time ? time.slice(2, 4) : today.getMinutes()
+
+        const usDate = new Date(year, month, jour, hour, min)
+
+        var myDate = usDate // Your timezone!
+        var myEpoch = myDate.getTime() / 1000.0
+        // console.log(myEpoch)
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
@@ -18,7 +32,12 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
+                let url
+                if (date || time) {
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?date=${date}&time=${time}`
+                } else {
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
+                }
 
                 const response = await fetch(url, {
                     credentials: 'include',
