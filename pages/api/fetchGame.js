@@ -21,8 +21,8 @@ export default async (req, res) => {
 
         const usDate = new Date(year, month, jour, hour, min)
 
-        var myDate = usDate // Your timezone!
-        var myEpoch = myDate.getTime() / 1000.0
+        const myDate = usDate // Your timezone!
+        const myEpoch = myDate.getTime() / 1000.0
         // console.log(myEpoch)
 
         if (req.headers.cookie) {
@@ -34,7 +34,7 @@ export default async (req, res) => {
             if (rtsEventCookie) {
                 let url
                 if (date || time) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?date=${date}&time=${time}`
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${myEpoch}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
                 }
