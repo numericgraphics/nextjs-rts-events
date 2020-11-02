@@ -26,6 +26,7 @@ class ThemeFactory {
             onError,
             backgroundImageURL
         } = importedTheme
+
         const palette = {
             primary: {
                 main: primary,
@@ -54,7 +55,62 @@ class ThemeFactory {
             onSecondary: onSecondary // @Rinaldo: Et pourquoi on pourrait pas faire ça???
         }
         // eslint-disable-next-line no-unused-vars
+
+        const props = {
+            MuiTypography: {
+                variantMapping: {
+                    h1: 'h1',
+                    h2: 'h2',
+                    h3: 'h3',
+                    h4: 'h4',
+                    h5: 'h5',
+                    h6: 'h6',
+                    subtitle1: 'div',
+                    subtitle2: 'div',
+                    body1: 'span',
+                    body2: 'span'
+                }
+            }
+        }
         const overrides = {
+            MuiTypography: {
+                h1: {
+                    fontFamily: 'srgssr-type-Bd, sans-serif',
+                    fontSize: '2.4rem'
+                },
+                h2: {
+                    fontFamily: 'srgssr-type-Bd, sans-serif',
+                    fontSize: '1.75rem'
+                },
+                h3: {
+                    fontFamily: 'srgssr-type-Bd, sans-serif',
+                    fontSize: '1.5rem'
+                },
+                h4: {
+                    fontFamily: 'srgssr-type-Bd, sans-serif',
+                    fontSize: '1.25rem'
+                },
+                h5: {
+                    fontFamily: 'srgssr-type-Bd, sans-serif',
+                    fontSize: '1rem'
+                },
+                h6: {
+                    fontFamily: 'srgssr-type-Bd, sans-serif',
+                    fontSize: '0.75rem'
+                },
+                subtitle1: {
+                    fontFamily: 'srgssr-type-Md, sans-serif',
+                    fontSize: '1.25rem'
+                },
+                subtitle2: {
+                    fontFamily: 'srgssr-type-Rg, sans-serif',
+                    fontSize: '1rem'
+                },
+                body1: {
+                    fontFamily: 'srgssr-type-Rg, sans-serif',
+                    fontSize: '0.75rem'
+                }
+            },
             MuiCssBaseline: {
                 '@global': {
                     /* body: {
@@ -72,7 +128,7 @@ class ThemeFactory {
         }
 
         this.backgroundImageURL = backgroundImageURL
-        this.createdTheme = createMuiTheme({ palette, overrides })
+        this.createdTheme = createMuiTheme({ props, palette, overrides })
         return this.createdTheme
     }
 
