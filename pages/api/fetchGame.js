@@ -1,6 +1,7 @@
 import cookie from 'cookie'
 import fetch from 'node-fetch'
 import getConfig from 'next/config'
+import { epochConverter } from '../../data/tools'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
@@ -11,19 +12,7 @@ export default async (req, res) => {
         const { eventName, date, time } = await req.body
         const cookieName = `rtsevents-${eventName}`
 
-        const today = new Date()
-        const euDate = date.split('-')
-        const jour = euDate[0]
-        const month = euDate[1]
-        const year = euDate[2]
-        const hour = time ? time.slice(0, 2) : today.getHours()
-        const min = time ? time.slice(2, 4) : today.getMinutes()
-
-        const usDate = new Date(year, month, jour, hour, min)
-
-        const myDate = usDate // Your timezone!
-        const myEpoch = myDate.getTime() / 1000.0
-        // console.log(myEpoch)
+        const epochCode = epochConverter(date, time)
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
@@ -34,7 +23,7 @@ export default async (req, res) => {
             if (rtsEventCookie) {
                 let url
                 if (date || time) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${myEpoch}`
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${epochCode}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
                 }

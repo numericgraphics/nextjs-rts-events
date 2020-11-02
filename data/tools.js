@@ -83,6 +83,21 @@ export function preLoadImage (url, callBack) {
     img.src = url
 }
 
+export function epochConverter (date, time) {
+    // date format : 23-12-1990 time : 2000 ( = 20 heure 00 min)
+    const today = new Date()
+    const euDate = date.split('-')
+    const jour = euDate[0]
+    const month = euDate[1]
+    const year = euDate[2]
+    const hour = time ? time.slice(0, 2) : today.getHours()
+    const min = time ? time.slice(2, 4) : today.getMinutes()
+    const usDate = new Date(year, month, jour, hour, min)
+
+    const myEpoch = usDate.getTime() / 1000.0
+    return myEpoch
+}
+
 export function phoneVerification (data) {
     const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
     const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/

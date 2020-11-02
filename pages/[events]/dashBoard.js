@@ -152,7 +152,6 @@ function DashBoard (props) {
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
 
     async function fetchData () {
-        console.log(events)
         try {
             const params = (new URL(document.location)).searchParams
             const date = params.get('date') ? params.get('date') : null
