@@ -303,7 +303,7 @@ function DashBoard (props) {
                             </Box>
                         </Fade>
                     </Box>
-                    <Box className={[stylesGlobal.bottomZoneDashboard, 'bottomZoneDashboard'].join(' ')} >
+                    <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                         <Fade in={!isLoading} timeout={500}>
                             <CustomDisabledButton color="primary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
