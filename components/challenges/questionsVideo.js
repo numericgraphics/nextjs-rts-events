@@ -171,7 +171,7 @@ function QuestionVideo (props) {
                     {answers.map((item, index) => {
                         return (
                             <Box key={index} className={classes.buttonWrapper} >
-                                <CustomDisabledButton color="primary" variant="contained" className={['questionButton', 'text2'].join(' ')} disabled={disabled} onClick={() => {
+                                <CustomDisabledButton color="secondary" variant="contained" className={['questionButton', 'text2'].join(' ')} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}

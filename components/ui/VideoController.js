@@ -94,11 +94,11 @@ function VideoController (props) {
         <Fragment>
             {controls
                 ? <Box className={classes.controlContainer} >
-                    <IconButton onClick={onPauseClick} color="primary" className={classes.button}>
+                    <IconButton onClick={onPauseClick} color="secondary" className={classes.button}>
                         {pause ? <PlayCircleOutlineIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />
                             : <PauseCircleOutlineIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />}
                     </IconButton>
-                    <IconButton onClick={onVolumeClick} color="primary" className={classes.button}>
+                    <IconButton onClick={onVolumeClick} color="secondary" className={classes.button}>
                         {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />
                             : <VolumeUpIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />}
                     </IconButton>
