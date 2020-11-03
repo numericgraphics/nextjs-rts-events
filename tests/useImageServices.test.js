@@ -10,6 +10,6 @@ test('should precache image with useImagesServices', () => {
     tools.preLoadImage.mockImplementation((image, callback) => { callback(true) })
     const { result } = renderHook(() => useImagesServices(data))
     expect(mockGetAllImages).toHaveBeenCalledTimes(1)
-    expect(mockLoadImage).toHaveBeenCalledTimes(3)
+    expect(mockLoadImage).toHaveBeenCalledTimes(5)
     expect(result.current.ready).toBeTruthy()
 })
