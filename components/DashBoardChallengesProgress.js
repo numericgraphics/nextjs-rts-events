@@ -19,7 +19,11 @@ function DashBoardChallengesProgress (props) {
 
     return (
         <Box className={classes.container}>
-            <ColorLinearProgress variant="determinate" style={{ color: 'white' }} value={progress} className={classes.linearProgress}/>
+            <ColorLinearProgress
+                variant="determinate"
+                color="primary"
+                value={progress}
+                className={classes.linearProgress}/>
         </Box>
     )
 }
