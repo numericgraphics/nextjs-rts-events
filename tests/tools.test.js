@@ -3,7 +3,7 @@ import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
     const images = getAllImagesFromJSON(data, [], ['.jpg', '.png', '.jpeg', '.image?'])
-    expect(images).toHaveLength(3)
+    expect(images).toHaveLength(5)
 })
 test('preload image', () => {
     // eslint-disable-next-line accessor-pairs

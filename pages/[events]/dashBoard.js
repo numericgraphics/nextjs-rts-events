@@ -211,7 +211,7 @@ function DashBoard (props) {
         if (isGlobalLoading) {
             setEventData(eventData.content)
             setEventName(events)
-            dataProvider.setData(eventData.content)
+            dataProvider.setEventData(eventData.content)
             setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         }
         fetchData().then()

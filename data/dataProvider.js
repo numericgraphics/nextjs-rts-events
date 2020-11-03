@@ -1,22 +1,44 @@
 class DataProvider {
     constructor () {
         this.data = {
+            gameID: '',
+            userID: '',
+            EventShortName: '',
             user: {},
+            event: {
+                shortName: '',
+                lang: '',
+                baseURL: '',
+                promos: '',
+                startPageElements: [],
+                gifts: [],
+                fallbackThemeID: '',
+                themeID: '',
+                usePhoneNumber: false,
+                theme: {},
+                timeControl: 0,
+                cguURL: '',
+                translation: {},
+                avatars: [],
+                nicknames: [],
+                challenges: {},
+                importConfig: '',
+                uiElements: {}
+            },
+            challengesStates: [],
             challenge: {},
-            gifts: [],
-            promos: [],
-            theme: {},
-            timeControl: {},
-            translation: {},
-            hasAvailableChallenges: true,
             gameStats: {},
             uiElements: {},
-            startPageElements: []
+            gifts: []
         }
     }
 
     setData (data) {
         Object.assign(this.data, data)
+    }
+
+    setEventData (data) {
+        return Object.assign(this.data, {}, { event: Object.assign(this.data.event, data) })
     }
 
     getAllData () {
@@ -28,23 +50,19 @@ class DataProvider {
     }
 
     getTheme () {
-        return this.data.theme
+        return this.data.event.theme
     }
 
-    getGifts () {
+    getGifts () { // 2 gifts in new model
         return this.data.gifts
     }
 
     getPromos () {
-        return this.data.promos
-    }
-
-    getTimeControl () {
-        return this.data.timeControl
+        return this.data.event.promos
     }
 
     getTranslation () {
-        return this.data.translation
+        return this.data.event.translation
     }
 
     getUser () {
@@ -55,10 +73,6 @@ class DataProvider {
         return this.data.challenge
     }
 
-    getChallenges () {
-        return this.data.challenges
-    }
-
     getChallengesStates () {
         return this.data.challengesStates
     }
@@ -67,8 +81,12 @@ class DataProvider {
         return this.data.uiElements
     }
 
+    getEventUiElements () {
+        return this.data.event.uiElements
+    }
+
     getStartPageElements () {
-        return this.data.startPageElements
+        return this.data.event.startPageElements
     }
 
     hasAvailableChallenges () {

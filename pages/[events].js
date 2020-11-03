@@ -18,7 +18,7 @@ function Events (props) {
             const response = await fetch(`api/verify/${events}`)
             if (response.status === 200) {
                 const content = await response.json()
-                dataProvider.setData(content)
+                dataProvider.setEventData(content)
                 await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
             } else {
                 setPageReady(true)
@@ -29,9 +29,10 @@ function Events (props) {
     }
 
     useEffect(() => {
+        console.log('[event] - dataProvider', dataProvider)
         setEventData(content)
         setEventName(events)
-        dataProvider.setData(content)
+        dataProvider.setEventData(content)
         setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         handleVerify().then()
     }, [])
