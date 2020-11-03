@@ -101,7 +101,8 @@ class ThemeFactory {
                 },
                 subtitle1: {
                     fontFamily: 'srgssr-type-Md, sans-serif',
-                    fontSize: '1.25rem'
+                    fontSize: '1.25rem',
+                    lineHeight: 1.5
                 },
                 subtitle2: {
                     fontFamily: 'srgssr-type-Rg, sans-serif',
