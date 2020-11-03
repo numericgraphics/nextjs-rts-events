@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core'
+import CardContent from '@material-ui/core/CardContent'
 
 class ThemeFactory {
     constructor () {
@@ -111,6 +112,21 @@ class ThemeFactory {
                 body1: {
                     fontFamily: 'srgssr-type-Rg, sans-serif',
                     fontSize: '0.75rem'
+                }
+            },
+            MuiCardContent: {
+                root: {
+                    minHeight: '0px!important',
+                    padding: 0
+                }
+            },
+            MuiCard: {
+                root: {
+                    // Changement du border Radius fait globalement depuis la révision de la dasboard. avant 16px
+                    borderRadius: '0.6rem',
+                    minHeight: '0px!important',
+                    boxShadow: 'none',
+                    padding: '0.5rem'
                 }
             },
             MuiCssBaseline: {

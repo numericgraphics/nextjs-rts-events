@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
 import Box from '@material-ui/core/Box'
-import { ColorCardContent } from '../../components/ui/ColorCardContent'
 import { ColorCard } from '../../components/ui/ColorCard'
 import { CustomDisabledButton } from '../../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/DashBoardChallengesProgress'
@@ -21,6 +20,7 @@ import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
 import AvatarEvent from '../../components/avatarEvent'
+import CardContent from '@material-ui/core/CardContent'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -247,16 +247,16 @@ function DashBoard (props) {
                                 }
                                 {availableScores &&
                                     <ColorCard className={classes.colorCard}>
-                                        <ColorCardContent className={classes.cardContent}>
+                                        <CardContent className={classes.cardContent}>
                                             <Typography variant='h1' component="p" className={[classes.scoreChunkText].join(' ')}>
                                                 {uiElements.scoreChunk}
                                             </Typography>
-                                        </ColorCardContent>
+                                        </CardContent>
                                     </ColorCard>
                                 }
                                 {availableResults &&
                                     <ColorCard className={classes.colorCard}>
-                                        <ColorCardContent className={classes.cardContent}>
+                                        <CardContent className={classes.cardContent}>
                                             <Typography variant='subtitle1' component="p" className={[classes.textRegularCenter].join(' ')}
                                                 dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                             </Typography>
@@ -274,11 +274,11 @@ function DashBoard (props) {
                                                     </Typography>
                                                 </Box>
                                             </Box>
-                                        </ColorCardContent>
+                                        </CardContent>
                                     </ColorCard>
                                 }
                                 <ColorCard className={classes.colorCard}>
-                                    <ColorCardContent className={classes.cardContent}>
+                                    <CardContent className={classes.cardContent}>
                                         <Box className={classes.giftContent}>
                                             { gifts && gifts.length === 1
                                                 ? <GiftResult
@@ -293,7 +293,7 @@ function DashBoard (props) {
                                                     setGift={setGift} />
                                             }
                                         </Box>
-                                    </ColorCardContent>
+                                    </CardContent>
                                 </ColorCard>
                             </Box>
                         </Fade>
