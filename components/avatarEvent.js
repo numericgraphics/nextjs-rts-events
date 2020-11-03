@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         position: 'absolute',
         width: '6rem',
         height: '6rem',
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
         borderRadius: '50%',
         display: 'inline-block',
         zIndex: 0
