@@ -15,6 +15,7 @@ import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 import { phoneVerification } from '../data/tools'
+import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -53,11 +54,11 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         position: 'relative',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontSize: '1rem',
-        padding: '6px 20px',
-        marginTop: 30
+        // borderRadius: 30,
+        // alignSelf: 'center',
+        // fontSize: '1rem',
+        // padding: '6px 20px',
+        marginTop: '2rem'
     },
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
@@ -333,9 +334,9 @@ const hasLoginModal = WrappedComponent => {
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
-                        <Button color="secondary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
+                        <CustomDisabledButton color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             {translation.send}
-                        </Button>
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.LOADING:
@@ -387,9 +388,9 @@ const hasLoginModal = WrappedComponent => {
                                 )
                             })}
                         </Box>
-                        <Button ref={smsSubmit} color="secondary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
-                            {translation.send}
-                        </Button>
+                        <CustomDisabledButton ref={smsSubmit} color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={(!phoneVerif || checked)} >
+                            { translation.send }
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.ERROR:
