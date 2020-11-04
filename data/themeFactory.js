@@ -64,9 +64,11 @@ class ThemeFactory {
                         backgroundSize: 'auto 100%',
                         opacity: 1
                     }, */
+                    /*
                     a: {
                         color: palette.secondary.contrastText + '!important'
                     }
+                    */
                 }
             }
         }

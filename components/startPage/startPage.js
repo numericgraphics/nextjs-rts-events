@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     buttonSwipeDownDesktop: {
         '&:hover': {
-            backgroundColor: theme.palette.primary.main
+            backgroundColor: theme.palette.secondary.main
         }
     },
     button: {
@@ -110,11 +110,12 @@ function StartPage (props) {
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {isLastTemplate() &&
                     <Slide direction="up" in={isLastTemplate()} timeout={300} mountOnEnter unmountOnExit>
-                        <Button color="primary"
+                        <Button color="secondary"
                             variant="contained"
                             className={['button', classes.button].join(' ')}
                             onClick={onStart}
-                            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+                            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+                        >
                             {translation.startPageButtonText}
                         </Button>
                     </Slide>
