@@ -76,15 +76,15 @@ class ThemeFactory {
         }
         const overrides = {
             MuiTypography: {
-                h1: {
+                h1: { // H1Title
                     fontFamily: 'srgssr-type-Bd, sans-serif',
                     fontSize: '2.4rem'
                 },
-                h2: {
+                h2: { // H2Title
                     fontFamily: 'srgssr-type-Bd, sans-serif',
                     fontSize: '1.75rem'
                 },
-                h3: {
+                h3: { // H3Title
                     fontFamily: 'srgssr-type-Bd, sans-serif',
                     fontSize: '1.5rem'
                 },
@@ -92,7 +92,7 @@ class ThemeFactory {
                     fontFamily: 'srgssr-type-Bd, sans-serif',
                     fontSize: '1.25rem'
                 },
-                h5: {
+                h5: { // text2
                     fontFamily: 'srgssr-type-Bd, sans-serif',
                     fontSize: '1rem'
                 },
@@ -100,16 +100,16 @@ class ThemeFactory {
                     fontFamily: 'srgssr-type-Bd, sans-serif',
                     fontSize: '0.75rem'
                 },
-                subtitle1: {
+                subtitle1: { // text1
                     fontFamily: 'srgssr-type-Md, sans-serif',
                     fontSize: '1.25rem',
                     lineHeight: 1.5
                 },
-                subtitle2: {
+                subtitle2: { // text3
                     fontFamily: 'srgssr-type-Rg, sans-serif',
                     fontSize: '1rem'
                 },
-                body1: {
+                body1: { // text4
                     fontFamily: 'srgssr-type-Rg, sans-serif',
                     fontSize: '0.75rem'
                 }
@@ -140,6 +140,14 @@ class ThemeFactory {
                     }, */
                     a: {
                         color: palette.secondary.contrastText + '!important'
+                    },
+                    p: {
+                        lineHeight: 1 + '!important'
+                    },
+                    button: {
+                        fontSize: '1.25rem!important',
+                        fontFamily: 'srgssr-type-Md, sans-serif!important',
+                        boxShadow: 'none!important'
                     }
                 }
             }

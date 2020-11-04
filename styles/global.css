@@ -180,7 +180,7 @@ content :   z-index = 0
 }
 
 .content {
-    padding: 0 0 0 0; /* page  de place pour swipe left  right */
+    padding: 0 0 0 0; /* pas de place pour swipe left  right */
     /* padding: 0 0 17rem 0;  Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
 }
 
@@ -276,9 +276,9 @@ content :   z-index = 0
 }
 
 .button, .buttonAlt {
-    font-size: 1.25rem!important;
-    font-family: 'srgssr-type-Md', sans-serif!important;
-    box-shadow: none!important;
+    /*font-size: 1.25rem!important;*/
+    /*font-family: 'srgssr-type-Md', sans-serif!important;*/
+    /*box-shadow: none!important;*/
     margin-bottom: 1rem!important;
 }
 
@@ -287,13 +287,14 @@ content :   z-index = 0
 }
 
 .buttonAlt {
+    font-size: 1.25rem!important;
     font-family: 'srgssr-type-Rg', sans-serif!important;
 }
 
 .questionButton {
     width: 85%;
-    /* font-size: 1rem!important;
-    font-family: 'srgssr-type-Rg', sans-serif!important; */
+    font-size: 1rem!important;
+    font-family: srgssr-type-Bd, sans-serif!important;
     text-transform: none!important;
 }
 
