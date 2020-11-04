@@ -12,7 +12,6 @@ class ThemeFactory {
 
     // TODO - add theme typo json model (yvain) - (scratch/theme-typo-json)
     createTheme (importedTheme) {
-        console.log('importedTheme', importedTheme)
         const {
             primary,
             primaryLight,
