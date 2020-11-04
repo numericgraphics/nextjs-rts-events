@@ -55,15 +55,15 @@ const hasCountDownModal = WrappedComponent => {
         }
 
         function startCountDown () {
-            // const timer = setInterval(() => {
-            //     setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
-            // }, 100)
-            // function stopTimer () {
-            //     setProgress(100)
-            //     setStatus(true)
-            //     handleClose()
-            //     clearInterval(timer)
-            // }
+            const timer = setInterval(() => {
+                setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
+            }, 100)
+            function stopTimer () {
+                setProgress(100)
+                setStatus(true)
+                handleClose()
+                clearInterval(timer)
+            }
         }
 
         function displayCountDownText () {
@@ -91,7 +91,7 @@ const hasCountDownModal = WrappedComponent => {
                     disableEnforceFocus
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    className={classes.modal}
+                    className={[classes.modal, 'containerModal'].join(' ')}
                     open={open}
                     closeAfterTransition
                     BackdropComponent={ColorBackDrop}

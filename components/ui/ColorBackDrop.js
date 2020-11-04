@@ -16,12 +16,9 @@ export default function ColorBackDrop () {
     const classes = useStyles()
     const stylesGlobal = useStylesGlobal()
     return (
-        <Box className={['container'].join(' ')} >
-            <Box className='content' >
-
-                <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}/>
-                <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}/>
-            </Box>
+        <Box className={[classes.overImage].join(' ')} >
+            <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')} />
+            <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')} />
         </Box>
     )
 }
