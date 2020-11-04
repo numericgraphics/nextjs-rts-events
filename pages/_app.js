@@ -140,7 +140,6 @@ function MyApp ({ Component, pageProps }) {
             if (time && date) {
                 setTimeStampMode({ enable: !!time, date, time })
             }
-            setTimeStampMode({ enable: !!time, date, time, initialized: true })
             setRouterReady(true)
         }
     }, [router])
