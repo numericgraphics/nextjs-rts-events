@@ -1,5 +1,6 @@
 import cookie from 'cookie'
 import getConfig from 'next/config'
+import { epochConverter } from '../../data/tools'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
@@ -8,7 +9,8 @@ export default async (req, res) => {
 
     // Check if rts-event cookie is available
     try {
-        const { answer, challengeID, eventName } = await req.body
+        const { answer, challengeID, eventName, date, time } = await req.body
+        const epochCode = ((date && time) || date) ? epochConverter(date, time) : false
         const cookieName = `rtsevents-${eventName}`
 
         if (req.headers.cookie) {
@@ -23,8 +25,13 @@ export default async (req, res) => {
             }
 
             if (rtsEventCookie) {
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end`
-
+                let url
+                if (epochCode) {
+                    console.log(epochCode)
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end?ts=${epochCode}`
+                } else {
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end`
+                }
                 const response = await fetch(url, {
                     credentials: 'include',
                     method: 'POST',

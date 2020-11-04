@@ -87,12 +87,10 @@ export function epochConverter (date, time) {
     // date format : 23-12-1990 time : 2000 ( = 20 heure 00 min)
     const today = new Date()
     const euDate = date.split('-')
-    console.log(euDate)
     const euDateFinal = euDate[2] + '-' + euDate[1] + '-' + euDate[0]
     const hour = time ? time.slice(0, 2) : today.getHours()
     const min = time ? time.slice(2, 4) : today.getMinutes()
     const usDate = new Date(euDateFinal + 'T' + hour + ':' + min + ':00')
-    console.log(usDate)
 
     const myEpoch = usDate.getTime() / 1000.0
     return myEpoch

@@ -20,7 +20,7 @@ function Challenge () {
     const router = useRouter()
     const { events } = router.query
     const { dataProvider, store } = useContext(UserContext)
-    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController } = store
+    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
@@ -30,11 +30,13 @@ function Challenge () {
 
     async function fetchQuestions () {
         try {
+            const bodyContent = (timeStampMode.enable) ? { eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { eventName: events }
             const response = await fetch('/api/fetchQuiz', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ eventName: events })
+                body: JSON.stringify(bodyContent)
             })
+            console.log(response.status)
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData({ challenge: content })
@@ -55,12 +57,13 @@ function Challenge () {
         try {
             const { challengeID } = dataProvider.getChallenge()
             const answerToString = String(answer)
+            const bodyContent = (timeStampMode.enable) ? { answer: answerToString, challengeID, eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { answer: answerToString, challengeID, eventName: events }
 
             const response = await fetch('/api/fetchQuizResult', {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ answer: answerToString, challengeID, eventName: events })
+                body: JSON.stringify(bodyContent)
             })
 
             if (response.status === 200) {
