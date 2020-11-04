@@ -162,6 +162,7 @@ function DashBoard (props) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ eventName: events, date: date, time: time })
             })
+            console.log(response.status)
             if (response.status === 200) {
                 const content = await response.json()
                 initGame(content)
