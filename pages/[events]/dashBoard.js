@@ -136,15 +136,14 @@ function DashBoard (props) {
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
-    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode } = store
 
     async function fetchData () {
         try {
-            const params = (new URL(document.location)).searchParams
-            const date = params.get('date') ? params.get('date') : null
-            const time = params.get('time') ? params.get('time') : null
-            const bodyContent = ((date && time) || date) ? { eventName: events, date: date, time: time } : { eventName: events }
-
+            // const params = (new URL(document.location)).searchParams
+            // const date = params.get('date') ? params.get('date') : null
+            // const time = params.get('time') ? params.get('time') : null
+            const bodyContent = (timeStampMode.enable) ? { eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { eventName: events }
             const response = await fetch('/api/fetchGame', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -212,9 +211,10 @@ function DashBoard (props) {
             setEventName(events)
             dataProvider.setEventData(eventData.content)
             setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
+        } else {
+            fetchData().then()
         }
-        fetchData().then()
-    }, [])
+    }, [isGlobalLoading])
 
     return (
         <EventLayout >
