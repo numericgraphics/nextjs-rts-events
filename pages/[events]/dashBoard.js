@@ -143,13 +143,13 @@ function DashBoard (props) {
             const params = (new URL(document.location)).searchParams
             const date = params.get('date') ? params.get('date') : null
             const time = params.get('time') ? params.get('time') : null
+            const bodyContent = ((date && time) || date) ? { eventName: events, date: date, time: time } : { eventName: events }
 
             const response = await fetch('/api/fetchGame', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ eventName: events, date: date, time: time })
+                body: JSON.stringify(bodyContent)
             })
-            console.log(response.status)
             if (response.status === 200) {
                 const content = await response.json()
                 initGame(content)

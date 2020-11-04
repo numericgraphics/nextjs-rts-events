@@ -12,7 +12,7 @@ export default async (req, res) => {
         const { eventName, date, time } = await req.body
         const cookieName = `rtsevents-${eventName}`
 
-        const epochCode = epochConverter(date, time)
+        const epochCode = ((date && time) || date) ? epochConverter(date, time) : false
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
@@ -22,7 +22,7 @@ export default async (req, res) => {
 
             if (rtsEventCookie) {
                 let url
-                if (date || time) {
+                if (epochCode) {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${epochCode}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
@@ -34,7 +34,6 @@ export default async (req, res) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: code })
                 })
-
                 if (response.status === 200) {
                     const content = await response.json()
                     res.status(200).send(JSON.stringify(content))

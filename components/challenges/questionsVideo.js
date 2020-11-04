@@ -140,12 +140,11 @@ function QuestionVideo (props) {
     }, [props.buttonModalCliked])
 
     useEffect(() => {
-        console.log(progress)
-        if (progress >= 201) {
+        if (progress >= 100) {
             setTimeLeft(0)
             setProgress(0)
             videoController.player.current.pause()
-            props.answerCallBack(1)
+            props.answerCallBack(-1)
             setDisabled(true)
         }
     }, [progress, appVisibilityStatus])
