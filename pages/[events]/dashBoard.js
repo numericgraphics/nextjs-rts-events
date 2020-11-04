@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Avatar from '@material-ui/core/Avatar'
 import UserContext from '../../components/UserContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -21,6 +20,7 @@ import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
+import AvatarEvent from '../../components/avatarEvent'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -36,13 +36,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         textAlign: 'center',
         lineHeight: 1,
         marginBottom: '0.5rem',
-        color: theme.palette.secondary.main
-    },
-    avatar: {
-        width: '6rem',
-        height: '6rem',
-        marginBottom: '0.5rem',
-        zIndex: 2
+        color: theme.palette.primary.contrastText
     },
     rateIcon: {
         display: 'inline',
@@ -65,18 +59,18 @@ const useStyles = makeStyles((theme = useTheme) => ({
         textAlign: 'center',
         width: '100%',
         // padding: '1rem 0 1rem 0',
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.primary.contrastText
     },
     textRegularCenter: {
         textAlign: 'center',
-        color: theme.palette.secondary.contrastText,
+        color: theme.palette.primary.contrastText,
         marginBottom: '0.5rem'
     },
     textRegularCenterOverlay: {
         position: 'absolute',
         zIndex: 2,
         textAlign: 'center',
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.primary.contrastText
     },
     progressBarOverlay: {
         position: 'relative',
@@ -111,7 +105,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         borderRadius: '0.5rem'
     },
     remainingTime: {
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
         marginBottom: '0.8rem'
     },
     cardContent: {
@@ -123,13 +117,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
         // paddingTop: 10
     }
 }))
-const styles = {
-    containerImage: {
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%'
-    }
-}
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -223,7 +210,7 @@ function DashBoard (props) {
         if (isGlobalLoading) {
             setEventData(eventData.content)
             setEventName(events)
-            dataProvider.setData(eventData.content)
+            dataProvider.setEventData(eventData.content)
             setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         }
         fetchData().then()
@@ -237,7 +224,7 @@ function DashBoard (props) {
                         <Fade in={!isLoading} timeout={500}>
                             <Box>
                                 <Box className={classes.header}>
-                                    <Avatar className={classes.avatar} src={user.avatarURL}/>
+                                    <AvatarEvent user={user.avatarURL}/>
                                     <Typography className={[classes.nickname, 'H2Title'].join(' ')}>
                                         {user.nickname}
                                     </Typography>
@@ -315,14 +302,14 @@ function DashBoard (props) {
                             </Box>
                         </Fade>
                     </Box>
-                    <Box className={[stylesGlobal.bottomZoneDashboard, 'bottomZoneDashboard'].join(' ')} >
+                    <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                         <Fade in={!isLoading} timeout={500}>
-                            <CustomDisabledButton color="primary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
+                            <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage className={'background'} style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage addcolor="true" addblur="true" className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>

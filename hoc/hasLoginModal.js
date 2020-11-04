@@ -186,7 +186,7 @@ const hasLoginModal = WrappedComponent => {
         const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
-        const uiElement = dataProvider.getUiElements()
+        const uiElement = dataProvider.getEventUiElements()
         const { agreementsChunks } = uiElement
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])

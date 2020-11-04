@@ -12,16 +12,32 @@ class ThemeFactory {
 
     // TODO - add theme typo json model (yvain) - (scratch/theme-typo-json)
     createTheme (importedTheme) {
-        const { primary, primaryVariant, onPrimary, secondary, secondaryVariant, onSecondary, background, error, onError, backgroundImageURL } = importedTheme
+        console.log('importedTheme', importedTheme)
+        const {
+            primary,
+            primaryLight,
+            primaryDark,
+            onPrimary,
+            secondary,
+            secondaryLight,
+            secondaryDark,
+            onSecondary,
+            background,
+            error,
+            onError,
+            backgroundImageURL
+        } = importedTheme
         const palette = {
             primary: {
                 main: primary,
-                light: primaryVariant,
+                light: primaryLight,
+                dark: primaryDark,
                 contrastText: onPrimary
             },
             secondary: {
                 main: secondary,
-                light: secondaryVariant,
+                light: secondaryLight,
+                dark: secondaryDark,
                 contrastText: onSecondary
             },
             background: {

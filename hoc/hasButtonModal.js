@@ -11,6 +11,7 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
 import UserContext from '../components/UserContext'
 import { useStylesGlobal } from '../styles/global.style'
+import LazyImage from '../components/ui/LazyImage'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     icon: {
@@ -95,6 +96,7 @@ const hasButtonModal = WrappedComponent => {
                     tabIndex={-1}
                 >
                     <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
+                        {/* TODO: utiliser LazyImage plutôt que les trois box */}
                         <Box className={[classes.backgroundImage].join(' ')}
                             style={{ backgroundImage: `url(${poster})`, height: height }}></Box>
                         <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}></Box>

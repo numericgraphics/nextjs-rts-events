@@ -10,6 +10,7 @@ import { ColorBorderButton } from '../ui/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { preLoadImage } from '../../data/tools'
+import { useStylesGlobal } from '../../styles/global.style'
 
 const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
@@ -74,7 +75,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         alignItems: 'center',
         justifyContent: 'center',
         minWidth: 275,
-        minHeight: 300
+        minHeight: 300,
+        paddingBottom: '11rem' // Pour pouvoir scroller quand il y a deux boutons...
     },
     button: {
         width: '80vw',
@@ -137,6 +139,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
 }))
 
 function Result (props) {
+    const stylesGlobal = useStylesGlobal()
     const { points, success, gameStats, newUnlockedGifts } = props.content
     const { nextAvailableChallengeImageURL } = gameStats
     const classes = useStyles()
@@ -213,7 +216,7 @@ function Result (props) {
                         }
                     </Box>
                 </Box>
-                <Box className='bottomZone'>
+                <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZone'].join(' ')}>
                     {gameStats.hasAvailableChallenges
                         ? <React.Fragment>
                             <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={'buttonAlt'} onClick={gotoDashBoard}>
