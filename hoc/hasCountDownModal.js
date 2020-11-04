@@ -4,6 +4,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 
@@ -54,15 +55,15 @@ const hasCountDownModal = WrappedComponent => {
         }
 
         function startCountDown () {
-            const timer = setInterval(() => {
-                setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
-            }, 100)
-            function stopTimer () {
-                setProgress(100)
-                setStatus(true)
-                handleClose()
-                clearInterval(timer)
-            }
+            // const timer = setInterval(() => {
+            //     setProgress((prevProgress) => (prevProgress >= 100 ? stopTimer() : prevProgress + 3))
+            // }, 100)
+            // function stopTimer () {
+            //     setProgress(100)
+            //     setStatus(true)
+            //     handleClose()
+            //     clearInterval(timer)
+            // }
         }
 
         function displayCountDownText () {
@@ -93,10 +94,10 @@ const hasCountDownModal = WrappedComponent => {
                     className={classes.modal}
                     open={open}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
                         timeout: 500,
-                        style: { backgroundColor: 'none' }
+                        // style: { backgroundColor: 'none' }
                     }}
                     tabIndex={-1}
                 >
