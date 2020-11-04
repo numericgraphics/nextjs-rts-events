@@ -7,6 +7,7 @@ import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
+import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import UserContext from '../components/UserContext'
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.light,
         color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
@@ -411,7 +412,7 @@ const hasLoginModal = WrappedComponent => {
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
                         timeout: 500
                     }}

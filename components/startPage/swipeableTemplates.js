@@ -41,7 +41,7 @@ function SwipeableTemplates (props) {
             className='backgroundSwipeableView'
             axis={'y'}
             animateHeight={true}
-            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+            // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
             onSwitching={handleSwitching}
         >
             {props.data.map((item, index) => getPromoTemplate(item, index, activeStep, isMoving))}

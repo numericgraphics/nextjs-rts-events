@@ -114,7 +114,7 @@ function StartPage (props) {
                             variant="contained"
                             className={['button', classes.button].join(' ')}
                             onClick={onStart}
-                            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+                            // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
                         >
                             {translation.startPageButtonText}
                         </Button>
