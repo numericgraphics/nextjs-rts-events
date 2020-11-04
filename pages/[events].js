@@ -29,7 +29,6 @@ function Events (props) {
     }
 
     useEffect(() => {
-        console.log('[event] - dataProvider', dataProvider)
         setEventData(content)
         setEventName(events)
         dataProvider.setEventData(content)
