@@ -23,6 +23,7 @@ export default async (req, res) => {
             if (rtsEventCookie) {
                 let url
                 if (epochCode) {
+                    console.log(epochCode)
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${epochCode}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
