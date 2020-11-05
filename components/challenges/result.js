@@ -35,14 +35,14 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         // lineHeight: 1.2,
         marginBottom: 10,
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     subTitle: {
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1.2rem',
         textAlign: 'center',
         // lineHeight: 1.2,
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
         marginBottom: '3rem!important'
 
     },
@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         // lineHeight: '1.8rem',
         marginBottom: 10,
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     secondCardText: {
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1,125rem',
         textAlign: 'center',
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     secondCardButton: {
         width: '80vw',
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         padding: '6px 20px',
         textAlign: 'center',
         marginTop: '15vh',
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     iconType: {
         display: 'flex',
@@ -222,7 +222,7 @@ function Result (props) {
                             <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={'buttonAlt'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={'button'} onClick={continueGame}>
+                            <Button key={'continueGame'} color="secondary" variant="contained" className={'button'} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>

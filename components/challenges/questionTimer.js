@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: 5
     },
     linearProgress: {
-        backgroundColor: theme.palette.secondary.dark
+        backgroundColor: theme.palette.primary.dark
     }
 }))
 const styles = {
@@ -43,7 +43,7 @@ function QuestionTimer (props) {
 
     return (
         <Box className={classes.container}>
-            <LinearProgress variant="determinate" color={'secondary'} value={progress} className={classes.linearProgress}/>
+            <LinearProgress variant="determinate" color={'primary'} value={progress} className={classes.linearProgress}/>
             <Box className={classes.content}>
                 <TimerIcon style={styles.icon}/>
                 <Typography variant="subtitle2" className={classes.text} >

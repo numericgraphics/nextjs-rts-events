@@ -22,11 +22,11 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginLeft: '5px',
         marginRight: '15px',
         lineHeight: 1,
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.primary.contrastText
     },
     giftIcon: {
-        fill: theme.palette.primary.contrastText,
-        backgroundColor: theme.palette.primary.main,
+        fill: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.secondary.main,
         minHeight: '34px',
         minWidth: '34px',
         fontSize: '5rem!important',
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     button: {
         borderRadius: 40,
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.light,
         paddingBottom: 5,
         paddingLeft: 10,
         paddingRight: 5,
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         zIndex: 1,
         '&:hover':
             {
-                backgroundColor: theme.palette.secondary.dark
+                backgroundColor: theme.palette.primary.dark
             }
     }
 }))

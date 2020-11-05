@@ -7,6 +7,7 @@ import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
+import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import UserContext from '../hooks/userContext'
@@ -15,6 +16,7 @@ import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 import { phoneVerification } from '../data/tools'
+import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -36,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette.secondary.main,
-        color: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
@@ -53,11 +55,11 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         position: 'relative',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontSize: '1rem',
-        padding: '6px 20px',
-        marginTop: 30
+        // borderRadius: 30,
+        // alignSelf: 'center',
+        // fontSize: '1rem',
+        // padding: '6px 20px',
+        marginTop: '2rem'
     },
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
@@ -95,12 +97,12 @@ const useStyles = makeStyles((theme) => ({
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.secondary.contrastText,
+        stroke: theme.palette.primary.contrastText,
         padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.secondary.contrastText
+        stroke: theme.palette.primary.contrastText
     },
     CGU: {
         width: '100%',
@@ -110,10 +112,13 @@ const useStyles = makeStyles((theme) => ({
         // fontSize: '0.9rem!important',
         letterSpacing: '0.00238em',
         lineHeight: 1.2,
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.primary.contrastText,
+        '& a': {
+            color: theme.palette.primary.contrastText
+        }
     },
     link: {
-        color: theme.palette.secondary.contrastText,
+        color: 'red',
         lineHeight: '1.1rem',
         textDecoration: 'underline'
     },
@@ -330,14 +335,14 @@ const hasLoginModal = WrappedComponent => {
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
+                        <CustomDisabledButton color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             {translation.send}
-                        </Button>
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress style={{ color: theme.palette.secondary.contrastText }}/>
+                    <CircularProgress style={{ color: theme.palette.primary.contrastText }}/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
@@ -384,9 +389,9 @@ const hasLoginModal = WrappedComponent => {
                                 )
                             })}
                         </Box>
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
-                            {translation.send}
-                        </Button>
+                        <CustomDisabledButton ref={smsSubmit} color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={(!phoneVerif || checked)} >
+                            { translation.send }
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.ERROR:
@@ -399,7 +404,6 @@ const hasLoginModal = WrappedComponent => {
         return (
             <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
-
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -407,9 +411,11 @@ const hasLoginModal = WrappedComponent => {
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        open: open,
+                        onClose: handleClose
                     }}
                 >
                     <Fade in={open}>

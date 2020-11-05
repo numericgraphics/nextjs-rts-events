@@ -21,7 +21,10 @@ export default function SlideShow (props) {
     const { slides, activeSlide } = props
 
     return (
-        <Box className='backgroundSlideShow' style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+        <Box
+            className='backgroundSlideShow'
+            // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+        >
             {slides.map((slide, index) => {
                 return <Box key={index} className={index === activeSlide ? [classes.slide, classes.slideActive].join(' ') : classes.slide}
                     style={{

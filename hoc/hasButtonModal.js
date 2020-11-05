@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: '10vw'
     },
     text: {
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
         position: 'absolute'
     },
     textButton: {
         textTransform: 'none',
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     overImage: {
         position: 'absolute',
@@ -127,7 +127,7 @@ const hasButtonModal = WrappedComponent => {
                                 </Typography>
                                 <Button
                                     key={'continueGame'}
-                                    color="primary"
+                                    color="secondary"
                                     variant="contained"
                                     className={'button'}
                                     onClick={startChallenge}
