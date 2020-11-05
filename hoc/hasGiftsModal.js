@@ -171,10 +171,10 @@ const hasGiftModal = WrappedComponent => {
                             <Box className={classes.footer} style={{ height: height }}>
                                 <Box className={classes.gradient} style={{ background: `linear-gradient(${hexToRgbA(theme.palette.secondary.main, 0)} 0%, ${hexToRgbA(theme.palette.secondary.main, 0)} 80%,${theme.palette.secondary.main} 100%)` }} />
                                 <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                    <Typography className={[classes.title, 'H2Title'].join(' ')} align={'center'}
+                                    <Typography variant="h2" className={classes.title} align={'center'}
                                         dangerouslySetInnerHTML={{ __html: gift.title }}>
                                     </Typography>
-                                    <Typography className={[classes.description, 'text3'].join(' ')} align={'center'}
+                                    <Typography variant="subtitle2" className={classes.description} align={'center'}
                                         dangerouslySetInnerHTML={{ __html: gift.message }}>
                                     </Typography>
                                 </Box>

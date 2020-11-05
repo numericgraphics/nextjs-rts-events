@@ -326,7 +326,7 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.NUMBER_RECEIVE:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={[classes.title, 'H3Title'].join(' ')} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
+                        <Typography variant="h3" className={classes.title} align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
@@ -342,7 +342,7 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={[classes.title, 'H3Title'].join(' ')} align={'center'}>{translation.modalLoginPhoneText}</Typography>
+                        <Typography variant="h3" className={classes.title} align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
@@ -379,7 +379,7 @@ const hasLoginModal = WrappedComponent => {
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
                                             checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />
-                                        <Typography className={[classes.CGUText, 'text4'].join(' ')} dangerouslySetInnerHTML={{ __html: data }}/>
+                                        <Typography variant="body1" className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
                                 )
                             })}
@@ -391,7 +391,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
-                    <Typography className={[classes.title, 'H3title'].join(' ')} align={'center'}>Erreur</Typography>
+                    <Typography variant="h3" className={classes.title} align={'center'}>Erreur</Typography>
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </Box>
             }

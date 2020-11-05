@@ -41,7 +41,6 @@ class ThemeFactory {
                 contrastText: onSecondary
             },
             background: {
-                // default: 'black'
                 default: background
             },
             error: {
@@ -135,8 +134,17 @@ class ThemeFactory {
                         fontFamily: 'sans-serif',
                         WebkitTextSizeAdjust: 'none',
                         overscrollBehavior: 'contain', /* prevent pull to refresh on mobile browsers */
+                        '@media only screen and (min-width: 481px)': {
+                            fontSize: '1.1em'
+                        },
                         '@media only screen and (min-height: 901px)': {
                             fontSize: '1.1em'
+                        },
+                        '@media only screen and (min-height: 901px) and (min-width: 600px) and (min-aspect-ratio: 600/901)': {
+                            fontSize: '2.2vh'
+                        },
+                        '@media only screen and (max-height:550px)': {
+                            fontSize: '0.9em'
                         }
                     },
                     a: {

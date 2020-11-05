@@ -1,4 +1,5 @@
 /*** TYPO ***/
+
 @font-face {
     font-family: 'srgssr-type-BdIt';
     src: url(../assets/fonts/SRGSSRType_BdIt.ttf);
@@ -19,9 +20,9 @@
 
 
 /***  HIERARCHY ***
-image - video :     z-index = -2
-gradient effect :   z-index = -1
-content :   z-index = 0
+    image - video :     z-index = -2
+    gradient effect :   z-index = -1
+    content :   z-index = 0
  */
 
 .z-index-media {
@@ -40,6 +41,7 @@ content :   z-index = 0
 
 
 /*** BACKGROUNDS ***/
+
 .backgroundSlideShow,
 .backgroundSwipeableView,
 .backgroundModal,
@@ -203,53 +205,6 @@ content :   z-index = 0
     z-index: 1;
 }
 
-
-/*** TYPO ***/
-.H1Title {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 2.4rem!important;
-}
-
-.H2Title {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.75rem!important;
-}
-
-.H3Title {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.5rem!important;
-}
-
-.text1 {
-    font-family: 'srgssr-type-Md', sans-serif!important;
-    font-size: 1.25rem!important;
-}
-
-.text2 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1rem!important;
-}
-
-.text3 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1rem!important;
-}
-
-.text4 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 0.75rem!important;
-}
-
-/*END*/
-
-.color-White {
-    color: white!important;
-}
-
-.unselectable-element {
-    user-select: none;
-}
-
 /*** COMPONENTS ***/
 
 .questionButton,
@@ -262,9 +217,6 @@ content :   z-index = 0
 }
 
 .button, .buttonAlt {
-    /*font-size: 1.25rem!important;*/
-    /*font-family: 'srgssr-type-Md', sans-serif!important;*/
-    /*box-shadow: none!important;*/
     margin-bottom: 1rem!important;
 }
 
@@ -302,10 +254,6 @@ content :   z-index = 0
     padding: 1.1rem 0.7rem;
 }
 
-.centered-content {
-     justify-content: center;
- }
-
 .cardContent {
     justify-content: flex-start;
 }
@@ -324,11 +272,6 @@ content :   z-index = 0
 /*** MEDIA QUERY ***/
 
 @media only screen and (min-width: 481px) { /* Pour les écrans de desktop et iPad/iPhones portrait on limite la largeur et on centre */
-
-    html, body {
-        font-size: 1.1em;
-    }
-
     .container,
     .containerModal,
     .background,
@@ -367,11 +310,6 @@ content :   z-index = 0
 }
 
 @media only screen and (min-height: 901px) { /* sur les écrans trop haut, on limite la hauteur du background pour que l'image/la vidéo reste acceptable */
-
-    html, body {
-        font-size: 1.1em;
-    }
-
     .background,
     .backgroundGradientBottom {
         max-height: 900px;
@@ -379,10 +317,6 @@ content :   z-index = 0
 }
 
 @media only screen and (min-height: 901px) and (min-width: 600px) and (min-aspect-ratio: 600/901) { /* sur les écrans trop haut, et trop large on zoome comme instagram */
-    html, body {
-        font-size: 2.2vh;
-    }
-
     .container,
     .containerModal,
     .background,
@@ -423,11 +357,6 @@ content :   z-index = 0
 }
 
 @media only screen and (max-height:550px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
-
-    html, body {
-        font-size: 0.9em;
-    }
-
     .content {
         display: flex;
         flex-direction: column;
@@ -459,8 +388,10 @@ content :   z-index = 0
     .topZoneDashboard {
         padding: 1rem 1rem 7rem;
     }
-
 }
+
+
+/*** TAGS & SPECIFIC CASES ***/
 
 a {
     text-decoration: underline;
@@ -487,4 +418,19 @@ input:focus ,
     border: none!important;
     box-shadow: none!important;
     outline: none!important;
+}
+
+
+/*** FUNCTIONAL CLASS ***/
+
+.color-White {
+    color: white!important;
+}
+
+.unselectable-element {
+    user-select: none;
+}
+
+.centered-content {
+    justify-content: center;
 }
