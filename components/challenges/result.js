@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { withRouter } from 'next/router'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -186,7 +186,7 @@ function Result (props) {
             <Box className='content' >
                 <Box className='topZone'>
                     <Box className={classes.content}>
-                        <Typography className={[classes.winPointText, 'H1Title'].join(' ')}>
+                        <Typography variant="h1" className={classes.winPointText}>
                             {gameStats.hasAvailableChallenges
                                 ? success
                                     ? `+ ${points} pts` // TODO: Translation pts
@@ -194,8 +194,8 @@ function Result (props) {
                                 : `+ ${gameStats.currentScore} pts`
                             }
                         </Typography>
-                        <Typography className={[classes.title, 'H1Title'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography className={[classes.subTitle, 'text1'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography variant="h1" className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
+                        <Typography variant="h1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
@@ -203,7 +203,7 @@ function Result (props) {
                         }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
-                                <Typography className={[classes.secondCardText, 'H3Title'].join(' ')} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
+                                <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
                                 <GiftResult
                                     className={classes.giftContainer}
                                     translation={translation.challengeResultGiftText}

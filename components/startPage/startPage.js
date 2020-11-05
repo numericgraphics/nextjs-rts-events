@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { isBrowser, isMobile, isTablet } from 'react-device-detect'
 import Button from '@material-ui/core/Button'
 import SwipeableTemplates from './swipeableTemplates'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import hasLoginModal from '../../hoc/hasLoginModal'
 import SlideShow from './slideShow'
 import { Box } from '@material-ui/core'
@@ -125,7 +125,7 @@ function StartPage (props) {
                         {!isLastTemplate() &&
                         <Box className={[classes.arrowSwipeDown, classes.arrowSwipeDownMobile].join(' ')}>
                             <ArrowIcon/>
-                            <Typography className={['text3', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                            <Typography variant="subtitle2" className={'color-White'} align={'center'}>{translation.startPageArrowDown}</Typography>
                         </Box>
                         }
                     </Box>}
@@ -136,7 +136,7 @@ function StartPage (props) {
                             <IconButton disableRipple={true} onClick={onSwipe} className={classes.buttonSwipeDownDesktop}>
                                 <ArrowIcon fontSize="large"/>
                             </IconButton>
-                            <Typography className={[classes.label, 'text3', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                            <Typography variant="subtitle2" className={[classes.label, 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
                         </React.Fragment>
                     }
                 </Box>}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
-import UserContext from '../../components/UserContext'
+import UserContext from '../../hooks/userContext'
 import EventLayout from '../../components/eventLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'

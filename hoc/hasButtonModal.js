@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
-import UserContext from '../components/UserContext'
+import UserContext from '../hooks/userContext'
 import { useStylesGlobal } from '../styles/global.style'
 import LazyImage from '../components/ui/LazyImage'
 

@@ -12,7 +12,6 @@ class ThemeFactory {
 
     // TODO - add theme typo json model (yvain) - (scratch/theme-typo-json)
     createTheme (importedTheme) {
-        console.log('importedTheme', importedTheme)
         const {
             primary,
             primaryLight,
@@ -53,9 +52,8 @@ class ThemeFactory {
                 disabledBackground: 'gray',
                 disabled: 'white'
             },
-            onSecondary: onSecondary // @Rinaldo: Et pourquoi on pourrait pas faire ça???
+            onSecondary: onSecondary
         }
-        // eslint-disable-next-line no-unused-vars
 
         const props = {
             MuiTypography: {
@@ -131,13 +129,16 @@ class ThemeFactory {
             },
             MuiCssBaseline: {
                 '@global': {
-                    /* body: {
-                        backgroundImage: `url(${backgroundImageURL})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'center',
-                        backgroundSize: 'auto 100%',
-                        opacity: 1
-                    }, */
+                    'html, body': {
+                        margin: 0,
+                        fontSize: '2.2vh', /* Relative à la hauteur du viewPort (bloque le zoom?) */
+                        fontFamily: 'sans-serif',
+                        WebkitTextSizeAdjust: 'none',
+                        overscrollBehavior: 'contain', /* prevent pull to refresh on mobile browsers */
+                        '@media only screen and (min-height: 901px)': {
+                            fontSize: '1.1em'
+                        }
+                    },
                     a: {
                         color: palette.secondary.contrastText + '!important'
                     },

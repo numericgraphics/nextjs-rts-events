@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { withRouter } from 'next/router'
-import UserContext from '../components/UserContext'
+import UserContext from '../hooks/userContext'
 import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
 import EventLayout from '../components/eventLayout'
@@ -29,7 +29,6 @@ function Events (props) {
     }
 
     useEffect(() => {
-        console.log('[event] - dataProvider', dataProvider)
         setEventData(content)
         setEventName(events)
         dataProvider.setEventData(content)

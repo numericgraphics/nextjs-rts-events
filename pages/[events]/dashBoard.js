@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import UserContext from '../../components/UserContext'
+import UserContext from '../../hooks/userContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'

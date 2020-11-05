@@ -6,7 +6,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import { storeInLocalStorage, UserStates, getDataFromLocalStorage } from '../../data/tools'
 
 const iconFontSize = 33

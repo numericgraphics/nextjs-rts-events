@@ -8,7 +8,7 @@ import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import useAppVisibility from '../../hooks/useAppVisivility'
 
 const useStyles = makeStyles({
@@ -159,10 +159,10 @@ function QuestionVideo (props) {
                         {props.content.videoURL && <VideoControler controls={true}/>}
                     </Box>
                     <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography className={[classes.HeaderTitle, 'text1'].join(' ')} align={'left'}>
+                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
                             {title}
                         </Typography>
-                        <Typography className={[classes.HeaderText, 'H3Title'].join(' ')} align={'left'}>
+                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
                             {question}
                         </Typography>
                     </Box>
@@ -171,7 +171,7 @@ function QuestionVideo (props) {
                     {answers.map((item, index) => {
                         return (
                             <Box key={index} className={classes.buttonWrapper} >
-                                <CustomDisabledButton color="primary" variant="contained" className={['questionButton', 'text2'].join(' ')} disabled={disabled} onClick={() => {
+                                <CustomDisabledButton color="primary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}
