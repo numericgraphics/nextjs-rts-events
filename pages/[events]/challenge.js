@@ -36,7 +36,6 @@ function Challenge () {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bodyContent)
             })
-            console.log(response.status)
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData({ challenge: content })

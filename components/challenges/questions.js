@@ -76,7 +76,6 @@ const useStyles = makeStyles({
 function Question (props) {
     const classes = useStyles()
     const { quiz, title, duration } = props.content
-    console.log(props.content)
     const { question, answers } = quiz
     const [progress, setProgress] = useState(0)
     const [timeLeft, setTimeLeft] = useState(duration)
