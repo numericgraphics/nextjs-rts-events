@@ -404,7 +404,6 @@ const hasLoginModal = WrappedComponent => {
         return (
             <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
-
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -415,7 +414,8 @@ const hasLoginModal = WrappedComponent => {
                     BackdropComponent={ColorBackDrop}
                     BackdropProps={{
                         timeout: 500,
-                        backgroundClick: handleClose
+                        open: open,
+                        onClose: handleClose
                     }}
                 >
                     <Fade in={open}>
