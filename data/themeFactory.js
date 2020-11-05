@@ -1,5 +1,4 @@
 import { createMuiTheme } from '@material-ui/core'
-import CardContent from '@material-ui/core/CardContent'
 
 class ThemeFactory {
     constructor () {
@@ -74,6 +73,7 @@ class ThemeFactory {
                 }
             }
         }
+
         const overrides = {
             MuiTypography: {
                 h1: { // H1Title
