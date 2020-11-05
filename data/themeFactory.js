@@ -147,9 +147,6 @@ class ThemeFactory {
                             fontSize: '0.9em'
                         }
                     },
-                    a: {
-                        color: palette.secondary.contrastText + '!important'
-                    },
                     p: {
                         lineHeight: 1 + '!important'
                     },
