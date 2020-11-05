@@ -1,7 +1,7 @@
 import cookie from 'cookie'
 import fetch from 'node-fetch'
 import getConfig from 'next/config'
-import { epochConverter } from '../../data/tools'
+import { dateCreator } from '../../data/tools'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
@@ -12,7 +12,7 @@ export default async (req, res) => {
         const { eventName, date, time } = await req.body
         const cookieName = `rtsevents-${eventName}`
 
-        const epochCode = ((date && time) || date) ? epochConverter(date, time) : false
+        const finalDate = ((date && time) || date) ? dateCreator(date, time) : false
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
@@ -22,8 +22,8 @@ export default async (req, res) => {
 
             if (rtsEventCookie) {
                 let url
-                if (epochCode) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${epochCode}`
+                if (finalDate) {
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?date=${finalDate}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
                 }

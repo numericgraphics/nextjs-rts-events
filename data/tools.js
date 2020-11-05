@@ -96,6 +96,15 @@ export function epochConverter (date, time) {
     return myEpoch
 }
 
+export function dateCreator (date, time) {
+    // date format : 23-12-1990 time : 2000 ( = 20 heure 00 min)
+    const today = new Date()
+    const hour = time ? time.slice(0, 2) : today.getHours()
+    const min = time ? time.slice(2, 4) : today.getMinutes()
+
+    return date + ' ' + hour + ':' + min
+}
+
 export function phoneVerification (data) {
     const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
     const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
