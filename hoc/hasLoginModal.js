@@ -414,7 +414,8 @@ const hasLoginModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={ColorBackDrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        backgroundClick: handleClose
                     }}
                 >
                     <Fade in={open}>
