@@ -11,6 +11,8 @@ import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { preLoadImage } from '../../data/tools'
 import { useStylesGlobal } from '../../styles/global.style'
+import { ColorCard } from '../../components/ui/ColorCard'
+import CardContent from '@material-ui/core/CardContent'
 
 const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
@@ -116,7 +118,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontSize: '2.5rem',
         padding: '6px 20px',
         textAlign: 'center',
-        marginTop: '15vh',
+        // marginTop: '15vh',
         color: theme.palette.primary.contrastText
     },
     iconType: {
@@ -135,7 +137,16 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '70vw',
         flexDirection: 'column',
         marginTop: '10px'
+    },
+    cardContent: {
+        margin: '0!important',
+        padding: '0.8rem!important'
+    },
+    colorCard: {
+        marginBottom: '0.4rem',
+        borderRadius: '0.5rem'
     }
+
 }))
 
 function Result (props) {
@@ -186,33 +197,35 @@ function Result (props) {
             <Box className='content' >
                 <Box className='topZone'>
                     <Box className={classes.content}>
-                        <Typography variant="h1" className={classes.winPointText}>
-                            {gameStats.hasAvailableChallenges
-                                ? success
-                                    ? `+ ${points} pts` // TODO: Translation pts
-                                    : `${points} pts`
-                                : `+ ${gameStats.currentScore} pts`
-                            }
-                        </Typography>
                         <Typography variant="h1" className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography variant="h1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography variant="h4" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
                                 dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
                         }
+                        <ColorCard className={classes.colorCard}>
+                            <CardContent className={classes.cardContent}>
+                                <Typography variant="h1" className={classes.winPointText}>
+                                    {gameStats.hasAvailableChallenges
+                                        ? success
+                                            ? `+ ${points} pts` // TODO: Translation pts
+                                            : `${points} pts`
+                                        : `+ ${gameStats.currentScore} pts`
+                                    }
+                                </Typography>
+                                {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
+                                }
+                            </CardContent>
+                        </ColorCard>
                         {newUnlockedGifts.length
-                            ? <React.Fragment>
-                                <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
-                                <GiftResult
-                                    className={classes.giftContainer}
-                                    translation={translation.challengeResultGiftText}
-                                    gift={newUnlockedGifts}
-                                    onClick={onStart}
-                                    setGift={setGift}
-                                />
-                            </React.Fragment>
-                            : null
+                            ? <GiftResult
+                                className={classes.giftContainer}
+                                translation={translation.challengeResultGiftText}
+                                gift={newUnlockedGifts}
+                                onClick={onStart}
+                                setGift={setGift}
+                            /> : null
                         }
                     </Box>
                 </Box>
