@@ -305,7 +305,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage addcolor={true} addblur={true} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>

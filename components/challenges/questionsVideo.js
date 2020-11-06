@@ -140,7 +140,6 @@ function QuestionVideo (props) {
     }, [props.buttonModalCliked])
 
     useEffect(() => {
-        console.log(progress)
         if (progress >= 100) {
             setTimeLeft(0)
             setProgress(0)

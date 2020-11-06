@@ -18,7 +18,7 @@ function BlurColoredBG (props) {
     const classes = useStyles()
 
     return (
-        <Box ref={ref} {...props} className={props.className}>
+        <Box ref={ref} className={props.className}>
             {props.addblur &&
                 <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
             }
