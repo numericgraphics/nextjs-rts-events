@@ -31,7 +31,7 @@ function LazyImage (props) {
     const classes = useStyles()
 
     return (
-        <Box ref={imageRef} {...props} className={[props.className, classes.imageAnim, classes.containerImage].join(' ')}>
+        <Box ref={imageRef} className={[props.className, classes.imageAnim, classes.containerImage].join(' ')}>
             {props.addblur &&
                 <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
             }
