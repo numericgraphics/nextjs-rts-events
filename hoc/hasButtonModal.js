@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
-import UserContext from '../components/UserContext'
+import UserContext from '../hooks/userContext'
 import { useStylesGlobal } from '../styles/global.style'
 import LazyImage from '../components/ui/LazyImage'
 
@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: '10vw'
     },
     text: {
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
         position: 'absolute'
     },
     textButton: {
         textTransform: 'none',
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     overImage: {
         position: 'absolute',
@@ -63,7 +63,7 @@ const hasButtonModal = WrappedComponent => {
             startChallenge()
         }
 
-        function openModal(image) {
+        function openModal (image) {
             setPoster(image)
             setOpen(true)
             setStatus(false)
@@ -98,9 +98,12 @@ const hasButtonModal = WrappedComponent => {
                     <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
                         {/* TODO: utiliser LazyImage plutôt que les trois box */}
                         <Box className={[classes.backgroundImage].join(' ')}
-                            style={{ backgroundImage: `url(${poster})`, height: height }}></Box>
-                        <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}></Box>
-                        <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}></Box>
+                            style={{
+                                backgroundImage: `url(${poster})`,
+                                height: height
+                            }}/>
+                        <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}/>
+                        <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}/>
                         {isOldDevice
                             ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                 <VolumeOffIcon className={classes.icon} />
@@ -119,12 +122,12 @@ const hasButtonModal = WrappedComponent => {
                             </Box>
                             : <Box className={[classes.text, 'centered-content'].join(' ')}>
                                 <VolumeOffIcon className={classes.icon} />
-                                <Typography className={'H3Title'}>
+                                <Typography variant="h3">
                                     {translation.challengeVideoTextUnMute}
                                 </Typography>
                                 <Button
                                     key={'continueGame'}
-                                    color="primary"
+                                    color="secondary"
                                     variant="contained"
                                     className={'button'}
                                     onClick={startChallenge}

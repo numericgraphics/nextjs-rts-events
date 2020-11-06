@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { withRouter } from 'next/router'
-import UserContext from '../components/UserContext'
+import UserContext from '../hooks/userContext'
 import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
 import EventLayout from '../components/eventLayout'

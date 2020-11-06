@@ -28,9 +28,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         flexWrap: 'wrap'
     },
     textRegularCenter: {
-        textAlign: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.1rem'
+        textAlign: 'center'
     },
     cadeau: {
         fill: theme.palette.secondary.contrastText,
@@ -96,7 +94,7 @@ function GiftsBox (props) {
 
     return (
         <Box className={classes.container}>
-            <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}>
+            <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}>
                 {props.translation}
             </Typography>
             <Box className={classes.gifts}>

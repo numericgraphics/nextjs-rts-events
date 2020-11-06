@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
-import UserContext from '../../components/UserContext'
+import UserContext from '../../hooks/userContext'
 import EventLayout from '../../components/eventLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
@@ -27,6 +27,8 @@ function Challenge () {
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
     const [backgroundType, setBackgroundType] = useState('image')
+    const [addColor, setColor] = useState(false)
+    const [addBlur, setBlur] = useState(false)
 
     async function fetchQuestions () {
         try {
@@ -164,8 +166,10 @@ function Challenge () {
         }
     }, [resultContent])
 
-    const addBlur = challengeState === ChallengeStates.QUESTIONS ? 'false' : 'true'
-    const addColor = challengeState === ChallengeStates.RESULT ? 'true' : 'false'
+    useEffect(() => {
+        setColor(challengeState === ChallengeStates.RESULT)
+        setBlur(challengeState === ChallengeStates.RESULT)
+    }, [challengeState])
 
     return (
         <EventLayout>
@@ -174,7 +178,7 @@ function Challenge () {
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
                     {backgroundType === 'image' &&
-                    <LazyImage addblur={ addBlur } addcolor={ addColor} className='background' style={{ backgroundImage: `url(${imageURL})` }}/>}
+                    <LazyImage addblur={ addBlur } addcolor={ addColor } className='background' style={{ backgroundImage: `url(${imageURL})` }}/>}
                 </React.Fragment>
             }
         </EventLayout>

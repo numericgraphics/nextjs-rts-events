@@ -6,6 +6,8 @@ const useStyles = makeStyles({
     input: {
         width: '2.1rem',
         height: '2.5rem',
+        fontFamily: 'srgssr-type-Md, sans-serif',
+        fontSize: '1.25rem',
         margin: '0.3rem',
         color: '#020202',
         textAlign: 'center',
@@ -117,7 +119,7 @@ function SmsInput (props) {
             }
             inpTab.push(<input {...inputProps}
                 key={i}
-                className={[classes.input, 'text1'].join(' ')}
+                className={classes.input}
                 onKeyDown={KeyCheck}
                 autoComplete="one-time-code"
                 onInput={handleInput}

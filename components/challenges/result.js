@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { withRouter } from 'next/router'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -35,14 +35,14 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         // lineHeight: 1.2,
         marginBottom: 10,
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     subTitle: {
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1.2rem',
         textAlign: 'center',
         // lineHeight: 1.2,
-        color: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
         marginBottom: '3rem!important'
 
     },
@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         // lineHeight: '1.8rem',
         marginBottom: 10,
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     secondCardText: {
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1,125rem',
         textAlign: 'center',
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     secondCardButton: {
         width: '80vw',
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         padding: '6px 20px',
         textAlign: 'center',
         marginTop: '15vh',
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.contrastText
     },
     iconType: {
         display: 'flex',
@@ -186,7 +186,7 @@ function Result (props) {
             <Box className='content' >
                 <Box className='topZone'>
                     <Box className={classes.content}>
-                        <Typography className={[classes.winPointText, 'H1Title'].join(' ')}>
+                        <Typography variant="h1" className={classes.winPointText}>
                             {gameStats.hasAvailableChallenges
                                 ? success
                                     ? `+ ${points} pts` // TODO: Translation pts
@@ -194,8 +194,8 @@ function Result (props) {
                                 : `+ ${gameStats.currentScore} pts`
                             }
                         </Typography>
-                        <Typography className={[classes.title, 'H1Title'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography className={[classes.subTitle, 'text1'].join(' ')} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography variant="h1" className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
+                        <Typography variant="h1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
@@ -203,7 +203,7 @@ function Result (props) {
                         }
                         {newUnlockedGifts.length
                             ? <React.Fragment>
-                                <Typography className={[classes.secondCardText, 'H3Title'].join(' ')} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
+                                <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
                                 <GiftResult
                                     className={classes.giftContainer}
                                     translation={translation.challengeResultGiftText}
@@ -222,7 +222,7 @@ function Result (props) {
                             <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={'buttonAlt'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
-                            <Button key={'continueGame'} color="primary" variant="contained" className={'button'} onClick={continueGame}>
+                            <Button key={'continueGame'} color="secondary" variant="contained" className={'button'} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
