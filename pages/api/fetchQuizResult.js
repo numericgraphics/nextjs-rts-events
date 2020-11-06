@@ -27,7 +27,7 @@ export default async (req, res) => {
             if (rtsEventCookie) {
                 let url
                 if (finalDate) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end?date=${finalDate}`
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end?ts=${finalDate}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end`
                 }

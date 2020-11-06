@@ -135,10 +135,10 @@ function MyApp ({ Component, pageProps }) {
         if (!timeStampMode.initialized) {
             // const { time, date } = router.query
             const params = (new URL(document.location)).searchParams
-            const time = params.get('time')
+            const time = params.get('time') ? params.get('time') : ''
             const date = params.get('date')
-            if (time && date) {
-                setTimeStampMode({ enable: !!time, date, time })
+            if (date) {
+                setTimeStampMode({ enable: !!date, date, time })
             }
             setRouterReady(true)
         }

@@ -98,11 +98,16 @@ export function epochConverter (date, time) {
 
 export function dateCreator (date, time) {
     // date format : 23-12-1990 time : 2000 ( = 20 heure 00 min)
-    const today = new Date()
-    const hour = time ? time.slice(0, 2) : today.getHours()
-    const min = time ? time.slice(2, 4) : today.getMinutes()
-
-    return date + ' ' + hour + ':' + min
+    const hour = time && time.slice(0, 2)
+    const min = time && time.slice(2, 4)
+    console.log(hour)
+    if (min && hour) {
+        console.log(date)
+        return date + ' ' + hour + ':' + min
+    } else {
+        console.log(date)
+        return date
+    }
 }
 
 export function phoneVerification (data) {
