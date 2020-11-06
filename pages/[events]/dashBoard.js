@@ -89,14 +89,20 @@ const useStyles = makeStyles((theme = useTheme) => ({
         backgroundColor: '#00B445',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: '0.2rem',
+        borderBottomLeftRadius: '0.6rem',
+        borderTopLeftRadius: '0.6rem'
     },
     badRateBox: {
         width: '50%',
         backgroundColor: '#FF0000',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: '0.2rem',
+        borderBottomRightRadius: '0.6rem',
+        borderTopRightRadius: '0.6rem'
     },
     colorCard: {
         marginBottom: '0.4rem',
@@ -299,7 +305,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage addcolor={true} addblur={true} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>

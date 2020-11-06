@@ -148,7 +148,7 @@ class ThemeFactory {
                         }
                     },
                     p: {
-                        lineHeight: 1 + '!important'
+                        lineHeight: 1.2 + '!important'
                     },
                     button: {
                         fontSize: '1.25rem!important',
