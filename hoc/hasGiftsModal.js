@@ -33,15 +33,17 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     closeBtn: {
         position: 'absolute',
-        top: '20px',
-        right: '20px',
+        top: '2rem',
+        right: '2rem',
         minHeight: '34px',
         minWidth: '34px',
         maxHeight: '58px',
         maxWidth: '58px',
-        width: '10vw',
-        height: '10vw',
-        zIndex: 4
+        width: '2.5rem',
+        height: '2.5rem',
+        zIndex: 4,
+        backgroundColor: theme.palette.secondary.main,
+        stroke: theme.palette.secondary.contrastText
     },
     lock: {
         minHeight: '68px',
@@ -50,13 +52,15 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '116px',
         width: '20vw',
         height: '20vw',
-        zIndex: 4
+        zIndex: 4,
+        fill: theme.palette.primary.contrastText
     },
     lockContainer: {
         position: 'absolute',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        zIndex: 3
     },
     svgIco: {
         minHeight: '34px',
@@ -70,9 +74,10 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         paddingLeft: '20px',
         paddingRight: '20px',
         flexGrow: 0,
-        border: 'solid',
-        borderColor: theme.palette.secondary.main,
-        color: theme.palette.secondary.contrastText
+        // border: 'solid',
+        // borderColor: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.primary.main
     },
     title: {
         // fontFamily: 'srgssr-type-Bd',
@@ -93,7 +98,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     gradient: {
         flexGrow: 3,
-        width: '100%'
+        width: '100%',
+        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${theme.palette.primary.main} 100%)`
     },
     closeIcon: {
         position: 'absolute',
@@ -169,20 +175,20 @@ const hasGiftModal = WrappedComponent => {
                         <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                             style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
                             <Box className={classes.footer} style={{ height: height }}>
-                                <Box className={classes.gradient} style={{ background: `linear-gradient(${hexToRgbA(theme.palette.secondary.main, 0)} 0%, ${hexToRgbA(theme.palette.secondary.main, 0)} 80%,${theme.palette.secondary.main} 100%)` }} />
-                                <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                    <Typography className={[classes.title, 'H2Title'].join(' ')} align={'center'}
+                                <Box className={classes.gradient} />
+                                <Box className={classes.containerText} ref={ boxTextRef }>
+                                    <Typography variant="h2" className={classes.title} align={'center'}
                                         dangerouslySetInnerHTML={{ __html: gift.title }}>
                                     </Typography>
-                                    <Typography className={[classes.description, 'text3'].join(' ')} align={'center'}
+                                    <Typography variant="subtitle2" className={classes.description} align={'center'}
                                         dangerouslySetInnerHTML={{ __html: gift.message }}>
                                     </Typography>
                                 </Box>
-                                {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
+                                {gift.locked ? <Box className={classes.lockContainer} style={{ bottom: boxHeight - 1 }}>
                                     {lockIcon({ ref: lockIconRef, className: classes.lock })}
                                 </Box> : null }
                             </Box>
-                            <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
+                            <IconButton onClick={handleClose} color="secondary" className={classes.closeBtn}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
                         </Box>

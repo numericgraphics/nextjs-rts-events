@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import UserContext from '../../components/UserContext'
+import UserContext from '../../hooks/userContext'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
 import Box from '@material-ui/core/Box'
-import { ColorCardContent } from '../../components/ui/ColorCardContent'
 import { ColorCard } from '../../components/ui/ColorCard'
 import { CustomDisabledButton } from '../../components/ui/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/DashBoardChallengesProgress'
@@ -21,6 +20,7 @@ import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
 import AvatarEvent from '../../components/avatarEvent'
+import CardContent from '@material-ui/core/CardContent'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     nickname: {
         textAlign: 'center',
-        lineHeight: 1,
         marginBottom: '0.5rem',
         color: theme.palette.primary.contrastText
     },
@@ -58,7 +57,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignSelf: 'flex-end',
         textAlign: 'center',
         width: '100%',
-        // padding: '1rem 0 1rem 0',
         color: theme.palette.primary.contrastText
     },
     textRegularCenter: {
@@ -91,14 +89,20 @@ const useStyles = makeStyles((theme = useTheme) => ({
         backgroundColor: '#00B445',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: '0.2rem',
+        borderBottomLeftRadius: '0.6rem',
+        borderTopLeftRadius: '0.6rem'
     },
     badRateBox: {
         width: '50%',
         backgroundColor: '#FF0000',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: '0.2rem',
+        borderBottomRightRadius: '0.6rem',
+        borderTopRightRadius: '0.6rem'
     },
     colorCard: {
         marginBottom: '0.4rem',
@@ -111,10 +115,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
     cardContent: {
         margin: '0!important',
         padding: '0.8rem!important'
-    },
-    giftContent: {
-        // paddingBottom: 10,
-        // paddingTop: 10
     }
 }))
 
@@ -225,64 +225,65 @@ function DashBoard (props) {
                             <Box>
                                 <Box className={classes.header}>
                                     <AvatarEvent user={user.avatarURL}/>
-                                    <Typography className={[classes.nickname, 'H2Title'].join(' ')}>
+                                    <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                         {user.nickname}
                                     </Typography>
                                     <Typography
-                                        className={[classes.remainingTime, 'text1'].join(' ')}
+                                        variant='subtitle1'
+                                        className={[classes.remainingTime].join(' ')}
                                         align={'center'}
                                         dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
                                 </Box>
                                 {availableChallenges
                                     ? <Box className={classes.progressBarOverlay}>
-                                        <Typography className={[classes.textRegularCenterOverlay, 'text1'].join(' ')}>
+                                        <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
                                             {uiElements.progressBarMessageChunk}
                                         </Typography>
                                         <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                     </Box>
                                     : <React.Fragment>
-                                        <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
+                                        <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
                                         </Typography>
-                                        <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
+                                        <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
                                             dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                         </Typography>
                                     </React.Fragment>
                                 }
                                 {availableScores &&
                                     <ColorCard className={classes.colorCard}>
-                                        <ColorCardContent className={classes.cardContent}>
-                                            <Typography className={[classes.scoreChunkText, 'H1Title'].join(' ')}>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
                                                 {uiElements.scoreChunk}
                                             </Typography>
-                                        </ColorCardContent>
+                                        </CardContent>
                                     </ColorCard>
                                 }
                                 {availableResults &&
                                     <ColorCard className={classes.colorCard}>
-                                        <ColorCardContent className={classes.cardContent}>
-                                            <Typography className={[classes.textRegularCenter, 'text1'].join(' ')}
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
                                                 dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
                                             </Typography>
                                             <Box className={classes.rateBox}>
                                                 <Box className={classes.goodRateBox}>
                                                     <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                                    <Typography className={[classes.rateText, 'text3'].join(' ')}>
+                                                    <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
                                                         {uiElements.successChunk}
                                                     </Typography>
                                                 </Box>
                                                 <Box className={classes.badRateBox}>
-                                                    <CloseIcon fontSize="small" className={[classes.rateIcon, 'text3'].join(' ')}/>
-                                                    <Typography className={classes.rateText}>
+                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
                                                         {uiElements.failChunk}
                                                     </Typography>
                                                 </Box>
                                             </Box>
-                                        </ColorCardContent>
+                                        </CardContent>
                                     </ColorCard>
                                 }
                                 <ColorCard className={classes.colorCard}>
-                                    <ColorCardContent className={classes.cardContent}>
+                                    <CardContent className={classes.cardContent}>
                                         <Box className={classes.giftContent}>
                                             { gifts && gifts.length === 1
                                                 ? <GiftResult
@@ -297,7 +298,7 @@ function DashBoard (props) {
                                                     setGift={setGift} />
                                             }
                                         </Box>
-                                    </ColorCardContent>
+                                    </CardContent>
                                 </ColorCard>
                             </Box>
                         </Fade>
@@ -309,7 +310,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage addcolor="true" addblur="true" className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
                 </Box>
             }
         </EventLayout>

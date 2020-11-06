@@ -4,6 +4,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 
@@ -90,13 +91,13 @@ const hasCountDownModal = WrappedComponent => {
                     disableEnforceFocus
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    className={classes.modal}
+                    className={[classes.modal, 'containerModal'].join(' ')}
                     open={open}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
                         timeout: 500,
-                        style: { backgroundColor: 'none' }
+                        // style: { backgroundColor: 'none' }
                     }}
                     tabIndex={-1}
                 >

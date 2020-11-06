@@ -11,6 +11,6 @@ export const useStylesGlobal = makeStyles((theme = useTheme) => ({
         opacity: 0.9
     },
     backdropFilterOverImage: {
-        backdropFilter: 'blur(0.1rem)' // Chrome, edge, safari, ... https://caniuse.com/css-backdrop-filter
+        backdropFilter: 'blur(0.3rem)' // Chrome, edge, safari, ... https://caniuse.com/css-backdrop-filter
     }
 }))

@@ -1,8 +1,10 @@
 import React, { forwardRef } from 'react'
 import Fade from '@material-ui/core/Fade/Fade'
-import { Box } from '@material-ui/core'
+import { Box, useTheme } from '@material-ui/core'
+import BlurColoredBG from './BlurColoredBG'
 
 function VideoPlayer (props, videoRef) {
+    const theme = useTheme()
     const { videoSource, showVideo, blurVideo } = props
 
     return (
@@ -17,11 +19,11 @@ function VideoPlayer (props, videoRef) {
                         playsInline
                         className='backgroundVideo'
                         autoPlay
-                        style={{ ...props.style, backgroundColor: 'black', filter: blurVideo ? 'blur(4px)' : 'none' }}
+                        style={{ ...props.style, backgroundColor: theme.palette.primary.main }}
                     >
                     </video>
-                    <Box className="backgroundGradientBottomAspectRatio"/>
-                    <Box className="backgroundVideoPlayer"/>
+                    <BlurColoredBG addcolor={blurVideo ? 1 : 0} addblur={blurVideo ? 1 : 0} className={'backgroundGradientVideoPlayer'}/>
+                    <Box className="backgroundVideoPlayer" style={{ background: theme.palette.primary.main }}/>
                 </React.Fragment>
             </Fade>
         </Box>

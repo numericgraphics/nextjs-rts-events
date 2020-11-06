@@ -4,19 +4,6 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { useStylesGlobal } from '../../styles/global.style'
 
 const useStyles = makeStyles((theme = useTheme) => ({
-    imageAnim: {
-        opacity: 0,
-        WebkitAnimationName: 'fadeIn',
-        WebkitAnimationDuration: '1s',
-        WebkitAnimationTimingFunction: 'ease-in',
-        WebkitAnimationDelay: 2,
-        WebkitAnimationFillMode: 'forwards'
-    },
-    containerImage: {
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%'
-    },
     overImage: {
         position: 'absolute',
         top: 0,
@@ -25,13 +12,13 @@ const useStyles = makeStyles((theme = useTheme) => ({
     }
 }))
 
-function LazyImage (props) {
+function BlurColoredBG (props) {
     const stylesGlobal = useStylesGlobal()
-    const imageRef = useRef()
+    const ref = useRef()
     const classes = useStyles()
 
     return (
-        <Box ref={imageRef} {...props} className={[props.className, classes.imageAnim, classes.containerImage].join(' ')}>
+        <Box ref={ref} className={props.className}>
             {props.addblur &&
                 <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
             }
@@ -42,4 +29,4 @@ function LazyImage (props) {
     )
 }
 
-export default LazyImage
+export default BlurColoredBG

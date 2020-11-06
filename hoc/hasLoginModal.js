@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Checkbox from '@material-ui/core/Checkbox'
-import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
+import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import UserContext from '../components/UserContext'
-import Button from '@material-ui/core/Button'
+import UserContext from '../hooks/userContext'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 import { phoneVerification } from '../data/tools'
+import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette.secondary.main,
-        color: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         position: 'relative',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontSize: '1rem',
-        padding: '6px 20px',
-        marginTop: 30
+        // borderRadius: 30,
+        // alignSelf: 'center',
+        // fontSize: '1rem',
+        // padding: '6px 20px',
+        marginTop: '2rem'
     },
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
@@ -95,12 +95,12 @@ const useStyles = makeStyles((theme) => ({
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.secondary.contrastText,
+        stroke: theme.palette.primary.contrastText,
         padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.secondary.contrastText
+        stroke: theme.palette.primary.contrastText
     },
     CGU: {
         width: '100%',
@@ -110,10 +110,13 @@ const useStyles = makeStyles((theme) => ({
         // fontSize: '0.9rem!important',
         letterSpacing: '0.00238em',
         lineHeight: 1.2,
-        color: theme.palette.secondary.contrastText
+        color: theme.palette.primary.contrastText,
+        '& a': {
+            color: theme.palette.primary.contrastText
+        }
     },
     link: {
-        color: theme.palette.secondary.contrastText,
+        color: 'red',
         lineHeight: '1.1rem',
         textDecoration: 'underline'
     },
@@ -326,23 +329,23 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.NUMBER_RECEIVE:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={[classes.title, 'H3Title'].join(' ')} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
+                        <Typography variant="h3" className={classes.title} align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
+                        <CustomDisabledButton color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             {translation.send}
-                        </Button>
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress style={{ color: theme.palette.secondary.contrastText }}/>
+                    <CircularProgress style={{ color: theme.palette.primary.contrastText }}/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={[classes.title, 'H3Title'].join(' ')} align={'center'}>{translation.modalLoginPhoneText}</Typography>
+                        <Typography variant="h3" className={classes.title} align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
@@ -379,19 +382,19 @@ const hasLoginModal = WrappedComponent => {
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
                                             checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />
-                                        <Typography className={[classes.CGUText, 'text4'].join(' ')} dangerouslySetInnerHTML={{ __html: data }}/>
+                                        <Typography variant="body1" className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
                                 )
                             })}
                         </Box>
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
-                            {translation.send}
-                        </Button>
+                        <CustomDisabledButton ref={smsSubmit} color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={(!phoneVerif || checked)} >
+                            { translation.send }
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
-                    <Typography className={[classes.title, 'H3title'].join(' ')} align={'center'}>Erreur</Typography>
+                    <Typography variant="h3" className={classes.title} align={'center'}>Erreur</Typography>
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </Box>
             }
@@ -399,7 +402,6 @@ const hasLoginModal = WrappedComponent => {
         return (
             <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
-
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -407,9 +409,11 @@ const hasLoginModal = WrappedComponent => {
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        open: open,
+                        onClose: handleClose
                     }}
                 >
                     <Fade in={open}>
