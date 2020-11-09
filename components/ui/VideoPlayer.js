@@ -22,7 +22,7 @@ function VideoPlayer (props, videoRef) {
                         style={{ ...props.style, backgroundColor: theme.palette.primary.main }}
                     >
                     </video>
-                    <BlurColoredBG addcolor={blurVideo ? 1 : 0} addblur={blurVideo ? 1 : 0} className={'backgroundGradientVideoPlayer'}/>
+                    <BlurColoredBG addcolor={blurVideo} addblur={blurVideo} className={'backgroundGradientVideoPlayer'}/>
                     <Box className="backgroundVideoPlayer" style={{ background: theme.palette.primary.main }}/>
                 </React.Fragment>
             </Fade>
