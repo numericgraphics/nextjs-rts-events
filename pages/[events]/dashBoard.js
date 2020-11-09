@@ -115,6 +115,16 @@ const useStyles = makeStyles((theme = useTheme) => ({
     cardContent: {
         margin: '0!important',
         padding: '0.8rem!important'
+    },
+    adminToolbar: {
+        position: 'absolute',
+        zIndex: 9999999999,
+        top: 5,
+        left: 5,
+        backgroundColor: 'red',
+        opacity: 0.8,
+        padding: '2px 5px',
+        boxShadow: '0px 0px 7px 2px #000000'
     }
 }))
 
@@ -157,6 +167,25 @@ function DashBoard (props) {
                     pathname: `/${events}`,
                     query: { modal: true }
                 })
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async function resetGame () {
+        try {
+            alert('Will try to reset Game')
+            const bodyContent = { eventName: events }
+            const response = await fetch('/api/resetGame', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyContent)
+            })
+            if (response.status === 200) {
+                alert('Game reseted')
+            } else {
+                alert('Could not reset game')
             }
         } catch (error) {
             throw new Error(error.message)
@@ -220,11 +249,14 @@ function DashBoard (props) {
         <EventLayout >
             {!(isLoading || isGlobalLoading) &&
                 <Box className='content' >
+                    { user.isAdmin &&
+                        <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
+                    }
                     <Box className='topZoneDashboard' >
                         <Fade in={!isLoading} timeout={500}>
                             <Box>
                                 <Box className={classes.header}>
-                                    <AvatarEvent user={user.avatarURL}/>
+                                    <AvatarEvent user={user.avatarURL} />
                                     <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                         {user.nickname}
                                     </Typography>
@@ -232,7 +264,7 @@ function DashBoard (props) {
                                         variant='subtitle1'
                                         className={[classes.remainingTime].join(' ')}
                                         align={'center'}
-                                        dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
+                                        dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
                                 </Box>
                                 {availableChallenges
                                     ? <Box className={classes.progressBarOverlay}>
@@ -267,13 +299,13 @@ function DashBoard (props) {
                                             </Typography>
                                             <Box className={classes.rateBox}>
                                                 <Box className={classes.goodRateBox}>
-                                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <CheckIcon fontSize="small" className={classes.rateIcon} />
                                                     <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
                                                         {uiElements.successChunk}
                                                     </Typography>
                                                 </Box>
                                                 <Box className={classes.badRateBox}>
-                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
+                                                    <CloseIcon fontSize="small" className={classes.rateIcon} />
                                                     <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
                                                         {uiElements.failChunk}
                                                     </Typography>
@@ -285,7 +317,7 @@ function DashBoard (props) {
                                 <ColorCard className={classes.colorCard}>
                                     <CardContent className={classes.cardContent}>
                                         <Box className={classes.giftContent}>
-                                            { gifts && gifts.length === 1
+                                            {gifts && gifts.length === 1
                                                 ? <GiftResult
                                                     translation={translation.challengeResultGiftText}
                                                     gift={gifts}
@@ -310,7 +342,7 @@ function DashBoard (props) {
                             </CustomDisabledButton>
                         </Fade>
                     </Box>
-                    <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
+                    <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }} />
                 </Box>
             }
         </EventLayout>
