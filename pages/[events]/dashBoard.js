@@ -145,7 +145,7 @@ function DashBoard (props) {
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
-    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
 
     async function fetchData () {
         try {
@@ -162,6 +162,7 @@ function DashBoard (props) {
                 const content = await response.json()
                 initGame(content)
             } else {
+                setTimeStampMode({ enable: false })
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
                     query: { modal: true }
