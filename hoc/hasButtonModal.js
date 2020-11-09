@@ -12,6 +12,7 @@ import { useHeight } from '../hooks/useHeight'
 import UserContext from '../hooks/userContext'
 import { useStylesGlobal } from '../styles/global.style'
 import LazyImage from '../components/ui/LazyImage'
+import { storeInLocalStorage, UserStates } from '../data/tools'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     icon: {
@@ -44,22 +45,28 @@ const hasButtonModal = WrappedComponent => {
         const stylesGlobal = useStylesGlobal()
         const classes = useStyles()
         const { dataProvider, store } = useContext(UserContext)
-        const { deviceDetection } = store
+        const { deviceDetection, eventName, videoController } = store
         const height = useHeight()
         const [translation, setTranslation] = useState([])
         const [open, setOpen] = useState(false)
         const [status, setStatus] = useState(false)
         const [poster, setPoster] = useState('')
-        const [secondaryStatus, setSecondaryStatus] = useState(false)
         const [isOldDevice, setOldDevice] = useState(false)
 
         const startChallenge = () => {
+            storeInLocalStorage(`${eventName}-storage`, { [UserStates.USER_ACTION_VIDEO_MUTED]: videoController.player.current.muted })
             setOpen(false)
             setStatus(true)
+            videoController.player.current.play()
         }
 
-        const mutedVideoPlayer = () => {
-            setSecondaryStatus(true)
+        const playUnMutedVideoPlayer = () => {
+            videoController.player.current.muted = false
+            startChallenge()
+        }
+
+        const playMutedVideoPlayer = () => {
+            videoController.player.current.muted = true
             startChallenge()
         }
 
@@ -81,7 +88,7 @@ const hasButtonModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={openModal} {...props} buttonModalCliked={status} setButtonModalCliked={setStatus} secondaryButtonClicked={secondaryStatus} />
+                <WrappedComponent openModal={openModal} {...props} firstPlayStarPlaying={status} />
                 <Modal
                     disableAutoFocus={true}
                     disableEnforceFocus
@@ -115,7 +122,7 @@ const hasButtonModal = WrappedComponent => {
                                     color="primary"
                                     variant="contained"
                                     className={'button'}
-                                    onClick={mutedVideoPlayer}
+                                    onClick={playMutedVideoPlayer}
                                     startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                     {translation.challengeVideoButtonStartMuted}
                                 </Button>
@@ -130,11 +137,11 @@ const hasButtonModal = WrappedComponent => {
                                     color="secondary"
                                     variant="contained"
                                     className={'button'}
-                                    onClick={startChallenge}
+                                    onClick={playUnMutedVideoPlayer}
                                     startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                     {translation.challengeVideoButtonUnMute}
                                 </Button>
-                                <Button className={['text2', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
+                                <Button className={['text2', classes.textButton].join(' ')} onClick={playMutedVideoPlayer}>
                                     {translation.challengeVideoButtonMute}
                                 </Button>
                             </Box>}

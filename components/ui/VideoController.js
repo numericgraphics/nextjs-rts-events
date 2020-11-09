@@ -36,23 +36,23 @@ function VideoController (props) {
         storeInLocalStorage(`${eventName}-storage`, { [key]: value })
     }
 
-    function play () {
+    function handlePlay () {
         if (store.videoController.videoHasPlayed === false) {
             store.videoController.setVideoPlayed(true)
         }
         store.videoController.setBlurVideo(false)
     }
 
-    function paused () {
+    function handlePaused () {
         store.videoController.setBlurVideo(true)
     }
 
-    function error (e) {
+    function handleError (e) {
         // TODO error handling
         console.log('VideoController - ERROR - error', e)
     }
 
-    function volumechange () {
+    function handelVolumechange () {
         setLocalStorageValue(UserStates.USER_ACTION_VIDEO_MUTED, videoPlayer.muted)
         setMute(videoPlayer.muted)
     }
@@ -68,19 +68,21 @@ function VideoController (props) {
 
     useEffect(() => {
         if (!videoPlayer) return
-        videoPlayer.addEventListener('volumechange', volumechange)
-        videoPlayer.addEventListener('error', error)
-        videoPlayer.addEventListener('play', play)
-        videoPlayer.addEventListener('pause', paused)
+        videoPlayer.addEventListener('volumechange', handelVolumechange)
+        videoPlayer.addEventListener('error', handleError)
+        videoPlayer.addEventListener('play', handlePlay)
+        videoPlayer.addEventListener('pause', handlePaused)
 
+        console.log('videoController - init', videoPlayer.muted)
         const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
         videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
+        setMute(videoPlayer.muted)
 
         return () => {
-            videoPlayer.removeEventListener('volumechange', volumechange)
-            videoPlayer.removeEventListener('error', error)
-            videoPlayer.removeEventListener('play', play)
-            videoPlayer.removeEventListener('pause', paused)
+            videoPlayer.removeEventListener('volumechange', handelVolumechange)
+            videoPlayer.removeEventListener('error', handleError)
+            videoPlayer.removeEventListener('play', handlePlay)
+            videoPlayer.removeEventListener('pause', handlePaused)
         }
     }, [])
 

@@ -41,12 +41,12 @@ function MyApp ({ Component, pageProps }) {
     const [videoSource, setVideoSource] = useState('')
     const [videoPoster, setVideoPoster] = useState('')
     const [videoVisible, setVideoVisible] = useState(false)
-    const [videoAutoPlay, setVideoAutoPlay] = useState(true)
+    // const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
     const [showVideo, setShowVideo] = useState(false)
     const [blurVideo, setBlurVideo] = useState(false)
     /* eslint-enable */
-    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode }
     const router = useRouter()
 
@@ -174,7 +174,7 @@ function MyApp ({ Component, pageProps }) {
                     ref={player}
                     videoSource={videoSource}
                     videoPoster={videoPoster}
-                    autoPlay={videoAutoPlay}
+                    // autoPlay={videoAutoPlay}
                     showVideo={showVideo}
                     blurVideo={blurVideo}
                     style={{ visibility: videoVisible ? 'visible' : 'hidden' }}

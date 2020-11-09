@@ -110,34 +110,36 @@ function QuestionVideo (props) {
 
     function canPlay () {
         setShowComponent(true)
+        if (videoController.videoHasPlayed) {
+            videoController.player.current.play()
+        }
         if (!videoController.videoHasPlayed) {
-            videoController.player.current.muted = props.secondaryButtonClicked
+            videoController.player.current.pause()
         }
         startTimer()
-        videoController.player.current.removeEventListener('canplay', canPlay)
     }
 
     useEffect(() => {
-        if (videoController.videoHasPlayed) {
-            props.setButtonModalCliked(true)
-        } else {
-            videoController.setVideoVisible(true)
-            videoController.setVideoPoster(imageURL)
+        videoController.player.current.addEventListener('canplay', canPlay)
+        videoController.setVideoVisible(true)
+        videoController.setVideoPoster(imageURL)
+        videoController.setVideoSource(videoURL)
+        if (!videoController.videoHasPlayed) {
             props.openModal(imageURL)
         }
 
-        return () => clearInterval(intervalId.current)
+        return () => {
+            clearInterval(intervalId.current)
+            videoController.player.current.removeEventListener('canplay', canPlay)
+        }
     }, [])
 
     useEffect(() => {
-        if (props.buttonModalCliked) {
+        if (props.firstPlayStarPlaying) {
             setDisabled(false)
-            videoController.player.current.addEventListener('canplay', canPlay)
             videoController.setVideoPoster('')
-            videoController.setVideoAutoPlay(true)
-            videoController.setVideoSource(videoURL)
         }
-    }, [props.buttonModalCliked])
+    }, [props.firstPlayStarPlaying])
 
     useEffect(() => {
         if (progress >= 100) {
