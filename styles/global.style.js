@@ -8,7 +8,7 @@ export const useStylesGlobal = makeStyles((theme = useTheme) => ({
     },
     colorOverImage: {
         backgroundColor: theme.palette.primary.main,
-        opacity: 0.9
+        opacity: 0.7
     },
     backdropFilterOverImage: {
         backdropFilter: 'blur(0.3rem)' // Chrome, edge, safari, ... https://caniuse.com/css-backdrop-filter
