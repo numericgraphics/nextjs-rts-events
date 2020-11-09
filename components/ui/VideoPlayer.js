@@ -10,7 +10,7 @@ function VideoPlayer (props, videoRef) {
     return (
         <Box className={['container', 'z-index-media'].join(' ')}>
             <Fade in={showVideo} timeout={500}>
-                <React.Fragment>
+                <Box>
                     <video
                         ref={videoRef}
                         preload={'auto'}
@@ -24,7 +24,7 @@ function VideoPlayer (props, videoRef) {
                     </video>
                     <BlurColoredBG addcolor={blurVideo} addblur={blurVideo} className={'backgroundGradientVideoPlayer'}/>
                     <Box className="backgroundVideoPlayer" style={{ background: theme.palette.primary.main }}/>
-                </React.Fragment>
+                </Box>
             </Fade>
         </Box>
     )
