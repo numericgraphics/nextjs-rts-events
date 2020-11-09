@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontSize: '1.75rem',
         textAlign: 'center',
         // lineHeight: 1.2,
-        marginBottom: 10,
+        // marginBottom: 10,
+        marginTop: '17vh',
         color: theme.palette.primary.contrastText
     },
     subTitle: {
@@ -45,7 +46,17 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center',
         // lineHeight: 1.2,
         color: theme.palette.primary.contrastText,
-        marginBottom: '3rem!important'
+        // marginBottom: '3rem!important
+        marginBottom: '5vh!important'
+
+    },
+    resultBox: {
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1.2rem',
+        textAlign: 'center',
+        // lineHeight: 1.2,
+        color: theme.palette.primary.contrastText
+        // marginBottom: '3rem!important
 
     },
     secondCardTitle: {
@@ -191,33 +202,35 @@ function Result (props) {
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
     }, [])
-
     return (
         <Fade in={showComponent} timeout={500}>
             <Box className='content' >
                 <Box className='topZone'>
                     <Box className={classes.content}>
                         <Typography variant="h1" className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography variant="h4" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography variant="subtitle1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
                                 dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
                         }
-                        <ColorCard className={classes.colorCard}>
-                            <CardContent className={classes.cardContent}>
-                                <Typography variant="h1" className={classes.winPointText}>
-                                    {gameStats.hasAvailableChallenges
-                                        ? success
-                                            ? `+ ${points} pts` // TODO: Translation pts
-                                            : `${points} pts`
-                                        : `+ ${gameStats.currentScore} pts`
+                        {!success
+                            ? <ColorCard className={classes.colorCard}>
+                                <CardContent className={classes.cardContent}>
+                                    <Typography variant="subtitle1" className={classes.resultBox} dangerouslySetInnerHTML={{ __html: uiElements.resultBoxChunk }}/>
+                                </CardContent>
+                            </ColorCard>
+                            : null}
+                        {(success || !gameStats.hasAvailableChallenges || newUnlockedGifts.length)
+                            ? <ColorCard className={classes.colorCard}>
+                                <CardContent className={classes.cardContent}>
+                                    <Typography variant="h1" className={classes.winPointText}
+                                        dangerouslySetInnerHTML={{ __html: `${uiElements.resultScoreChunk}` }}/>
+                                    {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
                                     }
-                                </Typography>
-                                {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
-                                }
-                            </CardContent>
-                        </ColorCard>
+                                </CardContent>
+                            </ColorCard>
+                            : null}
                         {newUnlockedGifts.length
                             ? <GiftResult
                                 className={classes.giftContainer}
