@@ -113,8 +113,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: '0.8rem'
     },
     cardContent: {
-        margin: '0!important',
-        padding: '0.8rem!important'
+        margin: '0!important'
     }
 }))
 

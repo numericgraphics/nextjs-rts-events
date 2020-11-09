@@ -127,7 +127,6 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     winPointText: {
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '2.5rem',
-        padding: '6px 20px',
         textAlign: 'center',
         // marginTop: '15vh',
         color: theme.palette.primary.contrastText
@@ -150,12 +149,12 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         marginTop: '10px'
     },
     cardContent: {
-        margin: '0!important',
-        padding: '0.8rem!important'
+        margin: '0!important'
     },
     colorCard: {
         marginBottom: '0.4rem',
-        borderRadius: '0.5rem'
+        borderRadius: '0.5rem',
+        width: '90%'
     }
 
 }))
