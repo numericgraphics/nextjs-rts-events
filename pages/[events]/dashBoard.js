@@ -335,13 +335,13 @@ function DashBoard (props) {
                             </Box>
                         </Fade>
                     </Box>
-                    <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <Fade in={!isLoading} timeout={500}>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                             <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
-                        </Fade>
-                    </Box>
+                        </Box>
+                    </Fade>
                     <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }} />
                 </Box>
             }
