@@ -73,7 +73,6 @@ function VideoController (props) {
         videoPlayer.addEventListener('play', handlePlay)
         videoPlayer.addEventListener('pause', handlePaused)
 
-        console.log('videoController - init', videoPlayer.muted)
         const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
         videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
         setMute(videoPlayer.muted)
