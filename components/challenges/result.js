@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
-    const { points, success, gameStats, newUnlockedGifts } = props.content
+    const { success, gameStats, newUnlockedGifts } = props.content
     const { nextAvailableChallengeImageURL } = gameStats
     const classes = useStyles()
     const [translation, setTranslation] = useState([])
