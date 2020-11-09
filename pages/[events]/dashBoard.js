@@ -217,7 +217,7 @@ function DashBoard (props) {
 
     return (
         <EventLayout >
-            {!(isLoading || isGlobalLoading) &&
+            {!(isLoading && isGlobalLoading) &&
                 <Box className='content' >
                     <Box className='topZoneDashboard' >
                         <Fade in={!isLoading} timeout={500}>
