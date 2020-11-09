@@ -114,7 +114,11 @@ class ThemeFactory {
             MuiCardContent: {
                 root: {
                     minHeight: '0px!important',
-                    padding: 0
+                    padding: '0.8rem',
+                    paddingBottom: 0,
+                    '&:last-child': {
+                        paddingBottom: '0.8rem'
+                    }
                 }
             },
             MuiCard: {
