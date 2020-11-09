@@ -34,7 +34,6 @@ export default async (req, res) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: code })
                 })
-                console.log(response)
                 if (response.status === 200) {
                     const content = await response.json()
                     res.status(200).send(JSON.stringify(content))
