@@ -4,14 +4,12 @@ import Backdrop from '@material-ui/core/Backdrop'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Fade from '@material-ui/core/Fade'
 import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
 import UserContext from '../hooks/userContext'
 import { useStylesGlobal } from '../styles/global.style'
-import LazyImage from '../components/ui/LazyImage'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     icon: {
@@ -107,7 +105,7 @@ const hasButtonModal = WrappedComponent => {
                         {isOldDevice
                             ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                 <VolumeOffIcon className={classes.icon} />
-                                <Typography className={'H3Title'}>
+                                <Typography variant="h3">
                                     {translation.challengeVideoTextStartMuted}
                                 </Typography>
                                 <Button
