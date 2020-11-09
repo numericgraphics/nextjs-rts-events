@@ -194,6 +194,12 @@ function Result (props) {
         }
     }
 
+    function successVariant () {
+        let variant
+        success ? variant = 'h1' : variant = 'subtitle1'
+        return variant
+    }
+
     useEffect(() => {
         if (nextAvailableChallengeImageURL) {
             preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
@@ -214,23 +220,15 @@ function Result (props) {
                                 className={classes.secondCardTitle}
                                 dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
                         }
-                        {!success
-                            ? <ColorCard className={classes.colorCard}>
-                                <CardContent className={classes.cardContent}>
-                                    <Typography variant="subtitle1" className={classes.resultBox} dangerouslySetInnerHTML={{ __html: uiElements.resultBoxChunk }}/>
-                                </CardContent>
-                            </ColorCard>
-                            : null}
-                        {(success || !gameStats.hasAvailableChallenges || newUnlockedGifts.length)
-                            ? <ColorCard className={classes.colorCard}>
-                                <CardContent className={classes.cardContent}>
-                                    <Typography variant="h1" className={classes.winPointText}
-                                        dangerouslySetInnerHTML={{ __html: `${uiElements.resultScoreChunk}` }}/>
-                                    {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
-                                    }
-                                </CardContent>
-                            </ColorCard>
-                            : null}
+                        <ColorCard className={classes.colorCard}>
+                            <CardContent className={classes.cardContent}>
+                                <Typography className={classes.winPointText} variant={successVariant()}
+                                    dangerouslySetInnerHTML={{ __html: `${uiElements.resultBoxChunk}` }}/>
+                                {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
+                                }
+                            </CardContent>
+                        </ColorCard>
+
                         {newUnlockedGifts.length
                             ? <GiftResult
                                 className={classes.giftContainer}
