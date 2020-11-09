@@ -113,14 +113,11 @@ function QuestionVideo (props) {
         if (videoController.videoHasPlayed) {
             videoController.player.current.play()
         }
-        if (!videoController.videoHasPlayed) {
-            videoController.player.current.pause()
-        }
         startTimer()
     }
 
     useEffect(() => {
-        videoController.player.current.addEventListener('canplay', canPlay)
+        videoController.player.current.addEventListener('loadedmetadata', canPlay)
         videoController.setVideoVisible(true)
         videoController.setVideoPoster(imageURL)
         videoController.setVideoSource(videoURL)
@@ -130,7 +127,7 @@ function QuestionVideo (props) {
 
         return () => {
             clearInterval(intervalId.current)
-            videoController.player.current.removeEventListener('canplay', canPlay)
+            videoController.player.current.removeEventListener('loadedmetadata', canPlay)
         }
     }, [])
 

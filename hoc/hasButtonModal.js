@@ -4,14 +4,12 @@ import Backdrop from '@material-ui/core/Backdrop'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Fade from '@material-ui/core/Fade'
 import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
 import UserContext from '../hooks/userContext'
 import { useStylesGlobal } from '../styles/global.style'
-import LazyImage from '../components/ui/LazyImage'
 import { storeInLocalStorage, UserStates } from '../data/tools'
 
 const useStyles = makeStyles((theme = useTheme) => ({
@@ -114,7 +112,7 @@ const hasButtonModal = WrappedComponent => {
                         {isOldDevice
                             ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                 <VolumeOffIcon className={classes.icon} />
-                                <Typography className={'H3Title'}>
+                                <Typography variant="h3">
                                     {translation.challengeVideoTextStartMuted}
                                 </Typography>
                                 <Button
@@ -141,7 +139,9 @@ const hasButtonModal = WrappedComponent => {
                                     startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
                                     {translation.challengeVideoButtonUnMute}
                                 </Button>
-                                <Button className={['text2', classes.textButton].join(' ')} onClick={playMutedVideoPlayer}>
+                                <Button
+                                    className={['text2', classes.textButton].join(' ')}
+                                    onClick={playMutedVideoPlayer}>
                                     {translation.challengeVideoButtonMute}
                                 </Button>
                             </Box>}

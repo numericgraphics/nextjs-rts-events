@@ -45,6 +45,8 @@ function VideoController (props) {
 
     function handlePaused () {
         store.videoController.setBlurVideo(true)
+        // FIX for ios sleeping mode : video is set to paused when the app is in sleeping mode
+        setPause(true)
     }
 
     function handleError (e) {
