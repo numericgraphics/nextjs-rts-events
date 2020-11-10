@@ -252,37 +252,36 @@ function DashBoard (props) {
                     { user.isAdmin &&
                         <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
                     }
-                    <Box className='topZoneDashboard' >
-                        <Fade in={!isLoading} timeout={500}>
-                            <Box>
-                                <Box className={classes.header}>
-                                    <AvatarEvent user={user.avatarURL} />
-                                    <Typography variant="h2" className={[classes.nickname].join(' ')}>
-                                        {user.nickname}
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className='topZoneDashboard' >
+                            <Box className={classes.header}>
+                                <AvatarEvent user={user.avatarURL} />
+                                <Typography variant="h2" className={[classes.nickname].join(' ')}>
+                                    {user.nickname}
+                                </Typography>
+                                <Typography
+                                    variant='subtitle1'
+                                    className={[classes.remainingTime].join(' ')}
+                                    align={'center'}
+                                    dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
+                            </Box>
+                            {availableChallenges
+                                ? <Box className={classes.progressBarOverlay}>
+                                    <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
+                                        {uiElements.progressBarMessageChunk}
                                     </Typography>
-                                    <Typography
-                                        variant='subtitle1'
-                                        className={[classes.remainingTime].join(' ')}
-                                        align={'center'}
-                                        dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
+                                    <DashBoardChallengesProgress variant="determinate" progress={progress} />
                                 </Box>
-                                {availableChallenges
-                                    ? <Box className={classes.progressBarOverlay}>
-                                        <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
-                                            {uiElements.progressBarMessageChunk}
-                                        </Typography>
-                                        <DashBoardChallengesProgress variant="determinate" progress={progress} />
-                                    </Box>
-                                    : <React.Fragment>
-                                        <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                            dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                        </Typography>
-                                        <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                            dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                        </Typography>
-                                    </React.Fragment>
-                                }
-                                {availableScores &&
+                                : <React.Fragment>
+                                    <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                        dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
+                                    </Typography>
+                                    <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                        dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
+                                    </Typography>
+                                </React.Fragment>
+                            }
+                            {availableScores &&
                                     <ColorCard className={classes.colorCard}>
                                         <CardContent className={classes.cardContent}>
                                             <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
@@ -290,8 +289,8 @@ function DashBoard (props) {
                                             </Typography>
                                         </CardContent>
                                     </ColorCard>
-                                }
-                                {availableResults &&
+                            }
+                            {availableResults &&
                                     <ColorCard className={classes.colorCard}>
                                         <CardContent className={classes.cardContent}>
                                             <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
@@ -313,35 +312,34 @@ function DashBoard (props) {
                                             </Box>
                                         </CardContent>
                                     </ColorCard>
-                                }
-                                <ColorCard className={classes.colorCard}>
-                                    <CardContent className={classes.cardContent}>
-                                        <Box className={classes.giftContent}>
-                                            {gifts && gifts.length === 1
-                                                ? <GiftResult
-                                                    translation={translation.challengeResultGiftText}
-                                                    gift={gifts}
-                                                    onClick={onStart}
-                                                    setGift={setGift} />
-                                                : <GiftsBox
-                                                    gifts={gifts}
-                                                    translation={translation.dashBoardGiftTitle}
-                                                    onClick={onStart}
-                                                    setGift={setGift} />
-                                            }
-                                        </Box>
-                                    </CardContent>
-                                </ColorCard>
-                            </Box>
-                        </Fade>
-                    </Box>
-                    <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <Fade in={!isLoading} timeout={500}>
+                            }
+                            <ColorCard className={classes.colorCard}>
+                                <CardContent className={classes.cardContent}>
+                                    <Box className={classes.giftContent}>
+                                        {gifts && gifts.length === 1
+                                            ? <GiftResult
+                                                translation={translation.challengeResultGiftText}
+                                                gift={gifts}
+                                                onClick={onStart}
+                                                setGift={setGift} />
+                                            : <GiftsBox
+                                                gifts={gifts}
+                                                translation={translation.dashBoardGiftTitle}
+                                                onClick={onStart}
+                                                setGift={setGift} />
+                                        }
+                                    </Box>
+                                </CardContent>
+                            </ColorCard>
+                        </Box>
+                    </Fade>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                             <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
-                        </Fade>
-                    </Box>
+                        </Box>
+                    </Fade>
                     <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }} />
                 </Box>
             }

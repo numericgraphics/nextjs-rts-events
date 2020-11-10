@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import ThemeFactory from '../data/themeFactory'
 import Box from '@material-ui/core/Box'
-import EventLayout from './eventLayout'
 
-const useStyles = makeStyles((theme = useTheme) => ({
+const useStyles = makeStyles((theme) => ({
     container: {
-        // position: 'fixed',
+        position: 'fixed',
         display: 'flex',
         zIndex: 10,
         width: '100%',
@@ -15,6 +14,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
+        backgroundColor: theme.palette ? theme.palette.primary.main : ThemeFactory.getDefaultTheme().palette.primary.main,
         overflow: 'hidden'
     }
 }))
@@ -30,13 +30,9 @@ function Progress () {
     }, [])
 
     return (
-        <EventLayout >
-            <Box className='content' >
-                <Box className={classes.container} style={{ height: height, backgroundColor: theme.palette ? theme.palette.primary.main : ThemeFactory.getDefaultTheme().palette.primary.main }}>
-                    <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
-                </Box>
-            </Box>
-        </EventLayout>
+        <Box className={classes.container} style={{ height: height }}>
+            <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
+        </Box>
     )
 }
 
