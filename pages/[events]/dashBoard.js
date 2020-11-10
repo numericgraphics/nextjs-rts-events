@@ -145,7 +145,7 @@ function DashBoard (props) {
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
-    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
 
     async function fetchData () {
         try {
@@ -162,6 +162,7 @@ function DashBoard (props) {
                 const content = await response.json()
                 initGame(content)
             } else {
+                setTimeStampMode({ enable: false })
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
                     query: { modal: true }
@@ -334,13 +335,13 @@ function DashBoard (props) {
                             </Box>
                         </Fade>
                     </Box>
-                    <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <Fade in={!isLoading} timeout={500}>
+                    <Fade in={!isLoading} timeout={500}>
+                        <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                             <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                                 {`${translation.dashBoardChallengesButton}`}
                             </CustomDisabledButton>
-                        </Fade>
-                    </Box>
+                        </Box>
+                    </Fade>
                     <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }} />
                 </Box>
             }
