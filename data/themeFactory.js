@@ -152,7 +152,7 @@ class ThemeFactory {
                         }
                     },
                     p: {
-                        lineHeight: 1.2 + '!important'
+                        lineHeight: '1.2em' + '!important'
                     },
                     button: {
                         fontSize: '1.25rem!important',

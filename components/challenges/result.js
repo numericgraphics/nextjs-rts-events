@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '1.75rem',
         textAlign: 'center',
-        // lineHeight: 1.2,
+        // lineHeight: '1.2em',
         // marginBottom: 10,
         marginTop: '17vh',
         color: theme.palette.primary.contrastText
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1.2rem',
         textAlign: 'center',
-        // lineHeight: 1.2,
+        // lineHeight: '1.2em',
         color: theme.palette.primary.contrastText,
         // marginBottom: '3rem!important
         marginBottom: '5vh!important'
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1.2rem',
         textAlign: 'center',
-        // lineHeight: 1.2,
+        // lineHeight: '1.2em',
         color: theme.palette.primary.contrastText
         // marginBottom: '3rem!important
 
