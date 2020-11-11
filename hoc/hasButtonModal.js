@@ -35,6 +35,16 @@ const useStyles = makeStyles((theme = useTheme) => ({
     backgroundImage: {
         height: '100%',
         width: '100%'
+    },
+    container: {
+        display: 'flex',
+        height: '100vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        outline: 'none',
+        textAlign: 'center'
+
     }
 }))
 
@@ -94,23 +104,15 @@ const hasButtonModal = WrappedComponent => {
                     className='containerModal'
                     open={open}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    // BackdropComponent={Backdrop}
                     BackdropProps={{
                         timeout: 500,
-                        style: { backgroundColor: 'none' }
+                        style: { backgroundColor: 'none!important' }
                     }}
                     tabIndex={-1}
                 >
                     <Fade in={open} timeout={1000}>
-                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
-                            {/* TODO: utiliser LazyImage plutôt que les trois box */}
-                            <Box className={[classes.backgroundImage].join(' ')}
-                                style={{
-                                    backgroundImage: `url(${poster})`,
-                                    height: height
-                                }}/>
-                            <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}/>
-                            <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}/>
+                        <Box className={['backgroundModal', classes.container].join(' ')}>
                             {isOldDevice
                                 ? <Box className={[classes.text, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />

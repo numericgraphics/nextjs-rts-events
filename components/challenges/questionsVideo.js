@@ -109,11 +109,11 @@ function QuestionVideo (props) {
     }
 
     function canPlay () {
-        setShowComponent(true)
         if (videoController.videoHasPlayed) {
             videoController.player.current.play()
+            setShowComponent(true)
+            startTimer()
         }
-        startTimer()
     }
 
     useEffect(() => {
@@ -135,6 +135,8 @@ function QuestionVideo (props) {
         if (props.firstPlayStarPlaying) {
             setDisabled(false)
             videoController.setVideoPoster('')
+            setShowComponent(true)
+            startTimer()
         }
     }, [props.firstPlayStarPlaying])
 

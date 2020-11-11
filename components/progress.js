@@ -30,8 +30,10 @@ function Progress () {
     }, [])
 
     return (
-        <Box className={classes.container} style={{ height: height }}>
-            <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
+        <Box className={'container'}>
+            <Box className={[classes.container, 'background'].join(' ')} style={{ height: height }}>
+                <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
+            </Box>
         </Box>
     )
 }
