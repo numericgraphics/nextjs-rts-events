@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { isBrowser, isMobile, isTablet } from 'react-device-detect'
 import Button from '@material-ui/core/Button'
 import SwipeableTemplates from './swipeableTemplates'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import hasLoginModal from '../../hoc/hasLoginModal'
 import SlideShow from './slideShow'
 import { Box } from '@material-ui/core'
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     buttonSwipeDownDesktop: {
         '&:hover': {
-            backgroundColor: theme.palette.primary.main
+            backgroundColor: theme.palette.secondary.main
         }
     },
     button: {
@@ -110,11 +110,12 @@ function StartPage (props) {
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {isLastTemplate() &&
                     <Slide direction="up" in={isLastTemplate()} timeout={300} mountOnEnter unmountOnExit>
-                        <Button color="primary"
+                        <Button color="secondary"
                             variant="contained"
-                            className={['bottomButton', 'bottom-1-rem', classes.button].join(' ')}
+                            className={['button', classes.button].join(' ')}
                             onClick={onStart}
-                            style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}>
+                            // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
+                        >
                             {translation.startPageButtonText}
                         </Button>
                     </Slide>
@@ -125,7 +126,7 @@ function StartPage (props) {
                         {!isLastTemplate() &&
                         <Box className={[classes.arrowSwipeDown, classes.arrowSwipeDownMobile].join(' ')}>
                             <ArrowIcon/>
-                            <Typography className={['regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                            <Typography variant="subtitle2" className={'color-White'} align={'center'}>{translation.startPageArrowDown}</Typography>
                         </Box>
                         }
                     </Box>}
@@ -136,7 +137,7 @@ function StartPage (props) {
                             <IconButton disableRipple={true} onClick={onSwipe} className={classes.buttonSwipeDownDesktop}>
                                 <ArrowIcon fontSize="large"/>
                             </IconButton>
-                            <Typography className={[classes.label, 'regular-1', 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
+                            <Typography variant="subtitle2" className={[classes.label, 'color-White'].join(' ')} align={'center'}>{translation.startPageArrowDown}</Typography>
                         </React.Fragment>
                     }
                 </Box>}

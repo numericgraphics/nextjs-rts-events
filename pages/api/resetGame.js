@@ -1,7 +1,6 @@
 import cookie from 'cookie'
 import fetch from 'node-fetch'
 import getConfig from 'next/config'
-import { dateCreator } from '../../data/tools'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
@@ -9,10 +8,8 @@ export default async (req, res) => {
     let cookies = null
 
     try {
-        const { eventName, date, time } = await req.body
+        const { eventName } = await req.body
         const cookieName = `rtsevents-${eventName}`
-
-        const finalDate = ((date && time) || date) ? dateCreator(date, time) : false
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
@@ -21,12 +18,7 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                let url
-                if (finalDate) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${finalDate}`
-                } else {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
-                }
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/reset`
 
                 const response = await fetch(url, {
                     credentials: 'include',
@@ -38,13 +30,13 @@ export default async (req, res) => {
                     const content = await response.json()
                     res.status(200).send(JSON.stringify(content))
                 } else {
-                    throw new Error('There is a probleme with the getData fetch')
+                    throw new Error('Oups, could not reset game')
                 }
             } else {
-                throw new Error('There is a no events cookie')
+                throw new Error('No events cookie')
             }
         } else {
-            throw new Error('There is a no cookies')
+            throw new Error('No cookies')
         }
     } catch (error) {
         res.status(401).send(error.message)

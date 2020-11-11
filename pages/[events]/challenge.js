@@ -1,21 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
-import UserContext from '../../components/UserContext'
+import UserContext from '../../hooks/userContext'
 import EventLayout from '../../components/eventLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import LazyImage from '../../components/ui/LazyImage'
 import { getAllEvents } from '../../lib/events'
-import Box from '@material-ui/core/Box'
 
-const styles = {
-    containerImage: {
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'auto 100%'
-    }
-}
 const ChallengeStates = Object.freeze({
     COUNTDOWN: 'countDown',
     QUESTIONS: 'questions',
@@ -28,20 +20,23 @@ function Challenge () {
     const router = useRouter()
     const { events } = router.query
     const { dataProvider, store } = useContext(UserContext)
-    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController } = store
+    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
     const [questionsContent, setQuestionsContent] = useState({})
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
     const [backgroundType, setBackgroundType] = useState('image')
+    const [addColor, setColor] = useState(false)
+    const [addBlur, setBlur] = useState(false)
 
     async function fetchQuestions () {
         try {
+            const bodyContent = (timeStampMode.enable) ? { eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { eventName: events }
             const response = await fetch('/api/fetchQuiz', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ eventName: events })
+                body: JSON.stringify(bodyContent)
             })
             if (response.status === 200) {
                 const content = await response.json()
@@ -63,12 +58,13 @@ function Challenge () {
         try {
             const { challengeID } = dataProvider.getChallenge()
             const answerToString = String(answer)
+            const bodyContent = (timeStampMode.enable) ? { answer: answerToString, challengeID, eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { answer: answerToString, challengeID, eventName: events }
 
             const response = await fetch('/api/fetchQuizResult', {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ answer: answerToString, challengeID, eventName: events })
+                body: JSON.stringify(bodyContent)
             })
 
             if (response.status === 200) {
@@ -172,15 +168,19 @@ function Challenge () {
         }
     }, [resultContent])
 
+    useEffect(() => {
+        setColor(challengeState === ChallengeStates.RESULT)
+        setBlur(challengeState === ChallengeStates.RESULT)
+    }, [challengeState])
+
     return (
         <EventLayout>
             {isLoading
                 ? null
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
-                    { challengeState === ChallengeStates.RESULT && <Box className='backgroundGradientByTheme' style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.60) 100%)' }} />}
                     {backgroundType === 'image' &&
-                    <LazyImage className='background' style={{ ...styles.containerImage, backgroundImage: `url(${imageURL})`, filter: challengeState === ChallengeStates.QUESTIONS ? 'none' : 'blur(4px)' }}/>}
+                    <LazyImage addblur={ addBlur } addcolor={ addColor } className='background' style={{ backgroundImage: `url(${imageURL})` }}/>}
                 </React.Fragment>
             }
         </EventLayout>

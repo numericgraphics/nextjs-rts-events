@@ -1,5 +1,6 @@
 import cookie from 'cookie'
 import getConfig from 'next/config'
+import { dateCreator } from '../../data/tools'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
@@ -8,7 +9,8 @@ export default async (req, res) => {
 
     // Check if rts-event cookie is available
     try {
-        const { eventName } = await req.body
+        const { eventName, date, time } = await req.body
+        const finalDate = (date) ? dateCreator(date, time) : false
         const cookieName = `rtsevents-${eventName}`
 
         if (req.headers.cookie) {
@@ -18,8 +20,14 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge`
-
+                let url
+                // TODO : mathieu tu peux tester cette version de l'url merci - la mm chose sur fetchgame, et sur fetchgameresult si ca fonctionne !
+                // let url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge${finalDate ? `?ts=${finalDate}` : ''}`
+                if (finalDate) {
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge?ts=${finalDate}`
+                } else {
+                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge`
+                }
                 const response = await fetch(url, {
                     credentials: 'include',
                     method: 'POST',

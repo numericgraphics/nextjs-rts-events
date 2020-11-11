@@ -33,15 +33,17 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     closeBtn: {
         position: 'absolute',
-        top: '20px',
-        right: '20px',
+        top: '2rem',
+        right: '2rem',
         minHeight: '34px',
         minWidth: '34px',
         maxHeight: '58px',
         maxWidth: '58px',
-        width: '10vw',
-        height: '10vw',
-        zIndex: 4
+        width: '2.5rem',
+        height: '2.5rem',
+        zIndex: 4,
+        backgroundColor: theme.palette.secondary.main,
+        stroke: theme.palette.secondary.contrastText
     },
     lock: {
         minHeight: '68px',
@@ -50,13 +52,15 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '116px',
         width: '20vw',
         height: '20vw',
-        zIndex: 4
+        zIndex: 4,
+        fill: theme.palette.primary.contrastText
     },
     lockContainer: {
         position: 'absolute',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        zIndex: 3
     },
     svgIco: {
         minHeight: '34px',
@@ -67,21 +71,27 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     containerText: {
         position: 'relative',
         paddingBottom: '7vh',
-        paddingLeft: '20px',
-        paddingRight: '20px',
+        paddingLeft: '3vw',
+        paddingRight: '3vw',
         flexGrow: 0,
-        border: 'solid',
-        borderColor: theme.palette.secondary.main
+        // border: 'solid',
+        // borderColor: theme.palette.secondary.main,
+        color: theme.palette.primary.contrastText,
+        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
+        //opacity: 0.9
+        //background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 30%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+
     },
     title: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.75em',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '1.75em',
         letterSpacing: '0em',
-        paddingBottom: '15px'
+        paddingBottom: '15px',
+        lineHeight: '1.2em'
     },
     description: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25em',
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1.25em',
         letterSpacing: '0em'
     },
     root: {
@@ -91,7 +101,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     },
     gradient: {
         flexGrow: 3,
-        width: '100%'
+        width: '100%',
+        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
     },
     closeIcon: {
         position: 'absolute',
@@ -167,16 +178,20 @@ const hasGiftModal = WrappedComponent => {
                         <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                             style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
                             <Box className={classes.footer} style={{ height: height }}>
-                                <Box className={classes.gradient} style={{ background: `linear-gradient(${hexToRgbA(theme.palette.secondary.main, 0)} 0%, ${hexToRgbA(theme.palette.secondary.main, 0)} 80%,${theme.palette.secondary.main} 100%)` }} />
-                                <Box className={classes.containerText} ref={ boxTextRef } style={{ backgroundColor: theme.palette.secondary.main }}>
-                                    <Typography className={classes.title} align={'center'}>{gift.title}</Typography>
-                                    <Typography className={classes.description} align={'center'}>{gift.message}</Typography>
+                                <Box className={classes.gradient} />
+                                <Box className={classes.containerText} ref={ boxTextRef }>
+                                    <Typography variant="h2" className={classes.title} align={'center'}
+                                        dangerouslySetInnerHTML={{ __html: gift.title }}>
+                                    </Typography>
+                                    <Typography variant="subtitle2" className={classes.description} align={'center'}
+                                        dangerouslySetInnerHTML={{ __html: gift.message }}>
+                                    </Typography>
                                 </Box>
-                                {gift.locked ? <Box className={classes.lockContainer} style={{ zIndex: 3, fill: theme.palette.secondary.contrastText, bottom: boxHeight - 1 }}>
+                                {gift.locked ? <Box className={classes.lockContainer} style={{ bottom: boxHeight - 1 }}>
                                     {lockIcon({ ref: lockIconRef, className: classes.lock })}
                                 </Box> : null }
                             </Box>
-                            <IconButton onClick={handleClose} color="primary" className={classes.closeBtn} style={{ backgroundColor: theme.palette.primary.main, stroke: theme.palette.primary.contrastText }}>
+                            <IconButton onClick={handleClose} color="secondary" className={classes.closeBtn}>
                                 { closeIcon({ className: classes.closeIcon }) }
                             </IconButton>
                         </Box>

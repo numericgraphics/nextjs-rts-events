@@ -3,10 +3,8 @@ import Card from '@material-ui/core/Card'
 
 export const ColorCard = withStyles((theme) => ({
     root: {
-        background: `${theme.palette.secondary.main}!important`,
-        color: `${theme.palette.secondary.contrastText}!important`,
-        borderRadius: '16px',
-        minHeight: '0px!important',
-        boxShadow: 'none'
+        background: `${theme.palette.primary.light}!important`,
+        color: `${theme.palette.primary.contrastText}!important`,
+        padding: 0
     }
 }))(Card)

@@ -3,8 +3,9 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/global.css'
 import '../styles/fadeIn.css'
-import 'react-phone-input-2/lib/style.css'
-import UserContext from '../components/UserContext'
+import '../styles/shake.css'
+import 'react-phone-input-2/lib/bootstrap.css'
+import UserContext from '../hooks/userContext'
 import DataProvider from '../data/dataProvider'
 import GameStatsService from '../data/gameStats'
 import UiElementsServices from '../data/uiElements'
@@ -15,19 +16,26 @@ import ThemeFactory from '../data/themeFactory'
 import Progress from '../components/progress'
 import VideoPlayer from '../components/ui/VideoPlayer'
 import useDeviceDetect from '../hooks/useDeviceDetect'
+import useNetwork from '../hooks/useNetwork'
+import useAppVisibility from '../hooks/useAppVisivility'
 
 function MyApp ({ Component, pageProps }) {
+    const netWorkStatus = useNetwork()
+    const appVisibilityStatus = useAppVisibility()
     const deviceDetection = useDeviceDetect()
     const [eventData, setEventData] = useState([])
     const [isGlobalLoading, setGlobalLoading] = useState(true)
     const [isLoading, setLoading] = useState(true)
     const [isStartAnimationEnded, setIsStartAnimationEnded] = useState(false)
     const [isEndedAnimationStart, setIsEndedAnimationStart] = useState(false)
+    const [isEndedAnimationEnded, setIsEndedAnimationEnded] = useState(false)
     const [routeChange, setRouteChange] = useState(false)
     const isImagesPreLoaded = useImagesServices(eventData)
     const [error, setError] = useState(false)
     const [eventName, setEventName] = useState('')
     const [theme, setTheme] = useState(ThemeFactory.getDefaultTheme())
+    const [timeStampMode, setTimeStampMode] = useState({ enable: false, date: '', time: '', initialized: false })
+    const [isRouterReady, setRouterReady] = useState(false)
     const player = useRef()
     /* eslint-disable */
     const [videoSource, setVideoSource] = useState('')
@@ -39,7 +47,7 @@ function MyApp ({ Component, pageProps }) {
     const [blurVideo, setBlurVideo] = useState(false)
     /* eslint-enable */
     const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
-    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode, setTimeStampMode }
     const router = useRouter()
 
     function startedCallBack () {
@@ -48,6 +56,7 @@ function MyApp ({ Component, pageProps }) {
 
     function endedCallBack () {
         setGlobalLoading(false)
+        setIsEndedAnimationEnded(true)
     }
 
     function sendStats (needToBeInitialized, shortName) {
@@ -81,6 +90,12 @@ function MyApp ({ Component, pageProps }) {
         }
     }
 
+    useEffect(() => {
+        if (isEndedAnimationEnded && isRouterReady) {
+            setGlobalLoading(false)
+        }
+    }, [isEndedAnimationEnded, isRouterReady])
+
     // First load a stats event is sent if GlobalLoading is true
     useEffect(() => {
         if (isGlobalLoading && eventName.length > 0) {
@@ -90,7 +105,7 @@ function MyApp ({ Component, pageProps }) {
 
     // wait for preloading service and animated splashscreen
     useEffect(() => {
-        if (isImagesPreLoaded && isStartAnimationEnded) {
+        if (isImagesPreLoaded.ready && isStartAnimationEnded) {
             setIsEndedAnimationStart(true)
         }
     }, [isImagesPreLoaded, isStartAnimationEnded])
@@ -103,6 +118,31 @@ function MyApp ({ Component, pageProps }) {
             setRouteChange(false)
         }
     }, [routeChange])
+
+    useEffect(() => {
+        console.log('NETWORK STATUS --> ', netWorkStatus)
+    }, [netWorkStatus])
+
+    useEffect(() => {
+        console.log('APP VISIBILITY STATUS --> ', appVisibilityStatus)
+    }, [appVisibilityStatus])
+
+    useEffect(() => {
+        console.log('APP TIMESTAMP STATUS --> ', timeStampMode)
+    }, [timeStampMode])
+
+    useEffect(() => {
+        if (!timeStampMode.initialized) {
+            // const { time, date } = router.query
+            const params = (new URL(document.location)).searchParams
+            const time = params.get('time') ? params.get('time') : ''
+            const date = params.get('date')
+            if (date) {
+                setTimeStampMode({ enable: !!date, date, time })
+            }
+            setRouterReady(true)
+        }
+    }, [router])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS

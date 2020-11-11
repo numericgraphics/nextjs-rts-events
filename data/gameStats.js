@@ -1,4 +1,4 @@
-class GameStatsServices {
+export class GameStatsServices {
     init (dataProvider) {
         this.dataProvider = dataProvider
         this.gameStats = this.getGameStats.bind(this)

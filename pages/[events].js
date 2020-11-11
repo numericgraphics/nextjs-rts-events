@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { withRouter } from 'next/router'
-import UserContext from '../components/UserContext'
+import UserContext from '../hooks/userContext'
 import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
 import EventLayout from '../components/eventLayout'
@@ -18,7 +18,7 @@ function Events (props) {
             const response = await fetch(`api/verify/${events}`)
             if (response.status === 200) {
                 const content = await response.json()
-                dataProvider.setData(content)
+                dataProvider.setEventData(content)
                 await router.push('/[events]/dashBoard', `/${events}/dashBoard`)
             } else {
                 setPageReady(true)
@@ -31,7 +31,7 @@ function Events (props) {
     useEffect(() => {
         setEventData(content)
         setEventName(events)
-        dataProvider.setData(content)
+        dataProvider.setEventData(content)
         setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         handleVerify().then()
     }, [])
@@ -66,6 +66,7 @@ export async function getStaticProps ({ params }) {
     return {
         props: {
             eventData
-        }
+        },
+        revalidate: 1
     }
 }

@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Checkbox from '@material-ui/core/Checkbox'
-import Backdrop from '@material-ui/core/Backdrop'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { useTheme } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import Typography from '@material-ui/core/Typography'
+import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import UserContext from '../components/UserContext'
-import Button from '@material-ui/core/Button'
+import UserContext from '../hooks/userContext'
 import SmsInput from '../components/ui/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
+import { phoneVerification } from '../data/tools'
+import { CustomDisabledButton } from '../components/ui/CustomDisabledButton'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -31,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
-        width: '95%',
+        width: '90%',
         minHeight: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette.secondary.main,
-        color: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 30
     },
@@ -45,18 +46,18 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: 30
     },
     title: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25em',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '1.25em',
         letterSpacing: '0em',
         lineHeight: 1.4
     },
     button: {
         position: 'relative',
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontSize: '1rem',
-        padding: '6px 20px',
-        marginTop: 30
+        // borderRadius: 30,
+        // alignSelf: 'center',
+        // fontSize: '1rem',
+        // padding: '6px 20px',
+        marginTop: '2rem'
     },
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
@@ -94,24 +95,28 @@ const useStyles = makeStyles((theme) => ({
     },
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.secondary.contrastText,
+        stroke: theme.palette.primary.contrastText,
         padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
         color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.secondary.contrastText
+        stroke: theme.palette.primary.contrastText
     },
     CGU: {
         width: '100%',
         marginTop: 30
     },
     CGUText: {
-        fontSize: '0.9rem!important',
+        // fontSize: '0.9rem!important',
         letterSpacing: '0.00238em',
-        lineHeight: 1.2
+        lineHeight: '1.2em',
+        color: theme.palette.primary.contrastText,
+        '& a': {
+            color: theme.palette.primary.contrastText
+        }
     },
     link: {
-        color: theme.palette.secondary.contrastText,
+        color: 'red',
         lineHeight: '1.1rem',
         textDecoration: 'underline'
     },
@@ -121,10 +126,25 @@ const useStyles = makeStyles((theme) => ({
     },
     iconClass: {
         height: 'unset'
+    },
+    iconClassChecked: {
+        height: 'unset',
+        stroke: '#00FF14'
+    },
+    shakeMe: {
+        WebkitAnimationName: 'shake',
+        WebkitAnimationDuration: '0.82s',
+        WebkitAnimationTimingFunction: 'cubic-bezier(.36,.07,.19,.97)',
+        WebkitAnimationFillMode: 'both',
+        transform: 'translate3d(0, 0, 0)',
+        WebkitAnimationDelay: '1s'
+    },
+    phoneInputBorder: {
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
     }
 }))
 const styles = {
-    textField: {
+    textFieldValidated: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.125rem',
         color: '#020202',
@@ -134,7 +154,23 @@ const styles = {
         backgroundColor: 'white',
         paddingTop: '0.4rem',
         paddingBottom: '0.4rem',
-        margin: '0.2rem'
+        margin: '0.2rem',
+        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
+        webkitAppearance: 'none'
+    },
+    textFieldNotValidated: {
+        fontFamily: 'srgssr-type-Bd',
+        fontSize: '1.125rem',
+        color: '#020202',
+        border: 'none',
+        width: '100%',
+        height: 'auto',
+        backgroundColor: 'white',
+        paddingTop: '0.4rem',
+        paddingBottom: '0.4rem',
+        margin: '0.2rem',
+        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
+        webkitAppearance: 'none'
     }
 }
 
@@ -153,7 +189,7 @@ const hasLoginModal = WrappedComponent => {
         const [loginState, setLoginState] = useState(ModalStates.PHONE_NUMBER)
         const [userData, setUserData] = useState({ phone: '', code: '' })
         const { dataProvider, store } = useContext(UserContext)
-        const uiElement = dataProvider.getUiElements()
+        const uiElement = dataProvider.getEventUiElements()
         const { agreementsChunks } = uiElement
         const { setLoading, eventName } = store
         const [translation, setTranslation] = useState([])
@@ -162,22 +198,8 @@ const hasLoginModal = WrappedComponent => {
         const smsSubmit = useRef()
         const [checked, setChecked] = useState(false)
         const [phoneVerif, setPhoneVerif] = useState(false)
-
-        function phoneVerification (data) {
-            const swissReg = /^(\+41)(\d{2})(\d{3})(\d{2})(\d{2})$/
-            const franceReg = /^(\+33)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
-            const belgiumReg = /^(\+32)(\d{1})(\d{2})(\d{2})(\d{2})(\d{2})$/
-            const italianReg = /^(\+39)(\d{3})(\d{7})$/
-            const liechtensteinReg = /^(\+423)(\d{3})(\d{3})(\d{3})(\d{3})$/
-
-            data = '+' + data
-            if ((swissReg.test(data)) || (franceReg.test(data)) || (belgiumReg.test(data)) || (italianReg.test(data)) || liechtensteinReg.test(data)) {
-                setPhoneVerif(true)
-            } else {
-                setPhoneVerif(false)
-            }
-        }
         const [counter, setCounter] = useState(0)
+        const [colorInput, setColorInput] = useState(styles.textFieldNotValidated)
 
         const handleOpen = () => {
             setOpen(true)
@@ -201,6 +223,10 @@ const hasLoginModal = WrappedComponent => {
                 setChecked(counter !== agreementsChunks.length)
             }
         }, [counter])
+
+        useEffect(() => {
+            setColorInput(phoneVerif ? styles.textFieldValidated : styles.textFieldNotValidated)
+        }, [phoneVerif])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -303,42 +329,43 @@ const hasLoginModal = WrappedComponent => {
             case ModalStates.NUMBER_RECEIVE:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginNumberText}</Typography>
+                        <Typography variant="h3" className={classes.title} align={'center'}>{translation.modalLoginNumberText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
                         <SmsInput onChange={ setCode } />
-                        <Button color="primary" variant="contained" className={classes.button} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
+                        <CustomDisabledButton color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             {translation.send}
-                        </Button>
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.LOADING:
                 return <Box className={classes.modalContent}>
-                    <CircularProgress style={{ color: theme.palette.secondary.contrastText }}/>
+                    <CircularProgress style={{ color: theme.palette.primary.contrastText }}/>
                 </Box>
             case ModalStates.PHONE_NUMBER:
                 return <Box className={classes.modalContent}>
                     <Box className={classes.containerTitle}>
-                        <Typography className={classes.title} variant="h4" align={'center'}>{translation.modalLoginPhoneText}</Typography>
+                        <Typography variant="h3" className={classes.title} align={'center'}>{translation.modalLoginPhoneText}</Typography>
                     </Box>
                     <form className={classes.textFieldContainer} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
-                            inputProps={ { style: styles.textField } }
+                            inputProps={ {
+                                style: colorInput,
+                                autoFocus: true
+                            } }
                             dropdownClass={classes.dropDown}
                             containerClass={classes.container}
                             inputExtraProps={{
                                 name: 'phone',
                                 required: true,
-                                autoFocus: true,
                                 enableSearch: true
                             }}
                             country='ch'
                             onlyCountries={['ch', 'fr', 'it', 'be', 'li']}
                             countryCodeEditable={false}
-                            placeholder=''
                             value={userData.phone}
                             onChange={(data) => {
-                                phoneVerification(data)
+                                setPhoneVerif(phoneVerification(data))
                                 setUserData(
                                     Object.assign({}, userData, { phone: data })
                                 )
@@ -351,23 +378,23 @@ const hasLoginModal = WrappedComponent => {
                                 return (
                                     <Box key={index} className={classes.CGUContent}>
                                         <Checkbox
-                                            classes={{ root: classes.CGUBox, checked: classes.CGUBoxCheck }}
+                                            classes={{ root: [classes.CGUBox, phoneVerif && classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
                                             icon={uncheckedBoxIcon({ className: classes.iconClass })}
-                                            checkedIcon={checkedBoxIcon({ className: classes.iconClass })}
+                                            checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                             onChange={checkBoxes} />
-                                        <Typography className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
+                                        <Typography variant="body1" className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
                                 )
                             })}
                         </Box>
-                        <Button ref={smsSubmit} color="primary" variant="contained" className={classes.button} type="submit" disabled={(!phoneVerif || checked)} >
-                            {translation.send}
-                        </Button>
+                        <CustomDisabledButton ref={smsSubmit} color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={(!phoneVerif || checked)} >
+                            { translation.send }
+                        </CustomDisabledButton>
                     </form>
                 </Box>
             case ModalStates.ERROR:
                 return <Box className={classes.modalContent}>
-                    <Typography className={classes.title} variant="h4" align={'center'}>Erreur</Typography>
+                    <Typography variant="h3" className={classes.title} align={'center'}>Erreur</Typography>
                     {userData.error && <p className="error">Error: {userData.error}</p>}
                 </Box>
             }
@@ -375,7 +402,6 @@ const hasLoginModal = WrappedComponent => {
         return (
             <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />
-
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -383,9 +409,11 @@ const hasLoginModal = WrappedComponent => {
                     open={open}
                     onClose={handleClose}
                     closeAfterTransition
-                    BackdropComponent={Backdrop}
+                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        open: open,
+                        onClose: handleClose
                     }}
                 >
                     <Fade in={open}>

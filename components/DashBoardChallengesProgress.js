@@ -5,12 +5,11 @@ import { ColorLinearProgress } from './ui/ColorLinearProgress'
 
 const useStyles = makeStyles({
     container: {
-        width: '100%',
-        margin: 10
+        width: '100%'
     },
     linearProgress: {
-        height: 23,
-        borderRadius: 10
+        height: '1.8rem',
+        borderRadius: '1rem'
     }
 })
 
@@ -20,7 +19,11 @@ function DashBoardChallengesProgress (props) {
 
     return (
         <Box className={classes.container}>
-            <ColorLinearProgress variant="determinate" style={{ color: 'white' }} value={progress} className={classes.linearProgress}/>
+            <ColorLinearProgress
+                variant="determinate"
+                color="primary"
+                value={progress}
+                className={classes.linearProgress}/>
         </Box>
     )
 }

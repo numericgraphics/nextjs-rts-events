@@ -1,31 +1,45 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Fade from '@material-ui/core/Fade'
 import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
-import UserContext from '../components/UserContext'
+import UserContext from '../hooks/userContext'
+import { useStylesGlobal } from '../styles/global.style'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme = useTheme) => ({
     icon: {
         fontSize: '6rem',
         marginBottom: '10vw'
     },
+    text: {
+        color: theme.palette.primary.contrastText,
+        position: 'absolute'
+    },
     textButton: {
         textTransform: 'none',
-        color: 'white'
+        color: theme.palette.primary.contrastText
+    },
+    overImage: {
+        position: 'absolute',
+        top: 0,
+        height: '100%',
+        width: '100%'
+    },
+    backgroundImage: {
+        height: '100%',
+        width: '100%'
     }
-
 }))
 
 const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
+        const stylesGlobal = useStylesGlobal()
         const classes = useStyles()
         const { dataProvider, store } = useContext(UserContext)
         const { deviceDetection } = store
@@ -65,12 +79,10 @@ const hasButtonModal = WrappedComponent => {
 
         return (
             <Box>
-                <WrappedComponent openModal={openModal} {...props} buttonModalCliked={status} setButtonModalCliked={setStatus} secondaryButtonClicked={secondaryStatus}/>
+                <WrappedComponent openModal={openModal} {...props} buttonModalCliked={status} setButtonModalCliked={setStatus} secondaryButtonClicked={secondaryStatus} />
                 <Modal
                     disableAutoFocus={true}
                     disableEnforceFocus
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
                     className='containerModal'
                     open={open}
                     closeAfterTransition
@@ -81,45 +93,51 @@ const hasButtonModal = WrappedComponent => {
                     }}
                     tabIndex={-1}
                 >
-                    <Fade in={open} timeout={1000}>
-                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
-                            style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${poster})`, height: height }}>
-                            {isOldDevice
-                                ? <Box className='centered-content color-White'>
-                                    <VolumeOffIcon className={classes.icon}/>
-                                    <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
-                                        {translation.challengeVideoTextStartMuted}
-                                    </Typography>
-                                    <Button
-                                        key={'continueGame'}
-                                        color="primary"
-                                        variant="contained"
-                                        className={['bottomButton', 'bottom-2-rem'].join(' ')}
-                                        onClick={mutedVideoPlayer}
-                                        startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
-                                        {translation.challengeVideoButtonStartMuted}
-                                    </Button>
-                                </Box>
-                                : <Box className='centered-content color-White'>
-                                    <VolumeOffIcon className={classes.icon}/>
-                                    <Typography className={['regular-1-25', 'bottom-2-rem'].join(' ')}>
-                                        {translation.challengeVideoTextUnMute}
-                                    </Typography>
-                                    <Button
-                                        key={'continueGame'}
-                                        color="primary"
-                                        variant="contained"
-                                        className={['bottomButton', 'bottom-2-rem'].join(' ')}
-                                        onClick={startChallenge}
-                                        startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
-                                        {translation.challengeVideoButtonUnMute}
-                                    </Button>
-                                    <Button className={['regular-1-25 ', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
-                                        {translation.challengeVideoButtonMute}
-                                    </Button>
-                                </Box>}
-                        </Box>
-                    </Fade>
+                    <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
+                        {/* TODO: utiliser LazyImage plutôt que les trois box */}
+                        <Box className={[classes.backgroundImage].join(' ')}
+                            style={{
+                                backgroundImage: `url(${poster})`,
+                                height: height
+                            }}/>
+                        <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}/>
+                        <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}/>
+                        {isOldDevice
+                            ? <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                <VolumeOffIcon className={classes.icon} />
+                                <Typography variant="h3">
+                                    {translation.challengeVideoTextStartMuted}
+                                </Typography>
+                                <Button
+                                    key={'continueGame'}
+                                    color="primary"
+                                    variant="contained"
+                                    className={'button'}
+                                    onClick={mutedVideoPlayer}
+                                    startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
+                                    {translation.challengeVideoButtonStartMuted}
+                                </Button>
+                            </Box>
+                            : <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                <VolumeOffIcon className={classes.icon} />
+                                <Typography variant="h3">
+                                    {translation.challengeVideoTextUnMute}
+                                </Typography>
+                                <Button
+                                    key={'continueGame'}
+                                    color="secondary"
+                                    variant="contained"
+                                    className={'button'}
+                                    onClick={startChallenge}
+                                    startIcon={<VolumeUpIcon style={{ fontSize: '7vw' }} />}>
+                                    {translation.challengeVideoButtonUnMute}
+                                </Button>
+                                <Button className={['text2', classes.textButton].join(' ')} onClick={mutedVideoPlayer}>
+                                    {translation.challengeVideoButtonMute}
+                                </Button>
+                            </Box>}
+
+                    </Box>
                 </Modal>
             </Box>
         )

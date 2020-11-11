@@ -1,3 +1,5 @@
+/*** TYPO ***/
+
 @font-face {
     font-family: 'srgssr-type-BdIt';
     src: url(../assets/fonts/SRGSSRType_BdIt.ttf);
@@ -10,29 +12,18 @@
     font-family: 'srgssr-type-Rg';
     src: url(../assets/fonts/SRGSSRType_Rg.ttf);
 }
-
-
-
-html, body {
-    /*height: 100%;*/
-    margin: 0;
-    font-size: 2.2vh; /* Relative à la hauteur du viewPort (bloque le zoom?) */
-    font-family: sans-serif;
-    -webkit-text-size-adjust:none;
-    overscroll-behavior: contain; /* prevent pull to refresh on mobile browsers */
+@font-face {
+    font-family: 'srgssr-type-Md';
+    src: url(../assets/fonts/SRGSSRType_Md.ttf);
 }
 
-html {
-    /*background-color: red;*/
-}
 
-/*
-image - video :     z-index = -2
-gradient effect :   z-index = -1
-content :   z-index = 0
 
+/***  HIERARCHY ***
+    image - video :     z-index = -2
+    gradient effect :   z-index = -1
+    content :   z-index = 0
  */
-
 
 .z-index-media {
     position: relative;
@@ -50,6 +41,7 @@ content :   z-index = 0
 
 
 /*** BACKGROUNDS ***/
+
 .backgroundSlideShow,
 .backgroundSwipeableView,
 .backgroundModal,
@@ -93,13 +85,18 @@ content :   z-index = 0
     z-index: -3;
 }
 
+.backgroundGradientVideoPlayer,
 .backgroundVideoPlayer {
     height: 100vh;
     width: 100%;
     position: fixed;
     top: 0;
     z-index: -1;
-    background-color: black;
+    /*background-color: black;*/
+}
+
+.backgroundGradientVideoPlayer {
+    z-index: 1;
 }
 
 .backgroundGradientByTheme {
@@ -138,6 +135,15 @@ content :   z-index = 0
     z-index: -1;
 }
 
+.backgroundGradientTopBottomDashBoard {
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)!important;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}
+
 .backgroundGradientTop {
     background: linear-gradient(to bottom,rgba(0,0,0,0.8)0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 100%);
     height: 100vh;
@@ -167,178 +173,71 @@ content :   z-index = 0
 }
 
 .content {
-    padding: 0 0 0 0; /* page  de place pour swipe left  right */
+    padding: 0 0 0 0; /* pas de place pour swipe left  right */
     /* padding: 0 0 17rem 0;  Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
 }
 
-.topZone {
+.topZone, .topZoneDashboard {
     position: relative;
     z-index: 0;
-    padding: 1rem 0.8rem 0 0.8rem;
+    padding: 3vw;
 }
 
-.topZone .text {
-    background-color: white;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    opacity: 0.8;
-    border-radius: 1rem;
-    padding: 1rem;
-    margin-top: 0;
+/*.topZone .text {*/
+/*    background-color: white;*/
+/*    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);*/
+/*    opacity: 0.8;*/
+/*    border-radius: 1rem;*/
+/*    padding: 1rem;*/
+/*    margin-top: 0;*/
+/*}*/
 
-}
-
-.bottomZone, .bottomZonePromo { /* Zone des boutons fixée en bas de page */
+.bottomZone, .bottomZonePromo, .bottomZoneDashboard { /* Zone des boutons fixée en bas de page */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     /*min-height: 150px;*/
     width: 100%;
     position: fixed;
     bottom: 0;
-    margin: 0 0 1rem 0;
-    padding: 0;
+    margin: 0;
+    padding: 1rem 0;
 }
 
-.bottomZone {
+.bottomZone, .bottomZoneDashboard {
     z-index: 1;
-}
-
-/*** SPACING ***/
-
-.bottom-3-rem {
-    margin-bottom: 3rem!important;
-}
-
-.bottom-2-rem {
-    margin-bottom: 2rem!important;
-}
-
-.bottom-1-rem{
-    margin-bottom: 1rem!important;
-}
-
-.bottom-0-5-rem{
-    margin-bottom: 0.5rem!important;
-}
-
-.margin-1-rem{
-    margin: 1rem!important;
-}
-
-.margin-1-5-rem{
-    margin: 1.5rem!important;
-}
-
-.margin-1-7-rem{
-    margin: 1.7rem!important;
-}
-
-/*** TYPO ***/
-.bold-1-125 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.125rem!important;
-}
-
-.bold-1-25 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.25rem!important;
-}
-
-.bold-1-75 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.75rem!important;
-}
-
-.bold-1-5 {
-    font-family: 'srgssr-type-Bd', sans-serif!important;
-    font-size: 1.5rem!important;
-}
-
-.regular-0-825 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 0.825rem!important;
-}
-
-.regular-1 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1rem!important;
-}
-
-.regular-1-1 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.1rem!important;
-}
-
-.regular-1-125 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.125rem!important;
-}
-
-.regular-1-25 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.25rem!important;
-}
-
-.regular-1-50 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.50rem!important;
-}
-
-.regular-1-75 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 1.75rem!important;
-}
-
-.regular-2 {
-    font-family: 'srgssr-type-Rg', sans-serif!important;
-    font-size: 2rem!important;
-}
-
-.color-White {
-    color: white!important;
-}
-
-.lineSpacing-1 {
-    line-height: 1!important;
-}
-
-.lineSpacing-1-2 {
-    line-height: 1.2!important;
-}
-
-.lineSpacing-1-5 {
-    line-height: 1.5!important;
-}
-
-.lineSpacing-1-8 {
-    line-height: 1.8!important;
-}
-
-.unselectable-element {
-    user-select: none;
 }
 
 /*** COMPONENTS ***/
 
 .questionButton,
-.bottomButton {
+.button,
+.buttonAlt {
     width: 80%;
     padding: 6px 20px!important;
     border-radius: 30px!important;
     align-self: center;
 }
 
-.bottomButton {
+.button, .buttonAlt {
+    margin-bottom: 1rem!important;
+}
+
+.backgroundModal .button, .backgroundModal .H3Title {
+    margin-bottom: 2rem!important;
+}
+
+.buttonAlt {
     font-size: 1.25rem!important;
-    font-family: 'srgssr-type-Bd', sans-serif!important;
+    font-family: 'srgssr-type-Rg', sans-serif!important;
 }
 
 .questionButton {
     width: 85%;
     font-size: 1rem!important;
-    font-family: 'srgssr-type-Rg', sans-serif!important;
+    font-family: srgssr-type-Bd, sans-serif!important;
     text-transform: none!important;
 }
 
@@ -354,18 +253,15 @@ content :   z-index = 0
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0!important;
-    margin: 1.1rem 0.7rem 1.1rem 0.7rem;
+    /* padding: 0!important; */
+    /* margin: 1.1rem 0.7rem 1.1rem 0.7rem; /* safari bug : https://stackoverflow.com/questions/44697888/flex-auto-margins-behave-differently-in-chrome-and-safari */
+    margin: 0;
+    padding: 1.1rem 0.7rem;
 }
-
-.centered-content {
-     justify-content: center;
- }
 
 .cardContent {
     justify-content: flex-start;
 }
-
 /*** ANIMATION ***/
 
 .fadeInAnimation {
@@ -381,11 +277,6 @@ content :   z-index = 0
 /*** MEDIA QUERY ***/
 
 @media only screen and (min-width: 481px) { /* Pour les écrans de desktop et iPad/iPhones portrait on limite la largeur et on centre */
-
-    html, body {
-        font-size: 1.1em;
-    }
-
     .container,
     .containerModal,
     .background,
@@ -397,10 +288,13 @@ content :   z-index = 0
     .backgroundGradientByTheme,
     .backgroundGradientBottom,
     .backgroundGradientTopBottom,
+    .backgroundGradientTopBottomDashBoard,
     .backgroundGradientTop,
+    .backgroundGradientVideoPlayer,
     .backgroundGradientBottomAspectRatio,
     .backgroundVideoPlayer,
     .bottomZone,
+    .bottomZoneDashboard,
     .bottomZonePromo,
     .swipeableViews {
         max-width: 480px;
@@ -422,11 +316,6 @@ content :   z-index = 0
 }
 
 @media only screen and (min-height: 901px) { /* sur les écrans trop haut, on limite la hauteur du background pour que l'image/la vidéo reste acceptable */
-
-    html, body {
-        font-size: 1.1em;
-    }
-
     .background,
     .backgroundGradientBottom {
         max-height: 900px;
@@ -434,10 +323,6 @@ content :   z-index = 0
 }
 
 @media only screen and (min-height: 901px) and (min-width: 600px) and (min-aspect-ratio: 600/901) { /* sur les écrans trop haut, et trop large on zoome comme instagram */
-    html, body {
-        font-size: 2.2vh;
-    }
-
     .container,
     .containerModal,
     .background,
@@ -450,10 +335,13 @@ content :   z-index = 0
     .backgroundGradientBottom,
     .backgroundGradientTop,
     .backgroundGradientTopBottom,
+    .backgroundGradientTopBottomDashBoard,
+    .backgroundGradientVideoPlayer,
     .backgroundGradientBottomAspectRatio,
     .backgroundVideoPlayer,
     .bottomZone,
     .bottomZonePromo,
+    .bottomZoneDashboard,
     .swipeableViews {
         max-width: 55vh;
     }
@@ -463,6 +351,7 @@ content :   z-index = 0
     .backgroundSlideShow,
     .backgroundGradientByTheme,
     .backgroundGradientTopBottom,
+    .backgroundGradientTopBottomDashBoard,
     .backgroundGradientTop,
     .backgroundGradientBottom {
         max-height: 100vh;
@@ -474,12 +363,7 @@ content :   z-index = 0
     }
 }
 
-@media only screen and (max-height:650px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
-
-    html, body {
-        font-size: 0.9em;
-    }
-
+@media only screen and (max-height:550px) { /* Sur les écrans trop courts (mobiles paysage, embed), on passe en mode flex pour que les questions restent lisibles */
     .content {
         display: flex;
         flex-direction: column;
@@ -487,15 +371,34 @@ content :   z-index = 0
         padding: 0;
     }
 
-    .topZone {
+    .topZone, .topZoneDashboard {
         flex-grow: 1;
     }
+
 
     .bottomZone {
         position: relative;
         height: 16rem!important;
     }
+
 }
+
+@media only screen and (max-height:450px){
+    .bottomZoneDashboard {
+        position: relative;
+        height: 5rem!important;
+    }
+}
+
+@media only screen and (min-height:450px) and (max-height:750px) {
+
+    .topZoneDashboard {
+        padding: 1rem 1rem 7rem;
+    }
+}
+
+
+/*** TAGS & SPECIFIC CASES ***/
 
 a {
     text-decoration: underline;
@@ -511,4 +414,30 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+input:focus ,
+.react-tel-input .form-control:focus {
+    outline: none;
+}
+.react-tel-input .selected-flag,
+.react-tel-input .selected-flag:focus:before,
+.react-tel-input .selected-flag.open:before {
+    border: none!important;
+    box-shadow: none!important;
+    outline: none!important;
+}
+
+
+/*** FUNCTIONAL CLASS ***/
+
+.color-White {
+    color: white!important;
+}
+
+.unselectable-element {
+    user-select: none;
+}
+
+.centered-content {
+    justify-content: center;
 }

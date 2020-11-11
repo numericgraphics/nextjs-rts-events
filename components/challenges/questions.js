@@ -45,7 +45,7 @@ const useStyles = makeStyles({
         margin: 20
     },
     HeaderText: {
-        lineHeight: 1.2,
+        lineHeight: '1.2em',
         textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {
@@ -65,7 +65,8 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
+        marginBottom: '1rem!important'
     },
     buttonProgress: {
         position: 'absolute'
@@ -131,10 +132,10 @@ function Question (props) {
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
                     </Box>
                     <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography className={[classes.HeaderTitle, 'regular-1-125'].join(' ')} align={'left'}>
+                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
                             {title}
                         </Typography>
-                        <Typography className={[classes.HeaderText, 'bold-1-5'].join(' ')} align={'left'}>
+                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
                             {question}
                         </Typography>
                     </Box>
@@ -142,8 +143,8 @@ function Question (props) {
                 <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={[classes.buttonWrapper, 'bottom-1-rem'].join(' ')} >
-                                <CustomDisabledButton color="primary" variant="contained" className='questionButton' disabled={disabled} onClick={() => {
+                            <Box key={index} className={classes.buttonWrapper} >
+                                <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}

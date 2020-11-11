@@ -27,10 +27,12 @@ export default function LayoutPromo (props) {
                 </Box>}
                 <Box className={styles.text}>
                     <Typography
+                        variant="h1"
                         className={[styles.title, 'unselectable-element'].join(' ')}
                         align={'center'}
                         dangerouslySetInnerHTML={{ __html: title }}/>
                     <Typography
+                        variant="h3"
                         className={[styles.subTitle, 'unselectable-element'].join(' ')}
                         align={'center'}
                         dangerouslySetInnerHTML={{ __html: description }}/>

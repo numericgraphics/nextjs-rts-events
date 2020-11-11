@@ -4,7 +4,7 @@ import TimerIcon from '@material-ui/icons/Timer'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: 5
     },
     linearProgress: {
-        backgroundColor: theme.palette.secondary.dark
+        backgroundColor: theme.palette.primary.dark
     }
 }))
 const styles = {
@@ -43,10 +43,10 @@ function QuestionTimer (props) {
 
     return (
         <Box className={classes.container}>
-            <LinearProgress variant="determinate" color={'secondary'} value={progress} className={classes.linearProgress}/>
+            <LinearProgress variant="determinate" color={'primary'} value={progress} className={classes.linearProgress}/>
             <Box className={classes.content}>
                 <TimerIcon style={styles.icon}/>
-                <Typography className={[classes.text, 'regular-1'].join(' ')} >
+                <Typography variant="subtitle2" className={classes.text} >
                     {`${Math.round(timeLeft)} ${translation.challengeQuestionTimeRemaining}`}
                 </Typography>
             </Box>

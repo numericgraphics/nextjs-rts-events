@@ -15,8 +15,11 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginRight: '10px',
         maxWidth: '50px',
         maxHeight: '50px',
-        backgroundColor: theme.palette.primary.main,
-        marginTop: 10
+        backgroundColor: theme.palette.secondary.main,
+        marginTop: 10,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.dark
+        }
     },
     gifts: {
         display: 'flex',
@@ -25,12 +28,10 @@ const useStyles = makeStyles((theme = useTheme) => ({
         flexWrap: 'wrap'
     },
     textRegularCenter: {
-        textAlign: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.1rem'
+        textAlign: 'center'
     },
     cadeau: {
-        fill: theme.palette.primary.contrastText,
+        fill: theme.palette.secondary.contrastText,
         minHeight: '34px',
         minWidth: '34px',
         width: '10vw',
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         zIndex: 1
     },
     medal: {
-        fill: theme.palette.primary.contrastText,
+        fill: theme.palette.secondary.contrastText,
         minHeight: '34px',
         minWidth: '34px',
         width: '10vw',
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
         maxHeight: '25px',
         width: '7.5vw',
         height: '7.5vw',
-        fill: 'white',
+        fill: theme.palette.secondary.contrastText,
         zIndex: 1
     }
 }))
@@ -93,7 +94,7 @@ function GiftsBox (props) {
 
     return (
         <Box className={classes.container}>
-            <Typography className={classes.textRegularCenter}>
+            <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}>
                 {props.translation}
             </Typography>
             <Box className={classes.gifts}>

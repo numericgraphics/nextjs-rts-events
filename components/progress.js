@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ThemeFactory from '../data/themeFactory'
 import Box from '@material-ui/core/Box'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     container: {
         position: 'fixed',
         display: 'flex',
@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
+        backgroundColor: theme.palette ? theme.palette.primary.main : ThemeFactory.getDefaultTheme().palette.primary.main,
         overflow: 'hidden'
     }
 }))
@@ -30,7 +31,7 @@ function Progress () {
 
     return (
         <Box className={classes.container} style={{ height: height }}>
-            <CircularProgress style={{ color: theme.palette ? theme.palette.secondary.contrastText : ThemeFactory.getDefaultTheme().palette.secondary.main }} />
+            <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
         </Box>
     )
 }

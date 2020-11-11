@@ -6,7 +6,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
 import { storeInLocalStorage, UserStates, getDataFromLocalStorage } from '../../data/tools'
 
 const iconFontSize = 33
@@ -45,6 +45,8 @@ function VideoController (props) {
 
     function paused () {
         store.videoController.setBlurVideo(true)
+        // FIX for ios sleeping mode : video is set to paused when the app is in sleeping mode
+        setPause(true)
     }
 
     function error (e) {
@@ -94,11 +96,11 @@ function VideoController (props) {
         <Fragment>
             {controls
                 ? <Box className={classes.controlContainer} >
-                    <IconButton onClick={onPauseClick} color="primary" className={classes.button}>
+                    <IconButton onClick={onPauseClick} color="secondary" className={classes.button}>
                         {pause ? <PlayCircleOutlineIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />
                             : <PauseCircleOutlineIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />}
                     </IconButton>
-                    <IconButton onClick={onVolumeClick} color="primary" className={classes.button}>
+                    <IconButton onClick={onVolumeClick} color="secondary" className={classes.button}>
                         {mute ? <VolumeOffIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />
                             : <VolumeUpIcon style={{ fontSize: iconFontSize, position: 'absolute' }} />}
                     </IconButton>

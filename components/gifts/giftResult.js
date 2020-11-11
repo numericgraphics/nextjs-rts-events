@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme = useTheme) => ({
         borderRadius: '50px',
         padding: '3px',
         marginBottom: '10px',
-        maxWidth: '70vw',
         flexDirection: 'column',
         marginTop: '25px'
     },
@@ -23,11 +22,11 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginLeft: '5px',
         marginRight: '15px',
         lineHeight: 1,
-        color: 'black'
+        color: theme.palette.primary.contrastText
     },
     giftIcon: {
-        fill: theme.palette.primary.contrastText,
-        backgroundColor: theme.palette.primary.main,
+        fill: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.secondary.main,
         minHeight: '34px',
         minWidth: '34px',
         fontSize: '5rem!important',
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     button: {
         borderRadius: 40,
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.primary.light,
         paddingBottom: 5,
         paddingLeft: 10,
         paddingRight: 5,
@@ -61,7 +60,12 @@ const useStyles = makeStyles((theme = useTheme) => ({
         boxShadow: 'none!important',
         height: '100%',
         width: '100%',
-        zIndex: 1
+        maxWidth: '70vw',
+        zIndex: 1,
+        '&:hover':
+            {
+                backgroundColor: theme.palette.primary.dark
+            }
     }
 }))
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box

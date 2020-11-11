@@ -7,6 +7,10 @@ class UiElementsServices {
     getUiElements () {
         return this.dataProvider.getUiElements()
     }
+
+    getEventUiElements () {
+        return this.dataProvider.getEventUiElements()
+    }
 }
 
 const UIElementsInstance = new UiElementsServices()

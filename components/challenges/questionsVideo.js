@@ -8,7 +8,8 @@ import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
-import UserContext from '../UserContext'
+import UserContext from '../../hooks/userContext'
+import useAppVisibility from '../../hooks/useAppVisivility'
 
 const useStyles = makeStyles({
     counter: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles({
         margin: 20
     },
     HeaderText: {
-        lineHeight: 1.2,
+        lineHeight: '1.2em',
         textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {
@@ -67,7 +68,8 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
+        marginBottom: '1rem!important'
     },
     buttonProgress: {
         position: 'absolute'
@@ -76,6 +78,7 @@ const useStyles = makeStyles({
 
 function QuestionVideo (props) {
     const classes = useStyles()
+    const appVisibilityStatus = useAppVisibility()
     const { quiz, title, duration, imageURL, videoURL } = props.content
     const { question, answers } = quiz
     const { store } = useContext(UserContext)
@@ -144,7 +147,7 @@ function QuestionVideo (props) {
             props.answerCallBack(-1)
             setDisabled(true)
         }
-    }, [progress])
+    }, [progress, appVisibilityStatus])
 
     return (
         <Fade in={showComponent} timeout={500}>
@@ -155,10 +158,10 @@ function QuestionVideo (props) {
                         {props.content.videoURL && <VideoControler controls={true}/>}
                     </Box>
                     <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography className={[classes.HeaderTitle, 'regular-1-125'].join(' ')} align={'left'}>
+                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
                             {title}
                         </Typography>
-                        <Typography className={[classes.HeaderText, 'bold-1-5'].join(' ')} align={'left'}>
+                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
                             {question}
                         </Typography>
                     </Box>
@@ -166,8 +169,8 @@ function QuestionVideo (props) {
                 <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={[classes.buttonWrapper, 'bottom-1-rem'].join(' ')} >
-                                <CustomDisabledButton color="primary" variant="contained" className='questionButton' disabled={disabled} onClick={() => {
+                            <Box key={index} className={classes.buttonWrapper} >
+                                <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
                                     onAnswer(index + 1)
                                 }}>
                                     {item}
