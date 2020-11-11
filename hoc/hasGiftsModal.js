@@ -71,20 +71,23 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     containerText: {
         position: 'relative',
         paddingBottom: '7vh',
-        paddingLeft: '20px',
-        paddingRight: '20px',
+        paddingLeft: '3vw',
+        paddingRight: '3vw',
         flexGrow: 0,
         // border: 'solid',
         // borderColor: theme.palette.secondary.main,
         color: theme.palette.primary.contrastText,
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
+        //opacity: 0.9
+        //background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 30%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+
     },
     title: {
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '1.75em',
         letterSpacing: '0em',
         paddingBottom: '15px',
-        lineHeight: 1.2
+        lineHeight: '1.2em'
     },
     description: {
         // fontFamily: 'srgssr-type-Rg',
@@ -99,7 +102,7 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     gradient: {
         flexGrow: 3,
         width: '100%',
-        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${theme.palette.primary.main} 100%)`
+        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
     },
     closeIcon: {
         position: 'absolute',

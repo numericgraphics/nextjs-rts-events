@@ -47,7 +47,7 @@ function MyApp ({ Component, pageProps }) {
     const [blurVideo, setBlurVideo] = useState(false)
     /* eslint-enable */
     const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
-    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode, setTimeStampMode }
     const router = useRouter()
 
     function startedCallBack () {

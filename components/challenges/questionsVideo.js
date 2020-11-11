@@ -48,7 +48,7 @@ const useStyles = makeStyles({
         margin: 20
     },
     HeaderText: {
-        lineHeight: 1.2,
+        lineHeight: '1.2em',
         textShadow: '0px 3px 6px #00000040'
     },
     HeaderTitle: {

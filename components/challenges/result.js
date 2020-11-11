@@ -11,6 +11,8 @@ import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { preLoadImage } from '../../data/tools'
 import { useStylesGlobal } from '../../styles/global.style'
+import { ColorCard } from '../../components/ui/ColorCard'
+import CardContent from '@material-ui/core/CardContent'
 
 const useStyles = makeStyles((theme = useTheme()) => ({
     containerGlobal: {
@@ -33,17 +35,28 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '1.75rem',
         textAlign: 'center',
-        // lineHeight: 1.2,
-        marginBottom: 10,
+        // lineHeight: '1.2em',
+        // marginBottom: 10,
+        marginTop: '17vh',
         color: theme.palette.primary.contrastText
     },
     subTitle: {
         // fontFamily: 'srgssr-type-Rg',
         // fontSize: '1.2rem',
         textAlign: 'center',
-        // lineHeight: 1.2,
+        // lineHeight: '1.2em',
         color: theme.palette.primary.contrastText,
-        marginBottom: '3rem!important'
+        // marginBottom: '3rem!important
+        marginBottom: '5vh!important'
+
+    },
+    resultBox: {
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1.2rem',
+        textAlign: 'center',
+        // lineHeight: '1.2em',
+        color: theme.palette.primary.contrastText
+        // marginBottom: '3rem!important
 
     },
     secondCardTitle: {
@@ -114,9 +127,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
     winPointText: {
         // fontFamily: 'srgssr-type-Bd',
         // fontSize: '2.5rem',
-        padding: '6px 20px',
         textAlign: 'center',
-        marginTop: '15vh',
+        // marginTop: '15vh',
         color: theme.palette.primary.contrastText
     },
     iconType: {
@@ -135,12 +147,21 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '70vw',
         flexDirection: 'column',
         marginTop: '10px'
+    },
+    cardContent: {
+        margin: '0!important'
+    },
+    colorCard: {
+        marginBottom: '0.4rem',
+        borderRadius: '0.5rem',
+        width: '90%'
     }
+
 }))
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
-    const { points, success, gameStats, newUnlockedGifts } = props.content
+    const { success, gameStats, newUnlockedGifts } = props.content
     const { nextAvailableChallengeImageURL } = gameStats
     const classes = useStyles()
     const [translation, setTranslation] = useState([])
@@ -172,6 +193,12 @@ function Result (props) {
         }
     }
 
+    function successVariant () {
+        let variant
+        success ? variant = 'h1' : variant = 'subtitle1'
+        return variant
+    }
+
     useEffect(() => {
         if (nextAvailableChallengeImageURL) {
             preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
@@ -180,39 +207,35 @@ function Result (props) {
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
     }, [])
-
     return (
         <Fade in={showComponent} timeout={500}>
             <Box className='content' >
                 <Box className='topZone'>
                     <Box className={classes.content}>
-                        <Typography variant="h1" className={classes.winPointText}>
-                            {gameStats.hasAvailableChallenges
-                                ? success
-                                    ? `+ ${points} pts` // TODO: Translation pts
-                                    : `${points} pts`
-                                : `+ ${gameStats.currentScore} pts`
-                            }
-                        </Typography>
                         <Typography variant="h1" className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                        <Typography variant="h1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                        <Typography variant="subtitle1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
                         {!gameStats.hasAvailableChallenges &&
                             <Typography
                                 className={classes.secondCardTitle}
                                 dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
                         }
+                        <ColorCard className={classes.colorCard}>
+                            <CardContent className={classes.cardContent}>
+                                <Typography className={classes.winPointText} variant={successVariant()}
+                                    dangerouslySetInnerHTML={{ __html: `${uiElements.resultBoxChunk}` }}/>
+                                {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
+                                }
+                            </CardContent>
+                        </ColorCard>
+
                         {newUnlockedGifts.length
-                            ? <React.Fragment>
-                                <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/>
-                                <GiftResult
-                                    className={classes.giftContainer}
-                                    translation={translation.challengeResultGiftText}
-                                    gift={newUnlockedGifts}
-                                    onClick={onStart}
-                                    setGift={setGift}
-                                />
-                            </React.Fragment>
-                            : null
+                            ? <GiftResult
+                                className={classes.giftContainer}
+                                translation={translation.challengeResultGiftText}
+                                gift={newUnlockedGifts}
+                                onClick={onStart}
+                                setGift={setGift}
+                            /> : null
                         }
                     </Box>
                 </Box>

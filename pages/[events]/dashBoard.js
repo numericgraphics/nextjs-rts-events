@@ -113,8 +113,17 @@ const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: '0.8rem'
     },
     cardContent: {
-        margin: '0!important',
-        padding: '0.8rem!important'
+        margin: '0!important'
+    },
+    adminToolbar: {
+        position: 'absolute',
+        zIndex: 9999999999,
+        top: 5,
+        left: 5,
+        backgroundColor: 'red',
+        opacity: 0.8,
+        padding: '2px 5px',
+        boxShadow: '0px 0px 7px 2px #000000'
     }
 }))
 
@@ -136,7 +145,7 @@ function DashBoard (props) {
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
-    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
 
     async function fetchData () {
         try {
@@ -153,10 +162,30 @@ function DashBoard (props) {
                 const content = await response.json()
                 initGame(content)
             } else {
+                setTimeStampMode({ enable: false })
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
                     query: { modal: true }
                 })
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async function resetGame () {
+        try {
+            alert('Will try to reset Game')
+            const bodyContent = { eventName: events }
+            const response = await fetch('/api/resetGame', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyContent)
+            })
+            if (response.status === 200) {
+                alert('Game reseted')
+            } else {
+                alert('Could not reset game')
             }
         } catch (error) {
             throw new Error(error.message)
@@ -219,99 +248,100 @@ function DashBoard (props) {
     return (
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
-                <Box className='content' >
+            <Box className='content' >
+                { user.isAdmin &&
+                <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
+                }
+                <Fade in={!isLoading} timeout={500}>
                     <Box className='topZoneDashboard' >
-                        <Fade in={!isLoading} timeout={500}>
-                            <Box>
-                                <Box className={classes.header}>
-                                    <AvatarEvent user={user.avatarURL}/>
-                                    <Typography variant="h2" className={[classes.nickname].join(' ')}>
-                                        {user.nickname}
-                                    </Typography>
-                                    <Typography
-                                        variant='subtitle1'
-                                        className={[classes.remainingTime].join(' ')}
-                                        align={'center'}
-                                        dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }}/>
-                                </Box>
-                                {availableChallenges
-                                    ? <Box className={classes.progressBarOverlay}>
-                                        <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
-                                            {uiElements.progressBarMessageChunk}
-                                        </Typography>
-                                        <DashBoardChallengesProgress variant="determinate" progress={progress} />
-                                    </Box>
-                                    : <React.Fragment>
-                                        <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                            dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                        </Typography>
-                                        <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                            dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                        </Typography>
-                                    </React.Fragment>
-                                }
-                                {availableScores &&
-                                    <ColorCard className={classes.colorCard}>
-                                        <CardContent className={classes.cardContent}>
-                                            <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
-                                                {uiElements.scoreChunk}
-                                            </Typography>
-                                        </CardContent>
-                                    </ColorCard>
-                                }
-                                {availableResults &&
-                                    <ColorCard className={classes.colorCard}>
-                                        <CardContent className={classes.cardContent}>
-                                            <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                                dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
-                                            </Typography>
-                                            <Box className={classes.rateBox}>
-                                                <Box className={classes.goodRateBox}>
-                                                    <CheckIcon fontSize="small" className={classes.rateIcon}/>
-                                                    <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
-                                                        {uiElements.successChunk}
-                                                    </Typography>
-                                                </Box>
-                                                <Box className={classes.badRateBox}>
-                                                    <CloseIcon fontSize="small" className={classes.rateIcon}/>
-                                                    <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
-                                                        {uiElements.failChunk}
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </ColorCard>
-                                }
-                                <ColorCard className={classes.colorCard}>
-                                    <CardContent className={classes.cardContent}>
-                                        <Box className={classes.giftContent}>
-                                            { gifts && gifts.length === 1
-                                                ? <GiftResult
-                                                    translation={translation.challengeResultGiftText}
-                                                    gift={gifts}
-                                                    onClick={onStart}
-                                                    setGift={setGift} />
-                                                : <GiftsBox
-                                                    gifts={gifts}
-                                                    translation={translation.dashBoardGiftTitle}
-                                                    onClick={onStart}
-                                                    setGift={setGift} />
-                                            }
-                                        </Box>
-                                    </CardContent>
-                                </ColorCard>
-                            </Box>
-                        </Fade>
-                    </Box>
-                    <Fade in={!isLoading} timeout={1000}>
-                        <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                            <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
-                                {`${translation.dashBoardChallengesButton}`}
-                            </CustomDisabledButton>
+                        <Box className={classes.header}>
+                            <AvatarEvent user={user.avatarURL} />
+                            <Typography variant="h2" className={[classes.nickname].join(' ')}>
+                                {user.nickname}
+                            </Typography>
+                            <Typography
+                                variant='subtitle1'
+                                className={[classes.remainingTime].join(' ')}
+                                align={'center'}
+                                dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
                         </Box>
-                    </Fade>
-                    <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }}/>
-                </Box>
+                        {availableChallenges
+                            ? <Box className={classes.progressBarOverlay}>
+                                <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
+                                    {uiElements.progressBarMessageChunk}
+                                </Typography>
+                                <DashBoardChallengesProgress variant="determinate" progress={progress} />
+                            </Box>
+                            : <React.Fragment>
+                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
+                                </Typography>
+                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
+                                </Typography>
+                            </React.Fragment>
+                        }
+                        {availableScores &&
+                        <ColorCard className={classes.colorCard}>
+                            <CardContent className={classes.cardContent}>
+                                <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
+                                    {uiElements.scoreChunk}
+                                </Typography>
+                            </CardContent>
+                        </ColorCard>
+                        }
+                        {availableResults &&
+                        <ColorCard className={classes.colorCard}>
+                            <CardContent className={classes.cardContent}>
+                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
+                                </Typography>
+                                <Box className={classes.rateBox}>
+                                    <Box className={classes.goodRateBox}>
+                                        <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                        <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
+                                            {uiElements.successChunk}
+                                        </Typography>
+                                    </Box>
+                                    <Box className={classes.badRateBox}>
+                                        <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                        <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
+                                            {uiElements.failChunk}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </CardContent>
+                        </ColorCard>
+                        }
+                        <ColorCard className={classes.colorCard}>
+                            <CardContent className={classes.cardContent}>
+                                <Box className={classes.giftContent}>
+                                    {gifts && gifts.length === 1
+                                        ? <GiftResult
+                                            translation={translation.challengeResultGiftText}
+                                            gift={gifts}
+                                            onClick={onStart}
+                                            setGift={setGift} />
+                                        : <GiftsBox
+                                            gifts={gifts}
+                                            translation={translation.dashBoardGiftTitle}
+                                            onClick={onStart}
+                                            setGift={setGift} />
+                                    }
+                                </Box>
+                            </CardContent>
+                        </ColorCard>
+                    </Box>
+                </Fade>
+                <Fade in={!isLoading} timeout={500}>
+                    <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
+                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
+                            {`${translation.dashBoardChallengesButton}`}
+                        </CustomDisabledButton>
+                    </Box>
+                </Fade>
+                <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }} />
+            </Box>
             }
         </EventLayout>
     )
