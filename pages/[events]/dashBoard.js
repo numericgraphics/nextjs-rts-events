@@ -21,7 +21,6 @@ import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
 import AvatarEvent from '../../components/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
-// import { DatePicker } from '@material-ui/pickers'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -147,7 +146,6 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
-    // const [selectedDate, handleDateChange] = useState(new Date());
 
     async function fetchData () {
         try {
@@ -247,27 +245,12 @@ function DashBoard (props) {
         }
     }, [isGlobalLoading])
 
-    /* useEffect(() => {
-        console.log(selectedDate)
-    }, [selectedDate]) */
-
     return (
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
-                <React.Fragment>
                     <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
-                    {/* <DatePicker
-                        disableFuture
-                        openTo="year"
-                        format="dd/MM/yyyy"
-                        label="Date of birth"
-                        views={['year', 'month', 'date']}
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                     /> */}
-                </React.Fragment>
                 }
                 <Fade in={!isLoading} timeout={500}>
                     <Box className='topZoneDashboard' >
