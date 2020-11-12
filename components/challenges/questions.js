@@ -3,10 +3,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import QuestionTimer from './questionTimer'
-import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
+import Slide from '@material-ui/core/Slide/Slide'
 
 const useStyles = makeStyles({
     counter: {
@@ -125,8 +125,8 @@ function Question (props) {
     }, [progress])
 
     return (
-        <Fade in={showComponent} timeout={500}>
-            <Box className='content' >
+        <Box className='content' >
+            <Slide in={showComponent} timeout={500} direction="down" >
                 <Box className='topZone'>
                     <Box className={classes.counter}>
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
@@ -140,6 +140,8 @@ function Question (props) {
                         </Typography>
                     </Box>
                 </Box>
+            </Slide>
+            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
                 <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
@@ -155,9 +157,9 @@ function Question (props) {
                     }
                     )}
                 </Box>
-                <Box className='backgroundGradientTop' />
-            </Box>
-        </Fade>
+            </Slide>
+            {showComponent && <Box className='backgroundGradientTop' />}
+        </Box>
     )
 }
 
