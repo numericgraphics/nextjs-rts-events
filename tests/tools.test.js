@@ -1,4 +1,4 @@
-import { getAllImagesFromJSON, preLoadImage, phoneVerification } from '../data/tools'
+import { getAllImagesFromJSON, preLoadImage, phoneVerification, dateCreator, epochConverter } from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
@@ -23,4 +23,14 @@ test('phone verification', () => {
     const testWrongNumber = phoneVerification(23232)
     expect(testSwissNumber).toBe(true)
     expect(testWrongNumber).toBe(false)
+})
+
+test('date creation', () => {
+    const testDateHyphen = dateCreator('02-11-1999', '1630')
+    expect(testDateHyphen).toMatch('02-11-1999 16:30')
+})
+
+test('epochConverter', () => {
+    const testEpoch = epochConverter('02-11-1999', '1630')
+    expect(testEpoch).toEqual(941556600)
 })
