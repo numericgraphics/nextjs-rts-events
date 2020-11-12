@@ -36,7 +36,12 @@ test('epochConverter', () => {
 })
 
 test('hexToRgbA', () => {
-    const whiteOpacity = hexToRgbA('#000000', 0.6)
-    expect(whiteOpacity).toMatch('rgba(0,0,0,0.6)')
-    expect(() => hexToRgbA('#00', 0.6)).toThrowError()
+    expect(hexToRgbA('#000000', 0.6)).toMatch('rgba(0,0,0,0.6)')
+    expect(hexToRgbA('#000000', 70)).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#00', 0.6)).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#ZZAABB', 0.6)).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#000000', 1)).toMatch('rgba(0,0,0,1)')
+    expect(hexToRgbA('#000000', 0)).toMatch('rgba(0,0,0,0)')
+    expect(hexToRgbA('#000000', '1')).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#000000', true)).toMatch('rgba(255,0,0,1)')
 })

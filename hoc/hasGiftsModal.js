@@ -78,8 +78,8 @@ const useStyles = makeStyles((theme = useTheme()) => ({
         // borderColor: theme.palette.secondary.main,
         color: theme.palette.primary.contrastText,
         backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
-        //opacity: 0.9
-        //background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 30%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+        // opacity: 0.9
+        // background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 30%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
 
     },
     title: {
