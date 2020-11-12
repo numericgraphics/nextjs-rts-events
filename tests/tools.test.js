@@ -1,4 +1,4 @@
-import { getAllImagesFromJSON, preLoadImage, phoneVerification, dateCreator, epochConverter } from '../data/tools'
+import { hexToRgbA, getAllImagesFromJSON, preLoadImage, phoneVerification, dateCreator, epochConverter } from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
@@ -33,4 +33,10 @@ test('date creation', () => {
 test('epochConverter', () => {
     const testEpoch = epochConverter('02-11-1999', '1630')
     expect(testEpoch).toEqual(941556600)
+})
+
+test('hexToRgbA', () => {
+    const whiteOpacity = hexToRgbA('#000000', 0.6)
+    expect(whiteOpacity).toMatch('rgba(0,0,0,0.6)')
+    expect(() => hexToRgbA('#00', 0.6)).toThrowError()
 })
