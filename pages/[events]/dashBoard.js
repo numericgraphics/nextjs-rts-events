@@ -147,7 +147,7 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
-    const [selectedDate, handleDateChange] = useState(new Date());
+    // const [selectedDate, handleDateChange] = useState(new Date());
 
     async function fetchData () {
         try {
@@ -247,9 +247,9 @@ function DashBoard (props) {
         }
     }, [isGlobalLoading])
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log(selectedDate)
-    }, [selectedDate])
+    }, [selectedDate]) */
 
     return (
         <EventLayout >

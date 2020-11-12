@@ -29,7 +29,6 @@ export function getDataFromLocalStorage (localStorageName, key) {
 
 export function hexToRgbA (hex, A) {
     let c
-    console.log(typeof A)
     if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex) && A <= 1 && A >= 0 && typeof A === 'number') {
         c = hex.substring(1).split('')
         if (c.length === 3) {
@@ -38,7 +37,7 @@ export function hexToRgbA (hex, A) {
         c = '0x' + c.join('')
         return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',' + A + ')'
     } else {
-        console.log('Bad Hex or Alpha')
+        console.log('Bad Hex or Alpha HEX : ' + hex + ' Alpha : ' + A)
         // default color on error
         return 'rgba(255,0,0,1)'
     }
