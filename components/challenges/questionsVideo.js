@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import QuestionTimer from './questionTimer'
-import Fade from '@material-ui/core/Fade/Fade'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import VideoControler from '../ui/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
 import UserContext from '../../hooks/userContext'
 import useAppVisibility from '../../hooks/useAppVisivility'
+import Slide from '@material-ui/core/Slide'
 
 const useStyles = makeStyles({
     counter: {
@@ -110,21 +110,20 @@ function QuestionVideo (props) {
 
     function canPlay () {
         if (videoController.videoHasPlayed) {
-            videoController.player.current.play()
             setShowComponent(true)
+            videoController.player.current.play()
             startTimer()
         }
     }
 
     useEffect(() => {
         videoController.player.current.addEventListener('loadedmetadata', canPlay)
-        videoController.setVideoVisible(true)
-        videoController.setVideoPoster(imageURL)
         videoController.setVideoSource(videoURL)
         if (!videoController.videoHasPlayed) {
-            props.openModal(imageURL)
+            props.openModal()
+            videoController.setVideoPoster(imageURL)
         }
-
+        videoController.setShowVideo(true)
         return () => {
             clearInterval(intervalId.current)
             videoController.player.current.removeEventListener('loadedmetadata', canPlay)
@@ -151,8 +150,8 @@ function QuestionVideo (props) {
     }, [progress, appVisibilityStatus])
 
     return (
-        <Fade in={showComponent} timeout={500}>
-            <Box className='content' >
+        <Box className='content' >
+            <Slide in={showComponent} timeout={500} direction="down" >
                 <Box className='topZone'>
                     <Box className={classes.counter}>
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
@@ -167,6 +166,8 @@ function QuestionVideo (props) {
                         </Typography>
                     </Box>
                 </Box>
+            </Slide>
+            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
                 <Box className='bottomZone'>
                     {answers.map((item, index) => {
                         return (
@@ -182,9 +183,10 @@ function QuestionVideo (props) {
                     }
                     )}
                 </Box>
-                <Box className='backgroundGradientTop' />
-            </Box>
-        </Fade>
+            </Slide>
+            {showComponent && <Box className='backgroundGradientTop' />}
+        </Box>
+
     )
 }
 

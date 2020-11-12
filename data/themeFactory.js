@@ -41,7 +41,8 @@ class ThemeFactory {
                 contrastText: onSecondary
             },
             background: {
-                default: background
+                default: primary,
+                paper: background
             },
             error: {
                 main: error,

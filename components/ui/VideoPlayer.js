@@ -9,7 +9,7 @@ function VideoPlayer (props, videoRef) {
 
     return (
         <Box className={['container', 'z-index-media'].join(' ')}>
-            <Fade in={showVideo} timeout={500}>
+            <Fade in={showVideo} timeout={1000}>
                 <Box>
                     <video
                         ref={videoRef}
