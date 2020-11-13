@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade/Fade'
@@ -11,32 +10,8 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import { useHeight } from '../hooks/useHeight'
 import UserContext from '../hooks/userContext'
 import { useStylesGlobal } from '../styles/global.style'
+import { useStyles } from '../styles/hasButtonModal.style'
 import { storeInLocalStorage, UserStates } from '../data/tools'
-
-const useStyles = makeStyles((theme = useTheme) => ({
-    icon: {
-        fontSize: '6rem',
-        marginBottom: '10vw'
-    },
-    text: {
-        color: theme.palette.primary.contrastText,
-        position: 'absolute'
-    },
-    textButton: {
-        textTransform: 'none',
-        color: theme.palette.primary.contrastText
-    },
-    overImage: {
-        position: 'absolute',
-        top: 0,
-        height: '100%',
-        width: '100%'
-    },
-    backgroundImage: {
-        height: '100%',
-        width: '100%'
-    }
-}))
 
 const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
