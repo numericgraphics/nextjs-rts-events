@@ -177,17 +177,26 @@
     /* padding: 0 0 17rem 0;  Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
 }
 
-.topZone, .topZoneDashboard, .timerZone {
+.topZone,
+.topZoneDashboard,
+.timerZone,
+.topZoneResult {
     position: relative;
     z-index: 0;
 }
 
-.topZone, .topZoneDashboard {
+.topZone,
+.topZoneDashboard,
+.topZoneResult {
     padding: 3vw;
 }
 
 .timerZone {
     padding: 3vw 1.5vw 0 1.5vw;
+}
+
+.topZoneResult {
+    height: 78vh;
 }
 
 /*.topZone .text {*/
@@ -425,8 +434,13 @@
 
     .topZone,
     .topZoneDashboard,
-    .timerZone {
+    .timerZone,
+    .topZoneResult {
         flex-grow: 1;
+    }
+
+    .topZoneResult {
+        height: auto;
     }
 
 
