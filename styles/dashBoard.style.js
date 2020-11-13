@@ -8,7 +8,8 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         justifyContent: 'flex-end',
         padding: '0 2rem',
         textAlign: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: '3vw!important'
     },
     nickname: {
         textAlign: 'center',
@@ -54,13 +55,11 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '0.8rem',
-        marginBottom: '0.8rem'
+        marginBottom: '0.4rem'
     },
     rateBox: {
         display: 'flex',
         flexDirection: 'row',
-        marginTop: '0.8rem'
     },
     goodRateBox: {
         width: '50%',
@@ -88,10 +87,9 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     },
     remainingTime: {
         color: theme.palette.primary.contrastText,
-        marginBottom: '0.8rem'
     },
     cardContent: {
-        margin: '0!important'
+        padding: '1.5vw 3vw!important'
     },
     adminToolbar: {
         position: 'absolute',

@@ -179,7 +179,7 @@ function DashBoard (props) {
                             </React.Fragment>
                         }
                         {availableScores &&
-                        <ColorCard className={classes.colorCard}>
+                        <ColorCard>
                             <CardContent className={classes.cardContent}>
                                 <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
                                     {uiElements.scoreChunk}
@@ -188,7 +188,7 @@ function DashBoard (props) {
                         </ColorCard>
                         }
                         {availableResults &&
-                        <ColorCard className={classes.colorCard}>
+                        <ColorCard>
                             <CardContent className={classes.cardContent}>
                                 <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
                                     dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
@@ -210,22 +210,20 @@ function DashBoard (props) {
                             </CardContent>
                         </ColorCard>
                         }
-                        <ColorCard className={classes.colorCard}>
+                        <ColorCard>
                             <CardContent className={classes.cardContent}>
-                                <Box className={classes.giftContent}>
-                                    {gifts && gifts.length === 1
-                                        ? <GiftResult
-                                            translation={translation.challengeResultGiftText}
-                                            gift={gifts}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                        : <GiftsBox
-                                            gifts={gifts}
-                                            translation={translation.dashBoardGiftTitle}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                    }
-                                </Box>
+                                {gifts && gifts.length === 1
+                                    ? <GiftResult
+                                        translation={translation.challengeResultGiftText}
+                                        gift={gifts}
+                                        onClick={onStart}
+                                        setGift={setGift} />
+                                    : <GiftsBox
+                                        gifts={gifts}
+                                        translation={translation.dashBoardGiftTitle}
+                                        onClick={onStart}
+                                        setGift={setGift} />
+                                }
                             </CardContent>
                         </ColorCard>
                     </Box>
