@@ -25,6 +25,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -128,6 +129,15 @@ const useStyles = makeStyles((theme = useTheme) => ({
         opacity: 0.8,
         padding: '2px 5px',
         boxShadow: '0px 0px 7px 2px #000000'
+    },
+    appBar: {
+        alignItems: 'center',
+        position: 'static',
+        textAlign: 'center'
+
+    },
+    dateChanger: {
+        marginBottom: '5px'
     }
 }))
 
@@ -282,22 +292,32 @@ function DashBoard (props) {
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
-                <AppBar position="static">
+                <AppBar className={classes.appBar}>
                     <Toolbar>
                         <Box>
                             <Typography variant="h6">ADMIN </Typography>
-                            <a href="#" onClick={resetGame} >reset game</a><br></br>
-                            <a href="#" onClick={resetTime} >reset time</a>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <DateTimePicker
-                                    ampm={false}
-                                    format="dd/MM/yyyy"
-                                    views={['year', 'month', 'date']}
-                                    value={new Date()}
-                                    onChange={(date) => handleDateChange(date)}
-                                    label="Allez dans le futur"
-                                />
-                            </MuiPickersUtilsProvider>
+                            {/* <a href="#" onClick={resetGame} >reset game</a><br></br>
+                            <a href="#" onClick={resetTime} >reset time</a> */}
+                            <Button size="small" onClick={resetGame} color="secondary">reset game</Button>
+                            <Button size="small" onClick={resetTime} color="secondary">reset time</Button>
+                            <Box className={classes.dateChanger}>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <DateTimePicker
+                                        ampm={false}
+                                        format="dd/MM/yyyy"
+                                        views={['year', 'month', 'date']}
+                                        value={new Date()}
+                                        onChange={(date) => handleDateChange(date)}
+                                        label="Simuler une date"
+                                    />
+                                </MuiPickersUtilsProvider>
+                                { timeStampMode.enable &&
+                            <Box>
+                                <Typography variant="h6">Date simulé : {timeStampMode.date} </Typography>
+                                <Typography variant="h6">Heure simulé : {timeStampMode.time} </Typography>
+                            </Box>
+                                }
+                            </Box>
                         </Box>
                     </Toolbar>
                 </AppBar>
