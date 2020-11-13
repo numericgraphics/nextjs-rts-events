@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import UserContext from '../../hooks/userContext'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
@@ -19,114 +18,9 @@ import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
+import { useStyles } from '../../styles/dashBoard.style'
 import AvatarEvent from '../../components/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
-// import { DatePicker } from '@material-ui/pickers'
-
-const useStyles = makeStyles((theme = useTheme) => ({
-    header: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '0 2rem',
-        textAlign: 'center',
-        alignItems: 'center'
-    },
-    nickname: {
-        textAlign: 'center',
-        marginBottom: '0.5rem',
-        color: theme.palette.primary.contrastText
-    },
-    rateIcon: {
-        display: 'inline',
-        width: '1rem',
-        height: '1rem',
-        marginRight: '0.2rem',
-        color: '#FFF!important'
-    },
-    rateText: {
-        alignSelf: 'left',
-        textAlign: 'left',
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#FFF!important'
-    },
-    scoreChunkText: {
-        alignSelf: 'flex-end',
-        textAlign: 'center',
-        width: '100%',
-        color: theme.palette.primary.contrastText
-    },
-    textRegularCenter: {
-        textAlign: 'center',
-        color: theme.palette.primary.contrastText,
-        marginBottom: '0.5rem'
-    },
-    textRegularCenterOverlay: {
-        position: 'absolute',
-        zIndex: 2,
-        textAlign: 'center',
-        color: theme.palette.primary.contrastText
-    },
-    progressBarOverlay: {
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: '0.8rem',
-        marginBottom: '0.8rem'
-    },
-    rateBox: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: '0.8rem'
-    },
-    goodRateBox: {
-        width: '50%',
-        backgroundColor: '#00B445',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0.2rem',
-        borderBottomLeftRadius: '0.6rem',
-        borderTopLeftRadius: '0.6rem'
-    },
-    badRateBox: {
-        width: '50%',
-        backgroundColor: '#FF0000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0.2rem',
-        borderBottomRightRadius: '0.6rem',
-        borderTopRightRadius: '0.6rem'
-    },
-    colorCard: {
-        marginBottom: '0.4rem',
-        borderRadius: '0.5rem'
-    },
-    remainingTime: {
-        color: theme.palette.primary.contrastText,
-        marginBottom: '0.8rem'
-    },
-    cardContent: {
-        margin: '0!important'
-    },
-    adminToolbar: {
-        position: 'absolute',
-        zIndex: 9999999999,
-        top: 5,
-        left: 5,
-        backgroundColor: 'red',
-        opacity: 0.8,
-        padding: '2px 5px',
-        boxShadow: '0px 0px 7px 2px #000000'
-    }
-}))
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -147,7 +41,6 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
-    // const [selectedDate, handleDateChange] = useState(new Date());
 
     async function fetchData () {
         try {
@@ -247,10 +140,6 @@ function DashBoard (props) {
         }
     }, [isGlobalLoading])
 
-    /* useEffect(() => {
-        console.log(selectedDate)
-    }, [selectedDate]) */
-
     return (
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
@@ -258,15 +147,6 @@ function DashBoard (props) {
                 { user.isAdmin &&
                 <React.Fragment>
                     <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
-                    {/* <DatePicker
-                        disableFuture
-                        openTo="year"
-                        format="dd/MM/yyyy"
-                        label="Date of birth"
-                        views={['year', 'month', 'date']}
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                     /> */}
                 </React.Fragment>
                 }
                 <Fade in={!isLoading} timeout={500}>

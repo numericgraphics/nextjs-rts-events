@@ -25,15 +25,15 @@ export default function LayoutInfo (props) {
                         title={title}
                     />
                 </Box>}
-                <Box className={styles.text}>
+                <Box className={'block-text-layout'}>
                     <Typography
                         variant="h1"
-                        className={[styles.title, 'unselectable-element'].join(' ')}
+                        className={['title-layout', 'unselectable-element'].join(' ')}
                         align={'center'}
                         dangerouslySetInnerHTML={{ __html: title }}/>
                     <Typography
                         variant="h3"
-                        className={[styles.subTitle, 'unselectable-element'].join(' ')}
+                        className={['subtitle-layout', 'unselectable-element'].join(' ')}
                         align={'center'}
                         dangerouslySetInnerHTML={{ __html: description }}/>
                 </Box>

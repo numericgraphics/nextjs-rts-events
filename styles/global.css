@@ -212,6 +212,40 @@
 
 /*** COMPONENTS ***/
 
+.block-text-layout {
+    color: white;
+    padding: 4vw;
+    overflow-wrap: break-word;
+}
+
+.title-layout,
+.subtitle-layout {
+    text-shadow: 0 1px 6px #000000;
+    overflow-wrap: break-word
+}
+
+.title-layout {
+    margin-bottom: 1.5vw!important;
+}
+
+.modal-title {
+    margin-bottom: 3vw!important;
+}
+
+.modal-textfield-phone {
+    width: 80%!important;
+    min-width: 173px;
+    margin-bottom: 3vw!important;
+}
+
+.modal-textField-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%
+}
+
 .questionButton,
 .button,
 .buttonAlt {

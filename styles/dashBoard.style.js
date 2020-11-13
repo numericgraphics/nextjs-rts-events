@@ -1,112 +1,106 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme = useTheme) => ({
     header: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        padding: '10px 30px',
-        maxHeight: 200,
-        zIndex: 2,
-        textAlign: 'center'
-    },
-    footer: {
-        display: 'flex',
-        flex: 2,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        marginBottom: 30,
-        zIndex: 2,
-        textAlign: 'center'
-    },
-    title: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.75rem',
+        padding: '0 2rem',
         textAlign: 'center',
-        lineHeight: 1,
-        marginBottom: 10
+        alignItems: 'center'
     },
-    avatar: {
-        width: 100,
-        height: 100,
-        position: 'absolute',
-        marginTop: '-25px'
+    nickname: {
+        textAlign: 'center',
+        marginBottom: '0.5rem',
+        color: theme.palette.primary.contrastText
     },
     rateIcon: {
-        display: 'inline'
+        display: 'inline',
+        width: '1rem',
+        height: '1rem',
+        marginRight: '0.2rem',
+        color: '#FFF!important'
     },
-    cardHeader: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        borderRadius: '10px',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-        marginBottom: '30px',
-        paddingTop: '10px',
-        paddingBottom: '10px'
-    },
-    cardFooter: {
-        width: '100%'
-    },
-    cardHeaderSide: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-    cardHeaderLeftSideText: {
+    rateText: {
         alignSelf: 'left',
         textAlign: 'left',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '0.8rem',
         display: 'flex',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#FFF!important'
     },
-    cardHeaderRightSideText: {
+    scoreChunkText: {
         alignSelf: 'flex-end',
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.5rem'
+        textAlign: 'center',
+        width: '100%',
+        color: theme.palette.primary.contrastText
     },
     textRegularCenter: {
         textAlign: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.1rem'
+        color: theme.palette.primary.contrastText,
+        marginBottom: '0.5rem'
     },
-    card: {
-        zIndex: 2
+    textRegularCenterOverlay: {
+        position: 'absolute',
+        zIndex: 2,
+        textAlign: 'center',
+        color: theme.palette.primary.contrastText
     },
-    HeaderTitle: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.25rem'
-    },
-    HeaderText: {
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1rem'
-    },
-    content: {
+    progressBarOverlay: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: '0.8rem',
+        marginBottom: '0.8rem'
     },
-    button: {
-        width: '80%',
-        padding: '6px 20px',
-        marginTop: 10,
-        borderRadius: 30,
-        alignSelf: 'center',
-        fontFamily: 'srgssr-type-Rg',
-        fontSize: '1.25rem'
+    rateBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: '0.8rem'
     },
-    gradient: {
+    goodRateBox: {
+        width: '50%',
+        backgroundColor: '#00B445',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0.2rem',
+        borderBottomLeftRadius: '0.6rem',
+        borderTopLeftRadius: '0.6rem'
+    },
+    badRateBox: {
+        width: '50%',
+        backgroundColor: '#FF0000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0.2rem',
+        borderBottomRightRadius: '0.6rem',
+        borderTopRightRadius: '0.6rem'
+    },
+    colorCard: {
+        marginBottom: '0.4rem',
+        borderRadius: '0.5rem'
+    },
+    remainingTime: {
+        color: theme.palette.primary.contrastText,
+        marginBottom: '0.8rem'
+    },
+    cardContent: {
+        margin: '0!important'
+    },
+    adminToolbar: {
         position: 'absolute',
-        width: '100vw',
-        height: '100vh',
-        flexGrow: 1,
-        zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.7) 100%)'
+        zIndex: 9999999999,
+        top: 5,
+        left: 5,
+        backgroundColor: 'red',
+        opacity: 0.8,
+        padding: '2px 5px',
+        boxShadow: '0px 0px 7px 2px #000000'
     }
-})
+}))
