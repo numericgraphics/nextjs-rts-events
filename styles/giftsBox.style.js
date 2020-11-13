@@ -24,7 +24,8 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     gifts: {
         display: 'flex',
         justifyContent: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        rowGap: '1vw'
     },
     textRegularCenter: {
         marginBottom: '1.5vw'

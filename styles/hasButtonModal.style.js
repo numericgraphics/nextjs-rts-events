@@ -5,13 +5,22 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         fontSize: '6rem',
         marginBottom: '3vw'
     },
-    text: {
+    modalContent: {
         color: theme.palette.primary.contrastText,
-        position: 'absolute'
+        position: 'absolute',
+
+        '& p': {
+            marginBottom: '3vw!important'
+        },
+
+        '& .button': {
+            marginBottom: '6vw!important'
+        }
     },
     textButton: {
         textTransform: 'none',
         lineHeight: 1,
+        padding: '0!important',
         color: theme.palette.primary.contrastText
     },
     overImage: {

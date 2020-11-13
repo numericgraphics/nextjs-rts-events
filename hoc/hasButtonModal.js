@@ -87,7 +87,7 @@ const hasButtonModal = WrappedComponent => {
                             <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}/>
                             <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}/>
                             {isOldDevice
-                                ? <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                ? <Box className={[classes.modalContent, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />
                                     <Typography variant="h3">
                                         {translation.challengeVideoTextStartMuted}
@@ -102,7 +102,7 @@ const hasButtonModal = WrappedComponent => {
                                         {translation.challengeVideoButtonStartMuted}
                                     </Button>
                                 </Box>
-                                : <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                : <Box className={[classes.modalContent, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />
                                     <Typography variant="h3">
                                         {translation.challengeVideoTextUnMute}
