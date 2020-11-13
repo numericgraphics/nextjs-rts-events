@@ -21,6 +21,10 @@ import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
 import AvatarEvent from '../../components/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -146,6 +150,7 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
+    const [selectedDate, setSelectedDate] = useState({})
 
     async function fetchData () {
         try {
@@ -183,6 +188,7 @@ function DashBoard (props) {
                 body: JSON.stringify(bodyContent)
             })
             if (response.status === 200) {
+                timeStampMode.enable ? setFakeTs({ date: timeStampMode.date, time: timeStampMode.time }) : resetTime()
                 alert('Game reseted')
             } else {
                 alert('Could not reset game')
@@ -245,12 +251,56 @@ function DashBoard (props) {
         }
     }, [isGlobalLoading])
 
+    async function setFakeTs (selectedDate) {
+        // await Router.push('/[events]/dashBoard', `/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
+        await Router.push(`/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
+    }
+
+    async function resetTime () {
+        await Router.push(`/${events}/dashBoard`)
+    }
+
+    function handleDateChange (dateObj) {
+        console.log(dateObj.getDate() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getFullYear())
+        const day = dateObj.getDate() < 10 ? '0' + dateObj.getDate().toString() : dateObj.getDate()
+        const month = dateObj.getMonth() < 10 ? '0' + (dateObj.getMonth() + 1).toString() : (dateObj.getMonth() + 1)
+        const hour = dateObj.getHours() < 10 ? '0' + dateObj.getHours().toString() : dateObj.getHours().toString()
+        const min = dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes().toString() : dateObj.getMinutes().toString()
+        const date = day + '-' + month + '-' + dateObj.getFullYear()
+        const time = hour + min
+        setSelectedDate({ date: date, time: time })
+    }
+
+    useEffect(() => {
+        if (selectedDate.date) {
+            setFakeTs(selectedDate)
+        }
+    }, [selectedDate])
+
     return (
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
-                    <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Box>
+                            <Typography variant="h6">ADMIN </Typography>
+                            <a href="#" onClick={resetGame} >reset game</a><br></br>
+                            <a href="#" onClick={resetTime} >reset time</a>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <DateTimePicker
+                                    ampm={false}
+                                    format="dd/MM/yyyy"
+                                    views={['year', 'month', 'date']}
+                                    value={new Date()}
+                                    onChange={(date) => handleDateChange(date)}
+                                    label="Allez dans le futur"
+                                />
+                            </MuiPickersUtilsProvider>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
                 }
                 <Fade in={!isLoading} timeout={500}>
                     <Box className='topZoneDashboard' >
