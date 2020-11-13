@@ -87,11 +87,13 @@ function QuestionVideo (props) {
     return (
         <Fade in={showComponent} timeout={500}>
             <Box className='content' >
-                <Box className='topZone'>
+                <Box className='timerZone'>
                     <Box className={classes.counter}>
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
                         {props.content.videoURL && <VideoControler controls={true}/>}
                     </Box>
+                </Box>
+                <Box className='topZone'>
                     <Box className={[classes.header, 'color-White'].join(' ')}>
                         <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
                             {title}
@@ -101,7 +103,7 @@ function QuestionVideo (props) {
                         </Typography>
                     </Box>
                 </Box>
-                <Box className='bottomZone'>
+                <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
                             <Box key={index} className={classes.buttonWrapper} >
