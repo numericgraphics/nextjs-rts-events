@@ -25,12 +25,7 @@ export default async (req, res) => {
             }
 
             if (rtsEventCookie) {
-                let url
-                if (finalDate) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end?ts=${finalDate}`
-                } else {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end`
-                }
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end${finalDate ? `?ts=${finalDate}` : ''}`
                 const response = await fetch(url, {
                     credentials: 'include',
                     method: 'POST',

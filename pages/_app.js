@@ -142,7 +142,7 @@ function MyApp ({ Component, pageProps }) {
             }
             setRouterReady(true)
         }
-    }, [router])
+    }, [timeStampMode.initialized, router])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
