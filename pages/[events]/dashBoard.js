@@ -366,11 +366,11 @@ function DashBoard (props) {
                         <List>
                             <ListItem button key={'Reset game'} onClick={resetGame}>
                                 <ListItemIcon><ExtensionIcon /></ListItemIcon>
-                                <ListItemText primary={'Reset game'} />
+                                <ListItemText primaryTypographyProps={{ variant: 'subtitle1' }} primary={'Reset game'} />
                             </ListItem>
                             <ListItem button key={'Reset time'} onClick={resetTime}>
                                 <ListItemIcon><RestoreIcon /></ListItemIcon>
-                                <ListItemText primary={'Reset time'} />
+                                <ListItemText primaryTypographyProps={{ variant: 'subtitle1' }} primary={'Reset time'} />
                             </ListItem>
                             <ListItem>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
