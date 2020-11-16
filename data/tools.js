@@ -79,6 +79,13 @@ export function preLoadImage (url, callBack) {
     img.src = url
 }
 
+export function hourConverter (time) {
+    // 2200 to 22:00
+    const hour = time.slice(0, 2)
+    const min = time.slice(2, 4)
+    return hour + ':' + min
+}
+
 export function epochConverter (date, time) {
     // date format : 23-12-1990 time : 2000 ( = 20 heure 00 min)
     const today = new Date()

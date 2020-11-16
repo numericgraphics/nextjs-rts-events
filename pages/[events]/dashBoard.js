@@ -26,6 +26,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import Button from '@material-ui/core/Button'
+import { hourConverter } from '../../data/tools'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -295,7 +296,6 @@ function DashBoard (props) {
                 <AppBar className={classes.appBar}>
                     <Toolbar>
                         <Box>
-                            <Typography variant="h6">ADMIN </Typography>
                             {/* <a href="#" onClick={resetGame} >reset game</a><br></br>
                             <a href="#" onClick={resetTime} >reset time</a> */}
                             <Button size="small" onClick={resetGame} color="secondary">reset game</Button>
@@ -314,7 +314,7 @@ function DashBoard (props) {
                                 { timeStampMode.enable &&
                             <Box>
                                 <Typography variant="h6">Date simulé : {timeStampMode.date} </Typography>
-                                <Typography variant="h6">Heure simulé : {timeStampMode.time} </Typography>
+                                <Typography variant="h6">Heure simulé : {hourConverter(timeStampMode.time)} </Typography>
                             </Box>
                                 }
                             </Box>
