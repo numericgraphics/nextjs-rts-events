@@ -391,7 +391,7 @@ function DashBoard (props) {
                             </ListItem>}
                         </List>
                     </Drawer>
-                    <IconButton onClick={toogleHide} color="secondary" style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
+                    <IconButton size="medium" onClick={toogleHide} color="secondary" style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
                         <SettingsIcon/>
                     </IconButton>
                 </React.Fragment>
