@@ -278,7 +278,6 @@ function DashBoard (props) {
     }, [isGlobalLoading])
 
     async function setFakeTs (selectedDate) {
-        // await Router.push('/[events]/dashBoard', `/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
         if (selectedDate.time === null) {
             await Router.push(`/${events}/dashBoard?date=${selectedDate.date}`)
         } else {
@@ -292,13 +291,12 @@ function DashBoard (props) {
 
     function handleDateChange (dateObj) {
         const today = new Date()
-        console.log(dateObj.getDate() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getFullYear())
         const day = dateObj.getDate() < 10 ? '0' + dateObj.getDate().toString() : dateObj.getDate()
         const month = dateObj.getMonth() < 10 ? '0' + (dateObj.getMonth() + 1).toString() : (dateObj.getMonth() + 1)
         const hour = dateObj.getHours() < 10 ? '0' + dateObj.getHours().toString() : dateObj.getHours().toString()
         const min = dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes().toString() : dateObj.getMinutes().toString()
         const date = day + '-' + month + '-' + dateObj.getFullYear()
-        const time = (dateObj.getHours === today.getHours && dateObj.getMinutes === today.getMinutes) ? null : hour + min
+        const time = (dateObj.getHours() === today.getHours() && dateObj.getMinutes() === today.getMinutes()) ? null : hour + min
         setSelectedDate({ date: date, time: time })
     }
 
@@ -316,39 +314,6 @@ function DashBoard (props) {
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
-                {/* user.isAdmin &&
-                <React.Fragment>
-                    <AppBar className={classes.appBar} style={hidded ? { display: 'none' } : null }>
-                        <Toolbar>
-                            <Box>
-                                <Button size="small" onClick={resetGame} color="secondary">reset game</Button>
-                                <Button size="small" onClick={resetTime} color="secondary">reset time</Button>
-                                <Box className={classes.dateChanger}>
-                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <DateTimePicker
-                                            ampm={false}
-                                            format="dd/MM/yyyy"
-                                            views={['year', 'month', 'date']}
-                                            value={new Date()}
-                                            onChange={(date) => handleDateChange(date)}
-                                            label="Simuler une date"
-                                        />
-                                    </MuiPickersUtilsProvider>
-                                    { timeStampMode.enable &&
-                            <Box>
-                                <Typography variant="h6">Date simulé : {timeStampMode.date} </Typography>
-                                <Typography variant="h6">Heure simulé : {hourConverter(timeStampMode.time)} </Typography>
-                            </Box>
-                                    }
-                                </Box>
-                            </Box>
-                        </Toolbar>
-                    </AppBar>
-                    <IconButton onClick={toogleHide} color="secondary" style={hidded ? { position: 'absolute', left: 0, top: 0, zIndex: 1 } : null }>
-                        <MenuIcon/>
-                    </IconButton>
-                </React.Fragment>
-                                */ }
                 { user.isAdmin &&
                 <React.Fragment>
                     <Drawer
