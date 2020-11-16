@@ -21,12 +21,26 @@ import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
 import AvatarEvent from '../../components/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
-import AppBar from '@material-ui/core/AppBar'
+/* import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
 import Button from '@material-ui/core/Button'
 import { hourConverter } from '../../data/tools'
+
+*/
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
+import { hourConverter } from '../../data/tools'
+
+import ExtensionIcon from '@material-ui/icons/Extension'
+import SettingsIcon from '@material-ui/icons/Settings'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import Drawer from '@material-ui/core/Drawer'
+import List from '@material-ui/core/List'
+import IconButton from '@material-ui/core/IconButton'
+import RestoreIcon from '@material-ui/icons/Restore'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -162,6 +176,7 @@ function DashBoard (props) {
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
     const [selectedDate, setSelectedDate] = useState({})
+    const [hidded, setHidded] = useState(true)
 
     async function fetchData () {
         try {
@@ -264,7 +279,11 @@ function DashBoard (props) {
 
     async function setFakeTs (selectedDate) {
         // await Router.push('/[events]/dashBoard', `/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
-        await Router.push(`/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
+        if (selectedDate.time === null) {
+            await Router.push(`/${events}/dashBoard?date=${selectedDate.date}`)
+        } else {
+            await Router.push(`/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
+        }
     }
 
     async function resetTime () {
@@ -272,14 +291,19 @@ function DashBoard (props) {
     }
 
     function handleDateChange (dateObj) {
+        const today = new Date()
         console.log(dateObj.getDate() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getFullYear())
         const day = dateObj.getDate() < 10 ? '0' + dateObj.getDate().toString() : dateObj.getDate()
         const month = dateObj.getMonth() < 10 ? '0' + (dateObj.getMonth() + 1).toString() : (dateObj.getMonth() + 1)
         const hour = dateObj.getHours() < 10 ? '0' + dateObj.getHours().toString() : dateObj.getHours().toString()
         const min = dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes().toString() : dateObj.getMinutes().toString()
         const date = day + '-' + month + '-' + dateObj.getFullYear()
-        const time = hour + min
+        const time = (dateObj.getHours === today.getHours && dateObj.getMinutes === today.getMinutes) ? null : hour + min
         setSelectedDate({ date: date, time: time })
+    }
+
+    function toogleHide () {
+        setHidded(!hidded)
     }
 
     useEffect(() => {
@@ -292,15 +316,63 @@ function DashBoard (props) {
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
+                {/* user.isAdmin &&
+                <React.Fragment>
+                    <AppBar className={classes.appBar} style={hidded ? { display: 'none' } : null }>
+                        <Toolbar>
+                            <Box>
+                                <Button size="small" onClick={resetGame} color="secondary">reset game</Button>
+                                <Button size="small" onClick={resetTime} color="secondary">reset time</Button>
+                                <Box className={classes.dateChanger}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DateTimePicker
+                                            ampm={false}
+                                            format="dd/MM/yyyy"
+                                            views={['year', 'month', 'date']}
+                                            value={new Date()}
+                                            onChange={(date) => handleDateChange(date)}
+                                            label="Simuler une date"
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                    { timeStampMode.enable &&
+                            <Box>
+                                <Typography variant="h6">Date simulé : {timeStampMode.date} </Typography>
+                                <Typography variant="h6">Heure simulé : {hourConverter(timeStampMode.time)} </Typography>
+                            </Box>
+                                    }
+                                </Box>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
+                    <IconButton onClick={toogleHide} color="secondary" style={hidded ? { position: 'absolute', left: 0, top: 0, zIndex: 1 } : null }>
+                        <MenuIcon/>
+                    </IconButton>
+                </React.Fragment>
+                                */ }
                 { user.isAdmin &&
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <Box>
-                            {/* <a href="#" onClick={resetGame} >reset game</a><br></br>
-                            <a href="#" onClick={resetTime} >reset time</a> */}
-                            <Button size="small" onClick={resetGame} color="secondary">reset game</Button>
-                            <Button size="small" onClick={resetTime} color="secondary">reset time</Button>
-                            <Box className={classes.dateChanger}>
+                <React.Fragment>
+                    <Drawer
+                        className={classes.drawer}
+                        variant="temporary"
+                        open={!hidded}
+                        onClose={toogleHide}
+                        classes={{
+                            paper: classes.drawerPaper
+                        }}
+                        anchor="left"
+                    >
+                        <div className={classes.toolbar} />
+                        <Divider />
+                        <List>
+                            <ListItem button key={'Reset game'} onClick={resetGame}>
+                                <ListItemIcon><ExtensionIcon /></ListItemIcon>
+                                <ListItemText primary={'Reset game'} />
+                            </ListItem>
+                            <ListItem button key={'Reset time'} onClick={resetTime}>
+                                <ListItemIcon><RestoreIcon /></ListItemIcon>
+                                <ListItemText primary={'Reset time'} />
+                            </ListItem>
+                            <ListItem>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <DateTimePicker
                                         ampm={false}
@@ -308,19 +380,21 @@ function DashBoard (props) {
                                         views={['year', 'month', 'date']}
                                         value={new Date()}
                                         onChange={(date) => handleDateChange(date)}
-                                        label="Simuler une date"
                                     />
                                 </MuiPickersUtilsProvider>
-                                { timeStampMode.enable &&
-                            <Box>
+                            </ListItem>
+                            { timeStampMode.date && <ListItem>
                                 <Typography variant="h6">Date simulé : {timeStampMode.date} </Typography>
+                            </ListItem>}
+                            { timeStampMode.time && <ListItem>
                                 <Typography variant="h6">Heure simulé : {hourConverter(timeStampMode.time)} </Typography>
-                            </Box>
-                                }
-                            </Box>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
+                            </ListItem>}
+                        </List>
+                    </Drawer>
+                    <IconButton onClick={toogleHide} color="secondary" style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
+                        <SettingsIcon/>
+                    </IconButton>
+                </React.Fragment>
                 }
                 <Fade in={!isLoading} timeout={500}>
                     <Box className='topZoneDashboard' >
