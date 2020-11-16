@@ -138,7 +138,7 @@ function MyApp ({ Component, pageProps }) {
             const time = params.get('time') ? params.get('time') : ''
             const date = params.get('date')
             if (date) {
-                setTimeStampMode({ enable: !!date, date, time })
+                setTimeStampMode({ enable: !!date, date, time, initialized: true })
             }
             setRouterReady(true)
         }
