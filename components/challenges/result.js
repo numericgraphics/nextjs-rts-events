@@ -62,6 +62,7 @@ function Result (props) {
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
     }, [])
+
     return (
         <Fade in={showComponent} timeout={500}>
             <Box className='content' >
