@@ -1,75 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useStyles } from '../../styles/giftsBox.style'
 import Typography from '@material-ui/core/Typography'
 import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
 import IconButton from '@material-ui/core/IconButton'
-
-const useStyles = makeStyles((theme = useTheme) => ({
-    gift: {
-        minHeight: '34px',
-        minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
-        marginLeft: '10px',
-        marginRight: '10px',
-        maxWidth: '50px',
-        maxHeight: '50px',
-        backgroundColor: theme.palette.secondary.main,
-        marginTop: 10,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.dark
-        }
-    },
-    gifts: {
-        display: 'flex',
-        margin: '10px',
-        justifyContent: 'center',
-        flexWrap: 'wrap'
-    },
-    textRegularCenter: {
-        textAlign: 'center'
-    },
-    cadeau: {
-        fill: theme.palette.secondary.contrastText,
-        minHeight: '34px',
-        minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
-        maxWidth: '50px',
-        maxHeight: '50px',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        zIndex: 1
-    },
-    medal: {
-        fill: theme.palette.secondary.contrastText,
-        minHeight: '34px',
-        minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
-        maxWidth: '50px',
-        maxHeight: '50px',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        zIndex: 1
-    },
-    lock: {
-        position: 'absolute',
-        top: 0,
-        right: '70%',
-        minHeight: '17px',
-        minWidth: '17px',
-        maxWidth: '25px',
-        maxHeight: '25px',
-        width: '7.5vw',
-        height: '7.5vw',
-        fill: theme.palette.secondary.contrastText,
-        zIndex: 1
-    }
-}))
 
 function GiftsBox (props) {
     const classes = useStyles()
@@ -93,7 +27,7 @@ function GiftsBox (props) {
     }
 
     return (
-        <Box className={classes.container}>
+        <Box className={classes.containerGifts}>
             <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}>
                 {props.translation}
             </Typography>

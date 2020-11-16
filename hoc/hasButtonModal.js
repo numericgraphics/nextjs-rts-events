@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Modal from '@material-ui/core/Modal'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import Backdrop from '@material-ui/core/Backdrop'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade/Fade'
@@ -8,42 +8,8 @@ import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import UserContext from '../hooks/userContext'
+import { useStyles } from '../styles/hasButtonModal.style'
 import { storeInLocalStorage, UserStates } from '../data/tools'
-
-const useStyles = makeStyles((theme = useTheme) => ({
-    icon: {
-        fontSize: '6rem',
-        marginBottom: '10vw'
-    },
-    text: {
-        color: theme.palette.primary.contrastText,
-        position: 'absolute'
-    },
-    textButton: {
-        textTransform: 'none',
-        color: theme.palette.primary.contrastText
-    },
-    overImage: {
-        position: 'absolute',
-        top: 0,
-        height: '100%',
-        width: '100%'
-    },
-    backgroundImage: {
-        height: '100%',
-        width: '100%'
-    },
-    container: {
-        display: 'flex',
-        height: '100vh',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        outline: 'none',
-        textAlign: 'center'
-
-    }
-}))
 
 const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
@@ -97,17 +63,17 @@ const hasButtonModal = WrappedComponent => {
                     className='containerModal'
                     open={open}
                     closeAfterTransition
-                    // BackdropComponent={Backdrop}
+                    BackdropComponent={Backdrop}
                     BackdropProps={{
                         timeout: 500,
-                        style: { backgroundColor: 'none!important' }
+                        style: { backgroundColor: 'none' }
                     }}
                     tabIndex={-1}
                 >
                     <Fade in={open} timeout={1000}>
-                        <Box className={['backgroundModal', classes.container].join(' ')}>
+                        <Box className={['backgroundModal', 'containerModal', classes.container].join(' ')}>
                             {isOldDevice
-                                ? <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                ? <Box className={[classes.modalContent, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />
                                     <Typography variant="h3">
                                         {translation.challengeVideoTextStartMuted}
@@ -122,7 +88,7 @@ const hasButtonModal = WrappedComponent => {
                                         {translation.challengeVideoButtonStartMuted}
                                     </Button>
                                 </Box>
-                                : <Box className={[classes.text, 'centered-content'].join(' ')}>
+                                : <Box className={[classes.modalContent, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />
                                     <Typography variant="h3">
                                         {translation.challengeVideoTextUnMute}
