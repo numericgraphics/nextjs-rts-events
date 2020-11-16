@@ -1,9 +1,9 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { hexToRGBA } from '../data/tools'
+import { hexToRgbA } from '../data/tools'
 
 export const useStylesGlobal = makeStyles((theme = useTheme) => ({
     bottomZoneGradient: {
-        background: 'linear-gradient(to bottom, ' + hexToRGBA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRGBA(theme.palette.primary.dark, 0.7) + ' 20%, ' + hexToRGBA(theme.palette.primary.dark, 1) + ' 100%)',
+        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.7) + ' 20%, ' + hexToRgbA(theme.palette.primary.dark, 1) + ' 100%)',
         padding: '2rem 0'
     },
     colorOverImage: {

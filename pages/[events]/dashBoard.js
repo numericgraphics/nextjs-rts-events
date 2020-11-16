@@ -250,7 +250,7 @@ function DashBoard (props) {
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
-                <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
+                    <Box className={[classes.adminToolbar].join(' ')}>ADMIN <a href="#" onClick={resetGame} >reset game</a></Box>
                 }
                 <Fade in={!isLoading} timeout={500}>
                     <Box className='topZoneDashboard' >

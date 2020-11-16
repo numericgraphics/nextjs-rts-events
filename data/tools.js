@@ -29,22 +29,18 @@ export function getDataFromLocalStorage (localStorageName, key) {
 
 export function hexToRgbA (hex, A) {
     let c
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex) && A <= 1 && A >= 0 && typeof A === 'number') {
         c = hex.substring(1).split('')
         if (c.length === 3) {
             c = [c[0], c[0], c[1], c[1], c[2], c[2]]
         }
         c = '0x' + c.join('')
         return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',' + A + ')'
+    } else {
+        console.log('Bad Hex or Alpha HEX : ' + hex + ' Alpha : ' + A)
+        // default color on error
+        return 'rgba(255,0,0,1)'
     }
-    throw new Error('Bad Hex')
-}
-
-export function hexToRGBA (hex, alpha = 1) {
-    var r = parseInt(hex.slice(1, 3), 16)
-    var g = parseInt(hex.slice(3, 5), 16)
-    var b = parseInt(hex.slice(5, 7), 16)
-    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')'
 }
 
 export function getAllImagesFromJSON (data, results, refs) {

@@ -182,11 +182,13 @@ class ThemeFactory {
             primary: {
                 main: '#90caf9',
                 light: '#90caf9',
+                dark: '#FFFF5B',
                 contrastText: '#90caf9'
             },
             secondary: {
                 main: '#90caf9',
                 light: '#90caf9',
+                dark: '#FFFF5B',
                 contrastText: '#90caf9'
             },
             background: {

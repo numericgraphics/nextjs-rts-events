@@ -1,4 +1,4 @@
-import { getAllImagesFromJSON, preLoadImage, phoneVerification } from '../data/tools'
+import { hexToRgbA, getAllImagesFromJSON, preLoadImage, phoneVerification, dateCreator, epochConverter } from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
@@ -23,4 +23,25 @@ test('phone verification', () => {
     const testWrongNumber = phoneVerification(23232)
     expect(testSwissNumber).toBe(true)
     expect(testWrongNumber).toBe(false)
+})
+
+test('date creation', () => {
+    const testDateHyphen = dateCreator('02-11-1999', '1630')
+    expect(testDateHyphen).toMatch('02-11-1999 16:30')
+})
+
+test('epochConverter', () => {
+    const testEpoch = epochConverter('02-11-1999', '1630')
+    expect(testEpoch).toEqual(941556600)
+})
+
+test('hexToRgbA', () => {
+    expect(hexToRgbA('#000000', 0.6)).toMatch('rgba(0,0,0,0.6)')
+    expect(hexToRgbA('#000000', 70)).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#00', 0.6)).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#ZZAABB', 0.6)).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#000000', 1)).toMatch('rgba(0,0,0,1)')
+    expect(hexToRgbA('#000000', 0)).toMatch('rgba(0,0,0,0)')
+    expect(hexToRgbA('#000000', '1')).toMatch('rgba(255,0,0,1)')
+    expect(hexToRgbA('#000000', true)).toMatch('rgba(255,0,0,1)')
 })
