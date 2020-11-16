@@ -177,10 +177,29 @@
     /* padding: 0 0 17rem 0;  Padding pour pouvoir scroller et laisser de la place aux boutons de réponse */
 }
 
-.topZone, .topZoneDashboard {
+.topZone,
+.topZoneDashboard,
+.timerZone,
+.topZoneResult {
     position: relative;
     z-index: 0;
+}
+
+.topZoneDashboard,
+.topZoneResult {
     padding: 3vw;
+}
+
+.topZone {
+    padding: 3vw 4vw 4vw 4vw;
+}
+
+.timerZone {
+    padding: 3vw 1.5vw 0 1.5vw;
+}
+
+.topZoneResult {
+    height: 78vh;
 }
 
 /*.topZone .text {*/
@@ -192,7 +211,10 @@
 /*    margin-top: 0;*/
 /*}*/
 
-.bottomZone, .bottomZonePromo, .bottomZoneDashboard { /* Zone des boutons fixée en bas de page */
+.bottomZone,
+.bottomZonePromo,
+.bottomZoneDashboard,
+.bottomZoneQuestions { /* Zone des boutons fixée en bas de page */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -203,14 +225,67 @@
     position: fixed;
     bottom: 0;
     margin: 0;
+}
+
+.bottomZone,
+.bottomZonePromo,
+.bottomZoneDashboard {
     padding: 1rem 0;
 }
 
-.bottomZone, .bottomZoneDashboard {
+.bottomZoneQuestions {
+    padding: 4vw;
+}
+
+.bottomZone,
+.bottomZoneDashboard,
+.bottomZoneQuestions {
     z-index: 1;
 }
 
+.bottomZoneQuestions div{
+    padding-bottom: 1rem;
+}
+
+.bottomZoneQuestions div:last-of-type{
+    padding-bottom: 0;
+}
+
 /*** COMPONENTS ***/
+
+.block-text-layout {
+    color: white;
+    padding: 4vw;
+    overflow-wrap: break-word;
+}
+
+.title-layout,
+.subtitle-layout {
+    text-shadow: 0 1px 6px #000000;
+    overflow-wrap: break-word
+}
+
+.title-layout {
+    margin-bottom: 1.5vw!important;
+}
+
+.modal-title {
+    margin-bottom: 3vw!important;
+}
+
+.modal-textfield-phone {
+    width: 80%!important;
+    min-width: 173px;
+    margin-bottom: 3vw!important;
+}
+
+.modal-textField-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%
+}
 
 .questionButton,
 .button,
@@ -225,17 +300,13 @@
     margin-bottom: 1rem!important;
 }
 
-.backgroundModal .button, .backgroundModal .H3Title {
-    margin-bottom: 2rem!important;
-}
-
 .buttonAlt {
     font-size: 1.25rem!important;
     font-family: 'srgssr-type-Rg', sans-serif!important;
 }
 
 .questionButton {
-    width: 85%;
+    width: 100%;
     font-size: 1rem!important;
     font-family: srgssr-type-Bd, sans-serif!important;
     text-transform: none!important;
@@ -296,6 +367,7 @@
     .bottomZone,
     .bottomZoneDashboard,
     .bottomZonePromo,
+    .bottomZoneQuestions,
     .swipeableViews {
         max-width: 480px;
     }
@@ -341,6 +413,7 @@
     .backgroundVideoPlayer,
     .bottomZone,
     .bottomZonePromo,
+    .bottomZoneQuestions,
     .bottomZoneDashboard,
     .swipeableViews {
         max-width: 55vh;
@@ -371,12 +444,20 @@
         padding: 0;
     }
 
-    .topZone, .topZoneDashboard {
+    .topZone,
+    .topZoneDashboard,
+    .timerZone,
+    .topZoneResult {
         flex-grow: 1;
     }
 
+    .topZoneResult {
+        height: auto;
+    }
 
-    .bottomZone {
+
+    .bottomZone,
+    .bottomZoneQuestions {
         position: relative;
         height: 16rem!important;
     }
