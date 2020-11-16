@@ -10,6 +10,7 @@ import hasButtonModal from '../../hoc/hasButtonModal'
 import UserContext from '../../hooks/userContext'
 import useAppVisibility from '../../hooks/useAppVisivility'
 import { useStyles } from '../../styles/questionVideo.style'
+import Slide from '@material-ui/core/Slide/Slide'
 
 function QuestionVideo (props) {
     const classes = useStyles()
@@ -44,8 +45,8 @@ function QuestionVideo (props) {
     }
 
     function canPlay () {
-        setShowComponent(true)
         if (videoController.videoHasPlayed) {
+            setShowComponent(true)
             videoController.player.current.play()
             startTimer()
         }
@@ -53,13 +54,12 @@ function QuestionVideo (props) {
 
     useEffect(() => {
         videoController.player.current.addEventListener('loadedmetadata', canPlay)
-        videoController.setVideoVisible(true)
-        videoController.setVideoPoster(imageURL)
         videoController.setVideoSource(videoURL)
         if (!videoController.videoHasPlayed) {
-            props.openModal(imageURL)
+            props.openModal()
+            videoController.setVideoPoster(imageURL)
         }
-
+        videoController.setShowVideo(true)
         return () => {
             clearInterval(intervalId.current)
             videoController.player.current.removeEventListener('loadedmetadata', canPlay)
@@ -70,6 +70,7 @@ function QuestionVideo (props) {
         if (props.firstPlayStarPlaying) {
             setDisabled(false)
             videoController.setVideoPoster('')
+            setShowComponent(true)
             startTimer()
         }
     }, [props.firstPlayStarPlaying])
@@ -85,24 +86,28 @@ function QuestionVideo (props) {
     }, [progress, appVisibilityStatus])
 
     return (
-        <Fade in={showComponent} timeout={500}>
-            <Box className='content' >
-                <Box className='timerZone'>
-                    <Box className={classes.counter}>
-                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                        {props.content.videoURL && <VideoControler controls={true}/>}
+        <Box className='content' >
+            <Slide in={showComponent} timeout={500} direction="down" >
+                <Box>
+                    <Box className='timerZone'>
+                        <Box className={classes.counter}>
+                            <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                            {props.content.videoURL && <VideoControler controls={true}/>}
+                        </Box>
+                    </Box>
+                    <Box className='topZone'>
+                        <Box className={[classes.header, 'color-White'].join(' ')}>
+                            <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
+                                {title}
+                            </Typography>
+                            <Typography variant='h3' className={classes.HeaderText} align={'left'}>
+                                {question}
+                            </Typography>
+                        </Box>
                     </Box>
                 </Box>
-                <Box className='topZone'>
-                    <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
-                            {title}
-                        </Typography>
-                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
-                            {question}
-                        </Typography>
-                    </Box>
-                </Box>
+            </Slide>
+            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
                 <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
@@ -118,9 +123,11 @@ function QuestionVideo (props) {
                     }
                     )}
                 </Box>
+            </Slide>
+            <Fade in={showComponent} timeout={500} >
                 <Box className='backgroundGradientTop' />
-            </Box>
-        </Fade>
+            </Fade>
+        </Box>
     )
 }
 

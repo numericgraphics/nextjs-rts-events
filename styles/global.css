@@ -185,10 +185,13 @@
     z-index: 0;
 }
 
-.topZone,
 .topZoneDashboard,
 .topZoneResult {
     padding: 3vw;
+}
+
+.topZone {
+    padding: 3vw 4vw 4vw 4vw;
 }
 
 .timerZone {
@@ -238,6 +241,14 @@
 .bottomZoneDashboard,
 .bottomZoneQuestions {
     z-index: 1;
+}
+
+.bottomZoneQuestions div{
+    padding-bottom: 1rem;
+}
+
+.bottomZoneQuestions div:last-of-type{
+    padding-bottom: 0;
 }
 
 /*** COMPONENTS ***/
@@ -402,6 +413,7 @@
     .backgroundVideoPlayer,
     .bottomZone,
     .bottomZonePromo,
+    .bottomZoneQuestions,
     .bottomZoneDashboard,
     .swipeableViews {
         max-width: 55vh;

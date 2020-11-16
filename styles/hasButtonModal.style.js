@@ -1,6 +1,9 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme = useTheme) => ({
+    container: {
+        height: '100vh'
+    },
     icon: {
         fontSize: '6rem',
         marginBottom: '3vw'

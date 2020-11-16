@@ -59,7 +59,7 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     },
     rateBox: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'row'
     },
     goodRateBox: {
         width: '50%',
@@ -86,7 +86,7 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         borderRadius: '0.5rem'
     },
     remainingTime: {
-        color: theme.palette.primary.contrastText,
+        color: theme.palette.primary.contrastText
     },
     cardContent: {
         padding: '1.5vw 3vw!important'

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import QuestionTimer from './questionTimer'
-import Fade from '@material-ui/core/Fade/Fade'
+import Slide from '@material-ui/core/Slide'
 import { CustomDisabledButton } from '../ui/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
@@ -60,23 +60,27 @@ function Question (props) {
     }, [progress])
 
     return (
-        <Fade in={showComponent} timeout={500}>
-            <Box className='content' >
-                <Box className='timerZone'>
-                    <Box className={classes.counter}>
-                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
+        <Box className='content' >
+            <Slide in={showComponent} timeout={500} direction="down" >
+                <Box>
+                    <Box className='timerZone'>
+                        <Box className={classes.counter}>
+                            <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                        </Box>
+                    </Box>
+                    <Box className='topZone'>
+                        <Box className={[classes.header, 'color-White'].join(' ')}>
+                            <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
+                                {title}
+                            </Typography>
+                            <Typography variant='h3' className={classes.HeaderText} align={'left'}>
+                                {question}
+                            </Typography>
+                        </Box>
                     </Box>
                 </Box>
-                <Box className='topZone'>
-                    <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
-                            {title}
-                        </Typography>
-                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
-                            {question}
-                        </Typography>
-                    </Box>
-                </Box>
+            </Slide>
+            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
                 <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
@@ -92,9 +96,9 @@ function Question (props) {
                     }
                     )}
                 </Box>
-                <Box className='backgroundGradientTop' />
-            </Box>
-        </Fade>
+            </Slide>
+            <Box className='backgroundGradientTop' />
+        </Box>
     )
 }
 

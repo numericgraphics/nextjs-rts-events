@@ -7,24 +7,19 @@ import Fade from '@material-ui/core/Fade/Fade'
 import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
-import { useHeight } from '../hooks/useHeight'
 import UserContext from '../hooks/userContext'
-import { useStylesGlobal } from '../styles/global.style'
 import { useStyles } from '../styles/hasButtonModal.style'
 import { storeInLocalStorage, UserStates } from '../data/tools'
 
 const hasButtonModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
-        const stylesGlobal = useStylesGlobal()
         const classes = useStyles()
         const { dataProvider, store } = useContext(UserContext)
         const { deviceDetection, eventName, videoController } = store
-        const height = useHeight()
         const [translation, setTranslation] = useState([])
         const [open, setOpen] = useState(false)
         const [status, setStatus] = useState(false)
-        const [poster, setPoster] = useState('')
         const [isOldDevice, setOldDevice] = useState(false)
 
         const startChallenge = () => {
@@ -44,8 +39,7 @@ const hasButtonModal = WrappedComponent => {
             startChallenge()
         }
 
-        function openModal (image) {
-            setPoster(image)
+        function openModal () {
             setOpen(true)
             setStatus(false)
         }
@@ -77,15 +71,7 @@ const hasButtonModal = WrappedComponent => {
                     tabIndex={-1}
                 >
                     <Fade in={open} timeout={1000}>
-                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}>
-                            {/* TODO: utiliser LazyImage plutôt que les trois box */}
-                            <Box className={[classes.backgroundImage].join(' ')}
-                                style={{
-                                    backgroundImage: `url(${poster})`,
-                                    height: height
-                                }}/>
-                            <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage, 'containerModal'].join(' ')}/>
-                            <Box className={[stylesGlobal.colorOverImage, classes.overImage, 'containerModal'].join(' ')}/>
+                        <Box className={['backgroundModal', 'containerModal', classes.container].join(' ')}>
                             {isOldDevice
                                 ? <Box className={[classes.modalContent, 'centered-content'].join(' ')}>
                                     <VolumeOffIcon className={classes.icon} />

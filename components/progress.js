@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.palette ? theme.palette.primary.main : ThemeFactory.getDefaultTheme().palette.primary.main,
         overflow: 'hidden'
     }
 }))
@@ -30,8 +29,10 @@ function Progress () {
     }, [])
 
     return (
-        <Box className={classes.container} style={{ height: height }}>
-            <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
+        <Box className={'container'}>
+            <Box className={[classes.container, 'background'].join(' ')} style={{ height: height, backgroundColor: theme.palette ? theme.palette.primary.main : ThemeFactory.getDefaultTheme().palette.primary.main }}>
+                <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
+            </Box>
         </Box>
     )
 }

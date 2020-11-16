@@ -90,9 +90,10 @@ function Challenge () {
     }
 
     // Callback for Result component to keep playing game
-    function playGame () {
+    function playGameCallBack () {
         setLoading(true)
-        videoController.setShowVideo(false)
+        videoController.setVideoPoster('')
+        videoController.setVideoSource('')
         fetchQuestions().then()
     }
 
@@ -106,7 +107,7 @@ function Challenge () {
                 ? <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
                 : <Question content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result content={resultContent} playGameCallBack={playGame} gotoDashBoard={gotoDashBoard}/>
+            return <Result content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
@@ -145,7 +146,6 @@ function Challenge () {
             const { imageURL } = questionsContent
             const { videoURL } = questionsContent
             if (videoURL) {
-                videoController.setShowVideo(true)
                 setBackgroundType('video')
             } else {
                 videoController.setShowVideo(false)
