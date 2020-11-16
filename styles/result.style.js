@@ -140,12 +140,9 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         marginTop: '10px'
     },
     cardContent: {
-        margin: '0!important'
+        padding: '1.5vw 3vw!important'
     },
     colorCard: {
-        margin: '3vw',
-        // marginBottom: '0.4rem',
-        // borderRadius: '0.5rem',
         width: '90%'
     }
 
