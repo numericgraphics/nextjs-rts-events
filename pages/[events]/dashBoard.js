@@ -16,7 +16,7 @@ import GiftsBox from '../../components/gifts/giftsBox'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
-import LazyImage from '../../components/ui/LazyImage'
+import BackGroundDisplay from '../../components/ui/BackGroundDisplay'
 import { useStylesGlobal } from '../../styles/global.style'
 import { useStyles } from '../../styles/dashBoard.style'
 import AvatarEvent from '../../components/avatarEvent'
@@ -221,7 +221,7 @@ function DashBoard (props) {
                         </CustomDisabledButton>
                     </Box>
                 </Fade>
-                <LazyImage addcolor={1} addblur={1} className={'background'} style={{ backgroundImage: `url(${imageURL})` }} />
+                <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
             </Box>
             }
         </EventLayout>

@@ -64,7 +64,7 @@ function Result (props) {
     }, [])
 
     return (
-        <Fade in={showComponent} timeout={500}>
+        <Fade in={showComponent} timeout={1000}>
             <Box className='content' >
                 <Box className='topZoneResult'>
                     <Box className={classes.content}>

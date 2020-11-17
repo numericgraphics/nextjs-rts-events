@@ -5,7 +5,7 @@ import EventLayout from '../../components/eventLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
-import LazyImage from '../../components/ui/LazyImage'
+import BackGroundDisplay from '../../components/ui/BackGroundDisplay'
 import { getAllEvents } from '../../lib/events'
 
 const ChallengeStates = Object.freeze({
@@ -91,9 +91,9 @@ function Challenge () {
 
     // Callback for Result component to keep playing game
     function playGameCallBack () {
-        setLoading(true)
         videoController.setVideoPoster('')
         videoController.setVideoSource('')
+        setLoading(true)
         fetchQuestions().then()
     }
 
@@ -114,7 +114,8 @@ function Challenge () {
     async function gotoDashBoard () {
         if (backgroundType === 'video') {
             videoController.setVideoSource('')
-            videoController.setVideoVisible(false)
+            videoController.setVideoPoster('')
+            videoController.setShowVideo(false)
         }
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
@@ -180,7 +181,7 @@ function Challenge () {
                 : <React.Fragment>
                     {getChallengeContent(challengeState)}
                     {backgroundType === 'image' &&
-                    <LazyImage addblur={ addBlur } addcolor={ addColor } className='background' style={{ backgroundImage: `url(${imageURL})` }}/>}
+                    <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' imageURL={imageURL}/>}
                 </React.Fragment>
             }
         </EventLayout>

@@ -66,7 +66,7 @@ const hasButtonModal = WrappedComponent => {
                     BackdropComponent={Backdrop}
                     BackdropProps={{
                         timeout: 500,
-                        style: { backgroundColor: 'none' }
+                        style: { backgroundColor: 'none!important' }
                     }}
                     tabIndex={-1}
                 >
