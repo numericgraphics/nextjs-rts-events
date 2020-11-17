@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     }
 })
 
+// TODO - unused component to remove
 function Progress () {
     const classes = useStyles()
     const height = useHeight()

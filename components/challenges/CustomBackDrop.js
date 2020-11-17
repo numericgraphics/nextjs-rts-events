@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+// TODO - unused component to remove
 function CustomBackDrop (props) {
     const { open } = props
     const classes = useStyles()

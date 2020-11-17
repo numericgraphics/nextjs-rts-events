@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme = useTheme) => ({
     }
 }))
 
+// TODO - rename component
 function AvatarEvent (props) {
     const classes = useStyles()
     return (
