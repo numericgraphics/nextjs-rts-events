@@ -231,6 +231,11 @@ class ThemeFactory {
                 root: {
                     color: '#FFFFFF!important'
                 }
+            },
+            MuiTypography: {
+                colorPrimary: {
+                    color: '#FFFFFF!important'
+                }
             }
         }
         return createMuiTheme({ palette, overrides })

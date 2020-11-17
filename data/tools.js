@@ -124,3 +124,15 @@ export function phoneVerification (data) {
         return false
     }
 }
+
+export function dateObjConvert (dateObj) {
+    const today = new Date()
+    const day = dateObj.getDate() < 10 ? '0' + dateObj.getDate().toString() : dateObj.getDate()
+    const month = dateObj.getMonth() < 10 ? '0' + (dateObj.getMonth() + 1).toString() : (dateObj.getMonth() + 1)
+    const hour = dateObj.getHours() < 10 ? '0' + dateObj.getHours().toString() : dateObj.getHours().toString()
+    const min = dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes().toString() : dateObj.getMinutes().toString()
+    const date = day + '-' + month + '-' + dateObj.getFullYear()
+    const time = (dateObj.getHours() === today.getHours() && dateObj.getMinutes() === today.getMinutes()) ? null : hour + min
+    const finalDate = { date: date, time: time }
+    return finalDate
+}

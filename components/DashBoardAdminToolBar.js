@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { hourConverter } from '../data/tools'
+import { hourConverter, dateObjConvert } from '../data/tools'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Divider from '@material-ui/core/Divider'
@@ -86,17 +86,6 @@ function DashBoardAdminToolBar (props) {
         setHidded(!hidded)
     }
 
-    function handleDateChange (dateObj) {
-        const today = new Date()
-        const day = dateObj.getDate() < 10 ? '0' + dateObj.getDate().toString() : dateObj.getDate()
-        const month = dateObj.getMonth() < 10 ? '0' + (dateObj.getMonth() + 1).toString() : (dateObj.getMonth() + 1)
-        const hour = dateObj.getHours() < 10 ? '0' + dateObj.getHours().toString() : dateObj.getHours().toString()
-        const min = dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes().toString() : dateObj.getMinutes().toString()
-        const date = day + '-' + month + '-' + dateObj.getFullYear()
-        const time = (dateObj.getHours() === today.getHours() && dateObj.getMinutes() === today.getMinutes()) ? null : hour + min
-        setSelectedDate({ date: date, time: time })
-    }
-
     async function resetGame () {
         try {
             alert('Will try to reset Game')
@@ -155,7 +144,7 @@ function DashBoardAdminToolBar (props) {
                                 format="dd/MM/yyyy"
                                 views={['year', 'month', 'date']}
                                 value={new Date()}
-                                onChange={(date) => handleDateChange(date)}
+                                onChange={(date) => setSelectedDate(dateObjConvert(date)) }
                             />
                         </MuiPickersUtilsProvider>
                     </ListItem>
