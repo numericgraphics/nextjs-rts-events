@@ -4,7 +4,7 @@ import TimerIcon from '@material-ui/icons/Timer'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import UserContext from '../../hooks/userContext'
+import UserContext from '../../../hooks/userContext'
 
 const useStyles = makeStyles(theme => ({
     container: {

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../hooks/userContext'
-import EventLayout from '../../components/eventLayout'
+import EventLayout from '../../components/ui/layout/eventLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
-import BackGroundDisplay from '../../components/ui/BackGroundDisplay'
+import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
 import { getAllEvents } from '../../lib/events'
 
 const ChallengeStates = Object.freeze({

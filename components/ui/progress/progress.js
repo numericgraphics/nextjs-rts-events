@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeFactory from '../data/themeFactory'
+import ThemeFactory from '../../../data/themeFactory'
 import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles((theme) => ({

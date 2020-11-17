@@ -3,7 +3,7 @@ import { withRouter } from 'next/router'
 import UserContext from '../hooks/userContext'
 import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
-import EventLayout from '../components/eventLayout'
+import EventLayout from '../components/ui/layout/eventLayout'
 import StartPage from '../components/startPage/startPage'
 
 function Events (props) {

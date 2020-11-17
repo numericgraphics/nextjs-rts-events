@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import { useStylesGlobal } from '../../styles/global.style'
+import { useStylesGlobal } from '../../../styles/global.style'
 import Backdrop from '@material-ui/core/Backdrop'
 
 const useStyles = makeStyles((theme) => ({

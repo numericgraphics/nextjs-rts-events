@@ -1,8 +1,8 @@
 import Box from '@material-ui/core/Box'
 import React, { useEffect, useRef, useState } from 'react'
-import { useStylesGlobal } from '../../styles/global.style'
+import { useStylesGlobal } from '../../../styles/global.style'
 import Fade from '@material-ui/core/Fade/Fade'
-import { useStyles } from '../../styles/backGroundDisplay.style'
+import { useStyles } from '../../../styles/backGroundDisplay.style'
 
 function BackGroundDisplay (props) {
     const [display, setDisplay] = useState(false)
