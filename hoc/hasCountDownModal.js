@@ -1,40 +1,11 @@
 import React, { useState } from 'react'
 import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import makeStyles from '@material-ui/core/styles/makeStyles'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import ColorBackDrop from '../components/ui/ColorBackDrop'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
-
-const useStyles = makeStyles(() => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        outline: 'none'
-
-    },
-    containerProgress: {
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'none',
-        pointerEvents: 'none'
-    },
-    textProgress: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '6rem'
-    },
-    bottomCircle: {
-        color: 'white'
-    },
-    topCircle: {
-        position: 'absolute',
-        left: 0
-    }
-}))
+import { useStyles } from '../styles/hasCountDownModal.style'
 
 const hasCountDownModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
@@ -96,8 +67,7 @@ const hasCountDownModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={ColorBackDrop}
                     BackdropProps={{
-                        timeout: 500,
-                        // style: { backgroundColor: 'none' }
+                        timeout: 500
                     }}
                     tabIndex={-1}
                 >

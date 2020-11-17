@@ -44,7 +44,7 @@ function MyApp ({ Component, pageProps }) {
     // const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
     const [showVideo, setShowVideo] = useState(false)
-    const [blurVideo, setBlurVideo] = useState(false)
+    const [blurVideo, setBlurVideo] = useState(true)
     /* eslint-enable */
     const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode, setTimeStampMode }
@@ -138,11 +138,11 @@ function MyApp ({ Component, pageProps }) {
             const time = params.get('time') ? params.get('time') : ''
             const date = params.get('date')
             if (date) {
-                setTimeStampMode({ enable: !!date, date, time })
+                setTimeStampMode({ enable: !!date, date, time, initialized: true })
             }
             setRouterReady(true)
         }
-    }, [router])
+    }, [timeStampMode.initialized, router])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS

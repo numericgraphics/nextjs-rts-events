@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import QuestionTimer from './questionTimer'
@@ -10,71 +9,8 @@ import VideoControler from '../ui/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
 import UserContext from '../../hooks/userContext'
 import useAppVisibility from '../../hooks/useAppVisivility'
-
-const useStyles = makeStyles({
-    counter: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        width: '100%',
-        flex: 1,
-        maxHeight: 100
-    },
-    header: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        padding: '1rem 0.8rem',
-        textAlign: 'center'
-    },
-    footer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        flex: 2,
-        textAlign: 'center',
-        marginBottom: 30
-    },
-    avatar: {
-        width: 100,
-        height: 100,
-        border: 'solid',
-        borderColor: 'gray'
-    },
-    card: {
-        minWidth: 275,
-        minHeight: 300,
-        margin: 20
-    },
-    HeaderText: {
-        lineHeight: '1.2em',
-        textShadow: '0px 3px 6px #00000040'
-    },
-    HeaderTitle: {
-        textShadow: '0px 3px 6px #00000040'
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 275,
-        minHeight: 300
-    },
-    buttonWrapper: {
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        marginBottom: '1rem!important'
-    },
-    buttonProgress: {
-        position: 'absolute'
-    }
-})
+import { useStyles } from '../../styles/questionVideo.style'
+import Slide from '@material-ui/core/Slide/Slide'
 
 function QuestionVideo (props) {
     const classes = useStyles()
@@ -109,22 +45,21 @@ function QuestionVideo (props) {
     }
 
     function canPlay () {
-        setShowComponent(true)
         if (videoController.videoHasPlayed) {
+            setShowComponent(true)
             videoController.player.current.play()
+            startTimer()
         }
-        startTimer()
     }
 
     useEffect(() => {
         videoController.player.current.addEventListener('loadedmetadata', canPlay)
-        videoController.setVideoVisible(true)
-        videoController.setVideoPoster(imageURL)
         videoController.setVideoSource(videoURL)
         if (!videoController.videoHasPlayed) {
-            props.openModal(imageURL)
+            props.openModal()
+            videoController.setVideoPoster(imageURL)
         }
-
+        videoController.setShowVideo(true)
         return () => {
             clearInterval(intervalId.current)
             videoController.player.current.removeEventListener('loadedmetadata', canPlay)
@@ -135,6 +70,8 @@ function QuestionVideo (props) {
         if (props.firstPlayStarPlaying) {
             setDisabled(false)
             videoController.setVideoPoster('')
+            setShowComponent(true)
+            startTimer()
         }
     }, [props.firstPlayStarPlaying])
 
@@ -149,23 +86,29 @@ function QuestionVideo (props) {
     }, [progress, appVisibilityStatus])
 
     return (
-        <Fade in={showComponent} timeout={500}>
-            <Box className='content' >
-                <Box className='topZone'>
-                    <Box className={classes.counter}>
-                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                        {props.content.videoURL && <VideoControler controls={true}/>}
+        <Box className='content' >
+            <Slide in={showComponent} timeout={500} direction="down" >
+                <Box>
+                    <Box className='timerZone'>
+                        <Box className={classes.counter}>
+                            <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                            {props.content.videoURL && <VideoControler controls={true}/>}
+                        </Box>
                     </Box>
-                    <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
-                            {title}
-                        </Typography>
-                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
-                            {question}
-                        </Typography>
+                    <Box className='topZone'>
+                        <Box className={[classes.header, 'color-White'].join(' ')}>
+                            <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
+                                {title}
+                            </Typography>
+                            <Typography variant='h3' className={classes.HeaderText} align={'left'}>
+                                {question}
+                            </Typography>
+                        </Box>
                     </Box>
                 </Box>
-                <Box className='bottomZone'>
+            </Slide>
+            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
+                <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
                             <Box key={index} className={classes.buttonWrapper} >
@@ -180,9 +123,11 @@ function QuestionVideo (props) {
                     }
                     )}
                 </Box>
+            </Slide>
+            <Fade in={showComponent} timeout={500} >
                 <Box className='backgroundGradientTop' />
-            </Box>
-        </Fade>
+            </Fade>
+        </Box>
     )
 }
 

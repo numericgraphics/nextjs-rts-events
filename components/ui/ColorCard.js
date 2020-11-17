@@ -5,6 +5,8 @@ export const ColorCard = withStyles((theme) => ({
     root: {
         background: `${theme.palette.primary.light}!important`,
         color: `${theme.palette.primary.contrastText}!important`,
-        padding: 0
+        padding: 0,
+        marginBottom: '0.4rem',
+        borderRadius: '0.5rem'
     }
 }))(Card)

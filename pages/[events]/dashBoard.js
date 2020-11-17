@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import UserContext from '../../hooks/userContext'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/eventLayout'
@@ -19,6 +18,7 @@ import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import LazyImage from '../../components/ui/LazyImage'
 import { useStylesGlobal } from '../../styles/global.style'
+import { useStyles } from '../../styles/dashBoard.style'
 import AvatarEvent from '../../components/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/DashBoardAdminToolBar'
@@ -28,100 +28,6 @@ import Button from '@material-ui/core/Button'
 import { hourConverter } from '../../data/tools'
 
 */
-const useStyles = makeStyles((theme = useTheme) => ({
-    header: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '0 2rem',
-        textAlign: 'center',
-        alignItems: 'center'
-    },
-    nickname: {
-        textAlign: 'center',
-        marginBottom: '0.5rem',
-        color: theme.palette.primary.contrastText
-    },
-    rateIcon: {
-        display: 'inline',
-        width: '1rem',
-        height: '1rem',
-        marginRight: '0.2rem',
-        color: '#FFF!important'
-    },
-    rateText: {
-        alignSelf: 'left',
-        textAlign: 'left',
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#FFF!important'
-    },
-    scoreChunkText: {
-        alignSelf: 'flex-end',
-        textAlign: 'center',
-        width: '100%',
-        color: theme.palette.primary.contrastText
-    },
-    textRegularCenter: {
-        textAlign: 'center',
-        color: theme.palette.primary.contrastText,
-        marginBottom: '0.5rem'
-    },
-    textRegularCenterOverlay: {
-        position: 'absolute',
-        zIndex: 2,
-        textAlign: 'center',
-        color: theme.palette.primary.contrastText
-    },
-    progressBarOverlay: {
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: '0.8rem',
-        marginBottom: '0.8rem'
-    },
-    rateBox: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: '0.8rem'
-    },
-    goodRateBox: {
-        width: '50%',
-        backgroundColor: '#00B445',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0.2rem',
-        borderBottomLeftRadius: '0.6rem',
-        borderTopLeftRadius: '0.6rem'
-    },
-    badRateBox: {
-        width: '50%',
-        backgroundColor: '#FF0000',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0.2rem',
-        borderBottomRightRadius: '0.6rem',
-        borderTopRightRadius: '0.6rem'
-    },
-    colorCard: {
-        marginBottom: '0.4rem',
-        borderRadius: '0.5rem'
-    },
-    remainingTime: {
-        color: theme.palette.primary.contrastText,
-        marginBottom: '0.8rem'
-    },
-    cardContent: {
-        margin: '0!important'
-    }
-}))
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -259,7 +165,7 @@ function DashBoard (props) {
                             </React.Fragment>
                         }
                         {availableScores &&
-                        <ColorCard className={classes.colorCard}>
+                        <ColorCard>
                             <CardContent className={classes.cardContent}>
                                 <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
                                     {uiElements.scoreChunk}
@@ -268,7 +174,7 @@ function DashBoard (props) {
                         </ColorCard>
                         }
                         {availableResults &&
-                        <ColorCard className={classes.colorCard}>
+                        <ColorCard>
                             <CardContent className={classes.cardContent}>
                                 <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
                                     dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
@@ -290,22 +196,20 @@ function DashBoard (props) {
                             </CardContent>
                         </ColorCard>
                         }
-                        <ColorCard className={classes.colorCard}>
+                        <ColorCard>
                             <CardContent className={classes.cardContent}>
-                                <Box className={classes.giftContent}>
-                                    {gifts && gifts.length === 1
-                                        ? <GiftResult
-                                            translation={translation.challengeResultGiftText}
-                                            gift={gifts}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                        : <GiftsBox
-                                            gifts={gifts}
-                                            translation={translation.dashBoardGiftTitle}
-                                            onClick={onStart}
-                                            setGift={setGift} />
-                                    }
-                                </Box>
+                                {gifts && gifts.length === 1
+                                    ? <GiftResult
+                                        translation={translation.challengeResultGiftText}
+                                        gift={gifts}
+                                        onClick={onStart}
+                                        setGift={setGift} />
+                                    : <GiftsBox
+                                        gifts={gifts}
+                                        translation={translation.dashBoardGiftTitle}
+                                        onClick={onStart}
+                                        setGift={setGift} />
+                                }
                             </CardContent>
                         </ColorCard>
                     </Box>

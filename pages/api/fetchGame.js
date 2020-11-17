@@ -21,12 +21,12 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                let url
-                if (finalDate) {
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame${finalDate ? `?ts=${finalDate}` : ''}`
+                /* if (finalDate) {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${finalDate}`
                 } else {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame`
-                }
+                } */
 
                 const response = await fetch(url, {
                     credentials: 'include',
