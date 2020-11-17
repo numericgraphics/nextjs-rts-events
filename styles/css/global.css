@@ -2,19 +2,19 @@
 
 @font-face {
     font-family: 'srgssr-type-BdIt';
-    src: url(../assets/fonts/SRGSSRType_BdIt.ttf);
+    src: url(../../assets/fonts/SRGSSRType_BdIt.ttf);
 }
 @font-face {
     font-family: 'srgssr-type-Bd';
-    src: url(../assets/fonts/SRGSSRType_Bd.ttf);
+    src: url(../../assets/fonts/SRGSSRType_Bd.ttf);
 }
 @font-face {
     font-family: 'srgssr-type-Rg';
-    src: url(../assets/fonts/SRGSSRType_Rg.ttf);
+    src: url(../../assets/fonts/SRGSSRType_Rg.ttf);
 }
 @font-face {
     font-family: 'srgssr-type-Md';
-    src: url(../assets/fonts/SRGSSRType_Md.ttf);
+    src: url(../../assets/fonts/SRGSSRType_Md.ttf);
 }
 
 

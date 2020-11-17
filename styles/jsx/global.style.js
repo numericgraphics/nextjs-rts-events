@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { hexToRgbA } from '../data/tools'
+import { hexToRgbA } from '../../data/tools'
 
 export const useStylesGlobal = makeStyles((theme = useTheme) => ({
     bottomZoneGradient: {

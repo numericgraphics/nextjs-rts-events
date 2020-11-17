@@ -14,7 +14,7 @@ import ReactPhoneInput from 'react-phone-input-2'
 import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 import { phoneVerification } from '../data/tools'
 import { CustomDisabledButton } from '../components/ui/button/CustomDisabledButton'
-import { useStyles, styles } from '../styles/hasLoginModal.style'
+import { useStyles, styles } from '../styles/jsx/components/modal/hasLoginModal.style'
 
 const ModalStates = Object.freeze({
     PHONE_NUMBER: 'phoneNumber',

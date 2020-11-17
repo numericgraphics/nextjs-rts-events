@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
 import { Typography } from '@material-ui/core'
-import { useStyles } from '../../styles/giftResult.style'
+import { useStyles } from '../../styles/jsx/gifts/giftResult.style'
 
 // TODO merge giftResult dans giftBox, si il y a plus d'un gift afficher la gift box
 function GiftResult (props) {

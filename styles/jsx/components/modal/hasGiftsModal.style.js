@@ -1,6 +1,6 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { useTheme } from '@material-ui/core'
-import { hexToRgbA } from '../data/tools'
+import { hexToRgbA } from '../../../../data/tools'
 
 export const useStyles = makeStyles((theme = useTheme()) => ({
     modal: {

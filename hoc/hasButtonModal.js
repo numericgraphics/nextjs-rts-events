@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import VolumeOffIcon from '@material-ui/icons/VolumeOff'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import UserContext from '../hooks/userContext'
-import { useStyles } from '../styles/hasButtonModal.style'
+import { useStyles } from '../styles/jsx/components/modal/hasButtonModal.style'
 import { storeInLocalStorage, UserStates } from '../data/tools'
 
 const hasButtonModal = WrappedComponent => {

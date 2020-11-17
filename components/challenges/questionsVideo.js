@@ -9,7 +9,7 @@ import VideoControler from '../ui/video/VideoController'
 import hasButtonModal from '../../hoc/hasButtonModal'
 import UserContext from '../../hooks/userContext'
 import useAppVisibility from '../../hooks/useAppVisivility'
-import { useStyles } from '../../styles/questionVideo.style'
+import { useStyles } from '../../styles/jsx/pages/questionVideo.style'
 import Slide from '@material-ui/core/Slide/Slide'
 
 function QuestionVideo (props) {

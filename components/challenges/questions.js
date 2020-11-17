@@ -6,7 +6,7 @@ import Slide from '@material-ui/core/Slide'
 import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
-import { useStyles } from '../../styles/questions.style'
+import { useStyles } from '../../styles/jsx/pages/questions.style'
 
 function Question (props) {
     const classes = useStyles()

@@ -1,7 +1,7 @@
 import Box from '@material-ui/core/Box'
 import React, { useRef } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { useStylesGlobal } from '../../../styles/global.style'
+import { useStylesGlobal } from '../../../styles/jsx/global.style'
 import Fade from '@material-ui/core/Fade'
 
 const useStyles = makeStyles((theme = useTheme) => ({
