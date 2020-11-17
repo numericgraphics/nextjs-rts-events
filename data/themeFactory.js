@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core'
+import { colors, createMuiTheme } from '@material-ui/core'
 
 class ThemeFactory {
     constructor () {
@@ -225,7 +225,15 @@ class ThemeFactory {
                 contrastText: '#90caf9'
             }
         }
-        return createMuiTheme({ palette })
+
+        const overrides = {
+            MuiButton: {
+                root: {
+                    color: '#FFFFFF!important'
+                }
+            }
+        }
+        return createMuiTheme({ palette, overrides })
     }
 }
 
