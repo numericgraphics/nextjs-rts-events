@@ -17,7 +17,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import Router, { useRouter } from 'next/router'
 import ThemeFactory from '../data/themeFactory'
 import Typography from '@material-ui/core/Typography'
-import { useStyles } from '../styles/DashBoardAdminToolBar.style'
+import { useStyles } from '../styles/dashBoardAdminToolBar.style'
 
 function DashBoardAdminToolBar (props) {
     const classes = useStyles()
