@@ -27,10 +27,10 @@ import Button from '@material-ui/core/Button'
 import { hourConverter } from '../../data/tools'
 
 */
+import TextField from '@material-ui/core/TextField'
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import { hourConverter } from '../../data/tools'
-
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Divider from '@material-ui/core/Divider'
@@ -41,6 +41,7 @@ import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import IconButton from '@material-ui/core/IconButton'
 import RestoreIcon from '@material-ui/icons/Restore'
+import { ThemeProvider } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     header: {
@@ -153,6 +154,16 @@ const useStyles = makeStyles((theme = useTheme) => ({
     },
     dateChanger: {
         marginBottom: '5px'
+    },
+    drawerPaper: {
+        backgroundColor: '#424242',
+        color: '#FFFFFF'
+    },
+    dateField: {
+        color: '#FFFFFF!important'
+    },
+    adminIcon: {
+        color: '#FFFFFF'
     }
 }))
 
@@ -304,6 +315,18 @@ function DashBoard (props) {
         setHidded(!hidded)
     }
 
+    const renderInput = (props) => (
+        <TextField
+            type="text"
+            onClick={props.onClick}
+            value={props.value}
+            onChange={props.onChange}
+            inputProps={{
+                className: classes.dateField
+            }}
+        />
+    )
+
     useEffect(() => {
         if (selectedDate.date) {
             setFakeTs(selectedDate)
@@ -315,51 +338,53 @@ function DashBoard (props) {
             {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
-                <React.Fragment>
-                    <Drawer
-                        className={classes.drawer}
-                        variant="temporary"
-                        open={!hidded}
-                        onClose={toogleHide}
-                        classes={{
-                            paper: classes.drawerPaper
-                        }}
-                        anchor="left"
-                    >
-                        <div className={classes.toolbar} />
-                        <Divider />
-                        <List>
-                            <ListItem button key={'Reset game'} onClick={resetGame}>
-                                <ListItemIcon><ExtensionIcon /></ListItemIcon>
-                                <ListItemText primaryTypographyProps={{ variant: 'subtitle2' }} primary={'Reset game'} />
-                            </ListItem>
-                            <ListItem button key={'Reset time'} onClick={resetTime}>
-                                <ListItemIcon><RestoreIcon /></ListItemIcon>
-                                <ListItemText primaryTypographyProps={{ variant: 'subtitle2' }} primary={'Reset time'} />
-                            </ListItem>
-                            <ListItem>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <DateTimePicker
-                                        ampm={false}
-                                        format="dd/MM/yyyy"
-                                        views={['year', 'month', 'date']}
-                                        value={new Date()}
-                                        onChange={(date) => handleDateChange(date)}
-                                    />
-                                </MuiPickersUtilsProvider>
-                            </ListItem>
-                            { timeStampMode.date && <ListItem>
-                                <Typography variant="h6">Date simulé : {timeStampMode.date} </Typography>
-                            </ListItem>}
-                            { timeStampMode.time && <ListItem>
-                                <Typography variant="h6">Heure simulé : {hourConverter(timeStampMode.time)} </Typography>
-                            </ListItem>}
-                        </List>
-                    </Drawer>
-                    <IconButton size="medium" onClick={toogleHide} color="secondary" style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
-                        <SettingsIcon/>
-                    </IconButton>
-                </React.Fragment>
+                    <ThemeProvider theme={ThemeFactory.getAdminTheme}>
+                        <Drawer
+                            className={classes.drawer}
+                            variant="temporary"
+                            open={!hidded}
+                            onClose={toogleHide}
+                            classes={{
+                                paper: classes.drawerPaper
+                            }}
+                            anchor="left"
+                        >
+                            <div className={classes.toolbar} />
+                            <Divider />
+                            <List>
+                                <ListItem button key={'Reset game'} onClick={resetGame}>
+                                    <ListItemIcon><ExtensionIcon className={ classes.adminIcon } /></ListItemIcon>
+                                    <ListItemText primaryTypographyProps={{ variant: 'subtitle2' }} primary={'Reset game'} />
+                                </ListItem>
+                                <ListItem button key={'Reset time'} onClick={resetTime}>
+                                    <ListItemIcon><RestoreIcon className={ classes.adminIcon } /></ListItemIcon>
+                                    <ListItemText primaryTypographyProps={{ variant: 'subtitle2' }} primary={'Reset time'} />
+                                </ListItem>
+                                <ListItem>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DateTimePicker
+                                            className={classes.dateField}
+                                            ampm={false}
+                                            TextFieldComponent={renderInput}
+                                            format="dd/MM/yyyy"
+                                            views={['year', 'month', 'date']}
+                                            value={new Date()}
+                                            onChange={(date) => handleDateChange(date)}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </ListItem>
+                                { timeStampMode.date && <ListItem>
+                                    <Typography variant="subtitle2">Date simulé : {timeStampMode.date} </Typography>
+                                </ListItem>}
+                                { timeStampMode.time && <ListItem>
+                                    <Typography variant="subtitle2">Heure simulé : {hourConverter(timeStampMode.time)} </Typography>
+                                </ListItem>}
+                            </List>
+                        </Drawer>
+                        <IconButton size="medium" onClick={toogleHide} color="secondary" style={{ position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
+                            <SettingsIcon/>
+                        </IconButton>
+                    </ThemeProvider>
                 }
                 <Fade in={!isLoading} timeout={500}>
                     <Box className='topZoneDashboard' >

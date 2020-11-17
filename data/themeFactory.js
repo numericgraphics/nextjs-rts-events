@@ -201,6 +201,32 @@ class ThemeFactory {
         }
         return createMuiTheme({ palette })
     }
+
+    getAdminTheme () {
+        const palette = {
+            primary: {
+                main: '#424242',
+                light: '#424242',
+                dark: '#424242',
+                contrastText: '#FFFFFF'
+            },
+            secondary: {
+                main: '#FFFFFF',
+                light: '#FFFFFF',
+                dark: '#FFFFFF',
+                contrastText: '#424242'
+            },
+            background: {
+                paper: '#424242',
+                default: '#FFFFFF'
+            },
+            error: {
+                main: '#90caf9',
+                contrastText: '#90caf9'
+            }
+        }
+        return createMuiTheme({ palette })
+    }
 }
 
 const ThemeFactoryInstance = new ThemeFactory()
