@@ -107,7 +107,7 @@ function Result (props) {
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
-                        : <Button color="primary" variant="contained" className={'button'} onClick={gotoDashBoard}>
+                        : <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
                             {`${translation.challengeResultButtonEnded}`}
                         </Button>
                     }
