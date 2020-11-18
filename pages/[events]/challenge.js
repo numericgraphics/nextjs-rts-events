@@ -43,7 +43,6 @@ function Challenge () {
                 dataProvider.setData({ challenge: content })
                 setQuestionsContent(content)
             } else {
-                // TODO : manage response !== 200
                 await Router.push('/[events]/dashBoard', {
                     pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
@@ -72,7 +71,6 @@ function Challenge () {
                 dataProvider.setData(content)
                 setResultContent(content)
             } else {
-                // TODO : manage response !== 200
                 await Router.push('/[events]/dashBoard', {
                     pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
