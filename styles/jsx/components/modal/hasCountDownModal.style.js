@@ -25,5 +25,8 @@ export const useStyles = makeStyles(() => ({
     topCircle: {
         position: 'absolute',
         left: 0
+    },
+    animation: {
+        animation: 'growFadeOut .5s'
     }
 }))
