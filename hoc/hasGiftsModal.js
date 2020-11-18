@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 import { useHeight } from '../hooks/useHeight'
-import { useStyles } from '../styles/hasGiftsModal.style'
+import { useStyles } from '../styles/jsx/components/modal/hasGiftsModal.style'
 
 const hasGiftModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name

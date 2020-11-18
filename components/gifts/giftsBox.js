@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
-import { useStyles } from '../../styles/giftsBox.style'
+import { useStyles } from '../../styles/jsx/gifts/giftsBox.style'
 import Typography from '@material-ui/core/Typography'
 import { medalIcon, giftIcon, lockIcon } from '../../data/icon'
 import IconButton from '@material-ui/core/IconButton'

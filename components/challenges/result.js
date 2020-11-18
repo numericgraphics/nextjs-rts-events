@@ -5,14 +5,14 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
-import { ColorBorderButton } from '../ui/ColorBorderButton'
+import { ColorBorderButton } from '../ui/button/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
 import giftsModal from '../../hoc/hasGiftsModal'
 import { preLoadImage } from '../../data/tools'
-import { useStylesGlobal } from '../../styles/global.style'
-import { ColorCard } from '../../components/ui/ColorCard'
+import { useStylesGlobal } from '../../styles/jsx/global.style'
+import { ColorCard } from '../ui/card/ColorCard'
 import CardContent from '@material-ui/core/CardContent'
-import { useStyles } from '../../styles/result.style'
+import { useStyles } from '../../styles/jsx/pages/result.style'
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
@@ -64,7 +64,7 @@ function Result (props) {
     }, [])
 
     return (
-        <Fade in={showComponent} timeout={500}>
+        <Fade in={showComponent} timeout={1000}>
             <Box className='content' >
                 <Box className='topZoneResult'>
                     <Box className={classes.content}>

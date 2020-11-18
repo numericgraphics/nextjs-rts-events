@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import ColorBackDrop from '../components/ui/ColorBackDrop'
+import ColorBackDrop from '../components/ui/modal/ColorBackDrop'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
-import { useStyles } from '../styles/hasCountDownModal.style'
+import { useStyles } from '../styles/jsx/components/modal/hasCountDownModal.style'
 
 const hasCountDownModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name

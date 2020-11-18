@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import { useTweenMaxWithRef } from '../hooks/useTweenMax'
+import { useTweenMaxWithRef } from '../../../hooks/useTweenMax'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
 const useStyles = makeStyles({
