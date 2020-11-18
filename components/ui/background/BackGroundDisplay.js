@@ -9,6 +9,7 @@ function BackGroundDisplay (props) {
     const stylesGlobal = useStylesGlobal()
     const ref = useRef()
     const classes = useStyles()
+    const timeOutValue = 500
 
     useEffect(() => {
         setDisplay(true)
@@ -18,22 +19,14 @@ function BackGroundDisplay (props) {
     }, [])
 
     return (
-        <Fade in={display} timeout={500}>
+        <Fade in={display} timeout={timeOutValue}>
             <Box ref={ref}
                 className={[props.className, props.imageURL && classes.containerImage].join(' ')}
                 style={{ backgroundImage: props.imageURL ? `url(${props.imageURL})` : 'none' }}>
-                <Fade in={!!props.addblur} timeout={{
-                    appear: 200,
-                    enter: 100,
-                    exit: 200
-                }}>
+                <Fade in={!!props.addblur}>
                     <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
                 </Fade>
-                <Fade in={!!props.addcolor} timeout={{
-                    appear: 200,
-                    enter: 100,
-                    exit: 200
-                }}>
+                <Fade in={!!props.addcolor}>
                     <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
                 </Fade>
             </Box>

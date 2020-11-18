@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Modal from '@material-ui/core/Modal'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import ColorBackDrop from '../components/ui/modal/ColorBackDrop'
 import Box from '@material-ui/core/Box'
 import Fade from '@material-ui/core/Fade'
 import { useStyles } from '../styles/jsx/components/modal/hasCountDownModal.style'
@@ -65,9 +64,9 @@ const hasCountDownModal = WrappedComponent => {
                     className={[classes.modal, 'containerModal'].join(' ')}
                     open={open}
                     closeAfterTransition
-                    BackdropComponent={ColorBackDrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 500,
+                        style: { backgroundColor: 'none!important' }
                     }}
                     tabIndex={-1}
                 >

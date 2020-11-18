@@ -7,6 +7,7 @@ import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
 import { useStyles } from '../../styles/jsx/pages/questions.style'
+import { ChallengeStates } from '../../data/challengeState'
 
 function Question (props) {
     const classes = useStyles()
@@ -44,6 +45,7 @@ function Question (props) {
 
     useEffect(() => {
         if (props.status) {
+            props.challengeState(ChallengeStates.QUESTIONS)
             setDisabled(false)
             setShowComponent(true)
             startTimer()
