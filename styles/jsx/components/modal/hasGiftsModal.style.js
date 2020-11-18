@@ -91,8 +91,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         minWidth: '34px',
         maxHeight: '58px',
         maxWidth: '58px',
-        width: '8vw',
-        height: '8vw'
+        width: '5vw',
+        height: '5vw'
     },
     footer: {
         display: 'flex',
