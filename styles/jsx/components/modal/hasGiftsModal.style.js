@@ -34,7 +34,10 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         height: '2.5rem',
         zIndex: 4,
         backgroundColor: theme.palette.secondary.main,
-        stroke: theme.palette.secondary.contrastText
+        stroke: theme.palette.secondary.contrastText,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.dark
+        }
     },
     lock: {
         minHeight: '68px',
