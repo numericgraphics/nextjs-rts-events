@@ -165,8 +165,8 @@ function MyApp ({ Component, pageProps }) {
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, uiElementsService: UiElementsServices, store }}>
-            {(isLoading && !isGlobalLoading) && <Progress/> }
-            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
+            { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
+            {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
