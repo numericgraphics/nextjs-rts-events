@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         minWidth: '34px',
         width: '10vw',
         height: '10vw',
-        margin: '1vw 1.5vw',
+        margin: '10px 10px',
         maxWidth: '50px',
         maxHeight: '50px',
         backgroundColor: theme.palette.secondary.main,
