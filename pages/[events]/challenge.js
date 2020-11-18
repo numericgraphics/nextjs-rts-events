@@ -17,6 +17,7 @@ function Challenge () {
     const { isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.LOADING)
     const [questionsContent, setQuestionsContent] = useState({})
+    const [hasPlayed, setHasPlayed] = useState(false)
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
@@ -98,7 +99,7 @@ function Challenge () {
             return null
         case ChallengeStates.COUNTDOWN:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer} challengeState={setChallengeState}/>
+            return <Question content={questionsContent} answerCallBack={setAnswer} challengeState={setChallengeState} hasPlayed={hasPlayed}/>
         case ChallengeStates.QUESTIONS_VIDEO:
             return <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
@@ -119,6 +120,9 @@ function Challenge () {
     useEffect(() => {
         if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO) {
             fetchResult().then()
+            if (!hasPlayed) {
+                setHasPlayed(true)
+            }
         }
     }, [answer])
 
@@ -147,7 +151,12 @@ function Challenge () {
                 videoController.setShowVideo(false)
                 setImageURL(imageURL)
                 setBackgroundType('image')
-                setChallengeState(ChallengeStates.COUNTDOWN)
+
+                if (!hasPlayed) {
+                    setChallengeState(ChallengeStates.COUNTDOWN)
+                } else {
+                    setChallengeState(ChallengeStates.QUESTIONS)
+                }
             }
         }
     }, [questionsContent])

@@ -37,18 +37,27 @@ function Question (props) {
         }, 1000)
     }
 
+    function startQuestion () {
+        setDisabled(false)
+        setShowComponent(true)
+        startTimer()
+    }
+
     useEffect(() => {
-        props.openCountDownModal()
-        props.startCountDown()
+        if (!props.hasPlayed) {
+            props.openCountDownModal()
+            props.startCountDown()
+        } else {
+            startQuestion()
+        }
+
         return () => clearInterval(intervalId.current)
     }, [])
 
     useEffect(() => {
         if (props.status) {
             props.challengeState(ChallengeStates.QUESTIONS)
-            setDisabled(false)
-            setShowComponent(true)
-            startTimer()
+            startQuestion()
         }
     }, [props.status])
 
@@ -82,7 +91,7 @@ function Question (props) {
                     </Box>
                 </Box>
             </Slide>
-            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
+            <Slide in={showComponent} timeout={600} direction="up" >
                 <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
