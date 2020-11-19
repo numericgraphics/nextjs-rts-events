@@ -66,8 +66,8 @@ class ThemeFactory {
                     h6: 'p',
                     subtitle1: 'p',
                     subtitle2: 'p',
-                    body1: 'span',
-                    body2: 'span'
+                    body1: 'p',
+                    body2: 'p'
                 }
             }
         }

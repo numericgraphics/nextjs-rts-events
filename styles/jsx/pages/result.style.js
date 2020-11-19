@@ -80,7 +80,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '3vw'
+        margin: 'min(3vw, 30px)'
     },
     button: {
         width: '80vw',
@@ -140,7 +140,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         marginTop: '10px'
     },
     cardContent: {
-        padding: '1.5vw 3vw!important'
+        padding: '1.5vw min(3vw, 30px)!important'
     },
     colorCard: {
         width: '90%'

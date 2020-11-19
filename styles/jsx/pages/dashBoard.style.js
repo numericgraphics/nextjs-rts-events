@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         padding: '0 3rem',
         textAlign: 'center',
         alignItems: 'center',
-        marginBottom: '3vw!important'
+        marginBottom: 'min(3vw, 30px)!important'
     },
     nickname: {
         textAlign: 'center',
@@ -89,7 +89,7 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         color: theme.palette.primary.contrastText
     },
     cardContent: {
-        padding: '1.5vw 3vw!important'
+        padding: '1.5vw min(3vw, 30px)!important'
     },
     adminToolbar: {
         position: 'absolute',
