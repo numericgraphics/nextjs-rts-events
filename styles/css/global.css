@@ -187,7 +187,7 @@
 
 .topZoneDashboard,
 .topZoneResult {
-    padding: 3vw;
+    padding: min(3vw, 30px);
 }
 
 .topZone {
@@ -199,7 +199,7 @@
 }
 
 .topZoneResult {
-    height: 78vh;
+    min-height: 78vh;
 }
 
 /*.topZone .text {*/

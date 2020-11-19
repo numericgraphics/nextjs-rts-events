@@ -80,7 +80,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '3vw'
+        margin: 'min(3vw, 30px)'
     },
     button: {
         width: '80vw',
@@ -137,10 +137,29 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         marginBottom: '10px',
         maxWidth: '70vw',
         flexDirection: 'column',
-        marginTop: '10px'
+        marginTop: '10px',
+        animationDelay: '1000ms',
+        animation: '$leaves 1s ease-in-out'
+    },
+    '@keyframes leaves': {
+        '0%': {
+            transform: 'scale(1.0)'
+        },
+        '25%': {
+            transform: 'scale(1.4)'
+        },
+        '50%': {
+            transform: 'scale(1.0)'
+        },
+        '75%': {
+            transform: 'scale(1.4)'
+        },
+        '100%': {
+            transform: 'scale(1.0)'
+        }
     },
     cardContent: {
-        padding: '1.5vw 3vw!important'
+        padding: '1.5vw min(3vw, 30px)!important'
     },
     colorCard: {
         width: '90%'
