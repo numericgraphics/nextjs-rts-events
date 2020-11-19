@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import QuestionTimer from '../ui/progress/questionTimer'
 import Slide from '@material-ui/core/Slide'
+import Fade from '@material-ui/core/Fade/Fade'
+import QuestionTimer from '../ui/progress/questionTimer'
 import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
@@ -110,7 +111,9 @@ function Question (props) {
                     )}
                 </Box>
             </Slide>
-            <Box className='backgroundGradientTop' />
+            <Fade in={showComponent} timeout={600}>
+                <Box className='backgroundGradientTop' />
+            </Fade>
         </Box>
     )
 }
