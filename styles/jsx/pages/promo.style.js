@@ -68,7 +68,10 @@ export const useStyles = makeStyles({
     image: {
         alignSelf: 'center',
         padding: '10px 30px',
-        width: '100%'
+        width: '100%',
+        '@media only screen and (max-height:550px)': {
+            width: '80%'
+        }
     },
     contentSwipeableView: {
         position: 'relative'
