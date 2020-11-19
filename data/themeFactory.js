@@ -237,7 +237,13 @@ class ThemeFactory {
                 colorPrimary: {
                     color: '#FFFFFF!important'
                 }
+            },
+            MuiPickersDay: {
+                current: {
+                    color: 'rgba(255, 255, 255, 0.54)!important'
+                }
             }
+
         }
         return createMuiTheme({ palette, overrides })
     }
