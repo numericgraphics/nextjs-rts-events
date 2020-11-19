@@ -1,20 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import '../styles/global.css'
-import '../styles/fadeIn.css'
-import '../styles/shake.css'
+import '../styles/css/global.css'
+import '../styles/css/fadeIn.css'
+import '../styles/css/growFadeOut.css'
+import '../styles/css/shake.css'
 import 'react-phone-input-2/lib/bootstrap.css'
 import UserContext from '../hooks/userContext'
 import DataProvider from '../data/dataProvider'
 import GameStatsService from '../data/gameStats'
 import UiElementsServices from '../data/uiElements'
 import { useRouter } from 'next/router'
-import SplashScreen from '../components/splashScreen'
+import SplashScreen from '../components/ui/splashscreen/splashScreen'
 import { useImagesServices } from '../hooks/useImagesServices'
 import ThemeFactory from '../data/themeFactory'
-import Progress from '../components/progress'
-import VideoPlayer from '../components/ui/VideoPlayer'
+import Progress from '../components/ui/progress/progress'
+import VideoPlayer from '../components/ui/video/VideoPlayer'
 import useDeviceDetect from '../hooks/useDeviceDetect'
 import useNetwork from '../hooks/useNetwork'
 import useAppVisibility from '../hooks/useAppVisivility'
@@ -41,12 +42,12 @@ function MyApp ({ Component, pageProps }) {
     const [videoSource, setVideoSource] = useState('')
     const [videoPoster, setVideoPoster] = useState('')
     const [videoVisible, setVideoVisible] = useState(false)
-    const [videoAutoPlay, setVideoAutoPlay] = useState(true)
+    // const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
     const [showVideo, setShowVideo] = useState(false)
-    const [blurVideo, setBlurVideo] = useState(false)
+    const [blurVideo, setBlurVideo] = useState(true)
     /* eslint-enable */
-    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, setVideoAutoPlay, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
+    const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
     const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode, setTimeStampMode }
     const router = useRouter()
 
@@ -138,11 +139,11 @@ function MyApp ({ Component, pageProps }) {
             const time = params.get('time') ? params.get('time') : ''
             const date = params.get('date')
             if (date) {
-                setTimeStampMode({ enable: !!date, date, time })
+                setTimeStampMode({ enable: !!date, date, time, initialized: true })
             }
             setRouterReady(true)
         }
-    }, [router])
+    }, [timeStampMode.initialized, router])
 
     useEffect(() => {
         // REMOVE SERVER SIDE INJECTED CSS
@@ -165,8 +166,8 @@ function MyApp ({ Component, pageProps }) {
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, uiElementsService: UiElementsServices, store }}>
-            {(isLoading && !isGlobalLoading) && <Progress/> }
-            {isGlobalLoading && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/> }
+            { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
+            {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
@@ -174,7 +175,7 @@ function MyApp ({ Component, pageProps }) {
                     ref={player}
                     videoSource={videoSource}
                     videoPoster={videoPoster}
-                    autoPlay={videoAutoPlay}
+                    // autoPlay={videoAutoPlay}
                     showVideo={showVideo}
                     blurVideo={blurVideo}
                     style={{ visibility: videoVisible ? 'visible' : 'hidden' }}

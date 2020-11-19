@@ -20,14 +20,7 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                let url
-                // TODO : mathieu tu peux tester cette version de l'url merci - la mm chose sur fetchgame, et sur fetchgameresult si ca fonctionne !
-                // let url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge${finalDate ? `?ts=${finalDate}` : ''}`
-                if (finalDate) {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge?ts=${finalDate}`
-                } else {
-                    url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge`
-                }
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/startNextAvailableChallenge${finalDate ? `?ts=${finalDate}` : ''}`
                 const response = await fetch(url, {
                     credentials: 'include',
                     method: 'POST',

@@ -3,7 +3,7 @@ import { isBrowser, isMobile, isTablet } from 'react-device-detect'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
-import { useStyles } from '../../styles/promo.style'
+import { useStyles } from '../../styles/jsx/pages/promo.style'
 import { useHeight } from '../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade'
 
@@ -25,15 +25,15 @@ export default function LayoutInfo (props) {
                         title={title}
                     />
                 </Box>}
-                <Box className={styles.text}>
+                <Box className={'block-text-layout'}>
                     <Typography
                         variant="h1"
-                        className={[styles.title, 'unselectable-element'].join(' ')}
+                        className={['title-layout', 'unselectable-element'].join(' ')}
                         align={'center'}
                         dangerouslySetInnerHTML={{ __html: title }}/>
                     <Typography
                         variant="h3"
-                        className={[styles.subTitle, 'unselectable-element'].join(' ')}
+                        className={['subtitle-layout', 'unselectable-element'].join(' ')}
                         align={'center'}
                         dangerouslySetInnerHTML={{ __html: description }}/>
                 </Box>

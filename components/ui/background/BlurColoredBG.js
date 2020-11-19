@@ -1,7 +1,8 @@
 import Box from '@material-ui/core/Box'
 import React, { useRef } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { useStylesGlobal } from '../../styles/global.style'
+import { useStylesGlobal } from '../../../styles/jsx/global.style'
+import Fade from '@material-ui/core/Fade'
 
 const useStyles = makeStyles((theme = useTheme) => ({
     overImage: {
@@ -19,12 +20,20 @@ function BlurColoredBG (props) {
 
     return (
         <Box ref={ref} className={props.className}>
-            {props.addblur &&
+            <Fade in={props.addblur} timeout={{
+                appear: 1000,
+                enter: 100,
+                exit: 100
+            }}>
                 <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
-            }
-            {props.addcolor &&
+            </Fade>
+            <Fade in={props.addcolor} timeout={{
+                appear: 1000,
+                enter: 100,
+                exit: 100
+            }}>
                 <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
-            }
+            </Fade>
         </Box>
     )
 }

@@ -6,8 +6,8 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
-import UserContext from '../../hooks/userContext'
-import { storeInLocalStorage, UserStates, getDataFromLocalStorage } from '../../data/tools'
+import UserContext from '../../../hooks/userContext'
+import { storeInLocalStorage, UserStates, getDataFromLocalStorage } from '../../../data/tools'
 
 const iconFontSize = 33
 const useStyles = makeStyles({
@@ -36,25 +36,25 @@ function VideoController (props) {
         storeInLocalStorage(`${eventName}-storage`, { [key]: value })
     }
 
-    function play () {
+    function handlePlay () {
         if (store.videoController.videoHasPlayed === false) {
             store.videoController.setVideoPlayed(true)
         }
         store.videoController.setBlurVideo(false)
     }
 
-    function paused () {
+    function handlePaused () {
         store.videoController.setBlurVideo(true)
         // FIX for ios sleeping mode : video is set to paused when the app is in sleeping mode
         setPause(true)
     }
 
-    function error (e) {
+    function handleError (e) {
         // TODO error handling
         console.log('VideoController - ERROR - error', e)
     }
 
-    function volumechange () {
+    function handelVolumechange () {
         setLocalStorageValue(UserStates.USER_ACTION_VIDEO_MUTED, videoPlayer.muted)
         setMute(videoPlayer.muted)
     }
@@ -70,19 +70,20 @@ function VideoController (props) {
 
     useEffect(() => {
         if (!videoPlayer) return
-        videoPlayer.addEventListener('volumechange', volumechange)
-        videoPlayer.addEventListener('error', error)
-        videoPlayer.addEventListener('play', play)
-        videoPlayer.addEventListener('pause', paused)
+        videoPlayer.addEventListener('volumechange', handelVolumechange)
+        videoPlayer.addEventListener('error', handleError)
+        videoPlayer.addEventListener('play', handlePlay)
+        videoPlayer.addEventListener('pause', handlePaused)
 
         const mutedFormLocalStorage = getDataFromLocalStorage(`${eventName}-storage`, UserStates.USER_ACTION_VIDEO_MUTED)
         videoPlayer.muted = mutedFormLocalStorage !== null ? mutedFormLocalStorage : false
+        setMute(videoPlayer.muted)
 
         return () => {
-            videoPlayer.removeEventListener('volumechange', volumechange)
-            videoPlayer.removeEventListener('error', error)
-            videoPlayer.removeEventListener('play', play)
-            videoPlayer.removeEventListener('pause', paused)
+            videoPlayer.removeEventListener('volumechange', handelVolumechange)
+            videoPlayer.removeEventListener('error', handleError)
+            videoPlayer.removeEventListener('play', handlePlay)
+            videoPlayer.removeEventListener('pause', handlePaused)
         }
     }, [])
 

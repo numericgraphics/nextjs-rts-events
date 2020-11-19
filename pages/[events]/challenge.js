@@ -1,28 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../hooks/userContext'
-import EventLayout from '../../components/eventLayout'
+import EventLayout from '../../components/ui/layout/eventLayout'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
-import LazyImage from '../../components/ui/LazyImage'
+import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
 import { getAllEvents } from '../../lib/events'
-
-const ChallengeStates = Object.freeze({
-    COUNTDOWN: 'countDown',
-    QUESTIONS: 'questions',
-    RESULT: 'result',
-    LOADING: 'loading',
-    ERROR: 'error'
-})
+import { ChallengeStates } from '../../data/challengeState'
+import Box from '@material-ui/core/Box'
 
 function Challenge () {
     const router = useRouter()
     const { events } = router.query
     const { dataProvider, store } = useContext(UserContext)
     const { isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
-    const [challengeState, setChallengeState] = useState(ChallengeStates.COUNTDOWN)
+    const [challengeState, setChallengeState] = useState(ChallengeStates.LOADING)
     const [questionsContent, setQuestionsContent] = useState({})
+    const [hasPlayed, setHasPlayed] = useState(false)
     const [resultContent, setResultContent] = useState({})
     const [answer, setAnswer] = useState(null)
     const [imageURL, setImageURL] = useState()
@@ -43,7 +38,6 @@ function Challenge () {
                 dataProvider.setData({ challenge: content })
                 setQuestionsContent(content)
             } else {
-                // TODO : manage response !== 200
                 await Router.push('/[events]/dashBoard', {
                     pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
@@ -72,7 +66,6 @@ function Challenge () {
                 dataProvider.setData(content)
                 setResultContent(content)
             } else {
-                // TODO : manage response !== 200
                 await Router.push('/[events]/dashBoard', {
                     pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
@@ -90,9 +83,11 @@ function Challenge () {
     }
 
     // Callback for Result component to keep playing game
-    function playGame () {
+    function playGameCallBack () {
+        setChallengeState(ChallengeStates.LOADING)
+        videoController.setVideoPoster('')
+        videoController.setVideoSource('')
         setLoading(true)
-        videoController.setShowVideo(false)
         fetchQuestions().then()
     }
 
@@ -101,28 +96,33 @@ function Challenge () {
     function getChallengeContent (state) {
         switch (state) {
         case ChallengeStates.LOADING:
+            return null
+        case ChallengeStates.COUNTDOWN:
         case ChallengeStates.QUESTIONS:
-            return backgroundType === 'video'
-                ? <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
-                : <Question content={questionsContent} answerCallBack={setAnswer} />
+            return <Question content={questionsContent} answerCallBack={setAnswer} challengeState={setChallengeState} hasPlayed={hasPlayed}/>
+        case ChallengeStates.QUESTIONS_VIDEO:
+            return <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result content={resultContent} playGameCallBack={playGame} gotoDashBoard={gotoDashBoard}/>
+            return <Result content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
     async function gotoDashBoard () {
         if (backgroundType === 'video') {
             videoController.setVideoSource('')
-            videoController.setVideoVisible(false)
+            videoController.setVideoPoster('')
+            videoController.setShowVideo(false)
         }
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
 
     // Call through question component callBack when user answered question
     useEffect(() => {
-        if (challengeState === ChallengeStates.QUESTIONS) {
-            setChallengeState(ChallengeStates.LOADING)
+        if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO) {
             fetchResult().then()
+            if (!hasPlayed) {
+                setHasPlayed(true)
+            }
         }
     }, [answer])
 
@@ -145,14 +145,19 @@ function Challenge () {
             const { imageURL } = questionsContent
             const { videoURL } = questionsContent
             if (videoURL) {
-                videoController.setShowVideo(true)
                 setBackgroundType('video')
+                setChallengeState(ChallengeStates.QUESTIONS_VIDEO)
             } else {
                 videoController.setShowVideo(false)
                 setImageURL(imageURL)
                 setBackgroundType('image')
+
+                if (!hasPlayed) {
+                    setChallengeState(ChallengeStates.COUNTDOWN)
+                } else {
+                    setChallengeState(ChallengeStates.QUESTIONS)
+                }
             }
-            setChallengeState(ChallengeStates.QUESTIONS)
         }
     }, [questionsContent])
 
@@ -169,19 +174,23 @@ function Challenge () {
     }, [resultContent])
 
     useEffect(() => {
-        setColor(challengeState === ChallengeStates.RESULT)
-        setBlur(challengeState === ChallengeStates.RESULT)
+        if (backgroundType === 'image') {
+            const needBackGround = (
+                challengeState === ChallengeStates.COUNTDOWN ||
+                challengeState === ChallengeStates.RESULT ||
+                challengeState === ChallengeStates.LOADING)
+            setColor(needBackGround)
+            setBlur(needBackGround)
+        }
     }, [challengeState])
 
     return (
         <EventLayout>
-            {isLoading
-                ? null
-                : <React.Fragment>
-                    {getChallengeContent(challengeState)}
-                    {backgroundType === 'image' &&
-                    <LazyImage addblur={ addBlur } addcolor={ addColor } className='background' style={{ backgroundImage: `url(${imageURL})` }}/>}
-                </React.Fragment>
+            {!isLoading && <Box>
+                {getChallengeContent(challengeState)}
+                {backgroundType === 'image' &&
+                    <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' imageURL={imageURL}/>}
+            </Box>
             }
         </EventLayout>
     )

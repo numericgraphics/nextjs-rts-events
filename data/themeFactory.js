@@ -41,7 +41,8 @@ class ThemeFactory {
                 contrastText: onSecondary
             },
             background: {
-                default: background
+                default: primary,
+                paper: background
             },
             error: {
                 main: error,
@@ -181,11 +182,13 @@ class ThemeFactory {
             primary: {
                 main: '#90caf9',
                 light: '#90caf9',
+                dark: '#FFFF5B',
                 contrastText: '#90caf9'
             },
             secondary: {
                 main: '#90caf9',
                 light: '#90caf9',
+                dark: '#FFFF5B',
                 contrastText: '#90caf9'
             },
             background: {
@@ -198,6 +201,51 @@ class ThemeFactory {
             }
         }
         return createMuiTheme({ palette })
+    }
+
+    getAdminTheme () {
+        const palette = {
+            primary: {
+                main: '#424242',
+                light: '#424242',
+                dark: '#424242',
+                contrastText: '#FFFFFF'
+            },
+            secondary: {
+                main: '#FFFFFF',
+                light: '#FFFFFF',
+                dark: '#FFFFFF',
+                contrastText: '#424242'
+            },
+            background: {
+                paper: '#424242',
+                default: '#FFFFFF'
+            },
+            error: {
+                main: '#90caf9',
+                contrastText: '#90caf9'
+            }
+        }
+
+        const overrides = {
+            MuiButton: {
+                root: {
+                    color: '#FFFFFF!important'
+                }
+            },
+            MuiTypography: {
+                colorPrimary: {
+                    color: '#FFFFFF!important'
+                }
+            },
+            MuiPickersDay: {
+                current: {
+                    color: 'rgba(255, 255, 255, 0.54)!important'
+                }
+            }
+
+        }
+        return createMuiTheme({ palette, overrides })
     }
 }
 
