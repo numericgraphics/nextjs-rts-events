@@ -57,7 +57,7 @@ const hasGiftModal = WrappedComponent => {
                     closeAfterTransition
                     BackdropComponent={Backdrop}
                     BackdropProps={{
-                        timeout: 500
+                        timeout: 1000
                     }}
                 >
                     <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
