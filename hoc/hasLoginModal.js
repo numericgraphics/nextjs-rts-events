@@ -215,11 +215,13 @@ const hasLoginModal = WrappedComponent => {
                             {uiElement.agreementsChunks && uiElement.agreementsChunks.map((data, index) => {
                                 return (
                                     <Box key={index} className={classes.CGUContent}>
-                                        <Checkbox
-                                            classes={{ root: [classes.CGUBox, phoneVerif && classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
-                                            icon={uncheckedBoxIcon({ className: classes.iconClass })}
-                                            checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
-                                            onChange={checkBoxes} />
+                                        <Box className={classes.checkBox}>
+                                            <Checkbox
+                                                classes={{ root: [classes.CGUBox, phoneVerif && classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
+                                                icon={uncheckedBoxIcon({ className: classes.iconClass })}
+                                                checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
+                                                onChange={checkBoxes} />
+                                        </Box>
                                         <Typography variant="body1" className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>
                                     </Box>
                                 )
