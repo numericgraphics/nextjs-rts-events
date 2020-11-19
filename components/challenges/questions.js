@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import QuestionTimer from '../ui/progress/questionTimer'
 import Slide from '@material-ui/core/Slide'
+import Fade from '@material-ui/core/Fade/Fade'
+import QuestionTimer from '../ui/progress/questionTimer'
 import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
@@ -37,18 +38,27 @@ function Question (props) {
         }, 1000)
     }
 
+    function startQuestion () {
+        setDisabled(false)
+        setShowComponent(true)
+        startTimer()
+    }
+
     useEffect(() => {
-        props.openCountDownModal()
-        props.startCountDown()
+        if (!props.hasPlayed) {
+            props.openCountDownModal()
+            props.startCountDown()
+        } else {
+            startQuestion()
+        }
+
         return () => clearInterval(intervalId.current)
     }, [])
 
     useEffect(() => {
         if (props.status) {
             props.challengeState(ChallengeStates.QUESTIONS)
-            setDisabled(false)
-            setShowComponent(true)
-            startTimer()
+            startQuestion()
         }
     }, [props.status])
 
@@ -82,24 +92,28 @@ function Question (props) {
                     </Box>
                 </Box>
             </Slide>
-            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
+            <Slide in={showComponent} timeout={200 + (100 * answers.length)} direction="up" >
                 <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={classes.buttonWrapper} >
-                                <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
-                                    onAnswer(index + 1)
-                                }}>
-                                    {item}
-                                </CustomDisabledButton>
-                                {(disabled && (answer === index + 1)) && <CircularProgress color={'secondary'} size={24} className={classes.buttonProgress} />}
-                            </Box>
+                            <Slide key={index} in={showComponent} timeout={200 + (100 * index)} direction="up" >
+                                <Box className={classes.buttonWrapper} >
+                                    <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
+                                        onAnswer(index + 1)
+                                    }}>
+                                        {item}
+                                    </CustomDisabledButton>
+                                    {(disabled && (answer === index + 1)) && <CircularProgress color={'secondary'} size={24} className={classes.buttonProgress} />}
+                                </Box>
+                            </Slide>
                         )
                     }
                     )}
                 </Box>
             </Slide>
-            <Box className='backgroundGradientTop' />
+            <Fade in={showComponent} timeout={600}>
+                <Box className='backgroundGradientTop' />
+            </Fade>
         </Box>
     )
 }

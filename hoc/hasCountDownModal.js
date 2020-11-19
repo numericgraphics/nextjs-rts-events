@@ -85,7 +85,7 @@ const hasCountDownModal = WrappedComponent => {
                                     alignItems="center"
                                     justifyContent="center"
                                 >
-                                    <Typography className={classes.textProgress} style={{ color: 'white' }}>{displayCountDownText()}</Typography>
+                                    <Typography className={[classes.textProgress, progress > 90 && classes.animation].join(' ')} style={{ color: 'white' }}>{displayCountDownText()}</Typography>
                                 </Box>
                             </Box>
                         </Fade>

@@ -107,18 +107,20 @@ function QuestionVideo (props) {
                     </Box>
                 </Box>
             </Slide>
-            <Slide in={showComponent} timeout={600} direction="up" style={{ transitionDelay: showComponent ? '100ms' : '0ms' }}>
+            <Slide in={showComponent} timeout={200 + (100 * answers.length)} direction="up" >
                 <Box className='bottomZoneQuestions'>
                     {answers.map((item, index) => {
                         return (
-                            <Box key={index} className={classes.buttonWrapper} >
-                                <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
-                                    onAnswer(index + 1)
-                                }}>
-                                    {item}
-                                </CustomDisabledButton>
-                                {(disabled && (answer === index + 1)) && <CircularProgress color={'secondary'} size={24} className={classes.buttonProgress} />}
-                            </Box>
+                            <Slide key={index} in={showComponent} timeout={200 + (100 * index)} direction="up" >
+                                <Box key={index} className={classes.buttonWrapper} >
+                                    <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
+                                        onAnswer(index + 1)
+                                    }}>
+                                        {item}
+                                    </CustomDisabledButton>
+                                    {(disabled && (answer === index + 1)) && <CircularProgress color={'secondary'} size={24} className={classes.buttonProgress} />}
+                                </Box>
+                            </Slide>
                         )
                     }
                     )}
