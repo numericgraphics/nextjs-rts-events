@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box'
 import { ColorCard } from '../../components/ui/card/ColorCard'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/ui/progress/DashBoardChallengesProgress'
-import Fade from '@material-ui/core/Fade/Fade'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
@@ -22,6 +21,7 @@ import { useStyles } from '../../styles/jsx/pages/dashBoard.style'
 import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
+import Slide from '@material-ui/core/Slide'
 /* import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
@@ -135,7 +135,7 @@ function DashBoard (props) {
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
                 }
-                <Fade in={!isLoading} timeout={500}>
+                <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
                             <AvatarEvent user={user.avatarURL} />
@@ -213,14 +213,14 @@ function DashBoard (props) {
                             </CardContent>
                         </ColorCard>
                     </Box>
-                </Fade>
-                <Fade in={!isLoading} timeout={500}>
+                </Slide>
+                <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                         <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
                     </Box>
-                </Fade>
+                </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
             </Box>
             }
