@@ -138,11 +138,21 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         maxWidth: '70vw',
         flexDirection: 'column',
         marginTop: '10px',
+        animationDelay: '1000ms',
         animation: '$leaves 1s ease-in-out'
     },
     '@keyframes leaves': {
         '0%': {
-            transform: 'scale(1.5)'
+            transform: 'scale(1.0)'
+        },
+        '25%': {
+            transform: 'scale(1.4)'
+        },
+        '50%': {
+            transform: 'scale(1.0)'
+        },
+        '75%': {
+            transform: 'scale(1.4)'
         },
         '100%': {
             transform: 'scale(1.0)'
