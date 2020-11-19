@@ -69,6 +69,9 @@ export const useStyles = makeStyles((theme) => ({
     CGUBox: {
         color: 'rgba(0,0,0, 0)!important',
         stroke: theme.palette.primary.contrastText,
+        padding: 0
+    },
+    checkBox: {
         padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
