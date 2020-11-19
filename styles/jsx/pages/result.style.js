@@ -137,7 +137,16 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         marginBottom: '10px',
         maxWidth: '70vw',
         flexDirection: 'column',
-        marginTop: '10px'
+        marginTop: '10px',
+        animation: '$leaves 1s ease-in-out'
+    },
+    '@keyframes leaves': {
+        '0%': {
+            transform: 'scale(1.5)'
+        },
+        '100%': {
+            transform: 'scale(1.0)'
+        }
     },
     cardContent: {
         padding: '1.5vw 3vw!important'
