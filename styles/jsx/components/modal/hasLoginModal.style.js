@@ -69,9 +69,6 @@ export const useStyles = makeStyles((theme) => ({
     CGUBox: {
         color: theme.palette.formNoValidate
     },
-    checkBox: {
-        padding: '12px 15px 12px 0px'
-    },
     CGUBoxCheck: {
         color: `${theme.palette.formValidate}!important`
     },
