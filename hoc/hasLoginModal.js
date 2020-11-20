@@ -11,7 +11,6 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import UserContext from '../hooks/userContext'
 import SmsInput from '../components/ui/form/SmsInput'
 import ReactPhoneInput from 'react-phone-input-2'
-import { checkedBoxIcon, uncheckedBoxIcon } from '../data/icon'
 import { phoneVerification } from '../data/tools'
 import { CustomDisabledButton } from '../components/ui/button/CustomDisabledButton'
 import { useStyles, styles } from '../styles/jsx/components/modal/hasLoginModal.style'
@@ -41,7 +40,6 @@ const hasLoginModal = WrappedComponent => {
         const [checked, setChecked] = useState(false)
         const [phoneVerif, setPhoneVerif] = useState(false)
         const [counter, setCounter] = useState(0)
-        const [colorInput, setColorInput] = useState(styles.textFieldNotValidated)
 
         const handleOpen = () => {
             setOpen(true)
@@ -65,10 +63,6 @@ const hasLoginModal = WrappedComponent => {
                 setChecked(counter !== agreementsChunks.length)
             }
         }, [counter])
-
-        useEffect(() => {
-            setColorInput(phoneVerif ? styles.textFieldValidated : styles.textFieldNotValidated)
-        }, [phoneVerif])
 
         const handleClose = () => {
             setLoginState(ModalStates.PHONE_NUMBER)
@@ -188,7 +182,11 @@ const hasLoginModal = WrappedComponent => {
                     <form className={'modal-textField-container'} noValidate autoComplete="off" onSubmit={handleSubmitPhoneNumber}>
                         <ReactPhoneInput
                             inputProps={ {
-                                style: colorInput,
+                                style: {
+                                    ...styles.textField,
+                                    boxShadow: phoneVerif ? `0 0 0 0.2rem ${theme.palette.formValidate}`
+                                        : `0 0 0 0.2rem ${theme.palette.formNoValidate}`
+                                },
                                 autoFocus: true
                             } }
                             dropdownClass={classes.dropDown}
@@ -218,8 +216,6 @@ const hasLoginModal = WrappedComponent => {
                                         <Box className={classes.checkBox}>
                                             <Checkbox
                                                 classes={{ root: [classes.CGUBox, phoneVerif && classes.shakeMe].join(' '), checked: classes.CGUBoxCheck }}
-                                                icon={uncheckedBoxIcon({ className: classes.iconClass })}
-                                                checkedIcon={checkedBoxIcon({ className: classes.iconClassChecked })}
                                                 onChange={checkBoxes} />
                                         </Box>
                                         <Typography variant="body1" className={classes.CGUText} dangerouslySetInnerHTML={{ __html: data }}/>

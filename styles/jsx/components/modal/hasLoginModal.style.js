@@ -67,16 +67,13 @@ export const useStyles = makeStyles((theme) => ({
         textAlign: 'left'
     },
     CGUBox: {
-        color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.primary.contrastText,
-        padding: 0
+        color: theme.palette.formNoValidate
     },
     checkBox: {
         padding: '12px 15px 12px 0px'
     },
     CGUBoxCheck: {
-        color: 'rgba(0,0,0, 0)!important',
-        stroke: theme.palette.primary.contrastText
+        color: `${theme.palette.formValidate}!important`
     },
     CGU: {
         width: '100%',
@@ -120,7 +117,7 @@ export const useStyles = makeStyles((theme) => ({
     }
 }))
 export const styles = {
-    textFieldValidated: {
+    textField: {
         fontFamily: 'srgssr-type-Bd',
         fontSize: '1.125rem',
         color: '#020202',
@@ -131,21 +128,6 @@ export const styles = {
         paddingTop: '0.4rem',
         paddingBottom: '0.4rem',
         margin: '0.2rem',
-        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
-        webkitAppearance: 'none'
-    },
-    textFieldNotValidated: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.125rem',
-        color: '#020202',
-        border: 'none',
-        width: '100%',
-        height: 'auto',
-        backgroundColor: 'white',
-        paddingTop: '0.4rem',
-        paddingBottom: '0.4rem',
-        margin: '0.2rem',
-        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
-        webkitAppearance: 'none'
+        WebkitAppearance: 'none'
     }
 }
