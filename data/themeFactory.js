@@ -10,7 +10,6 @@ class ThemeFactory {
         this.getDefaultTheme = this.getDefaultTheme.bind(this)
     }
 
-    // TODO - add theme typo json model (yvain) - (scratch/theme-typo-json)
     createTheme (importedTheme) {
         const {
             primary,
@@ -52,7 +51,9 @@ class ThemeFactory {
                 disabledBackground: 'gray',
                 disabled: 'white'
             },
-            onSecondary: onSecondary
+            onSecondary: onSecondary,
+            formNoValidate: 'rgb(255, 112, 0)',
+            formValidate: 'rgb(0, 183, 14)'
         }
 
         const props = {

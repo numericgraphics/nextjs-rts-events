@@ -1,31 +1,6 @@
 import React, { useState, useRef } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { useStyles, styles } from '../../../styles/jsx/components/form/smsInput.style'
 import Box from '@material-ui/core/Box'
-
-const useStyles = makeStyles({
-    input: {
-        width: '2.1rem',
-        height: '2.5rem',
-        fontFamily: 'srgssr-type-Md, sans-serif',
-        fontSize: '1.25rem',
-        margin: '0.3rem',
-        color: '#020202',
-        textAlign: 'center',
-        border: 'none!important',
-        borderRadius: 2
-    }
-})
-
-const styles = {
-    textFieldValidated: {
-        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
-        webkitAppearance: 'none'
-    },
-    textFieldNotValidated: {
-        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
-        webkitAppearance: 'none'
-    }
-}
 
 const digitState = () => {
     const init = [

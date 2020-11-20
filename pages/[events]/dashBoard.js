@@ -156,10 +156,10 @@ function DashBoard (props) {
                                 <DashBoardChallengesProgress variant="determinate" progress={progress} />
                             </Box>
                             : <React.Fragment>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
                                     dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
                                 </Typography>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
                                     dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                 </Typography>
                             </React.Fragment>
@@ -176,9 +176,6 @@ function DashBoard (props) {
                         {availableResults &&
                         <ColorCard>
                             <CardContent className={classes.cardContent}>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.sumChunk }} >
-                                </Typography>
                                 <Box className={classes.rateBox}>
                                     <Box className={classes.goodRateBox}>
                                         <CheckIcon fontSize="small" className={classes.rateIcon} />
@@ -193,6 +190,9 @@ function DashBoard (props) {
                                         </Typography>
                                     </Box>
                                 </Box>
+                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.challengesLeftChunk }} >
+                                </Typography>
                             </CardContent>
                         </ColorCard>
                         }

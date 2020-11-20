@@ -40,6 +40,10 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     },
     textRegularCenter: {
         textAlign: 'center',
+        color: theme.palette.primary.contrastText
+    },
+    textRegularCenterBottom: {
+        textAlign: 'center',
         color: theme.palette.primary.contrastText,
         marginBottom: '0.5rem'
     },
@@ -59,7 +63,8 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     },
     rateBox: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: '0.4rem'
     },
     goodRateBox: {
         width: '50%',
