@@ -12,7 +12,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import GiftsBox from '../../components/gifts/giftsBox'
-import giftsModal from '../../hoc/hasGiftsModal'
+import Gift from '../../components/gifts/gift'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
@@ -22,6 +22,7 @@ import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
+import GenericModal from '../../components/ui/modal/genericModal'
 /* import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
@@ -48,6 +49,8 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
+    const [open, setOpen] = useState(false)
+    const [gift, setGift] = useState({ description: '', title: '', locked: true })
 
     async function fetchData () {
         try {
@@ -101,12 +104,16 @@ function DashBoard (props) {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
-    function onStart () {
-        props.openModal()
+    function onOpenModal () {
+        openModal()
     }
 
-    function setGift (gift) {
-        props.setGift(gift)
+    function openModal () {
+        setOpen(true)
+    }
+
+    function closeModal () {
+        setOpen(false)
     }
 
     // after fetching, useImagesServices is running and initialize.
@@ -129,8 +136,9 @@ function DashBoard (props) {
     }, [isGlobalLoading])
 
     return (
-        <EventLayout >
-            {!(isLoading && isGlobalLoading) &&
+        <React.Fragment>
+            <EventLayout >
+                {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
@@ -202,12 +210,12 @@ function DashBoard (props) {
                                     ? <GiftResult
                                         translation={translation.challengeResultGiftText}
                                         gift={gifts}
-                                        onClick={onStart}
+                                        onClick={onOpenModal}
                                         setGift={setGift} />
                                     : <GiftsBox
                                         gifts={gifts}
                                         translation={translation.dashBoardGiftTitle}
-                                        onClick={onStart}
+                                        onClick={onOpenModal}
                                         setGift={setGift} />
                                 }
                             </CardContent>
@@ -223,11 +231,15 @@ function DashBoard (props) {
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
             </Box>
-            }
-        </EventLayout>
+                }
+            </EventLayout>
+            <GenericModal handleClose={closeModal} open={open}>
+                <Gift gift={gift} handleClose={closeModal} open={open}/>
+            </GenericModal>
+        </React.Fragment>
     )
 }
-export default giftsModal(DashBoard)
+export default DashBoard
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()
