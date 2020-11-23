@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import UserContext from '../../hooks/userContext'
+import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/ui/layout/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorCard } from '../../components/ui/card/ColorCard'
+import UserContext from '../../hooks/userContext'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/ui/progress/DashBoardChallengesProgress'
 import CloseIcon from '@material-ui/icons/Close'
@@ -23,11 +24,13 @@ import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
 import GenericModal from '../../components/ui/modal/genericModal'
-import EndgameInformations from '../../components/challenges/endGameInformation'
+import EndgameInformations from '../../components/dashboard/endGameInformation'
+import Profile from '../../components/dashboard/profile'
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
     END_GAME: 'endGame',
+    PROFILE: 'profile',
     MESSAGE: 'message',
     WIN: 'win'
 })
@@ -128,7 +131,13 @@ function DashBoard (props) {
             return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
             return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open}/>
+        case ModalStates.PROFILE:
+            return <Profile handleClose={closeModal} open={open}/>
         }
+    }
+
+    function onProfileClick () {
+        onOpenModal(ModalStates.PROFILE)
     }
 
     // after fetching, useImagesServices is running and initialize.
@@ -161,7 +170,11 @@ function DashBoard (props) {
                 <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
-                            <AvatarEvent user={user.avatarURL} />
+                            <ButtonBase
+                                focusRipple
+                                onClick={onProfileClick}>
+                                <AvatarEvent user={user.avatarURL} />
+                            </ButtonBase>
                             <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                 {user.nickname}
                             </Typography>
