@@ -23,12 +23,14 @@ import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
 import GenericModal from '../../components/ui/modal/genericModal'
-/* import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
-import { hourConverter } from '../../data/tools'
+import EndgameInformations from '../../components/challenges/endGameInformation'
 
-*/
+export const ModalStates = Object.freeze({
+    GIFT: 'gift',
+    END_GAME: 'endGame',
+    MESSAGE: 'message',
+    WIN: 'win'
+})
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -51,6 +53,7 @@ function DashBoard (props) {
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
+    const [modalState, setModalState] = useState(ModalStates.GIFT)
 
     async function fetchData () {
         try {
@@ -78,6 +81,11 @@ function DashBoard (props) {
         }
     }
 
+    function onOpenModal (state) {
+        setModalState(state)
+        setOpen(true)
+    }
+
     // initialize the all game, with user information, score,
     // result and start precaching service by sended gameStats with next imageChallengeUrl
     function initGame (content) {
@@ -98,22 +106,29 @@ function DashBoard (props) {
         setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
+
+        if (!availableChallenges) {
+            setTimeout(() => {
+                onOpenModal(ModalStates.END_GAME)
+            }, 1000)
+        }
     }
 
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
-    function onOpenModal () {
-        openModal()
-    }
-
-    function openModal () {
-        setOpen(true)
-    }
-
     function closeModal () {
         setOpen(false)
+    }
+
+    function getModalContent () {
+        switch (modalState) {
+        case ModalStates.GIFT:
+            return <Gift gift={gift} handleClose={closeModal} open={open}/>
+        case ModalStates.END_GAME:
+            return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open}/>
+        }
     }
 
     // after fetching, useImagesServices is running and initialize.
@@ -156,21 +171,13 @@ function DashBoard (props) {
                                 align={'center'}
                                 dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
                         </Box>
-                        {availableChallenges
-                            ? <Box className={classes.progressBarOverlay}>
+                        {availableChallenges &&
+                            <Box className={classes.progressBarOverlay}>
                                 <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
                                     {uiElements.progressBarMessageChunk}
                                 </Typography>
                                 <DashBoardChallengesProgress variant="determinate" progress={progress} />
                             </Box>
-                            : <React.Fragment>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                </Typography>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                </Typography>
-                            </React.Fragment>
                         }
                         {availableScores &&
                         <ColorCard>
@@ -210,12 +217,12 @@ function DashBoard (props) {
                                     ? <GiftResult
                                         translation={translation.challengeResultGiftText}
                                         gift={gifts}
-                                        onClick={onOpenModal}
+                                        onClick={() => onOpenModal(ModalStates.GIFT)}
                                         setGift={setGift} />
                                     : <GiftsBox
                                         gifts={gifts}
                                         translation={translation.dashBoardGiftTitle}
-                                        onClick={onOpenModal}
+                                        onClick={() => onOpenModal(ModalStates.GIFT)}
                                         setGift={setGift} />
                                 }
                             </CardContent>
@@ -234,7 +241,7 @@ function DashBoard (props) {
                 }
             </EventLayout>
             <GenericModal handleClose={closeModal} open={open}>
-                <Gift gift={gift} handleClose={closeModal} open={open}/>
+                {getModalContent()}
             </GenericModal>
         </React.Fragment>
     )
