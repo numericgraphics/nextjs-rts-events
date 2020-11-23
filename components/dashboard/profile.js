@@ -13,7 +13,7 @@ function Profile (props, ref) {
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
-                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: 'Votre Profil' }}/>
+                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: 'Choisissez votre nouveau avatar' }}/>
 
             </Box>
         </Grow>
