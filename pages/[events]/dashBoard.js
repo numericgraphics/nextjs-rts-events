@@ -223,9 +223,9 @@ function DashBoard (props) {
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
                 <PWAPrompt
                     delay={2000}
-                    promptOnVisit={1}
-                    timesToShow={100}
-                    permanentlyHideOnDismiss={false}
+                    copyTitle={`Add ${events} to home screen`}
+                    timesToShow={20}
+                    permanentlyHideOnDismiss={true}
                 />
             </Box>
             }
