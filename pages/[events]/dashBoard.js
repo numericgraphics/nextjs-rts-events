@@ -22,6 +22,7 @@ import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
+import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 /* import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
@@ -127,7 +128,6 @@ function DashBoard (props) {
             fetchData().then()
         }
     }, [isGlobalLoading])
-
     return (
         <EventLayout >
             {!(isLoading && isGlobalLoading) &&
@@ -162,6 +162,7 @@ function DashBoard (props) {
                                 <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
                                     dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                 </Typography>
+                                <HasTypeFormModal/>
                             </React.Fragment>
                         }
                         {availableScores &&

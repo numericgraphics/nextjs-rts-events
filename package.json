@@ -35,6 +35,7 @@
     "react-phone-input-material-ui": "^2.13.11",
     "react-swipeable-views": "^0.13.9",
     "react-swipeable-views-utils": "latest",
+    "react-typeform-embed": "^0.2.1",
     "remark": "^12.0.0",
     "remark-html": "^11.0.2"
   },
