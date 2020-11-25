@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
@@ -22,12 +23,10 @@ import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
-/* import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
-import { hourConverter } from '../../data/tools'
 
-*/
+const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
+    ssr: false
+})
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -222,6 +221,12 @@ function DashBoard (props) {
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
+                <PWAPrompt
+                    delay={2000}
+                    promptOnVisit={1}
+                    timesToShow={100}
+                    permanentlyHideOnDismiss={false}
+                />
             </Box>
             }
         </EventLayout>
