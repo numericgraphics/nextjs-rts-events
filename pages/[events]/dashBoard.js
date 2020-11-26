@@ -49,6 +49,7 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
+    const [gameStats, setGameStats] = useState()
 
     async function fetchData () {
         try {
@@ -95,6 +96,7 @@ function DashBoard (props) {
         setAvailableScores(dataProvider.getGameStats().currentScore > 0)
         setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
+        setGameStats(dataProvider.getGameStats())
         setLoading(false)
     }
 
@@ -162,7 +164,6 @@ function DashBoard (props) {
                                 <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
                                     dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
                                 </Typography>
-                                <HasTypeFormModal/>
                             </React.Fragment>
                         }
                         {availableScores &&
@@ -217,9 +218,12 @@ function DashBoard (props) {
                 </Slide>
                 <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
-                            {`${translation.dashBoardChallengesButton}`}
-                        </CustomDisabledButton>
+                        {availableChallenges
+                            ? <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} >
+                                {`${translation.dashBoardChallengesButton}`}
+                            </CustomDisabledButton>
+                            : <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} />
+                        }
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
