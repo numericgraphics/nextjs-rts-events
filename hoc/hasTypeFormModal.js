@@ -1,6 +1,5 @@
 import React from 'react'
 import { ReactTypeformEmbed } from 'react-typeform-embed'
-import { ColorBorderButton } from '../components/ui/button/ColorBorderButton'
 import Box from '@material-ui/core/Box'
 
 class HasTypeFormModal extends React.Component {
@@ -14,6 +13,8 @@ class HasTypeFormModal extends React.Component {
     }
 
     render () {
+        const Button = this.props.buttonComp
+
         return (
             <React.Fragment>
                 <ReactTypeformEmbed
@@ -29,9 +30,15 @@ class HasTypeFormModal extends React.Component {
                     }}
                 />
                 <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center', marginTop: 15, width: this.props.buttonWidth ? this.props.buttonWidth : '80%' }} >
-                    <ColorBorderButton key={'goToFeedBackForm'} variant="outlined" className={'buttonAlt'} style={{ width: '100%' }} onClick={this.openForm}>
+                    <Button
+                        color={this.props.color ? this.props.color : 'default'}
+                        key={'goToFeedBackForm'}
+                        variant={this.props.variant}
+                        className={this.props.buttonClassName ? this.props.buttonClassName : 'button'}
+                        style={{ width: '100%' }}
+                        onClick={this.openForm}>
                         {`${this.props.text}`}
-                    </ColorBorderButton>
+                    </Button>
                 </Box>
             </React.Fragment>
         )

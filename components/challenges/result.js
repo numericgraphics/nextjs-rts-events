@@ -109,10 +109,17 @@ function Result (props) {
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>
+                            <HasTypeFormModal
+                                text={translation.feedbackButton}
+                                score={gameStats && gameStats.currentScore}
+                                url={gameStats && gameStats.feedbackURL}
+                                buttonComp={ColorBorderButton}
+                                buttonClassName='buttonAlt'
+                                variant="outlined"
+                            />
                             <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonEnded}`}
                             </Button>
-                            <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} />
                         </React.Fragment>
                     }
                 </Box>

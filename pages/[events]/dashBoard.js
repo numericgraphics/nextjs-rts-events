@@ -31,6 +31,7 @@ import { hourConverter } from '../../data/tools' */
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformations from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
+import Button from '@material-ui/core/Button'
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -133,7 +134,14 @@ function DashBoard (props) {
     }
 
     function getFeedback () {
-        return <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} buttonWidth='100%' />
+        return <HasTypeFormModal
+            text={translation.feedbackButton}
+            score={gameStats && gameStats.currentScore}
+            url={gameStats && gameStats.feedbackURL}
+            buttonComp={Button}
+            variant="contained"
+            color="secondary"
+            buttonWidth='100%' />
     }
 
     function getModalContent () {
