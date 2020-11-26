@@ -14,12 +14,12 @@ function EndgameInformations (props, ref) {
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
-                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: 'Fin du jeu' }}/>
+                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: props.uiElements.noMoreChallengesChunk }}/>
                 <Typography variant='h4' className={[].join(' ')}
-                    dangerouslySetInnerHTML={{ __html: props.uiElements.noMoreChallengesChunk }}>
+                    dangerouslySetInnerHTML={{ __html: props.translation.feedbackTitle }}>
                 </Typography>
                 <Typography variant='subtitle2' className={[].join(' ')}
-                    dangerouslySetInnerHTML={{ __html: /* props.uiElements.finalResultScoreChunk */ 'Blalbalbla  Blalbalbla Blalbalbla Blalbalbla Blalbalbla' }} >
+                    dangerouslySetInnerHTML={{ __html: props.translation.feedbackMessage }} >
                 </Typography>
                 {props.button}
             </Box>

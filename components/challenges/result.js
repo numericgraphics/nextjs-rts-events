@@ -110,7 +110,7 @@ function Result (props) {
                         </React.Fragment>
                         : <React.Fragment>
                             <HasTypeFormModal
-                                text={translation.feedbackButton}
+                                text={translation.feedbackButtonOnResult}
                                 score={gameStats && gameStats.currentScore}
                                 url={gameStats && gameStats.feedbackURL}
                                 buttonComp={ColorBorderButton}
