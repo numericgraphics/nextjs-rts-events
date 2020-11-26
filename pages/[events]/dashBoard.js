@@ -110,11 +110,11 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
 
-        if (!availableChallenges) {
-            setTimeout(() => {
-                onOpenModal(ModalStates.END_GAME)
-            }, 1000)
-        }
+        // if (!availableChallenges) {
+        //     setTimeout(() => {
+        //         onOpenModal(ModalStates.END_GAME)
+        //     }, 1000)
+        // }
     }
 
     async function startGame () {
@@ -132,7 +132,7 @@ function DashBoard (props) {
         case ModalStates.END_GAME:
             return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open}/>
         case ModalStates.PROFILE:
-            return <Profile handleClose={closeModal} open={open}/>
+            return <Profile handleClose={closeModal} open={open} avatars={dataProvider.getAvatars()}/>
         }
     }
 
@@ -171,7 +171,6 @@ function DashBoard (props) {
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
                             <ButtonBase
-                                focusRipple
                                 onClick={onProfileClick}>
                                 <AvatarEvent user={user.avatarURL} />
                             </ButtonBase>

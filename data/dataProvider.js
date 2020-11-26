@@ -92,6 +92,10 @@ class DataProvider {
     hasAvailableChallenges () {
         return this.data.gameStats.hasAvailableChallenges
     }
+
+    getAvatars () {
+        return this.data.event.avatars
+    }
 }
 
 const DataProviderInstance = new DataProvider()

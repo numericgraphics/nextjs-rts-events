@@ -37,6 +37,11 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: '0rem!important'
     },
     root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             border: 'none'
         },
@@ -111,6 +116,29 @@ export const useStyles = makeStyles((theme) => ({
     },
     phoneInputBorder: {
         boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
+    },
+    gridList: {
+        width: '100%',
+        height: '50vh',
+        margin: 0,
+        marginBottom: '3vw!important',
+        '& .MuiGridListTile-root': {
+            opacity: 0.7,
+            border: 'solid 5px rgba(0, 0, 0, 0)'
+        },
+        '&::-webkit-scrollbar': {
+            display: 'none'
+        }
+    },
+    selected: {
+        border: `solid 5px ${theme.palette.secondary.main}!important`,
+        borderRadius: '8px',
+        // outlineOffset: '-4px',
+        // filter: 'drop-shadow(0px 0px 3px #333)!important',
+        WebkitAnimationName: 'avatarSelected',
+        WebkitAnimationDuration: '0.8s',
+        WebkitAnimationTimingFunction: 'ease-in',
+        WebkitAnimationFillMode: 'forwards'
     }
 }))
 export const styles = {
