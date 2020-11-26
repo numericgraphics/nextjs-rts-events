@@ -1,48 +1,40 @@
-import React from 'react'
-import { ReactTypeformEmbed } from 'react-typeform-embed'
-import Box from '@material-ui/core/Box'
+import React, { useEffect, useRef } from 'react'
+import * as typeformEmbed from '@typeform/embed'
 
-class HasTypeFormModal extends React.Component {
-    constructor (props) {
-        super(props)
-        this.openForm = this.openForm.bind(this)
-    }
+const hasTypeFormModal = WrappedComponent => {
+    // eslint-disable-next-line react/display-name
+    return (props) => {
+        const typeformRef = useRef(null)
+        const gameStats = props.gameStats
 
-    openForm () {
-        this.typeformEmbed.typeform.open()
-    }
-
-    render () {
-        const Button = this.props.buttonComp
+        useEffect(() => {
+            typeformEmbed.makePopup(
+                `${gameStats && gameStats.feedbackURL}`,
+                {
+                    mode: 'drawer_left',
+                    open: 'time',
+                    openValue: 30,
+                    autoClose: 3,
+                    hideScrollbars: true,
+                    onSubmit: function () {
+                        console.log('Typeform successfully submitted')
+                        props.setOpenFeedback(false)
+                    },
+                    onReady: function () {
+                        console.log('Typeform is ready')
+                    },
+                    onClose: function () {
+                        console.log('Typeform is closed')
+                        props.setOpenFeedback(false)
+                    }
+                }
+            )
+        }, [typeformRef])
 
         return (
-            <React.Fragment>
-                <ReactTypeformEmbed
-                    popup
-                    autoOpen={false}
-                    url={`${this.props.url}`}
-                    hideHeaders
-                    hideFooter
-                    buttonText="Go!"
-                    style={{ top: 100, zIndex: 0 }}
-                    ref={tf => {
-                        this.typeformEmbed = tf
-                    }}
-                />
-                <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center', marginTop: 15, width: this.props.buttonWidth ? this.props.buttonWidth : '80%' }} >
-                    <Button
-                        color={this.props.color ? this.props.color : 'default'}
-                        key={'goToFeedBackForm'}
-                        variant={this.props.variant}
-                        className={this.props.buttonClassName ? this.props.buttonClassName : 'button'}
-                        style={{ width: '100%' }}
-                        onClick={this.openForm}>
-                        {`${this.props.text}`}
-                    </Button>
-                </Box>
-            </React.Fragment>
+            <div ref={typeformRef} ></div>
         )
     }
 }
 
-export default HasTypeFormModal
+export default hasTypeFormModal
