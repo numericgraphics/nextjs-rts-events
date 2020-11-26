@@ -223,7 +223,11 @@ function DashBoard (props) {
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
                 <PWAPrompt
                     delay={2000}
-                    copyTitle={`Add ${events} to home screen`}
+                    copyTitle={`Ajouter ${events} sur votre page d'accueil`}
+                    copyBody={'Ce site web dispose d\'une fonctionnalité d\'application. Ajoutez-la à votre écran d\'accueil pour l\'utiliser en plein écran et hors ligne'}
+                    copyShareButtonLabel={'1) Appuyez sur le bouton "Partager" dans la barre de menu ci-dessous.'}
+                    copyAddHomeButtonLabel={'2) Appuyez sur "Ajouter à l\'écran d\'accueil".'}
+                    copyClosePrompt={'Annuler'}
                     timesToShow={20}
                     permanentlyHideOnDismiss={true}
                 />

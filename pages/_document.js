@@ -11,12 +11,6 @@ export default class MyDocument extends Document {
         return (
             <Html>
                 <Head>
-                    <title>Radio Télévision Suisse - Popquiz</title>
-                    < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
-                    <meta
-                        name="description"
-                        content="RTS Events"
-                    />
                     <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
                     <link rel='shortcut icon' href='/favicon.ico' />
 
