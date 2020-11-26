@@ -132,8 +132,8 @@ function DashBoard (props) {
         setOpen(false)
     }
 
-    function getFeedbackButton () {
-        return <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} />
+    function getFeedback () {
+        return <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} buttonWidth='100%' />
     }
 
     function getModalContent () {
@@ -141,7 +141,7 @@ function DashBoard (props) {
         case ModalStates.GIFT:
             return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
-            return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open} button={getFeedbackButton()}/>
+            return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open} button={getFeedback()} />
         case ModalStates.PROFILE:
             return <Profile handleClose={closeModal} open={open}/>
         }

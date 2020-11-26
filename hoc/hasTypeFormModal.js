@@ -14,9 +14,8 @@ class HasTypeFormModal extends React.Component {
     }
 
     render () {
-        console.log(this.props.test)
         return (
-            <div className="ExamplePopup">
+            <React.Fragment>
                 <ReactTypeformEmbed
                     popup
                     autoOpen={false}
@@ -29,12 +28,12 @@ class HasTypeFormModal extends React.Component {
                         this.typeformEmbed = tf
                     }}
                 />
-                <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center', marginTop: 15 }} >
+                <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center', marginTop: 15, width: this.props.buttonWidth ? this.props.buttonWidth : '80%' }} >
                     <ColorBorderButton key={'goToFeedBackForm'} variant="outlined" className={'buttonAlt'} style={{ width: '100%' }} onClick={this.openForm}>
                         {`${this.props.text}`}
                     </ColorBorderButton>
                 </Box>
-            </div>
+            </React.Fragment>
         )
     }
 }

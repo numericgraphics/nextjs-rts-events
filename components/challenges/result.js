@@ -13,6 +13,7 @@ import { useStylesGlobal } from '../../styles/jsx/global.style'
 import { ColorCard } from '../ui/card/ColorCard'
 import CardContent from '@material-ui/core/CardContent'
 import { useStyles } from '../../styles/jsx/pages/result.style'
+import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
@@ -107,9 +108,12 @@ function Result (props) {
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
-                        : <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
-                            {`${translation.challengeResultButtonEnded}`}
-                        </Button>
+                        : <React.Fragment>
+                            <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
+                                {`${translation.challengeResultButtonEnded}`}
+                            </Button>
+                            <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} />
+                        </React.Fragment>
                     }
                 </Box>
             </Box>
