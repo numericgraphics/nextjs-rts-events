@@ -29,7 +29,7 @@ class HasTypeFormModal extends React.Component {
                         this.typeformEmbed = tf
                     }}
                 />
-                <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }} >
+                <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center', marginTop: 15 }} >
                     <ColorBorderButton key={'goToFeedBackForm'} variant="outlined" className={'buttonAlt'} style={{ width: '100%' }} onClick={this.openForm}>
                         {`${this.props.text}`}
                     </ColorBorderButton>

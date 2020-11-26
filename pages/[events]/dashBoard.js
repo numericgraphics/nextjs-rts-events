@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import UserContext from '../../hooks/userContext'
+import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/ui/layout/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorCard } from '../../components/ui/card/ColorCard'
+import UserContext from '../../hooks/userContext'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/ui/progress/DashBoardChallengesProgress'
 import CloseIcon from '@material-ui/icons/Close'
@@ -12,7 +13,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import GiftsBox from '../../components/gifts/giftsBox'
-import giftsModal from '../../hoc/hasGiftsModal'
+import Gift from '../../components/gifts/gift'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
@@ -26,9 +27,18 @@ import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 /* import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
-import { hourConverter } from '../../data/tools'
+import { hourConverter } from '../../data/tools' */
+import GenericModal from '../../components/ui/modal/genericModal'
+import EndgameInformations from '../../components/dashboard/endGameInformation'
+import Profile from '../../components/dashboard/profile'
 
-*/
+export const ModalStates = Object.freeze({
+    GIFT: 'gift',
+    END_GAME: 'endGame',
+    PROFILE: 'profile',
+    MESSAGE: 'message',
+    WIN: 'win'
+})
 
 function DashBoard (props) {
     const stylesGlobal = useStylesGlobal()
@@ -50,6 +60,9 @@ function DashBoard (props) {
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
     const [gameStats, setGameStats] = useState()
+    const [open, setOpen] = useState(false)
+    const [gift, setGift] = useState({ description: '', title: '', locked: true })
+    const [modalState, setModalState] = useState(ModalStates.GIFT)
 
     async function fetchData () {
         try {
@@ -77,6 +90,11 @@ function DashBoard (props) {
         }
     }
 
+    function onOpenModal (state) {
+        setModalState(state)
+        setOpen(true)
+    }
+
     // initialize the all game, with user information, score,
     // result and start precaching service by sended gameStats with next imageChallengeUrl
     function initGame (content) {
@@ -98,18 +116,39 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
+
+        if (!availableChallenges) {
+            setTimeout(() => {
+                onOpenModal(ModalStates.END_GAME)
+            }, 1000)
+        }
     }
 
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
-    function onStart () {
-        props.openModal()
+    function closeModal () {
+        setOpen(false)
     }
 
-    function setGift (gift) {
-        props.setGift(gift)
+    function getFeedbackButton () {
+        return <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} />
+    }
+
+    function getModalContent () {
+        switch (modalState) {
+        case ModalStates.GIFT:
+            return <Gift gift={gift} handleClose={closeModal} open={open}/>
+        case ModalStates.END_GAME:
+            return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open} button={getFeedbackButton()}/>
+        case ModalStates.PROFILE:
+            return <Profile handleClose={closeModal} open={open}/>
+        }
+    }
+
+    function onProfileClick () {
+        onOpenModal(ModalStates.PROFILE)
     }
 
     // after fetching, useImagesServices is running and initialize.
@@ -131,8 +170,9 @@ function DashBoard (props) {
         }
     }, [isGlobalLoading])
     return (
-        <EventLayout >
-            {!(isLoading && isGlobalLoading) &&
+        <React.Fragment>
+            <EventLayout >
+                {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
@@ -140,7 +180,11 @@ function DashBoard (props) {
                 <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
-                            <AvatarEvent user={user.avatarURL} />
+                            <ButtonBase
+                                focusRipple
+                                onClick={onProfileClick}>
+                                <AvatarEvent user={user.avatarURL} />
+                            </ButtonBase>
                             <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                 {user.nickname}
                             </Typography>
@@ -150,21 +194,13 @@ function DashBoard (props) {
                                 align={'center'}
                                 dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
                         </Box>
-                        {availableChallenges
-                            ? <Box className={classes.progressBarOverlay}>
+                        {availableChallenges &&
+                            <Box className={classes.progressBarOverlay}>
                                 <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
                                     {uiElements.progressBarMessageChunk}
                                 </Typography>
                                 <DashBoardChallengesProgress variant="determinate" progress={progress} />
                             </Box>
-                            : <React.Fragment>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                </Typography>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                </Typography>
-                            </React.Fragment>
                         }
                         {availableScores &&
                         <ColorCard>
@@ -204,12 +240,12 @@ function DashBoard (props) {
                                     ? <GiftResult
                                         translation={translation.challengeResultGiftText}
                                         gift={gifts}
-                                        onClick={onStart}
+                                        onClick={() => onOpenModal(ModalStates.GIFT)}
                                         setGift={setGift} />
                                     : <GiftsBox
                                         gifts={gifts}
                                         translation={translation.dashBoardGiftTitle}
-                                        onClick={onStart}
+                                        onClick={() => onOpenModal(ModalStates.GIFT)}
                                         setGift={setGift} />
                                 }
                             </CardContent>
@@ -218,21 +254,22 @@ function DashBoard (props) {
                 </Slide>
                 <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        {availableChallenges
-                            ? <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} >
-                                {`${translation.dashBoardChallengesButton}`}
-                            </CustomDisabledButton>
-                            : <HasTypeFormModal text={translation.feedbackButton} score={gameStats && gameStats.currentScore} url={gameStats && gameStats.feedbackURL} />
-                        }
+                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges} >
+                            {`${translation.dashBoardChallengesButton}`}
+                        </CustomDisabledButton>
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
             </Box>
-            }
-        </EventLayout>
+                }
+            </EventLayout>
+            <GenericModal handleClose={closeModal} open={open}>
+                {getModalContent()}
+            </GenericModal>
+        </React.Fragment>
     )
 }
-export default giftsModal(DashBoard)
+export default DashBoard
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()
