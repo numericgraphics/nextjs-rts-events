@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { isSafari, isMobile, isIOS } from 'react-device-detect'
 import dynamic from 'next/dynamic'
 import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
@@ -221,7 +222,7 @@ function DashBoard (props) {
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
-                <PWAPrompt
+                {(isSafari && isMobile && isIOS) && <PWAPrompt
                     delay={2000}
                     copyTitle={`Ajouter ${events} sur votre page d'accueil`}
                     copyBody={'Ce site web dispose d\'une fonctionnalité d\'application. Ajoutez-la à votre écran d\'accueil pour l\'utiliser en plein écran et hors ligne'}
@@ -230,7 +231,7 @@ function DashBoard (props) {
                     copyClosePrompt={'Annuler'}
                     timesToShow={20}
                     permanentlyHideOnDismiss={true}
-                />
+                />}
             </Box>
             }
         </EventLayout>
