@@ -64,6 +64,7 @@ function DashBoard (props) {
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
+    let timeout
 
     async function fetchData () {
         try {
@@ -119,7 +120,7 @@ function DashBoard (props) {
         setLoading(false)
 
         if (!availableChallenges) {
-            setTimeout(() => {
+            timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
             }, 1000)
         }
@@ -158,6 +159,12 @@ function DashBoard (props) {
     function onProfileClick () {
         onOpenModal(ModalStates.PROFILE)
     }
+
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [])
 
     // after fetching, useImagesServices is running and initialize.
     useEffect(() => {

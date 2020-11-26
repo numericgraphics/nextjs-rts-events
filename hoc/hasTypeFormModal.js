@@ -24,7 +24,7 @@ class HasTypeFormModal extends React.Component {
                     hideHeaders
                     hideFooter
                     buttonText="Go!"
-                    style={{ top: 100 }}
+                    style={{ top: 100, zIndex: 0 }}
                     ref={tf => {
                         this.typeformEmbed = tf
                     }}
