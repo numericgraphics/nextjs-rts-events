@@ -13,6 +13,7 @@ import { useStylesGlobal } from '../../styles/jsx/global.style'
 import { ColorCard } from '../ui/card/ColorCard'
 import CardContent from '@material-ui/core/CardContent'
 import { useStyles } from '../../styles/jsx/pages/result.style'
+import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
@@ -23,6 +24,7 @@ function Result (props) {
     const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
     const { dataProvider, uiElementsService } = useContext(UserContext)
+    const [openFeedback, setOpenFeedback] = useState(false)
 
     async function continueGame () {
         setShowComponent(false)
@@ -62,10 +64,10 @@ function Result (props) {
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
     }, [])
-
     return (
         <Fade in={showComponent} timeout={1000}>
             <Box className='content' >
+                { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
                 <Box className='topZoneResult'>
                     <Box className={classes.content}>
                         <Box className={classes.header}>
@@ -107,9 +109,14 @@ function Result (props) {
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
-                        : <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
-                            {`${translation.challengeResultButtonEnded}`}
-                        </Button>
+                        : <React.Fragment>
+                            <ColorBorderButton key={'openFeedBackModal'} variant="outlined" className={'buttonAlt'} onClick={() => setOpenFeedback(!openFeedback)}>
+                                {`${translation.feedbackButtonOnResult}`}
+                            </ColorBorderButton>
+                            <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
+                                {`${translation.challengeResultButtonEnded}`}
+                            </Button>
+                        </React.Fragment>
                     }
                 </Box>
             </Box>

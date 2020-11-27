@@ -1,106 +1,61 @@
-import React, { createRef, useEffect } from 'react'
-import Container from '@material-ui/core/Container'
+import React, { createRef, useEffect, useRef, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import Grow from '@material-ui/core/Grow'
-import { useTweenMax } from '../../hooks/useTweenMax'
-import { isIOS } from '../../utils'
+import { useHeight } from '../../hooks/useHeight'
+import { useStyles } from '../../styles/jsx/components/modal/hasGiftsModal.style'
+import IconButton from '@material-ui/core/IconButton'
+import { closeIcon, lockIcon } from '../../data/icon'
+import Slide from '@material-ui/core/Slide/Slide'
 
-const styles = {
-    slide: {
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        zIndex: 0,
-        backgroundColor: 'gray'
-    },
-    slideGradient: {
-        position: 'absolute',
-        width: '100vw',
-        height: '70vh',
-        flexGrow: 1,
-        zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 35%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)'
-    },
-    slideTitle: {
-        width: '100%',
-        minHeight: '10vh',
-        alignSelf: 'center',
-        alignContent: 'center',
-        textAlign: 'center',
-        fontSize: '2rem',
-        color: 'green',
-        paddingBottom: 20
-    },
-    slideTitleTypo: {
-        fontFamily: 'srgssr-type-BdIt',
-        lineHeight: 1,
-        padding: 10,
-        backgroundColor: '#409AD3',
-        color: 'white'
-    },
-    slideBody: {
-        position: 'absolute',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        minHeight: '40vh',
-        zIndex: 2
-    },
-    slideBodyIOS: {
-        position: 'absolute',
-        top: '30vh',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        minHeight: '35vh',
-        zIndex: 2
-    },
-    slideTeaser: {
-        fontFamily: 'srgssr-type-Bd',
-        color: 'white'
+function Gift (props, ref) {
+    const classes = useStyles()
+    const height = useHeight()
+    const boxTextRef = useRef()
+    const lockIconRef = createRef()
+    const [boxHeight, setBoxHeight] = useState(0)
+
+    function handleResize () {
+        setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
     }
-}
-
-function getRandomInt (max) {
-    return Math.floor(Math.random() * Math.floor(max))
-}
-
-export default function Gift (props) {
-    const spintTitle = createRef()
-    const { teaser, title, imageURL } = props.data
-    const [spinInHandler] = useTweenMax(spintTitle, 1.2, {
-        rotation: -getRandomInt(6),
-        transformOrigin: 'center'
-    })
-    const [spinOutHandler] = useTweenMax(spintTitle, 0.2, {
-        rotation: 0,
-        transformOrigin: 'center'
-    })
 
     useEffect(() => {
-        props.selected ? spinInHandler() : spinOutHandler()
-    }, [props.selected])
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [handleResize])
+
+    useEffect(() => {
+        if (open) {
+            setTimeout(handleResize, 10)
+        }
+    }, [open])
 
     return (
-        <Box>
-            <Box style={styles.slideGradient}/>
-            <Box style={{ ...styles.slide, backgroundImage: `url(${imageURL})`, backgroundPosition: 'center' }}>
-                <Container style={isIOS() ? styles.slideBodyIOS : styles.slideBody}>
-                    <Box ref={spintTitle} style={styles.slideTitle}>
-                        <Typography variant="h4" style={styles.slideTitleTypo}>{title}</Typography>
+        <Slide direction="up" in={props.open} timeout={500} mountOnEnter unmountOnExit>
+            <Box ref={ref}
+                className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
+                style={{ backgroundImage: `url(${props.gift.imageURL})`, height: height }}
+                tabIndex={'-1'}>
+                <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
+                    { closeIcon({ className: classes.closeIcon }) }
+                </IconButton>
+                <Box className={classes.footer} style={{ height: height }}>
+                    <Box className={classes.gradient} />
+                    <Box className={classes.containerText} ref={ boxTextRef }>
+                        <Typography variant="h2" className={classes.title} align={'center'}
+                            dangerouslySetInnerHTML={{ __html: props.gift.title }}>
+                        </Typography>
+                        <Typography variant="subtitle2" className={classes.description} align={'center'}
+                            dangerouslySetInnerHTML={{ __html: props.gift.message }}>
+                        </Typography>
                     </Box>
-                    <Grow in={props.selected}
-                        style={{ transformOrigin: '50 50 0' }}
-                        {...(props.selected ? { timeout: 1000 } : {})}>
-                        <Typography style={styles.slideTeaser} variant="h5" align={'center'}>{teaser}</Typography>
-                    </Grow>
-                </Container>
+                    {props.gift.locked ? <Box className={classes.lockContainer} style={{ bottom: boxHeight - 1 }}>
+                        {lockIcon({ ref: lockIconRef, className: classes.lock })}
+                    </Box> : null }
+                </Box>
             </Box>
-        </Box>
+        </Slide>
     )
 }
+export default React.forwardRef(Gift)

@@ -19,6 +19,7 @@ import VideoPlayer from '../components/ui/video/VideoPlayer'
 import useDeviceDetect from '../hooks/useDeviceDetect'
 import useNetwork from '../hooks/useNetwork'
 import useAppVisibility from '../hooks/useAppVisivility'
+import Head from 'next/head'
 
 function MyApp ({ Component, pageProps }) {
     const netWorkStatus = useNetwork()
@@ -162,12 +163,24 @@ function MyApp ({ Component, pageProps }) {
             setRouteChange(true)
         }
         router.events.on('routeChangeStart', handleRouteChange)
+
+        return () => {
+            router.events.remove('routeChangeStart', handleRouteChange)
+        }
     }, [])
 
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, uiElementsService: UiElementsServices, store }}>
             { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
             {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
+            <Head>
+                <title>RTS - Pop quiz</title>
+                < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+                <meta
+                    name="description"
+                    content={'RTS - Pop quiz'}
+                />
+            </Head>
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
                 <Component {...pageProps} />
@@ -175,7 +188,6 @@ function MyApp ({ Component, pageProps }) {
                     ref={player}
                     videoSource={videoSource}
                     videoPoster={videoPoster}
-                    // autoPlay={videoAutoPlay}
                     showVideo={showVideo}
                     blurVideo={blurVideo}
                     style={{ visibility: videoVisible ? 'visible' : 'hidden' }}
