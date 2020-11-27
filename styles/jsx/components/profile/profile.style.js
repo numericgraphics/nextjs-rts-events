@@ -128,7 +128,12 @@ export const useStyles = makeStyles((theme) => ({
         },
         '&::-webkit-scrollbar': {
             display: 'none'
+        },
+        '& .MuiAvatar-root': {
+            width: 'auto',
+            height: 'auto'
         }
+
     },
     selected: {
         border: `solid 5px ${theme.palette.secondary.main}!important`,

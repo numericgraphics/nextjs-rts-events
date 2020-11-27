@@ -6,9 +6,11 @@ import Grow from '@material-ui/core/Grow'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
+import Avatar from '@material-ui/core/Avatar'
 
 function Profile (props, ref) {
     const classes = useStyles()
+    const { open, avatars } = props
     const [selected, setSelected] = useState(undefined)
 
     function onListItemClick (index) {
@@ -25,7 +27,7 @@ function Profile (props, ref) {
 
     return (
         <Grow
-            in={props.open}
+            in={open}
             timeout={1000} >
             <Box ref={ref}
                 className={classes.modalContent}
@@ -35,13 +37,13 @@ function Profile (props, ref) {
                     className={'modal-title'}
                     align={'center'}
                     dangerouslySetInnerHTML={{ __html: 'Choisissez votre nouvel avatar' }}/>
-                <GridList cellHeight={100} className={classes.gridList} cols={3}>
-                    {props.avatars.map((tile, index) => (
+                <GridList cellHeight={'auto'} className={classes.gridList} cols={3}>
+                    {avatars.map((tile, index) => (
                         <GridListTile
                             key={index}
                             onClick={() => onListItemClick(index)}
                             className={[selected === index ? classes.selected : null].join(' ')}>
-                            <img src={tile} alt={'avatar'} />
+                            <Avatar src={tile}/>
                         </GridListTile>
                     ))}
                 </GridList>

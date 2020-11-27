@@ -125,6 +125,12 @@ function DashBoard (props) {
         setOpen(false)
     }
 
+    // TODO check if getAvatars function return the current avatar url
+    // if not add it to the list
+    function getAvatars () {
+        return dataProvider.getAvatars()
+    }
+
     function getModalContent () {
         switch (modalState) {
         case ModalStates.GIFT:
@@ -132,7 +138,7 @@ function DashBoard (props) {
         case ModalStates.END_GAME:
             return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open}/>
         case ModalStates.PROFILE:
-            return <Profile handleClose={closeModal} open={open} avatars={dataProvider.getAvatars()}/>
+            return <Profile handleClose={closeModal} open={open} avatars={getAvatars()}/>
         }
     }
 
