@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { isSafari, isMobile, isIOS } from 'react-device-detect'
+import dynamic from 'next/dynamic'
+import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/ui/layout/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorCard } from '../../components/ui/card/ColorCard'
-import UserContext from '../../hooks/userContext'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/ui/progress/DashBoardChallengesProgress'
 import CloseIcon from '@material-ui/icons/Close'
@@ -26,6 +28,10 @@ import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformations from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
+
+const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
+    ssr: false
+})
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -268,6 +274,16 @@ function DashBoard (props) {
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
+                {(isSafari && isMobile && isIOS) && <PWAPrompt
+                    delay={2000}
+                    copyTitle={'Ajouter Pop quiz sur votre page d\'accueil'}
+                    copyBody={'Ce site web dispose d\'une fonctionnalité d\'application. Ajoutez-la à votre écran d\'accueil pour l\'utiliser en plein écran et hors ligne'}
+                    copyShareButtonLabel={'1) Appuyez sur le bouton "Partager" dans la barre de menu ci-dessous.'}
+                    copyAddHomeButtonLabel={'2) Appuyez sur "Ajouter à l\'écran d\'accueil".'}
+                    copyClosePrompt={'Annuler'}
+                    timesToShow={20}
+                    permanentlyHideOnDismiss={true}
+                />}
             </Box>
                 }
             </EventLayout>

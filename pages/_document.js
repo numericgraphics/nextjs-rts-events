@@ -11,6 +11,12 @@ export default class MyDocument extends Document {
             <Html>
                 <Head>
                     <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
+                    <link rel='shortcut icon' href='/favicon.ico' />
+
+                    <link href="/icons/touch-icon-iphone.png" rel="apple-touch-icon"/>
+                    <link href="/icons/touch-icon-ipad.png" rel="apple-touch-icon" sizes="76x76"/>
+                    <link href="/icons/touch-icon-iphone-retina.png" rel="apple-touch-icon" sizes="120x120"/>
+                    <link href="/icons/touch-icon-ipad-retina.png" rel="apple-touch-icon" sizes="152x152"/>
                 </Head>
                 <body>
                     <Main />
