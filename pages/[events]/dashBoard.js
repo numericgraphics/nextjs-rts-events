@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
@@ -57,6 +57,7 @@ function DashBoard (props) {
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
+    const test = useRef()
 
     async function fetchData () {
         try {
@@ -178,7 +179,7 @@ function DashBoard (props) {
                         <Box className={classes.header}>
                             <ButtonBase
                                 onClick={onProfileClick}>
-                                <AvatarEvent user={user.avatarURL} />
+                                <AvatarEvent ref={test} user={user.avatarURL} />
                             </ButtonBase>
                             <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                 {user.nickname}

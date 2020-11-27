@@ -7,10 +7,32 @@ import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import Avatar from '@material-ui/core/Avatar'
+import Router from 'next/router'
 
-function Profile (props, ref) {
+function Profile (props, ref, avatarRef) {
+    async function changeAvatar (events, url) {
+        try {
+            // const params = (new URL(document.location)).searchParams
+            // const date = params.get('date') ? params.get('date') : null
+            // const time = params.get('time') ? params.get('time') : null
+            const bodyContent = { eventName: events, avatarURL: url }
+            const response = await fetch('/api/changeAvatar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyContent)
+            })
+            if (response.status === 200) {
+                const content = await response.json()
+                console.log(content)
+                await Router.reload()
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
     const classes = useStyles()
-    const { open, avatars } = props
+    const { open, avatars, handleClose } = props
     const [selected, setSelected] = useState(undefined)
 
     function onListItemClick (index) {
@@ -18,7 +40,9 @@ function Profile (props, ref) {
     }
 
     function onValidate () {
-        console.log('onValidate', selected)
+        changeAvatar('popquiz', avatars[selected])
+        handleClose()
+        console.log('onValidate', avatars[selected])
     }
 
     useEffect(() => {
