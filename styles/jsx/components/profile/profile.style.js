@@ -17,9 +17,9 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         width: '90%',
-        minHeight: 200,
+        minHeight: '70vh',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         backgroundColor: theme.palette.primary.light,
         color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
@@ -111,9 +111,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     phoneInputBorder: {
         boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
-    },
-    subTitle: {
-        marginBottom: '15px'
     }
 }))
 export const styles = {

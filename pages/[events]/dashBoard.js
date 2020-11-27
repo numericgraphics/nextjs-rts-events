@@ -14,7 +14,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import GiftsBox from '../../components/gifts/giftsBox'
-import giftsModal from '../../hoc/hasGiftsModal'
+import Gift from '../../components/gifts/gift'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
 import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
@@ -24,9 +24,21 @@ import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
+import HasTypeFormModal from '../../hoc/hasTypeFormModal'
+import GenericModal from '../../components/ui/modal/genericModal'
+import EndgameInformations from '../../components/dashboard/endGameInformation'
+import Profile from '../../components/dashboard/profile'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
+})
+
+export const ModalStates = Object.freeze({
+    GIFT: 'gift',
+    END_GAME: 'endGame',
+    PROFILE: 'profile',
+    MESSAGE: 'message',
+    WIN: 'win'
 })
 
 function DashBoard (props) {
@@ -48,6 +60,12 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
+    const [gameStats, setGameStats] = useState()
+    const [open, setOpen] = useState(false)
+    const [gift, setGift] = useState({ description: '', title: '', locked: true })
+    const [modalState, setModalState] = useState(ModalStates.GIFT)
+    const [openFeedback, setOpenFeedback] = useState(false)
+    let timeout
 
     async function fetchData () {
         try {
@@ -75,6 +93,11 @@ function DashBoard (props) {
         }
     }
 
+    function onOpenModal (state) {
+        setModalState(state)
+        setOpen(true)
+    }
+
     // initialize the all game, with user information, score,
     // result and start precaching service by sended gameStats with next imageChallengeUrl
     function initGame (content) {
@@ -94,20 +117,55 @@ function DashBoard (props) {
         setAvailableScores(dataProvider.getGameStats().currentScore > 0)
         setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
+        setGameStats(dataProvider.getGameStats())
         setLoading(false)
+
+        if (!availableChallenges) {
+            timeout = setTimeout(() => {
+                onOpenModal(ModalStates.END_GAME)
+            }, 1000)
+        }
     }
 
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
-    function onStart () {
-        props.openModal()
+    function closeModal () {
+        setOpen(false)
     }
 
-    function setGift (gift) {
-        props.setGift(gift)
+    function onClickFeedback () {
+        closeModal()
+        setOpenFeedback(!openFeedback)
     }
+
+    function getFeedBack () {
+        return <CustomDisabledButton
+            color="secondary"
+            variant="contained"
+            className={'button'}
+            onClick={() => onClickFeedback()} >
+            {`${translation.feedbackButtonOnDashboard}`}
+        </CustomDisabledButton>
+    }
+
+    function getModalContent () {
+        switch (modalState) {
+        case ModalStates.GIFT:
+            return <Gift gift={gift} handleClose={closeModal} open={open}/>
+        case ModalStates.END_GAME:
+            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
+        case ModalStates.PROFILE:
+            return <Profile handleClose={closeModal} open={open}/>
+        }
+    }
+
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [])
 
     // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
@@ -127,10 +185,12 @@ function DashBoard (props) {
             fetchData().then()
         }
     }, [isGlobalLoading])
-
     return (
-        <EventLayout >
-            {!(isLoading && isGlobalLoading) &&
+        <React.Fragment>
+            {/* openFeedback && <MyTypeform/> */}
+            { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
+            <EventLayout >
+                {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
@@ -148,21 +208,13 @@ function DashBoard (props) {
                                 align={'center'}
                                 dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
                         </Box>
-                        {availableChallenges
-                            ? <Box className={classes.progressBarOverlay}>
+                        {availableChallenges &&
+                            <Box className={classes.progressBarOverlay}>
                                 <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
                                     {uiElements.progressBarMessageChunk}
                                 </Typography>
                                 <DashBoardChallengesProgress variant="determinate" progress={progress} />
                             </Box>
-                            : <React.Fragment>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}>
-                                </Typography>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterBottom].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.finalResultScoreChunk }} >
-                                </Typography>
-                            </React.Fragment>
                         }
                         {availableScores &&
                         <ColorCard>
@@ -202,12 +254,12 @@ function DashBoard (props) {
                                     ? <GiftResult
                                         translation={translation.challengeResultGiftText}
                                         gift={gifts}
-                                        onClick={onStart}
+                                        onClick={() => onOpenModal(ModalStates.GIFT)}
                                         setGift={setGift} />
                                     : <GiftsBox
                                         gifts={gifts}
                                         translation={translation.dashBoardGiftTitle}
-                                        onClick={onStart}
+                                        onClick={() => onOpenModal(ModalStates.GIFT)}
                                         setGift={setGift} />
                                 }
                             </CardContent>
@@ -216,7 +268,7 @@ function DashBoard (props) {
                 </Slide>
                 <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
+                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges} >
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
                     </Box>
@@ -233,11 +285,15 @@ function DashBoard (props) {
                     permanentlyHideOnDismiss={true}
                 />}
             </Box>
-            }
-        </EventLayout>
+                }
+            </EventLayout>
+            <GenericModal handleClose={closeModal} open={open}>
+                {getModalContent()}
+            </GenericModal>
+        </React.Fragment>
     )
 }
-export default giftsModal(DashBoard)
+export default DashBoard
 
 export async function getStaticPaths () {
     const paths = await getAllEvents()

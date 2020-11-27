@@ -5,7 +5,6 @@ import { ServerStyleSheets } from '@material-ui/core/styles'
 /*
  SOURCE : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
  */
-
 export default class MyDocument extends Document {
     render () {
         return (

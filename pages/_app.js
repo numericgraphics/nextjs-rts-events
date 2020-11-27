@@ -163,6 +163,10 @@ function MyApp ({ Component, pageProps }) {
             setRouteChange(true)
         }
         router.events.on('routeChangeStart', handleRouteChange)
+
+        return () => {
+            router.events.remove('routeChangeStart', handleRouteChange)
+        }
     }, [])
 
     return (
