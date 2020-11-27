@@ -281,7 +281,7 @@ function DashBoard (props) {
                     copyShareButtonLabel={'1) Appuyez sur le bouton "Partager" dans la barre de menu ci-dessous.'}
                     copyAddHomeButtonLabel={'2) Appuyez sur "Ajouter à l\'écran d\'accueil".'}
                     copyClosePrompt={'Annuler'}
-                    timesToShow={20}
+                    timesToShow={30}
                     permanentlyHideOnDismiss={true}
                 />}
             </Box>
