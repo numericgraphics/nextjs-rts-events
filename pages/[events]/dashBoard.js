@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
+import React, { useContext, useEffect, useState /*, useRef */ } from 'react'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
@@ -23,7 +23,7 @@ import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
-/* import HasTypeFormModal from '../../hoc/hasTypeFormModal'
+import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 /* import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
@@ -31,7 +31,7 @@ import { hourConverter } from '../../data/tools' */
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformations from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
-import * as typeformEmbed from '@typeform/embed'
+/* import * as typeformEmbed from '@typeform/embed' */
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -93,14 +93,14 @@ function DashBoard (props) {
         }
     }
 
-    const MyTypeform = () => {
+    /* const MyTypeform = () => {
         const typeformRef = useRef(null)
 
         useEffect(() => {
             typeformEmbed.makePopup(
                 `${gameStats && gameStats.feedbackURL}`,
                 {
-                    mode: 'drawer_left',
+                    mode: 'popup',
                     open: 'time',
                     openValue: 30,
                     autoClose: 3,
@@ -121,9 +121,9 @@ function DashBoard (props) {
         }, [typeformRef])
 
         return (
-            <div ref={typeformRef} ></div>
+            <div ref={typeformRef} style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}></div>
         )
-    }
+    } */
 
     function onOpenModal (state) {
         setModalState(state)
@@ -167,12 +167,23 @@ function DashBoard (props) {
         setOpen(false)
     }
 
+    function onClickFeedback () {
+        closeModal()
+        setOpenFeedback(!openFeedback)
+    }
+
+    function getFeedBack () {
+        return <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={() => onClickFeedback()} >
+                            Open modal
+        </CustomDisabledButton>
+    }
+
     function getModalContent () {
         switch (modalState) {
         case ModalStates.GIFT:
             return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
-            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} />
+            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
         case ModalStates.PROFILE:
             return <Profile handleClose={closeModal} open={open}/>
         }
@@ -208,8 +219,8 @@ function DashBoard (props) {
     }, [isGlobalLoading])
     return (
         <React.Fragment>
-            {openFeedback && <MyTypeform/> }
-            {/* <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> */}
+            {/* openFeedback && <MyTypeform/> */}
+            { <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
             <EventLayout >
                 {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
@@ -295,9 +306,6 @@ function DashBoard (props) {
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                         <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges} >
                             {`${translation.dashBoardChallengesButton}`}
-                        </CustomDisabledButton>
-                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={() => setOpenFeedback(!openFeedback)} >
-                            Open modal
                         </CustomDisabledButton>
                     </Box>
                 </Slide>

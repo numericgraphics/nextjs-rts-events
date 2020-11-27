@@ -21,7 +21,7 @@ function EndgameInformations (props, ref) {
                 <Typography variant='subtitle2' className={[].join(' ')}
                     dangerouslySetInnerHTML={{ __html: props.translation.feedbackMessage }} >
                 </Typography>
-                {props.button}
+                {props.feedback}
             </Box>
         </Grow>
     )

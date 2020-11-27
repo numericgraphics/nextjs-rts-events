@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, forwardRef } from 'react'
 import * as typeformEmbed from '@typeform/embed'
 
 const hasTypeFormModal = WrappedComponent => {
@@ -37,4 +37,4 @@ const hasTypeFormModal = WrappedComponent => {
     }
 }
 
-export default hasTypeFormModal
+export default forwardRef(hasTypeFormModal)
