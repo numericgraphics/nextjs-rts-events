@@ -111,6 +111,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     phoneInputBorder: {
         boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
+    },
+    subTitle: {
+        marginBottom: '15px'
     }
 }))
 export const styles = {

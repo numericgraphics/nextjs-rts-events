@@ -18,7 +18,7 @@ function EndgameInformations (props, ref) {
                 <Typography variant='h4' className={[].join(' ')}
                     dangerouslySetInnerHTML={{ __html: props.translation.feedbackTitle }}>
                 </Typography>
-                <Typography variant='subtitle2' className={[].join(' ')}
+                <Typography variant='subtitle2' className={classes.subTitle}
                     dangerouslySetInnerHTML={{ __html: props.translation.feedbackMessage }} >
                 </Typography>
                 {props.feedback}

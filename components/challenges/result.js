@@ -24,6 +24,7 @@ function Result (props) {
     const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
     const { dataProvider, uiElementsService } = useContext(UserContext)
+    const [openFeedback, setOpenFeedback] = useState(false)
 
     async function continueGame () {
         setShowComponent(false)
@@ -63,10 +64,11 @@ function Result (props) {
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
     }, [])
-
+    console.log(translation)
     return (
         <Fade in={showComponent} timeout={1000}>
             <Box className='content' >
+                { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
                 <Box className='topZoneResult'>
                     <Box className={classes.content}>
                         <Box className={classes.header}>
@@ -109,14 +111,9 @@ function Result (props) {
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>
-                            <HasTypeFormModal
-                                text={translation.feedbackButtonOnResult}
-                                score={gameStats && gameStats.currentScore}
-                                url={gameStats && gameStats.feedbackURL}
-                                buttonComp={ColorBorderButton}
-                                buttonClassName='buttonAlt'
-                                variant="outlined"
-                            />
+                            <ColorBorderButton key={'openFeedBackModal'} variant="outlined" className={'buttonAlt'} onClick={() => setOpenFeedback(!openFeedback)}>
+                                {`${translation.feedbackButtonOnResult}`}
+                            </ColorBorderButton>
                             <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonEnded}`}
                             </Button>

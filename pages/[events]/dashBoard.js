@@ -93,38 +93,6 @@ function DashBoard (props) {
         }
     }
 
-    /* const MyTypeform = () => {
-        const typeformRef = useRef(null)
-
-        useEffect(() => {
-            typeformEmbed.makePopup(
-                `${gameStats && gameStats.feedbackURL}`,
-                {
-                    mode: 'popup',
-                    open: 'time',
-                    openValue: 30,
-                    autoClose: 3,
-                    hideScrollbars: true,
-                    onSubmit: function () {
-                        console.log('Typeform successfully submitted')
-                        setOpenFeedback(false)
-                    },
-                    onReady: function () {
-                        console.log('Typeform is ready')
-                    },
-                    onClose: function () {
-                        console.log('Typeform is closed')
-                        setOpenFeedback(false)
-                    }
-                }
-            )
-        }, [typeformRef])
-
-        return (
-            <div ref={typeformRef} style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}></div>
-        )
-    } */
-
     function onOpenModal (state) {
         setModalState(state)
         setOpen(true)
@@ -173,8 +141,12 @@ function DashBoard (props) {
     }
 
     function getFeedBack () {
-        return <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={() => onClickFeedback()} >
-                            Open modal
+        return <CustomDisabledButton
+            color="secondary"
+            variant="contained"
+            className={'button'}
+            onClick={() => onClickFeedback()} >
+            {`${translation.feedbackButtonOnDashboard}`}
         </CustomDisabledButton>
     }
 
@@ -220,7 +192,7 @@ function DashBoard (props) {
     return (
         <React.Fragment>
             {/* openFeedback && <MyTypeform/> */}
-            { <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
+            { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
             <EventLayout >
                 {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
