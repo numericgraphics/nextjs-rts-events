@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState /*, useRef */ } from 'react'
-import ButtonBase from '@material-ui/core/ButtonBase'
+import React, { useContext, useEffect, useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/ui/layout/eventLayout'
@@ -24,14 +23,9 @@ import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
-/* import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
-import { hourConverter } from '../../data/tools' */
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformations from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
-/* import * as typeformEmbed from '@typeform/embed' */
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -161,10 +155,6 @@ function DashBoard (props) {
         }
     }
 
-    function onProfileClick () {
-        onOpenModal(ModalStates.PROFILE)
-    }
-
     useEffect(() => {
         return () => {
             clearTimeout(timeout)
@@ -202,11 +192,7 @@ function DashBoard (props) {
                 <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
-                            <ButtonBase
-                                focusRipple
-                                onClick={onProfileClick}>
-                                <AvatarEvent user={user.avatarURL} />
-                            </ButtonBase>
+                            <AvatarEvent user={user.avatarURL} />
                             <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                 {user.nickname}
                             </Typography>
