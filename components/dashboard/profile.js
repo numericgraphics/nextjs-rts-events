@@ -32,7 +32,7 @@ function Profile (props, ref, avatarRef) {
     }
 
     const classes = useStyles()
-    const { open, avatars, handleClose } = props
+    const { open, avatars, handleClose, currentAvatar } = props
     const [selected, setSelected] = useState(undefined)
 
     function onListItemClick (index) {
@@ -40,13 +40,12 @@ function Profile (props, ref, avatarRef) {
     }
 
     function onValidate () {
-        changeAvatar('popquiz', avatars[selected])
+        changeAvatar('popquiz', avatars[selected]).then()
         handleClose()
-        console.log('onValidate', avatars[selected])
     }
 
     useEffect(() => {
-
+        setSelected(avatars.indexOf(currentAvatar))
     }, [])
 
     return (
