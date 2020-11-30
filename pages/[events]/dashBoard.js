@@ -172,6 +172,7 @@ function DashBoard (props) {
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
                             <ButtonBase
+                                className={classes.avatarButton}
                                 onClick={onProfileClick}>
                                 <AvatarEvent user={user.avatarURL} />
                             </ButtonBase>

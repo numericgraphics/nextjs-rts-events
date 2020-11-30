@@ -105,5 +105,8 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         opacity: 0.8,
         padding: '2px 5px',
         boxShadow: '0px 0px 7px 2px #000000'
+    },
+    avatarButton: {
+        borderRadius: '50%'
     }
 }))
