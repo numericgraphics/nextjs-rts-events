@@ -8,7 +8,7 @@ export default async (req, res) => {
     let cookies = null
 
     try {
-        const { eventName, avatarURL } = await req.body
+        const { eventName, avatarURL, nickname } = await req.body
         const cookieName = `rtsevents-${eventName}`
 
         if (req.headers.cookie) {
@@ -16,6 +16,14 @@ export default async (req, res) => {
             rtsEventCookie = cookies[cookieName]
             const cookieValue = JSON.parse(cookies[cookieName])
             const { userID, code } = cookieValue
+            let body
+            if (avatarURL !== undefined && nickname === undefined) {
+                body = { code: code, avatarURL: avatarURL }
+            } else if (nickname !== undefined && avatarURL !== undefined) {
+                body = { code: code, nickname: nickname }
+            } else {
+                body = { code: code, avatarURL: avatarURL, nickname: nickname }
+            }
 
             if (rtsEventCookie) {
                 const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}`
@@ -29,7 +37,7 @@ export default async (req, res) => {
                     credentials: 'include',
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: code, avatarURL: avatarURL })
+                    body: JSON.stringify(body)
                 })
                 if (response.status === 200) {
                     const content = await response.json()
