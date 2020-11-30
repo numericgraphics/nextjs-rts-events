@@ -16,17 +16,16 @@ function Profile (props, ref) {
     const { eventName } = store
     const [user, setUser] = useState({})
     const [avatars, setAvatars] = useState([])
-    const [userName, setUserName] = useState('')
+    const [nickname, setNickname] = useState('')
     const [isLoading, setLoading] = useState(true)
     const [dataFetched, setDataFetched] = useState({})
     const classes = useStyles()
-    // const { open, handleClose } = props
-    const { open } = props
+    const { open, handleClose } = props
     const [selected, setSelected] = useState(undefined)
 
-    async function editUser (eventName, avatarURL, userName) {
+    async function editUser (eventName, avatarURL, nickname) {
         try {
-            const bodyContent = { eventName: eventName, avatarURL: avatarURL, nickname: userName }
+            const bodyContent = { eventName, avatarURL, nickname }
             const response = await fetch('/api/editUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -51,26 +50,21 @@ function Profile (props, ref) {
     }
 
     function updateProfile () {
-        editUser(eventName, avatars[selected], userName).then()
+        editUser(eventName, avatars[selected], nickname).then()
     }
-
-    /* function editNickname (events, nickname) {
-        editUser(events, undefined, nickname)
-    } */
 
     function onListItemClick (index) {
         setSelected(index)
     }
 
     const onInputChange = e => {
-        setUserName(e.target.value)
+        setNickname(e.target.value)
     }
 
     useEffect(() => {
         if (Object.keys(dataFetched).length !== 0) {
-            console.log('dataFetched', dataFetched)
-            // dataProvider.setUser(dataFetched)
-            // console.log('dataProvider', dataProvider)
+            dataProvider.setUser(dataFetched)
+            handleClose()
         }
     }, [dataFetched])
 
@@ -84,7 +78,7 @@ function Profile (props, ref) {
 
     useEffect(() => {
         if (avatars.length > 0 && user.avatarURL !== undefined) {
-            setUserName(user.nickname)
+            setNickname(user.nickname)
             setSelected(avatars.indexOf(user.avatarURL))
             setLoading(false)
         }
@@ -120,7 +114,7 @@ function Profile (props, ref) {
                     className={classes.textField}
                     type="text"
                     onChange={onInputChange}
-                    value={userName}
+                    value={nickname}
                 />
                 <CustomDisabledButton
                     color="secondary"

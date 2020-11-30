@@ -147,7 +147,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     selected: {
         border: `solid min(1.5vw, 5px) ${theme.palette.secondary.main}!important`,
-        borderRadius: '8px',
+        borderRadius: '50%',
         // outlineOffset: '-4px',
         // filter: 'drop-shadow(0px 0px 3px #333)!important',
         WebkitAnimationName: 'avatarSelected',
@@ -165,7 +165,6 @@ export const useStyles = makeStyles((theme) => ({
         WebkitAppearance: 'none',
         borderRadius: '5px',
         marginBottom: '4vw!important',
-        boxShadow: `0 0 0 0.2rem ${theme.palette.formValidate}`,
         '& input': {
             fontFamily: 'srgssr-type-Bd',
             textAlign: 'center!important',
