@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
 import { useStyles } from '../../styles/jsx/components/profile/profile.style'
@@ -50,10 +50,6 @@ function Profile (props, ref, avatarRef) {
         editAvatar(events, avatars[selected])
         handleClose()
     }
-
-    useEffect(() => {
-
-    }, [])
 
     return (
         <Grow
