@@ -109,12 +109,6 @@ function DashBoard (props) {
         setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setLoading(false)
-
-        // if (!availableChallenges) {
-        //     setTimeout(() => {
-        //         onOpenModal(ModalStates.END_GAME)
-        //     }, 1000)
-        // }
     }
 
     async function startGame () {
@@ -125,9 +119,10 @@ function DashBoard (props) {
         setOpen(false)
     }
 
-    // TODO check if getAvatars function return the current avatar url
-    // if not add it to the list
     function getAvatars () {
+        if (!dataProvider.getAvatars().includes(user.avatarURL)) {
+            return [user.avatarURL, ...dataProvider.getAvatars()]
+        }
         return dataProvider.getAvatars()
     }
 
@@ -138,7 +133,7 @@ function DashBoard (props) {
         case ModalStates.END_GAME:
             return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open}/>
         case ModalStates.PROFILE:
-            return <Profile handleClose={closeModal} open={open} avatars={getAvatars()} events={events} setUser={setUser}/>
+            return <Profile handleClose={closeModal} open={open} avatars={getAvatars()} currentAvatar={user.avatarURL} events={events} setUser={setUser}/>
         }
     }
 

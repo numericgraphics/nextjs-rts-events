@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
 import { useStyles } from '../../styles/jsx/components/profile/profile.style'
@@ -39,7 +39,7 @@ function Profile (props, ref, avatarRef) {
     } */
 
     const classes = useStyles()
-    const { open, avatars, handleClose } = props
+    const { open, avatars, handleClose, currentAvatar } = props
     const [selected, setSelected] = useState(undefined)
 
     function onListItemClick (index) {
@@ -50,6 +50,10 @@ function Profile (props, ref, avatarRef) {
         editAvatar(events, avatars[selected])
         handleClose()
     }
+
+    useEffect(() => {
+        setSelected(avatars.indexOf(currentAvatar))
+    }, [])
 
     return (
         <Grow
