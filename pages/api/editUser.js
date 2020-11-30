@@ -26,7 +26,11 @@ export default async (req, res) => {
             }
 
             if (rtsEventCookie) {
+                console.log('eventName', eventName)
+                console.log('userID', userID)
                 const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}`
+                console.log('url', url)
+
                 /* if (finalDate) {
                     url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?ts=${finalDate}`
                 } else {

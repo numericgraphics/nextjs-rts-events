@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
 import { useStyles } from '../../styles/jsx/components/profile/profile.style'
@@ -7,15 +7,26 @@ import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import Avatar from '@material-ui/core/Avatar'
+import InputBase from '@material-ui/core/InputBase'
+import UserContext from '../../hooks/userContext'
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
-function Profile (props, ref, avatarRef) {
-    const events = props.events
-    async function editUser (events, url, nickname) {
+function Profile (props, ref) {
+    const { dataProvider, store } = useContext(UserContext)
+    const { eventName } = store
+    const [user, setUser] = useState({})
+    const [avatars, setAvatars] = useState([])
+    const [userName, setUserName] = useState('')
+    const [isLoading, setLoading] = useState(true)
+    const [dataFetched, setDataFetched] = useState({})
+    const classes = useStyles()
+    // const { open, handleClose } = props
+    const { open } = props
+    const [selected, setSelected] = useState(undefined)
+
+    async function editUser (eventName, avatarURL, userName) {
         try {
-            // const params = (new URL(document.location)).searchParams
-            // const date = params.get('date') ? params.get('date') : null
-            // const time = params.get('time') ? params.get('time') : null
-            const bodyContent = { eventName: events, avatarURL: url, nickname: nickname }
+            const bodyContent = { eventName: eventName, avatarURL: avatarURL, nickname: userName }
             const response = await fetch('/api/editUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -23,37 +34,61 @@ function Profile (props, ref, avatarRef) {
             })
             if (response.status === 200) {
                 const content = await response.json()
-                props.setUser(content)
+                setDataFetched(content)
+            } else {
+                console.log('response not 200', response)
             }
         } catch (error) {
             throw new Error(error.message)
         }
     }
 
-    function editAvatar (events, url) {
-        editUser(events, url, undefined)
+    function getAvatars () {
+        if (!dataProvider.getAvatars().includes(user.avatarURL)) {
+            return [user.avatarURL, ...dataProvider.getAvatars()]
+        }
+        return dataProvider.getAvatars()
+    }
+
+    function updateProfile () {
+        editUser(eventName, avatars[selected], userName).then()
     }
 
     /* function editNickname (events, nickname) {
         editUser(events, undefined, nickname)
     } */
 
-    const classes = useStyles()
-    const { open, avatars, handleClose, currentAvatar } = props
-    const [selected, setSelected] = useState(undefined)
-
     function onListItemClick (index) {
         setSelected(index)
     }
 
-    function onValidate () {
-        editAvatar(events, avatars[selected])
-        handleClose()
+    const onInputChange = e => {
+        setUserName(e.target.value)
     }
 
     useEffect(() => {
-        setSelected(avatars.indexOf(currentAvatar))
+        if (Object.keys(dataFetched).length !== 0) {
+            console.log('dataFetched', dataFetched)
+            // dataProvider.setUser(dataFetched)
+            // console.log('dataProvider', dataProvider)
+        }
+    }, [dataFetched])
+
+    useEffect(() => {
+        setUser(dataProvider.getUser())
     }, [])
+
+    useEffect(() => {
+        setAvatars(getAvatars())
+    }, [user])
+
+    useEffect(() => {
+        if (avatars.length > 0 && user.avatarURL !== undefined) {
+            setUserName(user.nickname)
+            setSelected(avatars.indexOf(user.avatarURL))
+            setLoading(false)
+        }
+    }, [avatars, user])
 
     return (
         <Grow
@@ -66,24 +101,34 @@ function Profile (props, ref, avatarRef) {
                     variant="h3"
                     className={'modal-title'}
                     align={'center'}
-                    dangerouslySetInnerHTML={{ __html: 'Choisissez votre nouvel avatar' }}/>
-                <GridList cellHeight={'auto'} className={classes.gridList} cols={3}>
-                    {avatars.map((tile, index) => (
-                        <GridListTile
-                            key={index}
-                            onClick={() => onListItemClick(index)}
-                            className={[selected === index ? classes.selected : null].join(' ')}>
-                            <Avatar src={tile}/>
-                        </GridListTile>
-                    ))}
-                </GridList>
+                    dangerouslySetInnerHTML={{ __html: 'Choisissez votre nouvel avatar et votre Nom' }}/>
+                {!isLoading
+                    ? <GridList cellHeight={'auto'} className={classes.gridList} cols={3}>
+                        {avatars.map((tile, index) => (
+                            <GridListTile
+                                key={index}
+                                onClick={() => onListItemClick(index)}
+                                className={[selected === index ? classes.selected : null].join(' ')}>
+                                <Avatar src={tile}/>
+                            </GridListTile>
+                        ))}
+                    </GridList>
+                    : <Box className={classes.loadingContainer}>
+                        <CircularProgress className={classes.circularProgress}/>
+                    </Box>}
+                <InputBase
+                    className={classes.textField}
+                    type="text"
+                    onChange={onInputChange}
+                    value={userName}
+                />
                 <CustomDisabledButton
                     color="secondary"
                     variant="contained"
-                    className={'button'}
-                    onClick={onValidate}
+                    className={'buttonModal'}
+                    onClick={updateProfile}
                     disabled={selected === undefined}>
-                    Valides ton choix
+                    Valides tes choix
                 </CustomDisabledButton>
             </Box>
         </Grow>

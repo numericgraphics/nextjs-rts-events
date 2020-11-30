@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         width: '90%',
-        minHeight: '70vh',
+        // minHeight: '70vh',
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: theme.palette.primary.light,
@@ -117,11 +117,21 @@ export const useStyles = makeStyles((theme) => ({
     phoneInputBorder: {
         boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 0.9)'
     },
+    loadingContainer: {
+        width: '100%',
+        height: '40vh',
+        margin: 0,
+        marginBottom: '4vw!important',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+
+    },
     gridList: {
         width: '100%',
-        height: '50vh',
+        height: '40vh',
         margin: 0,
-        marginBottom: '3vw!important',
+        marginBottom: '4vw!important',
         '& .MuiGridListTile-root': {
             opacity: 0.7,
             border: 'solid 5px rgba(0, 0, 0, 0)'
@@ -136,7 +146,7 @@ export const useStyles = makeStyles((theme) => ({
 
     },
     selected: {
-        border: `solid 5px ${theme.palette.secondary.main}!important`,
+        border: `solid min(1.5vw, 5px) ${theme.palette.secondary.main}!important`,
         borderRadius: '8px',
         // outlineOffset: '-4px',
         // filter: 'drop-shadow(0px 0px 3px #333)!important',
@@ -144,20 +154,27 @@ export const useStyles = makeStyles((theme) => ({
         WebkitAnimationDuration: '0.8s',
         WebkitAnimationTimingFunction: 'ease-in',
         WebkitAnimationFillMode: 'forwards'
-    }
-}))
-export const styles = {
+    },
     textField: {
-        fontFamily: 'srgssr-type-Bd',
-        fontSize: '1.125rem',
-        color: '#020202',
         border: 'none',
         width: '100%',
         height: 'auto',
         backgroundColor: 'white',
-        paddingTop: '0.4rem',
-        paddingBottom: '0.4rem',
+        padding: '0.4rem!important',
         margin: '0.2rem',
-        WebkitAppearance: 'none'
+        WebkitAppearance: 'none',
+        borderRadius: '5px',
+        marginBottom: '4vw!important',
+        boxShadow: `0 0 0 0.2rem ${theme.palette.formValidate}`,
+        '& input': {
+            fontFamily: 'srgssr-type-Bd',
+            textAlign: 'center!important',
+            fontSize: '1.125rem',
+            color: '#020202'
+        }
+    },
+    circularProgress: {
+        color: theme.palette.primary.contrastText
     }
-}
+}))
+
