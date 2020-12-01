@@ -247,7 +247,7 @@ function DashBoard (props) {
             </Box>
                 }
             </EventLayout>
-            <GenericModal handleClose={closeModal} open={open}>
+            <GenericModal handleClose={closeModal} open={open} hideBackdrop={modalState !== ModalStates.END_GAME}>
                 {getModalContent()}
             </GenericModal>
         </React.Fragment>

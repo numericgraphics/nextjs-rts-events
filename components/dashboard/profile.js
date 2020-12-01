@@ -21,6 +21,7 @@ function Profile (props, ref) {
     const [isLoading, setLoading] = useState(true)
     const [dataFetched, setDataFetched] = useState({})
     const [translation, setTranslation] = useState([])
+    const [onTransition, setTransition] = useState(undefined)
     const classes = useStyles()
     const { open, handleClose } = props
     const [selected, setSelected] = useState(undefined)
@@ -63,16 +64,25 @@ function Profile (props, ref) {
         setNickname(e.target.value)
     }
 
+    function onExited () {
+        handleClose()
+    }
+
+    function transitionClose () {
+        setTransition(false)
+    }
+
     useEffect(() => {
         if (Object.keys(dataFetched).length !== 0) {
             dataProvider.setUser(dataFetched)
-            handleClose()
+            setTransition(false)
         }
     }, [dataFetched])
 
     useEffect(() => {
         setUser(dataProvider.getUser())
         setTranslation(dataProvider.getTranslation())
+        setTransition(open)
     }, [])
 
     useEffect(() => {
@@ -89,12 +99,17 @@ function Profile (props, ref) {
 
     return (
         <Grow
-            in={open}
-            timeout={1000} >
+            in={onTransition}
+            timeout={{
+                appear: 1000,
+                enter: 1000,
+                exit: 200
+            }}
+            onExited={onExited}>
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
-                <ButtonCloseModal handleClose={handleClose}/>
+                <ButtonCloseModal handleClose={transitionClose}/>
                 <Typography
                     variant="h3"
                     className={'modal-title'}

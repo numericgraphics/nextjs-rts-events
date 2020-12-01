@@ -3,7 +3,7 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 
 const GenericModal = (props) => {
-    const { handleClose } = props
+    const { handleClose, hideBackdrop } = props
     return (
         <Modal
             aria-labelledby="transition-modal-title"
@@ -12,6 +12,7 @@ const GenericModal = (props) => {
             open={props.open}
             onClose={handleClose}
             closeAfterTransition
+            hideBackdrop={hideBackdrop}
             BackdropComponent={Backdrop}
             BackdropProps={{
                 timeout: 1000
