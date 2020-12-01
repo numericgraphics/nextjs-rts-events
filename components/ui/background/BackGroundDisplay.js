@@ -22,7 +22,8 @@ function BackGroundDisplay (props) {
         <Fade in={display} timeout={timeOutValue}>
             <Box ref={ref}
                 className={[props.className, props.imageURL && classes.containerImage].join(' ')}
-                style={{ backgroundImage: props.imageURL ? `url(${props.imageURL})` : 'none' }}>
+            >
+                <Box style={{ backgroundImage: props.imageURL ? `url(${props.imageURL})` : 'none' }} className={classes.animation}></Box>
                 <Fade in={!!props.addblur}>
                     <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
                 </Fade>
