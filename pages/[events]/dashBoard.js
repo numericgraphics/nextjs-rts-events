@@ -273,7 +273,7 @@ function DashBoard (props) {
                         </CustomDisabledButton>
                     </Box>
                 </Slide>
-                <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
+                <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} animated={true} />
                 {(isSafari && isMobile && isIOS) && <PWAPrompt
                     delay={2000}
                     copyTitle={'Ajouter le Pop quiz sur votre page d\'accueil'}
