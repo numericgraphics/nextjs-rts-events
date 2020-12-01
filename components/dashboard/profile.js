@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar'
 import InputBase from '@material-ui/core/InputBase'
 import UserContext from '../../hooks/userContext'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
+import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 
 function Profile (props, ref) {
     const { dataProvider, store } = useContext(UserContext)
@@ -19,6 +20,7 @@ function Profile (props, ref) {
     const [nickname, setNickname] = useState('')
     const [isLoading, setLoading] = useState(true)
     const [dataFetched, setDataFetched] = useState({})
+    const [translation, setTranslation] = useState([])
     const classes = useStyles()
     const { open, handleClose } = props
     const [selected, setSelected] = useState(undefined)
@@ -70,6 +72,7 @@ function Profile (props, ref) {
 
     useEffect(() => {
         setUser(dataProvider.getUser())
+        setTranslation(dataProvider.getTranslation())
     }, [])
 
     useEffect(() => {
@@ -91,11 +94,18 @@ function Profile (props, ref) {
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
+                <ButtonCloseModal handleClose={handleClose}/>
                 <Typography
                     variant="h3"
                     className={'modal-title'}
                     align={'center'}
-                    dangerouslySetInnerHTML={{ __html: 'Choisissez votre nouvel avatar et votre Nom' }}/>
+                    dangerouslySetInnerHTML={{ __html: translation.profileSelectAvatarNickname }}/>
+                <InputBase
+                    className={classes.textField}
+                    type="text"
+                    onChange={onInputChange}
+                    value={nickname}
+                />
                 {!isLoading
                     ? <GridList cellHeight={'auto'} className={classes.gridList} cols={3}>
                         {avatars.map((tile, index) => (
@@ -110,19 +120,13 @@ function Profile (props, ref) {
                     : <Box className={classes.loadingContainer}>
                         <CircularProgress className={classes.circularProgress}/>
                     </Box>}
-                <InputBase
-                    className={classes.textField}
-                    type="text"
-                    onChange={onInputChange}
-                    value={nickname}
-                />
                 <CustomDisabledButton
                     color="secondary"
                     variant="contained"
                     className={'buttonModal'}
                     onClick={updateProfile}
                     disabled={selected === undefined}>
-                    Valides tes choix
+                    {translation.profileValidChoice}
                 </CustomDisabledButton>
             </Box>
         </Grow>
