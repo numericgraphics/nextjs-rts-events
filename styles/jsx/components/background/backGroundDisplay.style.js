@@ -12,13 +12,15 @@ export const useStyles = makeStyles(() => ({
         height: '100%',
         width: '100%'
     },
-    animation: {
+    image: {
         height: '100%',
         width: '100%',
-        animation: '$kenburns 60s ease-in-out infinite',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%'
+    },
+    animation: {
+        animation: '$kenburns 60s ease-in-out infinite'
     },
     '@keyframes kenburns': {
         '0%': {
