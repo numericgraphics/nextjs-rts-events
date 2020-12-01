@@ -53,10 +53,18 @@ function Events (props) {
 
 export default withRouter(Events)
 
-export async function getStaticPaths () {
-    const paths = await getAllEvents()
+export async function getStaticPaths ({ locales }) {
+    const eventPaths = await getAllEvents()
+
+    const paths = []
+    eventPaths.forEach((path) => {
+        locales.forEach((locale) => {
+            paths.push({ ...path, locale })
+        })
+    })
+
     return {
-        paths,
+        paths: paths,
         fallback: false
     }
 }
