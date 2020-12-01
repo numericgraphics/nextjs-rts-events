@@ -8,9 +8,10 @@ function KenBurnsImage (props) {
 
     return (
         <Box ref={ref}
-            className={[props.className, props.imageURL && classes.containerImage].join(' ')}
+            className={[props.className, classes.containerImage].join(' ')}
+            key={props.key}
         >
-            <Box style={{ backgroundImage: props.imageURL ? `url(${props.imageURL})` : 'none' }}
+            <Box style={{ backgroundImage: props.imageURL ? `url(${props.imageURL})` : 'none', ...props.style }}
                 className={props.animated ? [classes.image, classes.animation].join(' ') : classes.image} />
             {props.children}
         </Box>
