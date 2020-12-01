@@ -18,5 +18,9 @@ module.exports = {
         // API_STAGE: '/beta'
         // API_BASE_URL: 'http://localhost:3001',
         // API_STAGE: ''
+    },
+    i18n: {
+        locales: ['it', 'fr', 'ge', 'rm', 'en'],
+        defaultLocale: 'fr'
     }
 }
