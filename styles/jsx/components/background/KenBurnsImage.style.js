@@ -14,7 +14,7 @@ export const useStyles = makeStyles(() => ({
         backgroundSize: 'auto 100%'
     },
     animation: {
-        animation: '$kenburns 20s ease-in-out infinite'
+        animation: '$kenburns 60s infinite'
     },
     '@keyframes kenburns': {
         '0%': {
