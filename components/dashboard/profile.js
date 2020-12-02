@@ -150,7 +150,7 @@ function Profile (props, ref) {
                 <CustomDisabledButton
                     color="secondary"
                     variant="contained"
-                    className={'button'}
+                    className={['button', classes.buttonValidate].join(' ')}
                     onClick={updateProfile}
                     disabled={selected === undefined || !nicknameCheck}>
                     {translation.profileValidChoice}
