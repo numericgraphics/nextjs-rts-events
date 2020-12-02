@@ -69,11 +69,12 @@ export async function getStaticPaths ({ locales }) {
     }
 }
 
-export async function getStaticProps ({ params }) {
-    const eventData = await getEventsData(params.events)
+export async function getStaticProps ({ params, locale }) {
+    const eventData = await getEventsData(params.events, locale)
     return {
         props: {
-            eventData
+            eventData,
+            locale
         },
         revalidate: 1
     }

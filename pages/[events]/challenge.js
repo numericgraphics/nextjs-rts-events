@@ -214,7 +214,7 @@ export async function getStaticPaths ({ locales }) {
 }
 
 export async function getStaticProps ({ params, locale }) {
-    const eventData = await getEventsData(params.events)
+    const eventData = await getEventsData(params.events, locale)
     return {
         props: {
             eventData,
