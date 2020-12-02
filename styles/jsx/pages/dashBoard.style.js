@@ -12,9 +12,12 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: 'min(3vw, 30px)!important'
     },
     nickname: {
+        width: '100%',
         textAlign: 'center',
         marginBottom: '0.5rem',
-        color: theme.palette.primary.contrastText
+        color: theme.palette.primary.contrastText,
+        wordWrap: 'break-word',
+        textOverflow: 'ellipsis'
     },
     rateIcon: {
         display: 'inline',
