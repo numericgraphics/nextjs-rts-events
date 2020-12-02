@@ -23,6 +23,7 @@ function DashBoardAdminToolBar (props) {
     const classes = useStyles()
     const router = useRouter()
     const { events } = router.query
+    const { locale } = router
     const [hided, setHided] = useState(true)
     const [selectedDate, setSelectedDate] = useState({})
 
@@ -54,7 +55,7 @@ function DashBoardAdminToolBar (props) {
     async function resetGame () {
         try {
             alert('Will try to reset Game')
-            const bodyContent = { eventName: events }
+            const bodyContent = { eventName: events, locale }
             const response = await fetch('/api/resetGame', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

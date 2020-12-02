@@ -8,7 +8,7 @@ export default async (req, res) => {
     let cookies = null
 
     try {
-        const { eventName } = await req.body
+        const { eventName, locale } = await req.body
         const cookieName = `rtsevents-${eventName}`
 
         if (req.headers.cookie) {
@@ -18,7 +18,7 @@ export default async (req, res) => {
             const { userID, code } = cookieValue
 
             if (rtsEventCookie) {
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/reset`
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/reset?lang=${locale}`
 
                 const response = await fetch(url, {
                     credentials: 'include',

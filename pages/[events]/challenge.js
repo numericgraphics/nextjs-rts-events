@@ -6,7 +6,7 @@ import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
-import { getAllEvents } from '../../lib/events'
+import { getAllEvents, getEventsData } from '../../lib/events'
 import { ChallengeStates } from '../../data/challengeState'
 import Box from '@material-ui/core/Box'
 
@@ -14,7 +14,7 @@ function Challenge () {
     const router = useRouter()
     const { events } = router.query
     const { dataProvider, store } = useContext(UserContext)
-    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
+    const { locale, isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.LOADING)
     const [questionsContent, setQuestionsContent] = useState({})
     const [hasPlayed, setHasPlayed] = useState(false)
@@ -27,7 +27,7 @@ function Challenge () {
 
     async function fetchQuestions () {
         try {
-            const bodyContent = (timeStampMode.enable) ? { eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { eventName: events }
+            const bodyContent = { eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuiz', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -52,8 +52,7 @@ function Challenge () {
         try {
             const { challengeID } = dataProvider.getChallenge()
             const answerToString = String(answer)
-            const bodyContent = (timeStampMode.enable) ? { answer: answerToString, challengeID, eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { answer: answerToString, challengeID, eventName: events }
-
+            const bodyContent = { answer: answerToString, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuizResult', {
                 credentials: 'include',
                 method: 'POST',
@@ -198,19 +197,29 @@ function Challenge () {
 
 export default Challenge
 
-export async function getStaticPaths () {
-    const paths = await getAllEvents()
+export async function getStaticPaths ({ locales }) {
+    const eventPaths = await getAllEvents()
+
+    const paths = []
+    eventPaths.forEach((path) => {
+        locales.forEach((locale) => {
+            paths.push({ ...path, locale })
+        })
+    })
+
     return {
         paths,
         fallback: false
     }
 }
 
-export async function getStaticProps ({ params }) {
-    const events = params.events
+export async function getStaticProps ({ params, locale }) {
+    const eventData = await getEventsData(params.events)
     return {
         props: {
-            eventData: { events }
-        }
+            eventData,
+            locale
+        },
+        revalidate: 1
     }
 }
