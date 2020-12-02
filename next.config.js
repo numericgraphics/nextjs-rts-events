@@ -20,7 +20,7 @@ module.exports = {
         // API_STAGE: ''
     },
     i18n: {
-        locales: ['it', 'fr', 'ge', 'rm', 'en'],
+        locales: ['it', 'fr', 'de', 'rm', 'en'],
         defaultLocale: 'fr'
     }
 }
