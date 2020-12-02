@@ -14,7 +14,6 @@ export const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: '3vw'
     },
-
     root: {
         '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             border: 'none'
@@ -23,7 +22,6 @@ export const useStyles = makeStyles((theme) => ({
             color: 'black'
         }
     },
-
     loadingContainer: {
         width: '100%',
         height: '100%',
@@ -79,5 +77,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     circularProgress: {
         color: theme.palette.primary.contrastText
+    },
+    buttonClose: {
+        alignSelf: 'flex-end!important'
     }
 }))

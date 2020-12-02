@@ -11,6 +11,8 @@ import InputBase from '@material-ui/core/InputBase'
 import UserContext from '../../hooks/userContext'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import ButtonCloseModal from '../ui/modal/buttonCloseModal'
+import useTheme from '@material-ui/core/styles/useTheme'
+import { between } from '../../data/tools'
 
 function Profile (props, ref) {
     const { dataProvider, store } = useContext(UserContext)
@@ -22,9 +24,11 @@ function Profile (props, ref) {
     const [dataFetched, setDataFetched] = useState({})
     const [translation, setTranslation] = useState([])
     const [onTransition, setTransition] = useState(undefined)
+    const [selected, setSelected] = useState(undefined)
+    const [nicknameCheck, setNicknameCheck] = useState(true)
     const classes = useStyles()
     const { open, handleClose } = props
-    const [selected, setSelected] = useState(undefined)
+    const theme = useTheme()
 
     async function editUser (eventName, avatarURL, nickname) {
         try {
@@ -97,6 +101,10 @@ function Profile (props, ref) {
         }
     }, [avatars, user])
 
+    useEffect(() => {
+        setNicknameCheck(between(nickname.length, 3, 20))
+    }, [nickname])
+
     return (
         <Grow
             in={onTransition}
@@ -109,7 +117,7 @@ function Profile (props, ref) {
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
-                <ButtonCloseModal handleClose={transitionClose}/>
+                <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
                 <Typography
                     variant="h3"
                     className={'modal-title'}
@@ -120,6 +128,10 @@ function Profile (props, ref) {
                     type="text"
                     onChange={onInputChange}
                     value={nickname}
+                    style={{
+                        boxShadow: nicknameCheck ? `0 0 0 0.2rem ${theme.palette.formValidate}`
+                            : `0 0 0 0.2rem ${theme.palette.formNoValidate}`
+                    }}
                 />
                 {!isLoading
                     ? <GridList cellHeight={'auto'} className={classes.gridList} cols={3}>
@@ -138,9 +150,9 @@ function Profile (props, ref) {
                 <CustomDisabledButton
                     color="secondary"
                     variant="contained"
-                    className={'buttonModal'}
+                    className={'button'}
                     onClick={updateProfile}
-                    disabled={selected === undefined}>
+                    disabled={selected === undefined || !nicknameCheck}>
                     {translation.profileValidChoice}
                 </CustomDisabledButton>
             </Box>

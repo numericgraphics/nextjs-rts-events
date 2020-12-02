@@ -236,9 +236,19 @@ function DashBoard (props) {
                         </ColorCard>
                     </Box>
                 </Slide>
-                <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
+                <Slide
+                    in={!isLoading}
+                    timeout={500}
+                    direction="up"
+                    mountOnEnter
+                    unmountOnExit>
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges}>
+                        <CustomDisabledButton
+                            color="secondary"
+                            variant="contained"
+                            className={'button'}
+                            onClick={startGame}
+                            disabled={!availableChallenges}>
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
                     </Box>
