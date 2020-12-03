@@ -26,8 +26,9 @@ import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToo
 import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
-import EndgameInformations from '../../components/dashboard/endGameInformation'
+import EndgameInformation from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -128,6 +129,10 @@ function DashBoard (props) {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
+    function onProfileClick () {
+        onOpenModal(ModalStates.PROFILE)
+    }
+
     function closeModal () {
         setOpen(false)
     }
@@ -152,9 +157,9 @@ function DashBoard (props) {
         case ModalStates.GIFT:
             return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
-            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
+            return <EndgameInformation uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
         case ModalStates.PROFILE:
-            return <Profile handleClose={closeModal} open={open}/>
+            return <Profile handleClose={closeModal} open={open} />
         }
     }
 
@@ -184,7 +189,6 @@ function DashBoard (props) {
     }, [isGlobalLoading])
     return (
         <React.Fragment>
-            {/* openFeedback && <MyTypeform/> */}
             { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
             <EventLayout >
                 {!(isLoading && isGlobalLoading) &&
@@ -195,7 +199,11 @@ function DashBoard (props) {
                 <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
-                            <AvatarEvent user={user.avatarURL} />
+                            <ButtonBase
+                                className={classes.avatarButton}
+                                onClick={onProfileClick}>
+                                <AvatarEvent user={user.avatarURL} />
+                            </ButtonBase>
                             <Typography variant="h2" className={[classes.nickname].join(' ')}>
                                 {user.nickname}
                             </Typography>
@@ -263,9 +271,21 @@ function DashBoard (props) {
                         </ColorCard>
                     </Box>
                 </Slide>
-                <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
+                <Slide
+                    in={!isLoading}
+                    timeout={500}
+                    direction="up"
+                    mountOnEnter
+                    unmountOnExit
+                >
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges} >
+                        <CustomDisabledButton
+                            color="secondary"
+                            variant="contained"
+                            className={'button'}
+                            onClick={startGame}
+                            disabled={!availableChallenges}
+                        >
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
                     </Box>
@@ -273,18 +293,22 @@ function DashBoard (props) {
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
                 {(isSafari && isMobile && isIOS) && <PWAPrompt
                     delay={2000}
-                    copyTitle={'Ajouter le Pop quiz sur votre page d\'accueil'}
-                    copyBody={'Ce site web dispose d\'une fonctionnalité d\'application. Ajoutez-la à votre écran d\'accueil pour l\'utiliser en plein écran et hors ligne'}
-                    copyShareButtonLabel={'1) Appuyez sur le bouton "Partager" dans la barre de menu ci-dessous.'}
-                    copyAddHomeButtonLabel={'2) Appuyez sur "Ajouter à l\'écran d\'accueil".'}
-                    copyClosePrompt={'Annuler'}
+                    copyTitle={translation.dashboardCopyTitle}
+                    copyBody={translation.dashboardCopyBody}
+                    copyShareButtonLabel={translation.dashboardCopyShareButtonLabel}
+                    copyAddHomeButtonLabel={translation.dashboardCopyAddHomeButtonLabel}
+                    copyClosePrompt={translation.dashboardCopyClosePrompt}
                     timesToShow={30}
                     permanentlyHideOnDismiss={true}
                 />}
             </Box>
                 }
             </EventLayout>
-            <GenericModal handleClose={closeModal} open={open}>
+            <GenericModal
+                handleClose={closeModal}
+                open={open}
+                hideBackdrop={modalState !== ModalStates.END_GAME}
+            >
                 {getModalContent()}
             </GenericModal>
         </React.Fragment>

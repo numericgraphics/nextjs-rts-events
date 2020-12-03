@@ -233,6 +233,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             }
         }
+
         return (
             <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />

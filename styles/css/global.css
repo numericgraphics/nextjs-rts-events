@@ -230,7 +230,7 @@
 .bottomZone,
 .bottomZonePromo,
 .bottomZoneDashboard {
-    padding: 1rem 0;
+    padding: 1rem 0!important;
 }
 
 .bottomZoneQuestions {
@@ -270,7 +270,8 @@
 }
 
 .modal-title {
-    margin-bottom: 3vw!important;
+    margin-bottom: min(1rem, 30px)!important;
+    width: 80%
 }
 
 .modal-textfield-phone {
@@ -287,6 +288,7 @@
     width: 100%
 }
 
+.buttonModal,
 .questionButton,
 .button,
 .buttonAlt {

@@ -188,7 +188,7 @@ function Challenge () {
             {!isLoading && <Box>
                 {getChallengeContent(challengeState)}
                 {backgroundType === 'image' &&
-                    <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' imageURL={imageURL}/>}
+                    <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' animated={true} imageURL={imageURL}/>}
             </Box>
             }
         </EventLayout>
