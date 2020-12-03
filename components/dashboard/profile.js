@@ -147,14 +147,16 @@ function Profile (props, ref) {
                     : <Box className={classes.loadingContainer}>
                         <CircularProgress className={classes.circularProgress}/>
                     </Box>}
-                <CustomDisabledButton
-                    color="secondary"
-                    variant="contained"
-                    className={['button', classes.buttonValidate].join(' ')}
-                    onClick={updateProfile}
-                    disabled={selected === undefined || !nicknameCheck}>
-                    {translation.profileValidChoice}
-                </CustomDisabledButton>
+                <Box className={classes.bottomZone}>
+                    <CustomDisabledButton
+                        color="secondary"
+                        variant="contained"
+                        className={['button', classes.buttonValidate].join(' ')}
+                        onClick={updateProfile}
+                        disabled={selected === undefined || !nicknameCheck}>
+                        {translation.profileValidChoice}
+                    </CustomDisabledButton>
+                </Box>
             </Box>
         </Grow>
     )

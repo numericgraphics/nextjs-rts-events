@@ -95,5 +95,8 @@ export const useStyles = makeStyles((theme) => ({
         '@media only screen and (max-height:550px)': {
             minHeight: '43px'
         }
+    },
+    bottomZone: {
+        width: '100%'
     }
 }))
