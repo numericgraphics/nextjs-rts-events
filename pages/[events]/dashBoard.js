@@ -104,7 +104,7 @@ function DashBoard (props) {
         dataProvider.setData(content)
         gameStatsService.init(dataProvider)
         uiElementsService.init(dataProvider)
-        setPreCaching(dataProvider.getGameStats())
+        setPreCaching([dataProvider.getGameStats(), dataProvider.getGifts()])
     }
 
     function initPage () {

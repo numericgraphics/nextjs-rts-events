@@ -20,22 +20,22 @@ const hasGiftModal = WrappedComponent => {
         const lockIconRef = createRef()
         const [boxHeight, setBoxHeight] = useState(0)
 
-        function handleResize () {
-            setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
-        }
-
-        useEffect(() => {
-            window.addEventListener('resize', handleResize)
-            return () => {
-                window.removeEventListener('resize', handleResize)
-            }
-        }, [handleResize])
-
-        useEffect(() => {
-            if (open) {
-                setTimeout(handleResize, 10)
-            }
-        }, [open])
+        // function handleResize () {
+        //     setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
+        // }
+        //
+        // useEffect(() => {
+        //     window.addEventListener('resize', handleResize)
+        //     return () => {
+        //         window.removeEventListener('resize', handleResize)
+        //     }
+        // }, [handleResize])
+        //
+        // useEffect(() => {
+        //     if (open) {
+        //         setTimeout(handleResize, 10)
+        //     }
+        // }, [open])
 
         const handleOpen = () => {
             setOpen(true)
@@ -63,23 +63,6 @@ const hasGiftModal = WrappedComponent => {
                     <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
                         <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                             style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
-                            <IconButton onClick={handleClose} color="secondary" className={classes.closeBtn}>
-                                { closeIcon({ className: classes.closeIcon }) }
-                            </IconButton>
-                            <Box className={classes.footer} style={{ height: height }}>
-                                <Box className={classes.gradient} />
-                                <Box className={classes.containerText} ref={ boxTextRef }>
-                                    <Typography variant="h2" className={classes.title} align={'center'}
-                                        dangerouslySetInnerHTML={{ __html: gift.title }}>
-                                    </Typography>
-                                    <Typography variant="subtitle2" className={classes.description} align={'center'}
-                                        dangerouslySetInnerHTML={{ __html: gift.message }}>
-                                    </Typography>
-                                </Box>
-                                {gift.locked ? <Box className={classes.lockContainer} style={{ bottom: boxHeight - 1 }}>
-                                    {lockIcon({ ref: lockIconRef, className: classes.lock })}
-                                </Box> : null }
-                            </Box>
                         </Box>
                     </Slide>
                 </Modal>
