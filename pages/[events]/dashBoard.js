@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ButtonBase from '@material-ui/core/ButtonBase'
+import { isSafari, isMobile, isIOS } from 'react-device-detect'
+import dynamic from 'next/dynamic'
+import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import Router, { useRouter } from 'next/router'
 import EventLayout from '../../components/ui/layout/eventLayout'
 import Box from '@material-ui/core/Box'
 import { ColorCard } from '../../components/ui/card/ColorCard'
-import UserContext from '../../hooks/userContext'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 import DashBoardChallengesProgress from '../../components/ui/progress/DashBoardChallengesProgress'
 import CloseIcon from '@material-ui/icons/Close'
@@ -23,9 +24,15 @@ import AvatarEvent from '../../components/ui/avatar/avatarEvent'
 import CardContent from '@material-ui/core/CardContent'
 import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToolBar'
 import Slide from '@material-ui/core/Slide'
+import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformations from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
+import ButtonBase from '@material-ui/core/ButtonBase'
+
+const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
+    ssr: false
+})
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -54,9 +61,12 @@ function DashBoard (props) {
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
     const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
+    const [gameStats, setGameStats] = useState()
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
+    const [openFeedback, setOpenFeedback] = useState(false)
+    let timeout
 
     async function fetchData () {
         try {
@@ -108,15 +118,41 @@ function DashBoard (props) {
         setAvailableScores(dataProvider.getGameStats().currentScore > 0)
         setAvailableResults(dataProvider.getGameStats().uiSumCount > 0)
         setImageURL(ThemeFactory.getBackgroundImageURL())
+        setGameStats(dataProvider.getGameStats())
         setLoading(false)
+
+        if (!availableChallenges) {
+            timeout = setTimeout(() => {
+                onOpenModal(ModalStates.END_GAME)
+            }, 1000)
+        }
     }
 
     async function startGame () {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
+    function onProfileClick () {
+        onOpenModal(ModalStates.PROFILE)
+    }
+
     function closeModal () {
         setOpen(false)
+    }
+
+    function onClickFeedback () {
+        closeModal()
+        setOpenFeedback(!openFeedback)
+    }
+
+    function getFeedBack () {
+        return <CustomDisabledButton
+            color="secondary"
+            variant="contained"
+            className={'button'}
+            onClick={() => onClickFeedback()} >
+            {`${translation.feedbackButtonOnDashboard}`}
+        </CustomDisabledButton>
     }
 
     function getModalContent () {
@@ -124,15 +160,17 @@ function DashBoard (props) {
         case ModalStates.GIFT:
             return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
-            return <EndgameInformations uiElements={uiElements} handleClose={closeModal} open={open}/>
+            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
         case ModalStates.PROFILE:
             return <Profile handleClose={closeModal} open={open} />
         }
     }
 
-    function onProfileClick () {
-        onOpenModal(ModalStates.PROFILE)
-    }
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [])
 
     // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
@@ -152,9 +190,9 @@ function DashBoard (props) {
             fetchData().then()
         }
     }, [isGlobalLoading])
-
     return (
         <React.Fragment>
+            { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
             <EventLayout >
                 {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
@@ -241,23 +279,39 @@ function DashBoard (props) {
                     timeout={500}
                     direction="up"
                     mountOnEnter
-                    unmountOnExit>
+                    unmountOnExit
+                >
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
                         <CustomDisabledButton
                             color="secondary"
                             variant="contained"
                             className={'button'}
                             onClick={startGame}
-                            disabled={!availableChallenges}>
+                            disabled={!availableChallenges}
+                        >
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
+                {(isSafari && isMobile && isIOS) && <PWAPrompt
+                    delay={2000}
+                    copyTitle={translation.dashboardCopyTitle}
+                    copyBody={translation.dashboardCopyBody}
+                    copyShareButtonLabel={translation.dashboardCopyShareButtonLabel}
+                    copyAddHomeButtonLabel={translation.dashboardCopyAddHomeButtonLabel}
+                    copyClosePrompt={translation.dashboardCopyClosePrompt}
+                    timesToShow={30}
+                    permanentlyHideOnDismiss={true}
+                />}
             </Box>
                 }
             </EventLayout>
-            <GenericModal handleClose={closeModal} open={open} hideBackdrop={modalState !== ModalStates.END_GAME}>
+            <GenericModal
+                handleClose={closeModal}
+                open={open}
+                hideBackdrop={modalState !== ModalStates.END_GAME}
+            >
                 {getModalContent()}
             </GenericModal>
         </React.Fragment>

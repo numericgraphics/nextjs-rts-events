@@ -14,13 +14,14 @@ function EndgameInformations (props, ref) {
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
-                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: 'Fin du jeu' }}/>
-                <Typography variant='subtitle1' className={[].join(' ')}
-                    dangerouslySetInnerHTML={{ __html: props.uiElements.noMoreChallengesChunk }}>
+                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: props.uiElements.noMoreChallengesChunk }}/>
+                <Typography variant='h4' className={[].join(' ')}
+                    dangerouslySetInnerHTML={{ __html: props.translation.feedbackTitle }}>
                 </Typography>
-                <Typography variant='subtitle1' className={[].join(' ')}
-                    dangerouslySetInnerHTML={{ __html: props.uiElements.finalResultScoreChunk }} >
+                <Typography variant='subtitle2' className={classes.subTitle}
+                    dangerouslySetInnerHTML={{ __html: props.translation.feedbackMessage }} >
                 </Typography>
+                {props.feedback}
             </Box>
         </Grow>
     )
