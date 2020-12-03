@@ -270,7 +270,7 @@
 }
 
 .modal-title {
-    margin-bottom: 3vw!important;
+    margin-bottom: min(1rem, 30px)!important;
     width: 80%
 }
 

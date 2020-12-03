@@ -102,7 +102,7 @@ function Profile (props, ref) {
     }, [avatars, user])
 
     useEffect(() => {
-        setNicknameCheck(between(nickname.length, 3, 20))
+        setNicknameCheck(between(nickname.length, 3, 18))
     }, [nickname])
 
     return (

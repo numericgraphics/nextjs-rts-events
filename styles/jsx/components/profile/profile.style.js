@@ -12,9 +12,15 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.light,
         color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
-        padding: '3vw',
+        padding: 'min(3vw, 30px)',
         '& .MuiIconButton-root': {
             padding: '0!important'
+        },
+        '& .MuiInputBase-input': {
+            padding: '0.4rem',
+            '@media only screen and (max-height:550px)': {
+                padding: '1.3rem'
+            }
         }
     },
     root: {
@@ -38,7 +44,7 @@ export const useStyles = makeStyles((theme) => ({
     gridList: {
         width: '100%',
         margin: 0,
-        marginBottom: '4vw!important',
+        marginBottom: 'min(1rem, 30px)!important',
         '& .MuiGridListTile-root': {
             opacity: 0.7,
             border: 'solid 5px rgba(0, 0, 0, 0)'
@@ -70,7 +76,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: '0.2rem',
         WebkitAppearance: 'none',
         borderRadius: '5px',
-        marginBottom: '4vw!important',
+        marginBottom: 'min(1rem, 30px)!important',
         '& input': {
             fontFamily: 'srgssr-type-Bd',
             textAlign: 'center!important',
@@ -85,6 +91,8 @@ export const useStyles = makeStyles((theme) => ({
         alignSelf: 'flex-end!important'
     },
     buttonValidate: {
-        minHeight: '43px'
+        '@media only screen and (max-height:550px)': {
+            minHeight: '43px'
+        }
     }
 }))
