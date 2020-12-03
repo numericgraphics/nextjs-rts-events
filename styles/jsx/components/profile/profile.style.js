@@ -91,6 +91,7 @@ export const useStyles = makeStyles((theme) => ({
         alignSelf: 'flex-end!important'
     },
     buttonValidate: {
+        minHeight: '55px',
         '@media only screen and (max-height:550px)': {
             minHeight: '43px'
         }
