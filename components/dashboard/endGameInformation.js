@@ -1,30 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
-import { useStyles } from '../../styles/jsx/components/modal/hasLoginModal.style'
+import { useStyles } from '../../styles/jsx/components/modal/endGameInformation.style'
 import Grow from '@material-ui/core/Grow'
+import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 
-function EndgameInformations (props, ref) {
+function EndgameInformation (props, ref) {
     const classes = useStyles()
+    const { open, handleClose, translation, uiElements, feedback } = props
+    const [onTransition, setTransition] = useState(undefined)
+
+    function onExited () {
+        handleClose()
+    }
+
+    function transitionClose () {
+        setTransition(false)
+    }
+
+    useEffect(() => {
+        setTransition(open)
+    }, [])
+
     return (
         <Grow
-            in={props.open}
-            timeout={1000}
+            in={onTransition}
+            timeout={{
+                appear: 1000,
+                enter: 1000,
+                exit: 200
+            }}
+            onExited={onExited}
         >
             <Box ref={ref}
                 className={classes.modalContent}
                 tabIndex={'-1'} >
-                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: props.uiElements.noMoreChallengesChunk }}/>
+                <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
+                <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}/>
                 <Typography variant='h4' className={[].join(' ')}
-                    dangerouslySetInnerHTML={{ __html: props.translation.feedbackTitle }}>
+                    dangerouslySetInnerHTML={{ __html: translation.feedbackTitle }}>
                 </Typography>
                 <Typography variant='subtitle2' className={classes.subTitle}
-                    dangerouslySetInnerHTML={{ __html: props.translation.feedbackMessage }} >
+                    dangerouslySetInnerHTML={{ __html: translation.feedbackMessage }} >
                 </Typography>
-                {props.feedback}
+                {feedback}
             </Box>
         </Grow>
     )
 }
 
-export default React.forwardRef(EndgameInformations)
+export default React.forwardRef(EndgameInformation)

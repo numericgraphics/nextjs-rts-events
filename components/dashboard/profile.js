@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
-import { useStyles } from '../../styles/jsx/components/profile/profile.style'
+import { useStyles } from '../../styles/jsx/components/modal/profile.style'
 import Grow from '@material-ui/core/Grow'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'

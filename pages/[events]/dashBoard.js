@@ -26,7 +26,7 @@ import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToo
 import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
-import EndgameInformations from '../../components/dashboard/endGameInformation'
+import EndgameInformation from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
@@ -160,7 +160,7 @@ function DashBoard (props) {
         case ModalStates.GIFT:
             return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
-            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
+            return <EndgameInformation uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
         case ModalStates.PROFILE:
             return <Profile handleClose={closeModal} open={open} />
         }
