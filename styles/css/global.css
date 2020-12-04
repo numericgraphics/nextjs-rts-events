@@ -41,10 +41,10 @@
 
 
 /*** BACKGROUNDS ***/
-
 .backgroundSlideShow,
 .backgroundSwipeableView,
 .backgroundModal,
+.backgroundModalGift,
 .backgroundVideo,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     width: 100%;
@@ -160,6 +160,9 @@
     background-color: black;
 }
 
+.backgroundModalGift {
+    position: relative!important;
+}
 
 /*** LAYOUT ***/
 
@@ -360,6 +363,7 @@
     .backgroundSwipeableView,
     .backgroundSlideShow,
     .backgroundModal,
+    .backgroundModalGift,
     .backgroundVideo,
     .backgroundPadding,
     .backgroundGradientByTheme,
@@ -407,6 +411,7 @@
     .backgroundSwipeableView,
     .backgroundSlideShow,
     .backgroundModal,
+    .backgroundModalGift,
     .backgroundVideo,
     .backgroundPadding,
     .backgroundGradientByTheme,
