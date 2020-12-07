@@ -31,7 +31,7 @@ function Gift (props, ref) {
     useEffect(() => {
         if (open) {
             setTimeout(handleResize, 10)
-            videoRef.current.play()
+            props.gift.videoURL && videoRef.current.play()
         }
     }, [open])
 
