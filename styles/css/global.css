@@ -54,6 +54,7 @@
 
 .backgroundVideo { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     z-index: 0;
+    height: 100%;
 }
 
 
