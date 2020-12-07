@@ -136,3 +136,7 @@ export function dateObjConvert (dateObj) {
     const finalDate = { date: date, time: time }
     return finalDate
 }
+
+export function between (x, min, max) {
+    return x >= min && x <= max
+}

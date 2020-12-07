@@ -8,7 +8,7 @@ function AvatarEvent (props) {
     return (
 
         <Box className={classes.avatarContainer}>
-            <Avatar className={classes.avatar} src={props.user}/>
+            <Avatar className={classes.avatar} src={props.user} />
             <Box className={classes.avatarBg}/>
         </Box>
     )
