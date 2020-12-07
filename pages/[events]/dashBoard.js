@@ -207,7 +207,7 @@ function DashBoard (props) {
                                 onClick={onProfileClick}>
                                 <AvatarEvent user={user.avatarURL} />
                             </ButtonBase>
-                            <Typography variant="h2" className={[classes.nickname].join(' ')}>
+                            <Typography variant="h2" onClick={onProfileClick} className={[classes.nickname].join(' ')}>
                                 {user.nickname}
                             </Typography>
                             <Typography
