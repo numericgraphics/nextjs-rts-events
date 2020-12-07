@@ -5,7 +5,7 @@ import BackGroundDisplay from '../background/BackGroundDisplay'
 
 function VideoPlayer (props, videoRef) {
     const theme = useTheme()
-    const { videoSource, videoPoster, showVideo, blurVideo, className } = props
+    const { videoSource, videoPoster, showVideo, blurVideo } = props
 
     function onEnter (e) {
         console.log('onEnter', e)
@@ -25,9 +25,8 @@ function VideoPlayer (props, videoRef) {
                         src={videoSource}
                         poster={videoPoster}
                         loop
-                        controls
                         playsInline
-                        className={className || 'backgroundVideo'}
+                        className={'backgroundVideo'}
                         autoPlay={false}
                         style={{ ...props.style, backgroundColor: theme.palette.primary.main, minHeight: '100vh', objectFit: 'cover' }}
                     >

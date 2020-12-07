@@ -38,7 +38,7 @@ function Gift (props, ref) {
     return (
         <Slide direction="up" in={props.open} timeout={500} mountOnEnter unmountOnExit>
             {props.gift.videoURL
-                ? <Box style={{ height: '100%', width: '100%', display: 'flex' }} >
+                ? <Box className={classes.videoContainer}>
                     <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
                         { closeIcon({ className: classes.closeIcon }) }
                     </IconButton>
