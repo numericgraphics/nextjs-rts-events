@@ -29,6 +29,7 @@ import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformation from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -66,6 +67,7 @@ function DashBoard (props) {
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const theme = useTheme()
     let timeout
 
     async function fetchData () {
@@ -117,7 +119,7 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
-
+        console.log('theme', theme)
         if (!availableChallenges) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
@@ -142,24 +144,28 @@ function DashBoard (props) {
         setOpenFeedback(!openFeedback)
     }
 
-    function getFeedBack () {
-        return <CustomDisabledButton
-            color="secondary"
-            variant="contained"
-            className={'button'}
-            onClick={() => onClickFeedback()} >
-            {`${translation.feedbackButtonOnDashboard}`}
-        </CustomDisabledButton>
-    }
-
     function getModalContent () {
         switch (modalState) {
         case ModalStates.GIFT:
-            return <Gift gift={gift} handleClose={closeModal} open={open}/>
+            return <Gift
+                gift={gift}
+                handleClose={closeModal}
+                open={open}
+            />
         case ModalStates.END_GAME:
-            return <EndgameInformation uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
+            return <EndgameInformation
+                uiElements={uiElements}
+                translation={translation}
+                handleClose={closeModal}
+                handleOpenTypeForm={onClickFeedback}
+                open={open}
+                gameStats={gameStats}
+            />
         case ModalStates.PROFILE:
-            return <Profile handleClose={closeModal} open={open} />
+            return <Profile
+                handleClose={closeModal}
+                open={open}
+            />
         }
     }
 

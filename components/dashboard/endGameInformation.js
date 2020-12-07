@@ -4,10 +4,11 @@ import { Box } from '@material-ui/core'
 import { useStyles } from '../../styles/jsx/components/modal/endGameInformation.style'
 import Grow from '@material-ui/core/Grow'
 import ButtonCloseModal from '../ui/modal/buttonCloseModal'
+import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 
 function EndgameInformation (props, ref) {
     const classes = useStyles()
-    const { open, handleClose, translation, uiElements, feedback } = props
+    const { open, handleClose, translation, uiElements, handleOpenTypeForm } = props
     const [onTransition, setTransition] = useState(undefined)
 
     function onExited () {
@@ -28,7 +29,7 @@ function EndgameInformation (props, ref) {
             timeout={{
                 appear: 1000,
                 enter: 1000,
-                exit: 200
+                exit: 500
             }}
             onExited={onExited}
         >
@@ -43,7 +44,13 @@ function EndgameInformation (props, ref) {
                 <Typography variant='subtitle2' className={classes.subTitle}
                     dangerouslySetInnerHTML={{ __html: translation.feedbackMessage }} >
                 </Typography>
-                {feedback}
+                <CustomDisabledButton
+                    color="secondary"
+                    variant="contained"
+                    className={'button'}
+                    onClick={handleOpenTypeForm} >
+                    {`${translation.feedbackButtonOnDashboard}`}
+                </CustomDisabledButton>
             </Box>
         </Grow>
     )
