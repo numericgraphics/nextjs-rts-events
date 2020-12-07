@@ -37,11 +37,7 @@ function Result (props) {
     }
 
     function onStart () {
-        props.openModal()
-    }
-
-    function setGift (gift) {
-        props.setGift(gift)
+        props.openGiftModal()
     }
 
     function imagePreCacheCallBack (result) {
@@ -94,7 +90,7 @@ function Result (props) {
                                 translation={translation.challengeResultGiftText}
                                 gift={newUnlockedGifts}
                                 onClick={onStart}
-                                setGift={setGift}
+                                setGift={props.setGift}
                             />
                         }
                     </Box>
