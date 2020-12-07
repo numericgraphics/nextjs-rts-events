@@ -51,7 +51,7 @@ function Gift (props, ref) {
                         playsInline
                         className={'backgroundVideo'}
                         autoPlay={true}
-                        style={{ backgroundColor: theme.palette.primary.main, minHeight: '100vh', objectFit: 'cover' }}
+                        style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
                     />
                 </Box>
                 : <Box ref={ref}
