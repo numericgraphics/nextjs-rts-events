@@ -8,8 +8,7 @@ import { lockIcon, closeIcon } from '../data/icon'
 import IconButton from '@material-ui/core/IconButton'
 import { useHeight } from '../hooks/useHeight'
 import { useStyles } from '../styles/jsx/components/modal/hasGiftsModal.style'
-import VideoPlayer from '../components/ui/video/VideoPlayer'
-
+import useTheme from '@material-ui/core/styles/useTheme'
 const hasGiftModal = WrappedComponent => {
     // eslint-disable-next-line react/display-name
     return (props) => {
@@ -21,6 +20,7 @@ const hasGiftModal = WrappedComponent => {
         const lockIconRef = createRef()
         const [boxHeight, setBoxHeight] = useState(0)
         const videoRef = useRef()
+        const theme = useTheme()
 
         function handleResize () {
             setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
@@ -46,7 +46,7 @@ const hasGiftModal = WrappedComponent => {
         const handleClose = () => {
             setOpen(false)
         }
-        console.log('gift', gift)
+
         return (
             <Box>
                 <WrappedComponent setGift={setGift} openModal={handleOpen} isModalOpen={open} {...props} />
@@ -64,14 +64,18 @@ const hasGiftModal = WrappedComponent => {
                 >
                     <Slide direction="up" in={open} timeout={500} mountOnEnter unmountOnExit>
                         {gift.videoURL
-                            ? <VideoPlayer
+                            ? <video
                                 ref={videoRef}
-                                videoSource={gift.videoURL}
-                                videoPoster={gift.imageURL}
-                                showVideo={true}
-                                blurVideo={false}
-                                style={{ visibility: 'visible' }}
-                            />
+                                src={gift.videoURL}
+                                poster={gift.imageURL}
+                                preload={'auto'}
+                                controls
+                                playsInline
+                                className={'backgroundVideo'}
+                                autoPlay={true}
+                                style={{ ...props.style, backgroundColor: theme.palette.primary.main, minHeight: '100vh', objectFit: 'cover' }}
+                            >
+                            </video>
                             : <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                                 style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
                                 <IconButton onClick={handleClose} color="secondary" className={classes.closeBtn}>

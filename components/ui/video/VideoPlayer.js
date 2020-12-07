@@ -25,6 +25,7 @@ function VideoPlayer (props, videoRef) {
                         src={videoSource}
                         poster={videoPoster}
                         loop
+                        controls
                         playsInline
                         className={className || 'backgroundVideo'}
                         autoPlay={false}

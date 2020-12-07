@@ -6,7 +6,7 @@ import { useStyles } from '../../styles/jsx/components/modal/hasGiftsModal.style
 import IconButton from '@material-ui/core/IconButton'
 import { closeIcon, lockIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
-import VideoPlayer from '../ui/video/VideoPlayer'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 function Gift (props, ref) {
     const classes = useStyles()
@@ -15,6 +15,7 @@ function Gift (props, ref) {
     const lockIconRef = createRef()
     const [boxHeight, setBoxHeight] = useState(0)
     const videoRef = useRef()
+    const theme = useTheme()
 
     function handleResize () {
         setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
@@ -34,19 +35,25 @@ function Gift (props, ref) {
         }
     }, [open])
 
-    console.log(props.gift)
     return (
         <Slide direction="up" in={props.open} timeout={500} mountOnEnter unmountOnExit>
             {props.gift.videoURL
-                ? <VideoPlayer
-                    className={['backgroundModalGift', 'bg-top-cover'].join(' ')}
-                    ref={videoRef}
-                    videoSource={props.gift.videoURL}
-                    videoPoster={props.gift.imageURL}
-                    showVideo={true}
-                    blurVideo={false}
-                    style={{ visibility: 'visible' }}
-                />
+                ? <Box style={{ height: '100%', width: '100%', display: 'flex' }} >
+                    <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
+                        { closeIcon({ className: classes.closeIcon }) }
+                    </IconButton>
+                    <video
+                        ref={videoRef}
+                        src={props.gift.videoURL}
+                        poster={props.gift.imageURL}
+                        preload={'auto'}
+                        controls
+                        playsInline
+                        className={'backgroundVideo'}
+                        autoPlay={true}
+                        style={{ backgroundColor: theme.palette.primary.main, minHeight: '100vh', objectFit: 'cover' }}
+                    />
+                </Box>
                 : <Box ref={ref}
                     className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
                     style={{ backgroundImage: `url(${props.gift.imageURL})`, height: height }}
