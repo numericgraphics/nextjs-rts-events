@@ -102,7 +102,7 @@ function DashBoard (props) {
         dataProvider.setData(content)
         gameStatsService.init(dataProvider)
         uiElementsService.init(dataProvider)
-        setPreCaching(dataProvider.getGameStats())
+        setPreCaching([dataProvider.getGameStats(), dataProvider.getGifts()])
     }
 
     function initPage () {
@@ -117,6 +117,10 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/improve-dashboard-image-caching
         if (!availableChallenges) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
