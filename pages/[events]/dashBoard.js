@@ -117,10 +117,7 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/improve-dashboard-image-caching
         if (!availableChallenges) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
