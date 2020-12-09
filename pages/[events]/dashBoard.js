@@ -29,7 +29,6 @@ import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformation from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import useTheme from '@material-ui/core/styles/useTheme'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -67,7 +66,6 @@ function DashBoard (props) {
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
     const [openFeedback, setOpenFeedback] = useState(false)
-    const theme = useTheme()
     let timeout
 
     async function fetchData () {
@@ -119,7 +117,7 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
-        console.log('theme', theme)
+
         if (!availableChallenges) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
