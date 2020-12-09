@@ -183,11 +183,11 @@ function MyApp ({ Component, pageProps }) {
             { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
             {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             <Head>
-                <title>RTS - Pop quiz</title>
+                <title>RTS - Events</title>
                 < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
                 <meta
                     name="description"
-                    content={'RTS - Pop quiz'}
+                    content={'RTS - Events'}
                 />
             </Head>
             { <ThemeProvider theme={ theme }>

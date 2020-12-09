@@ -102,7 +102,7 @@ function DashBoard (props) {
         dataProvider.setData(content)
         gameStatsService.init(dataProvider)
         uiElementsService.init(dataProvider)
-        setPreCaching(dataProvider.getGameStats())
+        setPreCaching([dataProvider.getGameStats(), dataProvider.getGifts()])
     }
 
     function initPage () {
@@ -142,24 +142,28 @@ function DashBoard (props) {
         setOpenFeedback(!openFeedback)
     }
 
-    function getFeedBack () {
-        return <CustomDisabledButton
-            color="secondary"
-            variant="contained"
-            className={'button'}
-            onClick={() => onClickFeedback()} >
-            {`${translation.feedbackButtonOnDashboard}`}
-        </CustomDisabledButton>
-    }
-
     function getModalContent () {
         switch (modalState) {
         case ModalStates.GIFT:
-            return <Gift gift={gift} handleClose={closeModal} open={open}/>
+            return <Gift
+                gift={gift}
+                handleClose={closeModal}
+                open={open}
+            />
         case ModalStates.END_GAME:
-            return <EndgameInformation uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
+            return <EndgameInformation
+                uiElements={uiElements}
+                translation={translation}
+                handleClose={closeModal}
+                handleOpenTypeForm={onClickFeedback}
+                open={open}
+                gameStats={gameStats}
+            />
         case ModalStates.PROFILE:
-            return <Profile handleClose={closeModal} open={open} />
+            return <Profile
+                handleClose={closeModal}
+                open={open}
+            />
         }
     }
 
@@ -204,11 +208,13 @@ function DashBoard (props) {
                                 onClick={onProfileClick}>
                                 <AvatarEvent user={user.avatarURL} />
                             </ButtonBase>
-                            <Typography variant="h2"
-                                className={[classes.nickname].join(' ')}
-                                onClick={onProfileClick}>
-                                {user.nickname}
-                            </Typography>
+                            <ButtonBase
+                                onClick={onProfileClick}
+                            >
+                                <Typography variant="h2" className={[classes.nickname].join(' ')}>
+                                    {user.nickname}
+                                </Typography>
+                            </ButtonBase>
                             <Typography
                                 variant='subtitle1'
                                 className={[classes.remainingTime].join(' ')}

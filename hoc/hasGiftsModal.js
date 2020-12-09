@@ -22,22 +22,22 @@ const hasGiftModal = WrappedComponent => {
         const videoRef = useRef()
         const theme = useTheme()
 
-        function handleResize () {
-            setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
-        }
-
-        useEffect(() => {
-            window.addEventListener('resize', handleResize)
-            return () => {
-                window.removeEventListener('resize', handleResize)
-            }
-        }, [handleResize])
-
-        useEffect(() => {
-            if (open) {
-                setTimeout(handleResize, 10)
-            }
-        }, [open])
+        // function handleResize () {
+        //     setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
+        // }
+        //
+        // useEffect(() => {
+        //     window.addEventListener('resize', handleResize)
+        //     return () => {
+        //         window.removeEventListener('resize', handleResize)
+        //     }
+        // }, [handleResize])
+        //
+        // useEffect(() => {
+        //     if (open) {
+        //         setTimeout(handleResize, 10)
+        //     }
+        // }, [open])
 
         const handleOpen = () => {
             setOpen(true)
@@ -97,6 +97,9 @@ const hasGiftModal = WrappedComponent => {
                                 </Box>
                             </Box>
                         }
+                        <Box className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
+                            style={{ backgroundImage: `url(${gift.imageURL})`, height: height }}>
+                        </Box>
                     </Slide>
                 </Modal>
             </Box>

@@ -1,42 +1,52 @@
-import React, { createRef, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState, useRef, createRef } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import { useHeight } from '../../hooks/useHeight'
-import { useStyles } from '../../styles/jsx/components/modal/hasGiftsModal.style'
+import { useStyles } from '../../styles/jsx/gifts/gift.style'
 import IconButton from '@material-ui/core/IconButton'
 import { closeIcon, lockIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 function Gift (props, ref) {
+    const { open, handleClose, gift } = props
     const classes = useStyles()
-    const height = useHeight()
+    const [onTransition, setTransition] = useState(undefined)
     const boxTextRef = useRef()
     const lockIconRef = createRef()
-    const [boxHeight, setBoxHeight] = useState(0)
-    const videoRef = useRef()
     const theme = useTheme()
-
-    function handleResize () {
-        setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
-    }
+    const videoRef = useRef()
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize)
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [handleResize])
+        setTransition(open)
+    }, [])
 
     useEffect(() => {
         if (open) {
-            setTimeout(handleResize, 10)
             props.gift.videoURL && videoRef.current.play()
         }
     }, [open])
 
+    function onExited () {
+        handleClose()
+    }
+
+    function transitionClose () {
+        setTransition(false)
+    }
+
     return (
-        <Slide direction="up" in={props.open} timeout={500} mountOnEnter unmountOnExit>
+        <Slide
+            direction="up"
+            in={onTransition}
+            timeout={{
+                appear: 1000,
+                enter: 1000,
+                exit: 200
+            }}
+            mountOnEnter
+            unmountOnExit
+            onExited={onExited}
+        >
             {props.gift.videoURL
                 ? <Box className={classes.videoContainer}>
                     <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
@@ -55,25 +65,27 @@ function Gift (props, ref) {
                     />
                 </Box>
                 : <Box ref={ref}
-                    className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
-                    style={{ backgroundImage: `url(${props.gift.imageURL})`, height: height }}
+                    className={['backgroundModal', 'containerModal', classes.containerModal].join(' ')}
                     tabIndex={'-1'}>
-                    <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
+                    <Box className={classes.image} style={{ backgroundImage: `url(${props.gift.imageURL})` }}/>
+                    <IconButton onClick={transitionClose} color="secondary" className={classes.closeBtn}>
                         { closeIcon({ className: classes.closeIcon }) }
                     </IconButton>
-                    <Box className={classes.footer} style={{ height: height }}>
-                        <Box className={classes.gradient} />
+                    <Box className={classes.content} >
+                        {gift.locked
+                            ? <Box className={classes.iconContainer} >
+                                {lockIcon({ ref: lockIconRef, className: classes.lock })}
+                            </Box>
+                            : <Box className={classes.topGradient} />
+                        }
                         <Box className={classes.containerText} ref={ boxTextRef }>
                             <Typography variant="h2" className={classes.title} align={'center'}
-                                dangerouslySetInnerHTML={{ __html: props.gift.title }}>
+                                dangerouslySetInnerHTML={{ __html: gift.title }}>
                             </Typography>
                             <Typography variant="subtitle2" className={classes.description} align={'center'}
-                                dangerouslySetInnerHTML={{ __html: props.gift.message }}>
+                                dangerouslySetInnerHTML={{ __html: gift.message }}>
                             </Typography>
                         </Box>
-                        {props.gift.locked ? <Box className={classes.lockContainer} style={{ bottom: boxHeight - 1 }}>
-                            {lockIcon({ ref: lockIconRef, className: classes.lock })}
-                        </Box> : null }
                     </Box>
                 </Box>
             }
