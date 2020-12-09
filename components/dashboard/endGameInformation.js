@@ -8,7 +8,7 @@ import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 
 function EndgameInformation (props, ref) {
     const classes = useStyles()
-    const { open, handleClose, translation, uiElements, handleOpenTypeForm } = props
+    const { open, handleClose, translation, uiElements, handleOpenTypeForm, gameStats } = props
     const [onTransition, setTransition] = useState(undefined)
 
     function onExited () {
@@ -22,7 +22,7 @@ function EndgameInformation (props, ref) {
     useEffect(() => {
         setTransition(open)
     }, [])
-
+    console.log(gameStats)
     return (
         <Grow
             in={onTransition}
@@ -38,19 +38,23 @@ function EndgameInformation (props, ref) {
                 tabIndex={'-1'} >
                 <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
                 <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}/>
-                <Typography variant='h4' className={[].join(' ')}
-                    dangerouslySetInnerHTML={{ __html: translation.feedbackTitle }}>
-                </Typography>
-                <Typography variant='subtitle2' className={classes.subTitle}
-                    dangerouslySetInnerHTML={{ __html: translation.feedbackMessage }} >
-                </Typography>
-                <CustomDisabledButton
-                    color="secondary"
-                    variant="contained"
-                    className={'button'}
-                    onClick={handleOpenTypeForm} >
-                    {`${translation.feedbackButtonOnDashboard}`}
-                </CustomDisabledButton>
+                { gameStats.feedbackURL &&
+                    <React.Fragment>
+                        <Typography variant='h4' className={[].join(' ')}
+                            dangerouslySetInnerHTML={{ __html: translation.feedbackTitle }}>
+                        </Typography>
+                        <Typography variant='subtitle2' className={classes.subTitle}
+                            dangerouslySetInnerHTML={{ __html: translation.feedbackMessage }} >
+                        </Typography>
+                        <CustomDisabledButton
+                            color="secondary"
+                            variant="contained"
+                            className={'button'}
+                            onClick={handleOpenTypeForm} >
+                            {`${translation.feedbackButtonOnDashboard}`}
+                        </CustomDisabledButton>
+                    </React.Fragment>
+                }
             </Box>
         </Grow>
     )

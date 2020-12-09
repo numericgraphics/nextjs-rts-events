@@ -110,9 +110,11 @@ function Result (props) {
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>
+                            { gameStats.feedbackURL &&
                             <ColorBorderButton key={'openFeedBackModal'} variant="outlined" className={'buttonAlt'} onClick={() => setOpenFeedback(!openFeedback)}>
                                 {`${translation.feedbackButtonOnResult}`}
                             </ColorBorderButton>
+                            }
                             <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonEnded}`}
                             </Button>
