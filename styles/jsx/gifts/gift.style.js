@@ -103,6 +103,25 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top',
         backgroundSize: 'cover'
+    },
+    videoContainer: {
+        height: '100%',
+        width: '100%',
+        display: 'flex'
+    },
+    play: {
+        width: 'min(2.8rem, 65px)',
+        height: 'min(2.8rem, 65px)',
+        zIndex: 4,
+        fill: theme.palette.primary.contrastText
+    },
+    playButton: {
+        width: 'min(2.8rem, 65px)',
+        height: 'min(2.8rem, 65px)',
+        backgroundColor: theme.palette.secondary.main,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.dark
+        }
     }
 
 }))

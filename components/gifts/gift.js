@@ -3,9 +3,14 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../../styles/jsx/gifts/gift.style'
 import IconButton from '@material-ui/core/IconButton'
-import { closeIcon, lockIcon } from '../../data/icon'
+import { closeIcon, lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import useTheme from '@material-ui/core/styles/useTheme'
+
+export const ModalStates = Object.freeze({
+    GIFT: 'gift',
+    GIFT_VIDEO: 'giftVideo'
+})
 
 function Gift (props, ref) {
     const { open, handleClose, gift } = props
@@ -15,6 +20,7 @@ function Gift (props, ref) {
     const lockIconRef = createRef()
     const theme = useTheme()
     const videoRef = useRef()
+    const [modalState, setModalState] = useState(ModalStates.GIFT)
 
     useEffect(() => {
         setTransition(open)
@@ -22,7 +28,7 @@ function Gift (props, ref) {
 
     useEffect(() => {
         if (open) {
-            props.gift.videoURL && videoRef.current.play()
+            videoRef.current && videoRef.current.play()
         }
     }, [open])
 
@@ -32,6 +38,58 @@ function Gift (props, ref) {
 
     function transitionClose () {
         setTransition(false)
+    }
+
+    function getModalContent () {
+        switch (modalState) {
+        case ModalStates.GIFT:
+            return <Box ref={ref}
+                className={['backgroundModal', 'containerModal', classes.containerModal].join(' ')}
+                tabIndex={'-1'}>
+                <Box className={classes.image} style={{ backgroundImage: `url(${props.gift.imageURL})` }}/>
+                <IconButton onClick={transitionClose} color="secondary" className={classes.closeBtn}>
+                    { closeIcon({ className: classes.closeIcon }) }
+                </IconButton>
+                <Box className={classes.content} >
+                    {gift.locked
+                        ? <Box className={classes.iconContainer} >
+                            {lockIcon({ ref: lockIconRef, className: classes.lock })}
+                        </Box>
+                        : gift.videoURL
+                            ? <Box className={classes.iconContainer} >
+                                <IconButton onClick={() => setModalState(ModalStates.GIFT_VIDEO)} className={classes.playButton}>
+                                    { playIcon({ className: classes.play }) }
+                                </IconButton>
+                            </Box> : <Box className={classes.topGradient} />
+                    }
+                    <Box className={classes.containerText} ref={ boxTextRef }>
+                        <Typography variant="h2" className={classes.title} align={'center'}
+                            dangerouslySetInnerHTML={{ __html: gift.title }}>
+                        </Typography>
+                        <Typography variant="subtitle2" className={classes.description} align={'center'}
+                            dangerouslySetInnerHTML={{ __html: gift.message }}>
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        case ModalStates.GIFT_VIDEO:
+            return <Box className={classes.videoContainer}>
+                <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
+                    { closeIcon({ className: classes.closeIcon }) }
+                </IconButton>
+                <video
+                    ref={videoRef}
+                    src={props.gift.videoURL}
+                    poster={props.gift.imageURL}
+                    preload={'auto'}
+                    controls
+                    playsInline
+                    className={'backgroundVideo'}
+                    autoPlay={true}
+                    style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
+                />
+            </Box>
+        }
     }
 
     return (
@@ -47,48 +105,7 @@ function Gift (props, ref) {
             unmountOnExit
             onExited={onExited}
         >
-            {props.gift.videoURL
-                ? <Box className={classes.videoContainer}>
-                    <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
-                        { closeIcon({ className: classes.closeIcon }) }
-                    </IconButton>
-                    <video
-                        ref={videoRef}
-                        src={props.gift.videoURL}
-                        poster={props.gift.imageURL}
-                        preload={'auto'}
-                        controls
-                        playsInline
-                        className={'backgroundVideo'}
-                        autoPlay={true}
-                        style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
-                    />
-                </Box>
-                : <Box ref={ref}
-                    className={['backgroundModal', 'containerModal', classes.containerModal].join(' ')}
-                    tabIndex={'-1'}>
-                    <Box className={classes.image} style={{ backgroundImage: `url(${props.gift.imageURL})` }}/>
-                    <IconButton onClick={transitionClose} color="secondary" className={classes.closeBtn}>
-                        { closeIcon({ className: classes.closeIcon }) }
-                    </IconButton>
-                    <Box className={classes.content} >
-                        {gift.locked
-                            ? <Box className={classes.iconContainer} >
-                                {lockIcon({ ref: lockIconRef, className: classes.lock })}
-                            </Box>
-                            : <Box className={classes.topGradient} />
-                        }
-                        <Box className={classes.containerText} ref={ boxTextRef }>
-                            <Typography variant="h2" className={classes.title} align={'center'}
-                                dangerouslySetInnerHTML={{ __html: gift.title }}>
-                            </Typography>
-                            <Typography variant="subtitle2" className={classes.description} align={'center'}
-                                dangerouslySetInnerHTML={{ __html: gift.message }}>
-                            </Typography>
-                        </Box>
-                    </Box>
-                </Box>
-            }
+            {getModalContent()}
         </Slide>
     )
 }
