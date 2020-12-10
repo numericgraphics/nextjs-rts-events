@@ -5,7 +5,7 @@ import { useStyles } from '../../styles/jsx/gifts/gift.style'
 import IconButton from '@material-ui/core/IconButton'
 import { closeIcon, lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
-import useTheme from '@material-ui/core/styles/useTheme'
+import VideoPlayerGift from '../ui/video/VideoPlayerGift'
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -18,7 +18,6 @@ function Gift (props, ref) {
     const [onTransition, setTransition] = useState(undefined)
     const boxTextRef = useRef()
     const lockIconRef = createRef()
-    const theme = useTheme()
     const videoRef = useRef()
     const [modalState, setModalState] = useState(ModalStates.GIFT)
 
@@ -73,22 +72,7 @@ function Gift (props, ref) {
                 </Box>
             </Box>
         case ModalStates.GIFT_VIDEO:
-            return <Box className={classes.videoContainer}>
-                <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
-                    { closeIcon({ className: classes.closeIcon }) }
-                </IconButton>
-                <video
-                    ref={videoRef}
-                    src={props.gift.videoURL}
-                    poster={props.gift.imageURL}
-                    preload={'auto'}
-                    controls
-                    playsInline
-                    className={'backgroundVideo'}
-                    autoPlay={true}
-                    style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
-                />
-            </Box>
+            return <VideoPlayerGift src={props.gift.videoURL} ref={videoRef} imageURL={props.gift.imageURL} handleClose={props.handleClose} />
         }
     }
 

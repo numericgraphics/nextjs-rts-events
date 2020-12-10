@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
 import { ColorBorderButton } from '../ui/button/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
-import giftsModal from '../../hoc/hasGiftsModal'
 import { preLoadImage } from '../../data/tools'
 import { useStylesGlobal } from '../../styles/jsx/global.style'
 import { ColorCard } from '../ui/card/ColorCard'
@@ -122,4 +121,4 @@ function Result (props) {
     )
 }
 
-export default giftsModal(withRouter(Result))
+export default withRouter(Result)
