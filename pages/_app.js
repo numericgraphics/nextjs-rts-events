@@ -26,7 +26,7 @@ import Head from 'next/head'
 function MyApp ({ Component, pageProps }) {
     const netWorkStatus = useNetwork()
     const router = useRouter()
-    const { defaultLocale, locale, isFallback, query } = router
+    const { defaultLocale, locale, isFallback, query, pathname } = router
     const appVisibilityStatus = useAppVisibility()
     const deviceDetection = useDeviceDetect()
     const [eventData, setEventData] = useState([])
@@ -99,6 +99,7 @@ function MyApp ({ Component, pageProps }) {
         console.log('isFallback - locale', locale)
         console.log('isFallback - defaultLocale', defaultLocale)
         console.log('isFallback - query', query)
+        console.log('isFallback - pathname', pathname)
     }, [isFallback])
 
     useEffect(() => {

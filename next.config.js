@@ -11,6 +11,7 @@ module.exports = {
     },
     serverRuntimeConfig: {
         EVENT_NAME: 'NIFF',
+        IMAGE_BASE_URL: 'https://rts-challenge.s3.eu-central-1.amazonaws.com/rtschallengeassets',
         API_BASE_URL: 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com',
         // API_STAGE: '/prod'
         API_STAGE: '/dev'

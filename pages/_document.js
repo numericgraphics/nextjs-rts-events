@@ -1,11 +1,31 @@
 import React from 'react'
+import getConfig from 'next/config'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
-
+const { serverRuntimeConfig } = getConfig()
 /*
  SOURCE : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
  */
 export default class MyDocument extends Document {
+    constructor (props) {
+        super(props)
+        const { __NEXT_DATA__, ids } = props
+        const { query } = __NEXT_DATA__
+        const { IMAGE_BASE_URL } = serverRuntimeConfig
+
+        if (ids) {
+            __NEXT_DATA__.ids = ids
+        }
+
+        try {
+            this.query = query
+            this.data = __NEXT_DATA__
+            this.imageBaseUrl = `${IMAGE_BASE_URL}/icons/${query.events}`
+        } catch (e) {
+            console.log('MyDocument constructor - error', e)
+        }
+    }
+
     render () {
         return (
             <Html>
@@ -13,10 +33,10 @@ export default class MyDocument extends Document {
                     <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
                     <link rel='shortcut icon' href='/favicon.ico' />
 
-                    <link href="/icons/touch-icon-iphone.png" rel="apple-touch-icon"/>
-                    <link href="/icons/touch-icon-ipad.png" rel="apple-touch-icon" sizes="76x76"/>
-                    <link href="/icons/touch-icon-iphone-retina.png" rel="apple-touch-icon" sizes="120x120"/>
-                    <link href="/icons/touch-icon-ipad-retina.png" rel="apple-touch-icon" sizes="152x152"/>
+                    <link href={`${this.imageBaseUrl}/touch-icon-iphone.png`} rel="apple-touch-icon"/>
+                    <link href={`${this.imageBaseUrl}/touch-icon-ipad.png`} rel="apple-touch-icon" sizes="76x76"/>
+                    <link href={`${this.imageBaseUrl}/touch-icon-iphone-retina.png`} rel="apple-touch-icon" sizes="120x120"/>
+                    <link href={`${this.imageBaseUrl}/touch-icon-ipad-retina.png`} rel="apple-touch-icon" sizes="152x152"/>
                 </Head>
                 <body>
                     <Main />
