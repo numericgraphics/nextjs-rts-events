@@ -19,7 +19,6 @@ function VideoController (props, ref) {
                 src={props.src}
                 poster={props.imageURL}
                 preload={'auto'}
-                controls
                 playsInline
                 className={'backgroundVideo'}
                 autoPlay={true}

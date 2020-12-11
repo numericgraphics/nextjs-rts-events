@@ -5,7 +5,7 @@ import { useStyles } from '../../styles/jsx/gifts/gift.style'
 import IconButton from '@material-ui/core/IconButton'
 import { closeIcon, lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
-import VideoPlayerGift from '../ui/video/VideoPlayerGift'
+import VideoPlayerGift from '../ui/video/VideoPlayerFloat'
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
