@@ -36,7 +36,7 @@ function Result (props) {
     }
 
     function onStart () {
-        props.openGiftModal()
+        props.openModal()
     }
 
     function imagePreCacheCallBack (result) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, createRef } from 'react'
+import React, { useEffect, useState, useRef, createRef, forwardRef } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../../styles/jsx/gifts/gift.style'
@@ -30,6 +30,10 @@ function Gift (props, ref) {
             videoRef.current && videoRef.current.play()
         }
     }, [open])
+
+    useEffect(() => {
+        console.log('opened')
+    }, [modalState])
 
     function onExited () {
         handleClose()
@@ -72,10 +76,10 @@ function Gift (props, ref) {
                 </Box>
             </Box>
         case ModalStates.GIFT_VIDEO:
-            return <VideoPlayerGift src={props.gift.videoURL} ref={videoRef} imageURL={props.gift.imageURL} handleClose={props.handleClose} />
+            return <VideoPlayerGift src={props.gift.videoURL} ref={videoRef} imageURL={props.gift.imageURL} handleClose={() => setModalState(ModalStates.GIFT)} />
         }
     }
-
+    console.log(modalState)
     return (
         <Slide
             direction="up"
@@ -93,4 +97,4 @@ function Gift (props, ref) {
         </Slide>
     )
 }
-export default React.forwardRef(Gift)
+export default forwardRef(Gift)

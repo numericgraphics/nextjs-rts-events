@@ -12,10 +12,6 @@ import Box from '@material-ui/core/Box'
 import Gift from '../../components/gifts/gift'
 import GenericModal from '../../components/ui/modal/genericModal'
 
-export const ModalStates = Object.freeze({
-    GIFT: 'gift'
-})
-
 function Challenge () {
     const router = useRouter()
     const { events } = router.query
@@ -32,7 +28,6 @@ function Challenge () {
     const [addBlur, setBlur] = useState(false)
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
-    const [modalState, setModalState] = useState(ModalStates.GIFT)
 
     async function fetchQuestions () {
         try {
@@ -111,7 +106,7 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_VIDEO:
             return <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result openGiftModal={openGiftModal} setGift={setGift} content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
+            return <Result openModal={onOpenModal} setGift={setGift} content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
@@ -125,19 +120,11 @@ function Challenge () {
     }
 
     function getModalContent () {
-        switch (modalState) {
-        case ModalStates.GIFT:
-            return <Gift gift={gift} handleClose={closeModal} open={open}/>
-        }
+        return <Gift gift={gift} handleClose={closeModal} open={open}/>
     }
 
-    function onOpenModal (state) {
-        setModalState(state)
+    function onOpenModal () {
         setOpen(true)
-    }
-
-    function openGiftModal () {
-        onOpenModal(ModalStates.GIFT)
     }
 
     function closeModal () {

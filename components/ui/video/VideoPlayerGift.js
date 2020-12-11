@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
 import { closeIcon } from '../../../data/icon'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { useStyles } from '../../../styles/jsx/gifts/videoPlayerGift.style'
 
-function VideoController (props) {
+function VideoController (props, ref) {
     const theme = useTheme()
     const classes = useStyles()
 
@@ -29,4 +29,4 @@ function VideoController (props) {
     )
 }
 
-export default VideoController
+export default forwardRef(VideoController)
