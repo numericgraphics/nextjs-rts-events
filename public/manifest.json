@@ -1,6 +1,7 @@
 {
   "name": "EventsByRTS",
   "short_name": "RTS-Events",
+  "description": "Events by RTS",
   "theme_color": "#af011f",
   "background_color": "#af011f",
   "display": "standalone",

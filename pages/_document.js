@@ -20,7 +20,8 @@ export default class MyDocument extends Document {
         try {
             this.query = query
             this.data = __NEXT_DATA__
-            this.imageBaseUrl = `${IMAGE_BASE_URL}/icons/${query.events}`
+            this.iconUrl = `${IMAGE_BASE_URL}/icons/${query.events}`
+            this.manifestUrl = `${IMAGE_BASE_URL}/manifests/${query.events}`
         } catch (e) {
             console.log('MyDocument constructor - error', e)
         }
@@ -33,10 +34,12 @@ export default class MyDocument extends Document {
                     <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
                     <link rel='shortcut icon' href='/favicon.ico' />
 
-                    <link href={`${this.imageBaseUrl}/touch-icon-iphone.png`} rel="apple-touch-icon"/>
-                    <link href={`${this.imageBaseUrl}/touch-icon-ipad.png`} rel="apple-touch-icon" sizes="76x76"/>
-                    <link href={`${this.imageBaseUrl}/touch-icon-iphone-retina.png`} rel="apple-touch-icon" sizes="120x120"/>
-                    <link href={`${this.imageBaseUrl}/touch-icon-ipad-retina.png`} rel="apple-touch-icon" sizes="152x152"/>
+                    <link href={`${this.iconUrl}/touch-icon-iphone.png`} rel="apple-touch-icon"/>
+                    <link href={`${this.iconUrl}/touch-icon-ipad.png`} rel="apple-touch-icon" sizes="76x76"/>
+                    <link href={`${this.iconUrl}/touch-icon-iphone-retina.png`} rel="apple-touch-icon" sizes="120x120"/>
+                    <link href={`${this.iconUrl}/touch-icon-ipad-retina.png`} rel="apple-touch-icon" sizes="152x152"/>
+
+                    <link rel='manifest' href={`${this.manifestUrl}/manifest.json`} />
                 </Head>
                 <body>
                     <Main />
