@@ -15,10 +15,11 @@ export const ModalStates = Object.freeze({
 
 function Gift (props, ref) {
     const { open, handleClose, gift } = props
+    const { videoURL, imageURL, locked, title, message } = gift
     const classes = useStyles()
     const height = useHeight()
     const [onTransition, setTransition] = useState(undefined)
-    const [onPlayVideo, setPlayVideo] = useState(undefined)
+    const [videoVisible, setVideoVisible] = useState(false)
     const boxTextRef = useRef()
     const lockIconRef = createRef()
     const videoRef = useRef()
@@ -41,6 +42,10 @@ function Gift (props, ref) {
         setTransition(false)
     }
 
+    function playVideo (value) {
+        setVideoVisible(value)
+    }
+
     return (
         <React.Fragment>
             <Slide
@@ -55,14 +60,13 @@ function Gift (props, ref) {
                 unmountOnExit
                 onExited={onExited}
             >
-
                 <Box
                     ref={ref}
                     className={['backgroundModal', 'containerModal', classes.containerModal].join(' ')}
                     tabIndex={'-1'}>
                     <Box
                         className={classes.image}
-                        style={{ backgroundImage: `url(${props.gift.imageURL})`, height: height }}
+                        style={{ backgroundImage: `url(${imageURL})`, height: height }}
                     />
                     <IconButton
                         onClick={transitionClose}
@@ -72,14 +76,14 @@ function Gift (props, ref) {
                         { closeIcon({ className: classes.closeIcon }) }
                     </IconButton>
                     <Box className={classes.content} style={{ height: height }} >
-                        {gift.locked
+                        {locked
                             ? <Box className={classes.iconContainer} >
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
                             </Box>
-                            : gift.videoURL
+                            : videoURL
                                 ? <Box className={classes.iconContainer} >
                                     <IconButton
-                                        onClick={() => setPlayVideo(true)}
+                                        onClick={() => playVideo(true)}
                                         className={classes.playButton}>
                                         { playIcon({ className: classes.play }) }
                                     </IconButton>
@@ -91,24 +95,27 @@ function Gift (props, ref) {
                                 variant="h2"
                                 className={classes.title}
                                 align={'center'}
-                                dangerouslySetInnerHTML={{ __html: gift.title }}
+                                dangerouslySetInnerHTML={{ __html: title }}
                             />
                             <Typography
                                 variant="subtitle2"
                                 className={classes.description}
                                 align={'center'}
-                                dangerouslySetInnerHTML={{ __html: gift.message }}
+                                dangerouslySetInnerHTML={{ __html: message }}
                             />
                         </Box>
                     </Box>
                 </Box>
             </Slide>
-            {onPlayVideo && <VideoPlayerGift
-                src={props.gift.videoURL}
+            {videoURL &&
+            <VideoPlayerGift
                 ref={videoRef}
-                imageURL={props.gift.imageURL}
-                handleClose={() => setPlayVideo(false)}
-            />}
+                source={videoURL}
+                handleClose={() => playVideo(false)}
+                style={{ visibility: videoVisible ? 'visible' : 'hidden' }}
+                open={videoVisible}
+            />
+            }
         </React.Fragment>)
 }
 export default forwardRef(Gift)

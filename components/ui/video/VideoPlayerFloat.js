@@ -7,14 +7,18 @@ import { useStyles } from '../../../styles/jsx/gifts/videoPlayerGift.style'
 import Zoom from '@material-ui/core/Zoom'
 
 function VideoController (props, ref) {
-    const { handleClose, src, imageURL } = props
+    const { handleClose, source, open } = props
     const theme = useTheme()
     const classes = useStyles()
     const [onVideoTransition, setVideoTransition] = useState(false)
 
     useEffect(() => {
-        setVideoTransition(true)
-    }, [])
+        setVideoTransition(open)
+        if (open) {
+            ref.current.src = source
+            ref.current.play()
+        }
+    }, [open])
 
     function closeTransition () {
         setVideoTransition(false)
@@ -22,6 +26,8 @@ function VideoController (props, ref) {
 
     function onExited () {
         handleClose()
+        ref.current.pause()
+        ref.current.src = ''
     }
 
     return (
@@ -34,7 +40,7 @@ function VideoController (props, ref) {
             }}
             onExited={onExited}
         >
-            <Box ref={ref} className={classes.videoContainer}>
+            <Box className={classes.videoContainer}>
                 <IconButton
                     onClick={closeTransition}
                     color="secondary"
@@ -44,12 +50,10 @@ function VideoController (props, ref) {
                 </IconButton>
                 <video
                     ref={ref}
-                    src={src}
-                    poster={imageURL}
                     preload={'auto'}
                     playsInline
                     className={'backgroundVideo'}
-                    autoPlay={true}
+                    autoPlay={false}
                     style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
                 />
             </Box>
