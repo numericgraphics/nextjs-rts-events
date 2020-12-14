@@ -17,8 +17,6 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        height: '100vh',
-        minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'flex-end',
         zIndex: 2
@@ -30,6 +28,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         width: 'min(1.8rem, 35px)',
         height: 'min(1.8rem, 35px)',
         zIndex: 4,
+        padding: 0,
         backgroundColor: theme.palette.secondary.main,
         stroke: theme.palette.secondary.contrastText,
         '&:hover': {

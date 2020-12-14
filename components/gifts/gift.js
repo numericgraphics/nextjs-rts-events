@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, createRef, forwardRef } from 'react
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../../styles/jsx/gifts/gift.style'
+import { useHeight } from '../../hooks/useHeight'
 import IconButton from '@material-ui/core/IconButton'
 import { closeIcon, lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
@@ -15,6 +16,7 @@ export const ModalStates = Object.freeze({
 function Gift (props, ref) {
     const { open, handleClose, gift } = props
     const classes = useStyles()
+    const height = useHeight()
     const [onTransition, setTransition] = useState(undefined)
     const boxTextRef = useRef()
     const lockIconRef = createRef()
@@ -49,11 +51,11 @@ function Gift (props, ref) {
             return <Box ref={ref}
                 className={['backgroundModal', 'containerModal', classes.containerModal].join(' ')}
                 tabIndex={'-1'}>
-                <Box className={classes.image} style={{ backgroundImage: `url(${props.gift.imageURL})` }}/>
+                <Box className={classes.image} style={{ backgroundImage: `url(${props.gift.imageURL})`, height: height }}/>
                 <IconButton onClick={transitionClose} color="secondary" className={classes.closeBtn}>
                     { closeIcon({ className: classes.closeIcon }) }
                 </IconButton>
-                <Box className={classes.content} >
+                <Box className={classes.content} style={{ height: height }} >
                     {gift.locked
                         ? <Box className={classes.iconContainer} >
                             {lockIcon({ ref: lockIconRef, className: classes.lock })}
