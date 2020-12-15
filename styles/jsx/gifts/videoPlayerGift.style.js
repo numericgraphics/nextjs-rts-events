@@ -9,8 +9,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     closeBtn: {
         position: 'absolute',
-        top: '3vw',
-        right: '3vw',
+        top: 'min(3vw, 30px)',
+        right: 'min(3vw, 30px)',
         width: 'min(1.8rem, 35px)',
         height: 'min(1.8rem, 35px)',
         zIndex: 5,
