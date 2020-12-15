@@ -4,9 +4,10 @@ import Typography from '@material-ui/core/Typography'
 import { useStyles } from '../../styles/jsx/gifts/gift.style'
 import { useHeight } from '../../hooks/useHeight'
 import IconButton from '@material-ui/core/IconButton'
-import { closeIcon, lockIcon, playIcon } from '../../data/icon'
+import { lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import VideoPlayerGift from '../ui/video/VideoPlayerFloat'
+import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -62,20 +63,21 @@ function Gift (props, ref) {
             >
                 <Box
                     ref={ref}
-                    className={['backgroundModal', 'containerModal', classes.containerModal].join(' ')}
-                    tabIndex={'-1'}>
+                    className={classes.modalContent}
+                    tabIndex={'-1'}
+                >
+                    <ButtonCloseModal
+                        handleClose={transitionClose}
+                        className={classes.closeBtn}
+                    />
                     <Box
                         className={classes.image}
                         style={{ backgroundImage: `url(${imageURL})`, height: height }}
                     />
-                    <IconButton
-                        onClick={transitionClose}
-                        color="secondary"
-                        className={classes.closeBtn}
+                    <Box
+                        className={classes.content}
+                        style={{ height: height }}
                     >
-                        { closeIcon({ className: classes.closeIcon }) }
-                    </IconButton>
-                    <Box className={classes.content} style={{ height: height }} >
                         {locked
                             ? <Box className={classes.iconContainer} >
                                 {lockIcon({ ref: lockIconRef, className: classes.lock })}
@@ -88,9 +90,12 @@ function Gift (props, ref) {
                                         { playIcon({ className: classes.play }) }
                                     </IconButton>
                                 </Box>
-                                : <Box className={classes.topGradient} />
+                                : <Box className={classes.topGradient}/>
                         }
-                        <Box className={classes.containerText} ref={ boxTextRef }>
+                        <Box
+                            className={classes.containerText}
+                            ref={ boxTextRef }
+                        >
                             <Typography
                                 variant="h2"
                                 className={classes.title}

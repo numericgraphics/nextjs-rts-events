@@ -3,15 +3,17 @@ import { useTheme } from '@material-ui/core'
 import { hexToRgbA } from '../../../data/tools'
 
 export const useStyles = makeStyles((theme = useTheme()) => ({
-    modal: {
+    modalContent: {
+        position: 'absolute',
         display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        width: '100vw',
-        height: '100vh'
-    },
-    containerModal: {
-        backgroundColor: theme.palette.primary.main
+        justifyContent: 'flex-start',
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.primary.contrastText,
+        boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)'
     },
     content: {
         display: 'flex',
@@ -22,18 +24,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         zIndex: 2
     },
     closeBtn: {
-        position: 'absolute',
-        top: '3vw',
-        right: '3vw',
-        width: 'min(1.8rem, 35px)',
-        height: 'min(1.8rem, 35px)',
-        zIndex: 4,
-        padding: 0,
-        backgroundColor: theme.palette.secondary.main,
-        stroke: theme.palette.secondary.contrastText,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.dark
-        }
+        alignSelf: 'flex-end!important',
+        margin: 'min(3vw, 30px)'
     },
     lock: {
         minHeight: '68px',
@@ -51,12 +43,6 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         display: 'flex',
         justifyContent: 'center',
         background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
-    },
-    svgIco: {
-        minHeight: '34px',
-        minWidth: '34px',
-        maxHeight: '58px',
-        maxWidth: '58px'
     },
     containerText: {
         position: 'relative',
@@ -80,18 +66,6 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         flexGrow: 3,
         width: '100%',
         background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
-    },
-    closeIcon: {
-        // position: 'absolute',
-        width: 'min(1.8rem, 35px)',
-        height: 'min(1.8rem, 35px)'
-    },
-    footer: {
-        display: 'flex',
-        flexDirection: 'column',
-        zIndex: 2,
-        position: 'absolute',
-        width: '100%'
     },
     image: {
         position: 'absolute',

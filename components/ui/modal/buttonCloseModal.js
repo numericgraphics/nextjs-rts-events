@@ -8,8 +8,12 @@ const ButtonCloseModal = (props) => {
     const classes = useStyles()
 
     return (
-        <IconButton onClick={handleClose} color="secondary" className={[props.className, classes.closeBtn].join(' ')}>
-            { closeIcon({ className: classes.closeIcon }) }
+        <IconButton
+            onClick={handleClose}
+            color="secondary"
+            className={[props.className, classes.closeBtn].join(' ')}
+        >
+            { closeIcon() }
         </IconButton>
     )
 }

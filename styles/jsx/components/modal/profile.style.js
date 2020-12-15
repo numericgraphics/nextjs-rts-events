@@ -13,9 +13,6 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 'min(3vw, 30px)',
-        '& .MuiIconButton-root': {
-            padding: '0!important'
-        },
         '& .MuiInputBase-input': {
             padding: '0.4rem',
             '@media only screen and (max-height:550px)': {

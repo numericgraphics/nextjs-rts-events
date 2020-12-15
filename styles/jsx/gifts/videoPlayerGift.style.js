@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         right: '3vw',
         width: 'min(1.8rem, 35px)',
         height: 'min(1.8rem, 35px)',
-        zIndex: 4,
+        zIndex: 5,
         backgroundColor: theme.palette.secondary.main,
         stroke: theme.palette.secondary.contrastText,
         '&:hover': {
@@ -23,6 +23,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     videoContainer: {
         height: '100%',
         width: '100%',
-        display: 'flex'
+        display: 'flex',
+        zIndex: 4
     }
 }))
