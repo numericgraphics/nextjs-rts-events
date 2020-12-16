@@ -11,6 +11,7 @@ import { ChallengeStates } from '../../data/challengeState'
 import Box from '@material-ui/core/Box'
 import Gift from '../../components/gifts/gift'
 import GenericModal from '../../components/ui/modal/genericModal'
+import QuestionImage from '../../components/challenges/questionsImage'
 
 function Challenge () {
     const router = useRouter()
@@ -111,6 +112,10 @@ function Challenge () {
             return <QuestionsVideo
                 content={questionsContent}
                 answerCallBack={setAnswer} />
+        case ChallengeStates.QUESTIONS_IMAGE:
+            return <QuestionImage
+                content={questionsContent}
+                answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
             return <Result
                 openModal={onOpenModal}
@@ -170,9 +175,14 @@ function Challenge () {
             }
             const { imageURL } = questionsContent
             const { videoURL } = questionsContent
+            const { reco } = questionsContent
             if (videoURL) {
                 setBackgroundType('video')
                 setChallengeState(ChallengeStates.QUESTIONS_VIDEO)
+            //    TODO check RECO propertie in challange object
+            } else if (reco !== null) {
+                console.log('questionsContent', questionsContent)
+                setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
             } else {
                 videoController.setShowVideo(false)
                 setImageURL(imageURL)
