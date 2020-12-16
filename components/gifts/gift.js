@@ -68,7 +68,7 @@ function Gift (props, ref) {
                 >
                     <ButtonCloseModal
                         handleClose={transitionClose}
-                        className={classes.closeBtn}
+                        className={classes.buttonClose}
                     />
                     <Box
                         className={classes.image}

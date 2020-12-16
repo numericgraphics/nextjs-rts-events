@@ -13,6 +13,12 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText,
         boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.25)',
         padding: 'min(3vw, 30px)',
+        '@media only screen and (min-width: 600px)': {
+            padding: 'min(2vw, 20px)'
+        },
+        '@media only screen and (min-width: 750px)': {
+            padding: 'min(1.5vw, 15px)'
+        },
         '& .MuiInputBase-input': {
             padding: '0.4rem',
             '@media only screen and (max-height:550px)': {

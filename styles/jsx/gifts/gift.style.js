@@ -23,9 +23,15 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         justifyContent: 'flex-end',
         zIndex: 2
     },
-    closeBtn: {
+    buttonClose: {
         alignSelf: 'flex-end!important',
-        margin: 'min(3vw, 30px)'
+        margin: 'min(3vw, 30px)',
+        '@media only screen and (min-width: 600px)': {
+            margin: 'min(2vw, 20px)'
+        },
+        '@media only screen and (min-width: 750px)': {
+            margin: 'min(1.5vw, 15px)'
+        }
     },
     lock: {
         minHeight: '68px',

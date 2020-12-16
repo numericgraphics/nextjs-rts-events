@@ -1,10 +1,9 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
-import IconButton from '@material-ui/core/IconButton'
-import { closeIcon } from '../../../data/icon'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { useStyles } from '../../../styles/jsx/gifts/videoPlayerGift.style'
 import Zoom from '@material-ui/core/Zoom'
+import ButtonCloseModal from '../modal/buttonCloseModal'
 
 function VideoController (props, ref) {
     const { handleClose, source, open } = props
@@ -20,7 +19,7 @@ function VideoController (props, ref) {
         }
     }, [open])
 
-    function closeTransition () {
+    function transitionClose () {
         setVideoTransition(false)
     }
 
@@ -41,13 +40,10 @@ function VideoController (props, ref) {
             onExited={onExited}
         >
             <Box className={classes.videoContainer}>
-                <IconButton
-                    onClick={closeTransition}
-                    color="secondary"
-                    className={classes.closeBtn}
-                >
-                    { closeIcon({ className: classes.closeIcon }) }
-                </IconButton>
+                <ButtonCloseModal
+                    handleClose={transitionClose}
+                    className={classes.buttonClose}
+                />
                 <video
                     ref={ref}
                     preload={'auto'}
