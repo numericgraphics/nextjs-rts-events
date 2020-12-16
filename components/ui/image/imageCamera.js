@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; const useStyles = makeStyles((theme) => ({
@@ -22,9 +21,9 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
     }
 })); function ImageCapture () {
     const classes = useStyles()
-    const [source, setSource] = useState('')
+    /* const [source, setSource] = useState('')
 
-    const handleCapture = (target) => {
+    /* const handleCapture = (target) => {
         if (target.files) {
             if (target.files.length !== 0) {
                 const file = target.files[0]
@@ -33,24 +32,12 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
                 setSource(newUrl)
             }
         }
-    }
+    } */
     return (
         <div className={classes.root}>
             <Grid container>
                 <Grid item xs={12}>
-                    <h5>Capture your image</h5>
-                    {source &&
-            <Box display="flex" justifyContent="center" border={1} className={classes.imgBox}>
-                <img src={source} alt={'snap'} className={classes.img}></img>
-            </Box>}
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="icon-button-file"
-                        type="file"
-                        capture="environment"
-                        onChange={(e) => handleCapture(e.target)}
-                    />
+                    <video id="video" width="640" height="480" autoPlay/>
                     <label htmlFor="icon-button-file">
                         <IconButton
                             color="primary"
