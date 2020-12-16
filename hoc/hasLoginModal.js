@@ -32,7 +32,7 @@ const hasLoginModal = WrappedComponent => {
         const { dataProvider, store } = useContext(UserContext)
         const uiElement = dataProvider.getEventUiElements()
         const { agreementsChunks } = uiElement
-        const { setLoading, eventName } = store
+        const { setLoading, eventName, locale } = store
         const [translation, setTranslation] = useState([])
         const theme = useTheme()
         const [code, setCode] = useState()
@@ -106,7 +106,7 @@ const hasLoginModal = WrappedComponent => {
                 const response = await fetch('/api/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, eventName })
+                    body: JSON.stringify({ phone, eventName, locale })
                 })
 
                 if (response.status === 200) {
@@ -138,7 +138,7 @@ const hasLoginModal = WrappedComponent => {
                 const response = await fetch('/api/number', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code, eventName })
+                    body: JSON.stringify({ code, eventName, locale })
                 })
 
                 if (response.status === 200) {
@@ -233,6 +233,7 @@ const hasLoginModal = WrappedComponent => {
                 </Box>
             }
         }
+
         return (
             <React.Fragment>
                 <WrappedComponent openModal={OpenModal} isModalOpen={open} {...props} />

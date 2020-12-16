@@ -1,7 +1,6 @@
 import cookie from 'cookie'
 import fetch from 'node-fetch'
 import getConfig from 'next/config'
-import { dateCreator } from '../../data/tools'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
@@ -9,25 +8,29 @@ export default async (req, res) => {
     let cookies = null
 
     try {
-        const { eventName, date, time, locale } = await req.body
+        const { eventName, avatarURL, nickname } = await req.body
         const cookieName = `rtsevents-${eventName}`
-
-        const finalDate = ((date && time) || date) ? dateCreator(date, time) : false
 
         if (req.headers.cookie) {
             cookies = cookie.parse(req.headers.cookie ?? '')
             rtsEventCookie = cookies[cookieName]
             const cookieValue = JSON.parse(cookies[cookieName])
             const { userID, code } = cookieValue
-
+            const body = {
+                code: code,
+                ...(nickname !== undefined && { nickname }),
+                ...(avatarURL !== undefined && { avatarURL })
+            }
             if (rtsEventCookie) {
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/getGame?lang=${locale}${finalDate ? `&ts=${finalDate}` : ''}`
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}`
+
                 const response = await fetch(url, {
                     credentials: 'include',
-                    method: 'POST',
+                    method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: code })
+                    body: JSON.stringify(body)
                 })
+
                 if (response.status === 200) {
                     const content = await response.json()
                     res.status(200).send(JSON.stringify(content))

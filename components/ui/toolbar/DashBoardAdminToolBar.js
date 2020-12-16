@@ -23,15 +23,13 @@ function DashBoardAdminToolBar (props) {
     const classes = useStyles()
     const router = useRouter()
     const { events } = router.query
-    const [hidded, setHidded] = useState(true)
+    const { locale } = router
+    const [hided, setHided] = useState(true)
     const [selectedDate, setSelectedDate] = useState({})
 
     async function setFakeTs (selectedDate) {
-        if (selectedDate.time === null) {
-            await Router.push(`/${events}/dashBoard?date=${selectedDate.date}`)
-        } else {
-            await Router.push(`/${events}/dashBoard?date=${selectedDate.date}&time=${selectedDate.time}`)
-        }
+        await router.replace(`/${events}/dashBoard?date=${selectedDate.date}${selectedDate.time !== null ? `&time=${selectedDate.time}` : ''}`)
+        router.reload()
     }
 
     async function resetTime () {
@@ -51,13 +49,13 @@ function DashBoardAdminToolBar (props) {
     )
 
     function toogleHide () {
-        setHidded(!hidded)
+        setHided(!hided)
     }
 
     async function resetGame () {
         try {
             alert('Will try to reset Game')
-            const bodyContent = { eventName: events }
+            const bodyContent = { eventName: events, locale }
             const response = await fetch('/api/resetGame', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -76,7 +74,7 @@ function DashBoardAdminToolBar (props) {
 
     useEffect(() => {
         if (selectedDate.date) {
-            setFakeTs(selectedDate)
+            setFakeTs(selectedDate).then()
         }
     }, [selectedDate])
 
@@ -85,7 +83,7 @@ function DashBoardAdminToolBar (props) {
             <Drawer
                 className={classes.drawer}
                 variant="temporary"
-                open={!hidded}
+                open={!hided}
                 onClose={toogleHide}
                 classes={{
                     paper: classes.drawerPaper

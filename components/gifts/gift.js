@@ -1,61 +1,126 @@
-import React, { createRef, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState, useRef, createRef, forwardRef } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import { useStyles } from '../../styles/jsx/gifts/gift.style'
 import { useHeight } from '../../hooks/useHeight'
-import { useStyles } from '../../styles/jsx/components/modal/hasGiftsModal.style'
 import IconButton from '@material-ui/core/IconButton'
-import { closeIcon, lockIcon } from '../../data/icon'
+import { lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
+import VideoPlayerGift from '../ui/video/VideoPlayerFloat'
+import ButtonCloseModal from '../ui/modal/buttonCloseModal'
+
+export const ModalStates = Object.freeze({
+    GIFT: 'gift',
+    GIFT_VIDEO: 'giftVideo'
+})
 
 function Gift (props, ref) {
+    const { open, handleClose, gift } = props
+    const { videoURL, imageURL, locked, title, message } = gift
     const classes = useStyles()
     const height = useHeight()
+    const [onTransition, setTransition] = useState(undefined)
+    const [videoVisible, setVideoVisible] = useState(false)
     const boxTextRef = useRef()
     const lockIconRef = createRef()
-    const [boxHeight, setBoxHeight] = useState(0)
-
-    function handleResize () {
-        setBoxHeight(boxTextRef.current ? boxTextRef.current.clientHeight : null)
-    }
+    const videoRef = useRef()
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize)
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [handleResize])
+        setTransition(open)
+    }, [])
 
     useEffect(() => {
         if (open) {
-            setTimeout(handleResize, 10)
+            videoRef.current && videoRef.current.play()
         }
     }, [open])
 
+    function onExited () {
+        handleClose()
+    }
+
+    function transitionClose () {
+        setTransition(false)
+    }
+
+    function playVideo (value) {
+        setVideoVisible(value)
+    }
+
     return (
-        <Slide direction="up" in={props.open} timeout={500} mountOnEnter unmountOnExit>
-            <Box ref={ref}
-                className={['backgroundModal', 'containerModal', 'bg-top-cover'].join(' ')}
-                style={{ backgroundImage: `url(${props.gift.imageURL})`, height: height }}
-                tabIndex={'-1'}>
-                <IconButton onClick={props.handleClose} color="secondary" className={classes.closeBtn}>
-                    { closeIcon({ className: classes.closeIcon }) }
-                </IconButton>
-                <Box className={classes.footer} style={{ height: height }}>
-                    <Box className={classes.gradient} />
-                    <Box className={classes.containerText} ref={ boxTextRef }>
-                        <Typography variant="h2" className={classes.title} align={'center'}
-                            dangerouslySetInnerHTML={{ __html: props.gift.title }}>
-                        </Typography>
-                        <Typography variant="subtitle2" className={classes.description} align={'center'}
-                            dangerouslySetInnerHTML={{ __html: props.gift.message }}>
-                        </Typography>
+        <React.Fragment>
+            <Slide
+                direction="up"
+                in={onTransition}
+                timeout={{
+                    appear: 1000,
+                    enter: 1000,
+                    exit: 200
+                }}
+                mountOnEnter
+                unmountOnExit
+                onExited={onExited}
+            >
+                <Box
+                    ref={ref}
+                    className={classes.modalContent}
+                    tabIndex={'-1'}
+                >
+                    <ButtonCloseModal
+                        handleClose={transitionClose}
+                        className={classes.buttonClose}
+                    />
+                    <Box
+                        className={classes.image}
+                        style={{ backgroundImage: `url(${imageURL})`, height: height }}
+                    />
+                    <Box
+                        className={classes.content}
+                        style={{ height: height }}
+                    >
+                        {locked
+                            ? <Box className={classes.iconContainer} >
+                                {lockIcon({ ref: lockIconRef, className: classes.lock })}
+                            </Box>
+                            : videoURL
+                                ? <Box className={classes.iconContainer} >
+                                    <IconButton
+                                        onClick={() => playVideo(true)}
+                                        className={classes.playButton}>
+                                        { playIcon({ className: classes.play }) }
+                                    </IconButton>
+                                </Box>
+                                : <Box className={classes.topGradient}/>
+                        }
+                        <Box
+                            className={classes.containerText}
+                            ref={ boxTextRef }
+                        >
+                            <Typography
+                                variant="h2"
+                                className={classes.title}
+                                align={'center'}
+                                dangerouslySetInnerHTML={{ __html: title }}
+                            />
+                            <Typography
+                                variant="subtitle2"
+                                className={classes.description}
+                                align={'center'}
+                                dangerouslySetInnerHTML={{ __html: message }}
+                            />
+                        </Box>
                     </Box>
-                    {props.gift.locked ? <Box className={classes.lockContainer} style={{ bottom: boxHeight - 1 }}>
-                        {lockIcon({ ref: lockIconRef, className: classes.lock })}
-                    </Box> : null }
                 </Box>
-            </Box>
-        </Slide>
-    )
+            </Slide>
+            {videoURL &&
+            <VideoPlayerGift
+                ref={videoRef}
+                source={videoURL}
+                handleClose={() => playVideo(false)}
+                style={{ visibility: videoVisible ? 'visible' : 'hidden' }}
+                open={videoVisible}
+            />
+            }
+        </React.Fragment>)
 }
-export default React.forwardRef(Gift)
+export default forwardRef(Gift)
