@@ -29,6 +29,7 @@ import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformation from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import ImageCapture from '../../components/ui/image/imageCamera'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -296,6 +297,7 @@ function DashBoard (props) {
                         >
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
+                        <ImageCapture/>
                     </Box>
                 </Slide>
                 <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
