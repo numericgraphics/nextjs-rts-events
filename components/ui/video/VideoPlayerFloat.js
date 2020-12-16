@@ -7,15 +7,22 @@ import ButtonCloseModal from '../modal/buttonCloseModal'
 
 function VideoController (props, ref) {
     const { handleClose, source, open } = props
+    const videoPlayer = ref.current
     const theme = useTheme()
     const classes = useStyles()
     const [onVideoTransition, setVideoTransition] = useState(false)
 
+    function canPlay () {
+        setTimeout(() => {
+            setVideoTransition(open)
+            videoPlayer.play()
+        }, 500)
+    }
+
     useEffect(() => {
-        setVideoTransition(open)
         if (open) {
-            ref.current.src = source
-            ref.current.play()
+            videoPlayer.addEventListener('loadedmetadata', canPlay)
+            videoPlayer.src = source
         }
     }, [open])
 
@@ -25,8 +32,8 @@ function VideoController (props, ref) {
 
     function onExited () {
         handleClose()
-        ref.current.pause()
-        ref.current.src = ''
+        videoPlayer.pause()
+        videoPlayer.src = ''
     }
 
     return (
