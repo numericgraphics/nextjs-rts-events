@@ -102,11 +102,22 @@ function Challenge () {
             return null
         case ChallengeStates.COUNTDOWN:
         case ChallengeStates.QUESTIONS:
-            return <Question content={questionsContent} answerCallBack={setAnswer} challengeState={setChallengeState} hasPlayed={hasPlayed}/>
+            return <Question
+                content={questionsContent}
+                answerCallBack={setAnswer}
+                challengeState={setChallengeState}
+                hasPlayed={hasPlayed}/>
         case ChallengeStates.QUESTIONS_VIDEO:
-            return <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
+            return <QuestionsVideo
+                content={questionsContent}
+                answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result openModal={onOpenModal} setGift={setGift} content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
+            return <Result
+                openModal={onOpenModal}
+                setGift={setGift}
+                content={resultContent}
+                playGameCallBack={playGameCallBack}
+                gotoDashBoard={gotoDashBoard}/>
         }
     }
 
@@ -205,7 +216,12 @@ function Challenge () {
                 {!isLoading && <Box>
                     {getChallengeContent(challengeState)}
                     {backgroundType === 'image' &&
-                    <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' animated={true} imageURL={imageURL}/>}
+                    <BackGroundDisplay
+                        addBlur={ addBlur }
+                        addColor={ addColor }
+                        className='background'
+                        animated={true}
+                        imageURL={imageURL}/>}
                 </Box>
                 }
             </EventLayout>
