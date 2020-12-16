@@ -26,7 +26,7 @@ function VideoPlayer (props, videoRef) {
                         poster={videoPoster}
                         loop
                         playsInline
-                        className='backgroundVideo'
+                        className={'backgroundVideo'}
                         autoPlay={false}
                         style={{ ...props.style, backgroundColor: theme.palette.primary.main, minHeight: '100vh', objectFit: 'cover' }}
                     >

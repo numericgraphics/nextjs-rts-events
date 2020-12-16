@@ -9,6 +9,8 @@ import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import { ChallengeStates } from '../../data/challengeState'
 import Box from '@material-ui/core/Box'
+import Gift from '../../components/gifts/gift'
+import GenericModal from '../../components/ui/modal/genericModal'
 
 function Challenge () {
     const router = useRouter()
@@ -24,6 +26,8 @@ function Challenge () {
     const [backgroundType, setBackgroundType] = useState('image')
     const [addColor, setColor] = useState(false)
     const [addBlur, setBlur] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [gift, setGift] = useState({ description: '', title: '', locked: true })
 
     async function fetchQuestions () {
         try {
@@ -102,7 +106,7 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_VIDEO:
             return <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
+            return <Result openModal={onOpenModal} setGift={setGift} content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
@@ -113,6 +117,18 @@ function Challenge () {
             videoController.setShowVideo(false)
         }
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
+    }
+
+    function getModalContent () {
+        return <Gift gift={gift} handleClose={closeModal} open={open}/>
+    }
+
+    function onOpenModal () {
+        setOpen(true)
+    }
+
+    function closeModal () {
+        setOpen(false)
     }
 
     // Call through question component callBack when user answered question
@@ -184,14 +200,23 @@ function Challenge () {
     }, [challengeState])
 
     return (
-        <EventLayout>
-            {!isLoading && <Box>
-                {getChallengeContent(challengeState)}
-                {backgroundType === 'image' &&
+        <React.Fragment>
+            <EventLayout>
+                {!isLoading && <Box>
+                    {getChallengeContent(challengeState)}
+                    {backgroundType === 'image' &&
                     <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' animated={true} imageURL={imageURL}/>}
-            </Box>
-            }
-        </EventLayout>
+                </Box>
+                }
+            </EventLayout>
+            <GenericModal
+                handleClose={closeModal}
+                open={open}
+                hideBackdrop={true}
+            >
+                {getModalContent()}
+            </GenericModal>
+        </React.Fragment>
     )
 }
 

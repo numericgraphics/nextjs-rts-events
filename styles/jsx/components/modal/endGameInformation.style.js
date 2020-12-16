@@ -15,6 +15,12 @@ export const useStyles = makeStyles((theme) => ({
         padding: 'min(3vw, 30px)',
         '& .MuiIconButton-root': {
             padding: '0!important'
+        },
+        '@media only screen and (min-width: 600px)': {
+            padding: 'min(2vw, 20px)'
+        },
+        '@media only screen and (min-width: 750px)': {
+            padding: 'min(1.5vw, 15px)'
         }
     },
     buttonClose: {
