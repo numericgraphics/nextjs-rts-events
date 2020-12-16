@@ -6,17 +6,15 @@ export const useStyles = makeStyles(() => ({
         height: '100%',
         overflow: 'hidden'
     },
-    overImage: {
-        position: 'absolute',
-        top: 0,
-        height: '100%',
-        width: '100%'
-    },
     image: {
         height: '100%',
         width: '100%',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'auto 100%'
+    },
+    animation: {
+        animationName: 'kenburns',
+        animation: '60s infinite'
     }
 }))

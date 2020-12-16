@@ -7,14 +7,14 @@ let userData = {}
 
 export default async (req, res) => {
     try {
-        const { phone, eventName } = await req.body
+        const { phone, eventName, locale } = await req.body
         const cookieName = `rtsevents-${eventName}`
 
         if (!phone) {
             throw new Error('phone must be provided.')
         }
 
-        const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/createOrSync`
+        const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/createOrSync?lang=${locale}`
 
         const response = await fetch(url, {
             credentials: 'include',

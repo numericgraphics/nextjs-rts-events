@@ -11,7 +11,6 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     avatar: {
         width: '6rem',
         height: '6rem',
-        marginBottom: '0.5rem',
         zIndex: 1
     },
     avatarBg: {

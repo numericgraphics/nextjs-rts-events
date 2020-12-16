@@ -9,7 +9,7 @@ export default async (req, res) => {
 
     // Check if rts-event cookie is available
     try {
-        const { answer, challengeID, eventName, date, time } = await req.body
+        const { answer, challengeID, eventName, date, time, locale } = await req.body
         const finalDate = ((date && time) || date) ? dateCreator(date, time) : false
         const cookieName = `rtsevents-${eventName}`
 
@@ -25,7 +25,7 @@ export default async (req, res) => {
             }
 
             if (rtsEventCookie) {
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end${finalDate ? `?ts=${finalDate}` : ''}`
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/${userID}/challenges/${challengeID}/end?lang=${locale}${finalDate ? `&ts=${finalDate}` : ''}`
                 const response = await fetch(url, {
                     credentials: 'include',
                     method: 'POST',

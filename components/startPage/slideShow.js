@@ -1,6 +1,7 @@
 import React from 'react'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
+import KenBurnImage from '../ui/background/KenBurnsImage'
 
 const useStyles = makeStyles({
     slide: {
@@ -26,16 +27,25 @@ export default function SlideShow (props) {
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
         >
             {slides.map((slide, index) => {
-                return <Box key={index} className={index === activeSlide ? [classes.slide, classes.slideActive].join(' ') : classes.slide}
-                    style={{
-                        width: '100%',
-                        height: '100vh',
-                        zIndex: -3,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%), url(${slide.backgroundImageURL})`
-                    }} />
+                return <Box
+                    key={index}
+                    className={index === activeSlide ? [classes.slide, classes.slideActive].join(' ') : classes.slide}
+                >
+                    <KenBurnImage
+                        className='background'
+                        animated={true}
+                        imageURL={slide.backgroundImageURL}
+                    >
+                        <Box
+                            style={{
+                                background: 'linear-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)',
+                                position: 'absolute',
+                                top: 0,
+                                height: '100%',
+                                width: '100%'
+                            }} />
+                    </KenBurnImage>
+                </Box>
             })}
         </Box>
     )
