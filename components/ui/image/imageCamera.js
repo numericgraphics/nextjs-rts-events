@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -19,7 +19,10 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
     input: {
         display: 'none'
     }
-})); function ImageCapture () {
+}))
+
+function ImageCapture () {
+    const videoRef = useRef()
     const classes = useStyles()
     /* const [source, setSource] = useState('')
 
@@ -33,11 +36,25 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
             }
         }
     } */
+
+    useEffect(() => {
+        if (videoRef) {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Not adding `{ audio: true }` since we only want video now
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                    videoRef.current.src = window.URL.createObjectURL(stream)
+                    videoRef.current.srcObject = stream
+                    videoRef.current.play()
+                })
+            }
+        }
+    }, [videoRef])
+
     return (
         <div className={classes.root}>
             <Grid container>
                 <Grid item xs={12}>
-                    <video id="video" width="640" height="480" autoPlay/>
+                    <video ref={videoRef} id="video" width="640" height="480" autoPlay/>
                     <label htmlFor="icon-button-file">
                         <IconButton
                             color="primary"
