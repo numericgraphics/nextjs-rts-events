@@ -1,20 +1,60 @@
-import React /* , { useEffect, useRef, useState } */ from 'react'
+import React /* , { useEffect, useRef, useState } */, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
-// import QuestionTimer from '../ui/progress/questionTimer'
-// import Typography from '@material-ui/core/Typography'
+import { useStyles } from '../../styles/jsx/pages/questions.style'
+import QuestionTimer from '../ui/progress/questionTimer'
+import Typography from '@material-ui/core/Typography'
+import { ChallengeStates } from '../../data/challengeState'
+
+const questionStates = Object.freeze({
+    CAMERA: 'camera',
+    PHOTO_VALIDATION: 'photoValidation'
+})
 
 function QuestionImage (props) {
+    const classes = useStyles()
+    const { title, duration } = props.content
+    const [progress, setProgress] = useState(0)
+    const [timeLeft, setTimeLeft] = useState(duration)
+    const [questionState, setQuestionState] = useState(ChallengeStates.LOADING)
+    // eslint-disable-next-line no-unused-vars
+    const [tempRawImage, setTempRawImage] = useState(null)
+
+    useEffect(() => {
+        if (progress >= 100) {
+            setTimeLeft(0)
+            setProgress(0)
+        }
+    }, [progress])
+
+    useEffect(() => {
+        console.log('useEffect - QuestionImage content ', props.content)
+        setQuestionState(questionStates.CAMERA)
+    }, [])
+
+    useEffect(() => {
+        // TODO manage photo data
+        if (tempRawImage) {
+
+        }
+    }, [tempRawImage])
+
+    function getChallengeContent (state) {
+        switch (state) {
+        case questionStates.CAMERA:
+            return null // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+        case questionStates.PHOTO_VALIDATION:
+            return null // <ImageValidation  />
+        }
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    function takeSnapShot () {
+        setQuestionState(questionStates.PHOTO_VALIDATION)
+    }
+
     return (
         <Box className='content' >
-
-        </Box>
-    )
-}
-
-export default QuestionImage
-
-/*
-<Box>
+            <Box>
                 <Box className='timerZone'>
                     <Box className={classes.counter}>
                         <QuestionTimer timeLeft={timeLeft} progress={progress} />
@@ -26,9 +66,22 @@ export default QuestionImage
                             {title}
                         </Typography>
                         <Typography variant='h3' className={classes.HeaderText} align={'left'}>
-                            {question}
+                            question ????
                         </Typography>
                     </Box>
                 </Box>
             </Box>
+            <Box className='bottomZoneQuestions'>
+                {/* TODO add camera control */}
+                {getChallengeContent(questionState)}
+            </Box>
+            <Box className='backgroundGradientTop' />
+        </Box>
+    )
+}
+
+export default QuestionImage
+
+/*
+
  */

@@ -29,6 +29,8 @@ function Challenge () {
     const [addBlur, setBlur] = useState(false)
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
+    // eslint-disable-next-line no-unused-vars
+    const [rawImage, setRawImage] = useState(null)
 
     async function fetchQuestions () {
         try {
@@ -115,7 +117,7 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_IMAGE:
             return <QuestionImage
                 content={questionsContent}
-                answerCallBack={setAnswer} />
+                answerCallBack={setRawImage} />
         case ChallengeStates.RESULT:
             return <Result
                 openModal={onOpenModal}
