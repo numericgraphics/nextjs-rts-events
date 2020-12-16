@@ -11,11 +11,11 @@ function Events (props) {
     const { content, events } = eventData
     const [isPageReady, setPageReady] = useState(false)
     const { dataProvider, store } = useContext(UserContext)
-    const { locale, setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
 
     async function handleVerify () {
         try {
-            const response = await fetch(`api/verify/${events}?locale=${locale}`)
+            const response = await fetch(`api/verify/${events}`)
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setEventData(content)
@@ -53,28 +53,19 @@ function Events (props) {
 
 export default withRouter(Events)
 
-export async function getStaticPaths ({ locales }) {
-    const eventPaths = await getAllEvents()
-
-    const paths = []
-    eventPaths.forEach((path) => {
-        locales.forEach((locale) => {
-            paths.push({ ...path, locale })
-        })
-    })
-
+export async function getStaticPaths () {
+    const paths = await getAllEvents()
     return {
         paths,
         fallback: false
     }
 }
 
-export async function getStaticProps ({ params, locale }) {
-    const eventData = await getEventsData(params.events, locale)
+export async function getStaticProps ({ params }) {
+    const eventData = await getEventsData(params.events)
     return {
         props: {
-            eventData,
-            locale
+            eventData
         },
         revalidate: 1
     }

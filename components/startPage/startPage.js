@@ -6,11 +6,63 @@ import UserContext from '../../hooks/userContext'
 import hasLoginModal from '../../hoc/hasLoginModal'
 import SlideShow from './slideShow'
 import { Box } from '@material-ui/core'
-import { useStyles } from '../../styles/jsx/pages/startPage.style'
+import { makeStyles } from '@material-ui/core/styles'
 import { ArrowIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+
+const useStyles = makeStyles((theme) => ({
+    containerIcon: {
+        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        width: '100%'
+    },
+    arrowSwipeDown: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    arrowSwipeDownMobile: {
+        zIndex: -2
+    },
+    arrowSwipeDownDesktop: {
+        zIndex: 2
+    },
+    buttonSwipeDownDesktop: {
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.main
+        }
+    },
+    button: {
+        zIndex: 2
+    },
+    slide: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        opacity: 0,
+        transition: '.3s ease'
+    },
+    slideActive: {
+        opacity: 1,
+        transitionDuration: '.2s'
+    },
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
+    label: {
+        position: 'relative',
+        color: 'white'
+    }
+
+}))
 
 function StartPage (props) {
     const classes = useStyles()

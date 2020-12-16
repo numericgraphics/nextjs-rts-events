@@ -12,12 +12,9 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         marginBottom: 'min(3vw, 30px)!important'
     },
     nickname: {
-        width: '100%',
         textAlign: 'center',
         marginBottom: '0.5rem',
-        color: theme.palette.primary.contrastText,
-        wordWrap: 'break-word',
-        textOverflow: 'ellipsis'
+        color: theme.palette.primary.contrastText
     },
     rateIcon: {
         display: 'inline',
@@ -108,8 +105,5 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         opacity: 0.8,
         padding: '2px 5px',
         boxShadow: '0px 0px 7px 2px #000000'
-    },
-    avatarButton: {
-        borderRadius: '50%'
     }
 }))

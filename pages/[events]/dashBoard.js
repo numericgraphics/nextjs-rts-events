@@ -26,9 +26,8 @@ import DashBoardAdminToolBar from '../../components/ui/toolbar/DashBoardAdminToo
 import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
-import EndgameInformation from '../../components/dashboard/endGameInformation'
+import EndgameInformations from '../../components/dashboard/endGameInformation'
 import Profile from '../../components/dashboard/profile'
-import ButtonBase from '@material-ui/core/ButtonBase'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -60,7 +59,7 @@ function DashBoard (props) {
     const isImagesPreLoaded = useImagesServices(preCaching)
     const [imageURL, setImageURL] = useState()
     const { dataProvider, gameStatsService, uiElementsService, store } = useContext(UserContext)
-    const { locale, setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
+    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading, timeStampMode, setTimeStampMode } = store
     const [gameStats, setGameStats] = useState()
     const [open, setOpen] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
@@ -70,7 +69,10 @@ function DashBoard (props) {
 
     async function fetchData () {
         try {
-            const bodyContent = { eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            // const params = (new URL(document.location)).searchParams
+            // const date = params.get('date') ? params.get('date') : null
+            // const time = params.get('time') ? params.get('time') : null
+            const bodyContent = (timeStampMode.enable) ? { eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { eventName: events }
             const response = await fetch('/api/fetchGame', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -102,7 +104,7 @@ function DashBoard (props) {
         dataProvider.setData(content)
         gameStatsService.init(dataProvider)
         uiElementsService.init(dataProvider)
-        setPreCaching([dataProvider.getGameStats(), dataProvider.getGifts()])
+        setPreCaching(dataProvider.getGameStats())
     }
 
     function initPage () {
@@ -129,10 +131,6 @@ function DashBoard (props) {
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
-    function onProfileClick () {
-        onOpenModal(ModalStates.PROFILE)
-    }
-
     function closeModal () {
         setOpen(false)
     }
@@ -142,28 +140,24 @@ function DashBoard (props) {
         setOpenFeedback(!openFeedback)
     }
 
+    function getFeedBack () {
+        return <CustomDisabledButton
+            color="secondary"
+            variant="contained"
+            className={'button'}
+            onClick={() => onClickFeedback()} >
+            {`${translation.feedbackButtonOnDashboard}`}
+        </CustomDisabledButton>
+    }
+
     function getModalContent () {
         switch (modalState) {
         case ModalStates.GIFT:
-            return <Gift
-                gift={gift}
-                handleClose={closeModal}
-                open={open}
-            />
+            return <Gift gift={gift} handleClose={closeModal} open={open}/>
         case ModalStates.END_GAME:
-            return <EndgameInformation
-                uiElements={uiElements}
-                translation={translation}
-                handleClose={closeModal}
-                handleOpenTypeForm={onClickFeedback}
-                open={open}
-                gameStats={gameStats}
-            />
+            return <EndgameInformations uiElements={uiElements} translation={translation} handleClose={closeModal} open={open} feedback={getFeedBack()} />
         case ModalStates.PROFILE:
-            return <Profile
-                handleClose={closeModal}
-                open={open}
-            />
+            return <Profile handleClose={closeModal} open={open}/>
         }
     }
 
@@ -193,38 +187,21 @@ function DashBoard (props) {
     }, [isGlobalLoading])
     return (
         <React.Fragment>
-            { openFeedback && <HasTypeFormModal
-                gameStats={gameStats}
-                setOpenFeedback={setOpenFeedback}/> }
+            {/* openFeedback && <MyTypeform/> */}
+            { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
             <EventLayout >
                 {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
                 }
-                <Slide
-                    in={!isLoading}
-                    timeout={500}
-                    direction="down"
-                    mountOnEnter
-                    unmountOnExit
-                >
+                <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
-                            <ButtonBase
-                                className={classes.avatarButton}
-                                onClick={onProfileClick}>
-                                <AvatarEvent user={user.avatarURL} />
-                            </ButtonBase>
-                            <ButtonBase
-                                onClick={onProfileClick}
-                            >
-                                <Typography
-                                    variant="h2"
-                                    className={[classes.nickname].join(' ')}>
-                                    {user.nickname}
-                                </Typography>
-                            </ButtonBase>
+                            <AvatarEvent user={user.avatarURL} />
+                            <Typography variant="h2" className={[classes.nickname].join(' ')}>
+                                {user.nickname}
+                            </Typography>
                             <Typography
                                 variant='subtitle1'
                                 className={[classes.remainingTime].join(' ')}
@@ -233,22 +210,16 @@ function DashBoard (props) {
                         </Box>
                         {availableChallenges &&
                             <Box className={classes.progressBarOverlay}>
-                                <Typography
-                                    variant='subtitle1'
-                                    className={[classes.textRegularCenterOverlay].join(' ')}>
+                                <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
                                     {uiElements.progressBarMessageChunk}
                                 </Typography>
-                                <DashBoardChallengesProgress
-                                    variant="determinate"
-                                    progress={progress} />
+                                <DashBoardChallengesProgress variant="determinate" progress={progress} />
                             </Box>
                         }
                         {availableScores &&
                         <ColorCard>
                             <CardContent className={classes.cardContent}>
-                                <Typography
-                                    variant='h1'
-                                    className={[classes.scoreChunkText].join(' ')}>
+                                <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
                                     {uiElements.scoreChunk}
                                 </Typography>
                             </CardContent>
@@ -259,32 +230,21 @@ function DashBoard (props) {
                             <CardContent className={classes.cardContent}>
                                 <Box className={classes.rateBox}>
                                     <Box className={classes.goodRateBox}>
-                                        <CheckIcon
-                                            fontSize="small"
-                                            className={classes.rateIcon}
-                                        />
-                                        <Typography
-                                            variant="subtitle2"
-                                            className={[classes.rateText].join(' ')}>
+                                        <CheckIcon fontSize="small" className={classes.rateIcon} />
+                                        <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
                                             {uiElements.successChunk}
                                         </Typography>
                                     </Box>
                                     <Box className={classes.badRateBox}>
-                                        <CloseIcon
-                                            fontSize="small"
-                                            className={classes.rateIcon}
-                                        />
-                                        <Typography
-                                            variant="subtitle2"
-                                            className={[classes.rateText].join(' ')}>
+                                        <CloseIcon fontSize="small" className={classes.rateIcon} />
+                                        <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
                                             {uiElements.failChunk}
                                         </Typography>
                                     </Box>
                                 </Box>
-                                <Typography
-                                    variant='subtitle1'
-                                    className={[classes.textRegularCenter].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.challengesLeftChunk }} />
+                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.challengesLeftChunk }} >
+                                </Typography>
                             </CardContent>
                         </ColorCard>
                         }
@@ -306,49 +266,28 @@ function DashBoard (props) {
                         </ColorCard>
                     </Box>
                 </Slide>
-                <Slide
-                    in={!isLoading}
-                    timeout={500}
-                    direction="up"
-                    mountOnEnter
-                    unmountOnExit
-                >
+                <Slide in={!isLoading} timeout={500} direction="up" mountOnEnter unmountOnExit>
                     <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZoneDashboard'].join(' ')} >
-                        <CustomDisabledButton
-                            color="secondary"
-                            variant="contained"
-                            className={'button'}
-                            onClick={startGame}
-                            disabled={!availableChallenges}
-                        >
+                        <CustomDisabledButton color="secondary" variant="contained" className={'button'} onClick={startGame} disabled={!availableChallenges} >
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
                     </Box>
                 </Slide>
-                <BackGroundDisplay
-                    addColor={1}
-                    addBlur={1}
-                    className={'background'}
-                    imageURL={imageURL}
-                />
+                <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
                 {(isSafari && isMobile && isIOS) && <PWAPrompt
                     delay={2000}
-                    copyTitle={translation.dashboardCopyTitle}
-                    copyBody={translation.dashboardCopyBody}
-                    copyShareButtonLabel={translation.dashboardCopyShareButtonLabel}
-                    copyAddHomeButtonLabel={translation.dashboardCopyAddHomeButtonLabel}
-                    copyClosePrompt={translation.dashboardCopyClosePrompt}
+                    copyTitle={'Ajouter le Pop quiz sur votre page d\'accueil'}
+                    copyBody={'Ce site web dispose d\'une fonctionnalité d\'application. Ajoutez-la à votre écran d\'accueil pour l\'utiliser en plein écran et hors ligne'}
+                    copyShareButtonLabel={'1) Appuyez sur le bouton "Partager" dans la barre de menu ci-dessous.'}
+                    copyAddHomeButtonLabel={'2) Appuyez sur "Ajouter à l\'écran d\'accueil".'}
+                    copyClosePrompt={'Annuler'}
                     timesToShow={30}
                     permanentlyHideOnDismiss={true}
                 />}
             </Box>
                 }
             </EventLayout>
-            <GenericModal
-                handleClose={closeModal}
-                open={open}
-                hideBackdrop={modalState !== ModalStates.END_GAME}
-            >
+            <GenericModal handleClose={closeModal} open={open}>
                 {getModalContent()}
             </GenericModal>
         </React.Fragment>
@@ -356,28 +295,19 @@ function DashBoard (props) {
 }
 export default DashBoard
 
-export async function getStaticPaths ({ locales }) {
-    const eventPaths = await getAllEvents()
-
-    const paths = []
-    eventPaths.forEach((path) => {
-        locales.forEach((locale) => {
-            paths.push({ ...path, locale })
-        })
-    })
-
+export async function getStaticPaths () {
+    const paths = await getAllEvents()
     return {
         paths,
         fallback: false
     }
 }
 
-export async function getStaticProps ({ params, locale }) {
-    const eventData = await getEventsData(params.events, locale)
+export async function getStaticProps ({ params }) {
+    const eventData = await getEventsData(params.events)
     return {
         props: {
-            eventData,
-            locale
+            eventData
         },
         revalidate: 1
     }

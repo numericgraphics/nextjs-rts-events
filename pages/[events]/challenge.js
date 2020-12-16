@@ -6,17 +6,15 @@ import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
 import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
-import { getAllEvents, getEventsData } from '../../lib/events'
+import { getAllEvents } from '../../lib/events'
 import { ChallengeStates } from '../../data/challengeState'
 import Box from '@material-ui/core/Box'
-import Gift from '../../components/gifts/gift'
-import GenericModal from '../../components/ui/modal/genericModal'
 
 function Challenge () {
     const router = useRouter()
     const { events } = router.query
     const { dataProvider, store } = useContext(UserContext)
-    const { locale, isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
+    const { isGlobalLoading, isLoading, setLoading, setEventName, videoController, timeStampMode } = store
     const [challengeState, setChallengeState] = useState(ChallengeStates.LOADING)
     const [questionsContent, setQuestionsContent] = useState({})
     const [hasPlayed, setHasPlayed] = useState(false)
@@ -26,12 +24,10 @@ function Challenge () {
     const [backgroundType, setBackgroundType] = useState('image')
     const [addColor, setColor] = useState(false)
     const [addBlur, setBlur] = useState(false)
-    const [open, setOpen] = useState(false)
-    const [gift, setGift] = useState({ description: '', title: '', locked: true })
 
     async function fetchQuestions () {
         try {
-            const bodyContent = { eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            const bodyContent = (timeStampMode.enable) ? { eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { eventName: events }
             const response = await fetch('/api/fetchQuiz', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -56,7 +52,8 @@ function Challenge () {
         try {
             const { challengeID } = dataProvider.getChallenge()
             const answerToString = String(answer)
-            const bodyContent = { answer: answerToString, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            const bodyContent = (timeStampMode.enable) ? { answer: answerToString, challengeID, eventName: events, date: timeStampMode.date, time: timeStampMode.time } : { answer: answerToString, challengeID, eventName: events }
+
             const response = await fetch('/api/fetchQuizResult', {
                 credentials: 'include',
                 method: 'POST',
@@ -102,22 +99,11 @@ function Challenge () {
             return null
         case ChallengeStates.COUNTDOWN:
         case ChallengeStates.QUESTIONS:
-            return <Question
-                content={questionsContent}
-                answerCallBack={setAnswer}
-                challengeState={setChallengeState}
-                hasPlayed={hasPlayed}/>
+            return <Question content={questionsContent} answerCallBack={setAnswer} challengeState={setChallengeState} hasPlayed={hasPlayed}/>
         case ChallengeStates.QUESTIONS_VIDEO:
-            return <QuestionsVideo
-                content={questionsContent}
-                answerCallBack={setAnswer} />
+            return <QuestionsVideo content={questionsContent} answerCallBack={setAnswer} />
         case ChallengeStates.RESULT:
-            return <Result
-                openModal={onOpenModal}
-                setGift={setGift}
-                content={resultContent}
-                playGameCallBack={playGameCallBack}
-                gotoDashBoard={gotoDashBoard}/>
+            return <Result content={resultContent} playGameCallBack={playGameCallBack} gotoDashBoard={gotoDashBoard}/>
         }
     }
 
@@ -128,18 +114,6 @@ function Challenge () {
             videoController.setShowVideo(false)
         }
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
-    }
-
-    function getModalContent () {
-        return <Gift gift={gift} handleClose={closeModal} open={open}/>
-    }
-
-    function onOpenModal () {
-        setOpen(true)
-    }
-
-    function closeModal () {
-        setOpen(false)
     }
 
     // Call through question component callBack when user answered question
@@ -211,56 +185,32 @@ function Challenge () {
     }, [challengeState])
 
     return (
-        <React.Fragment>
-            <EventLayout>
-                {!isLoading && <Box>
-                    {getChallengeContent(challengeState)}
-                    {backgroundType === 'image' &&
-                    <BackGroundDisplay
-                        addBlur={ addBlur }
-                        addColor={ addColor }
-                        className='background'
-                        animated={true}
-                        imageURL={imageURL}/>}
-                </Box>
-                }
-            </EventLayout>
-            <GenericModal
-                handleClose={closeModal}
-                open={open}
-                hideBackdrop={true}
-            >
-                {getModalContent()}
-            </GenericModal>
-        </React.Fragment>
+        <EventLayout>
+            {!isLoading && <Box>
+                {getChallengeContent(challengeState)}
+                {backgroundType === 'image' &&
+                    <BackGroundDisplay addblur={ addBlur } addcolor={ addColor } className='background' imageURL={imageURL}/>}
+            </Box>
+            }
+        </EventLayout>
     )
 }
 
 export default Challenge
 
-export async function getStaticPaths ({ locales }) {
-    const eventPaths = await getAllEvents()
-
-    const paths = []
-    eventPaths.forEach((path) => {
-        locales.forEach((locale) => {
-            paths.push({ ...path, locale })
-        })
-    })
-
+export async function getStaticPaths () {
+    const paths = await getAllEvents()
     return {
         paths,
         fallback: false
     }
 }
 
-export async function getStaticProps ({ params, locale }) {
-    const eventData = await getEventsData(params.events, locale)
+export async function getStaticProps ({ params }) {
+    const events = params.events
     return {
         props: {
-            eventData,
-            locale
-        },
-        revalidate: 1
+            eventData: { events }
+        }
     }
 }

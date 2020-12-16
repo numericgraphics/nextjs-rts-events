@@ -18,18 +18,21 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         margin: 20
     },
     title: {
-        width: '100%',
+        // fontFamily: 'srgssr-type-Bd',
+        // fontSize: '1.75rem',
         textAlign: 'center',
+        // lineHeight: '1.2em',
         marginBottom: '1.5vw',
-        color: theme.palette.primary.contrastText,
-        wordWrap: 'break-word',
-        textOverflow: 'ellipsis'
+        // marginTop: '17vh',
+        color: theme.palette.primary.contrastText
     },
     subTitle: {
+        // fontFamily: 'srgssr-type-Rg',
+        // fontSize: '1.2rem',
         textAlign: 'center',
+        // lineHeight: '1.2em',
         color: theme.palette.primary.contrastText,
-        wordWrap: 'break-word',
-        textOverflow: 'ellipsis'
+        // marginBottom: '3rem!important
 
     },
     resultBox: {
@@ -73,7 +76,6 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         // paddingBottom: '11rem' // Pour pouvoir scroller quand il y a deux boutons...
     },
     header: {
-        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

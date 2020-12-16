@@ -132,11 +132,6 @@ class ThemeFactory {
                     padding: '0.5rem'
                 }
             },
-            MuiIconButton: {
-                root: {
-                    padding: '1px!important'
-                }
-            },
             MuiCssBaseline: {
                 '@global': {
                     'html, body': {

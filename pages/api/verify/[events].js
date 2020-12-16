@@ -4,7 +4,7 @@ import getConfig from 'next/config'
 const { serverRuntimeConfig } = getConfig()
 
 export default async (req, res) => {
-    const { query: { events, locale } } = req
+    const { query: { events } } = req
     let rtsEventCookie = null
     let cookies = null
     const cookieName = `rtsevents-${events}`
@@ -20,7 +20,7 @@ export default async (req, res) => {
                 // getData to get timeline
                 const code = cookieValue.code
 
-                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${events}/${cookieValue.userID}/getUser?lang=${locale}`
+                const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${events}/${cookieValue.userID}/getUser`
 
                 const response = await fetch(url, {
                     credentials: 'include',

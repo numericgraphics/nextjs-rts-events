@@ -41,10 +41,6 @@ class DataProvider {
         return Object.assign(this.data, {}, { event: Object.assign(this.data.event, data) })
     }
 
-    setUser (data) {
-        return Object.assign(this.data, {}, { user: Object.assign(this.data.user, data) })
-    }
-
     getAllData () {
         return this.data
     }
@@ -95,10 +91,6 @@ class DataProvider {
 
     hasAvailableChallenges () {
         return this.data.gameStats.hasAvailableChallenges
-    }
-
-    getAvatars () {
-        return this.data.event.avatars
     }
 }
 

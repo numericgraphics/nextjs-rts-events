@@ -26,8 +26,12 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         position: 'absolute',
         top: '3vw',
         right: '3vw',
-        width: 'min(1.8rem, 35px)',
-        height: 'min(1.8rem, 35px)',
+        minHeight: '34px',
+        minWidth: '34px',
+        maxHeight: '58px',
+        maxWidth: '58px',
+        width: '2.5rem',
+        height: '2.5rem',
         zIndex: 4,
         backgroundColor: theme.palette.secondary.main,
         stroke: theme.palette.secondary.contrastText,
@@ -83,8 +87,12 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     closeIcon: {
         position: 'absolute',
-        width: 'min(1.8rem, 35px)',
-        height: 'min(1.8rem, 35px)'
+        minHeight: '34px',
+        minWidth: '34px',
+        maxHeight: '58px',
+        maxWidth: '58px',
+        width: '5vw',
+        height: '5vw'
     },
     footer: {
         display: 'flex',
@@ -92,10 +100,5 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         zIndex: 2,
         position: 'absolute',
         width: '100%'
-    },
-    videoContainer: {
-        height: '100%',
-        width: '100%',
-        display: 'flex'
     }
 }))

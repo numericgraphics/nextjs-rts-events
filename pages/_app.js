@@ -3,10 +3,8 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import '../styles/css/global.css'
 import '../styles/css/fadeIn.css'
-import '../styles/css/avatarSelected.css'
 import '../styles/css/growFadeOut.css'
 import '../styles/css/shake.css'
-import '../styles/css/kenBurns.css'
 import 'react-phone-input-2/lib/bootstrap.css'
 import UserContext from '../hooks/userContext'
 import DataProvider from '../data/dataProvider'
@@ -25,8 +23,6 @@ import Head from 'next/head'
 
 function MyApp ({ Component, pageProps }) {
     const netWorkStatus = useNetwork()
-    const router = useRouter()
-    const { defaultLocale, locale, isFallback, query } = router
     const appVisibilityStatus = useAppVisibility()
     const deviceDetection = useDeviceDetect()
     const [eventData, setEventData] = useState([])
@@ -47,12 +43,14 @@ function MyApp ({ Component, pageProps }) {
     const [videoSource, setVideoSource] = useState('')
     const [videoPoster, setVideoPoster] = useState('')
     const [videoVisible, setVideoVisible] = useState(false)
+    // const [videoAutoPlay, setVideoAutoPlay] = useState(true)
     const [videoHasPlayed, setVideoPlayed] = useState(false)
     const [showVideo, setShowVideo] = useState(false)
     const [blurVideo, setBlurVideo] = useState(true)
     /* eslint-enable */
     const videoController = { player, setVideoVisible, setVideoSource, setVideoPoster, videoHasPlayed, setVideoPlayed, showVideo, setShowVideo, setBlurVideo }
-    const store = { locale, error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode, setTimeStampMode }
+    const store = { error, setError, isLoading, isGlobalLoading, setLoading, setTheme, eventName, setEventName, setEventData, videoController, deviceDetection, timeStampMode, setTimeStampMode }
+    const router = useRouter()
 
     function startedCallBack () {
         setIsStartAnimationEnded(true)
@@ -93,13 +91,6 @@ function MyApp ({ Component, pageProps }) {
             console.log('_app - Stats - ERROR', e)
         }
     }
-
-    useEffect(() => {
-        console.log('isFallback', isFallback)
-        console.log('isFallback - locale', locale)
-        console.log('isFallback - defaultLocale', defaultLocale)
-        console.log('isFallback - query', query)
-    }, [isFallback])
 
     useEffect(() => {
         if (isEndedAnimationEnded && isRouterReady) {
@@ -183,11 +174,11 @@ function MyApp ({ Component, pageProps }) {
             { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
             {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             <Head>
-                <title>RTS - Events</title>
+                <title>RTS - Pop quiz</title>
                 < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
                 <meta
                     name="description"
-                    content={'RTS - Events'}
+                    content={'RTS - Pop quiz'}
                 />
             </Head>
             { <ThemeProvider theme={ theme }>

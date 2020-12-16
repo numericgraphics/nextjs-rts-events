@@ -1,12 +1,4 @@
-import {
-    hexToRgbA,
-    getAllImagesFromJSON,
-    preLoadImage,
-    phoneVerification,
-    dateCreator,
-    epochConverter,
-    between
-} from '../data/tools'
+import { hexToRgbA, getAllImagesFromJSON, preLoadImage, phoneVerification, dateCreator, epochConverter } from '../data/tools'
 import data from '../mock/test-call-event'
 
 test('get images from JSON using getAllImagesFromJSON function', () => {
@@ -52,13 +44,4 @@ test('hexToRgbA', () => {
     expect(hexToRgbA('#000000', 0)).toMatch('rgba(0,0,0,0)')
     expect(hexToRgbA('#000000', '1')).toMatch('rgba(255,0,0,1)')
     expect(hexToRgbA('#000000', true)).toMatch('rgba(255,0,0,1)')
-})
-
-test('between', () => {
-    const testBetweenOne = between(12, 20, 30)
-    expect(testBetweenOne).toBe(false)
-    const testBetweenTwo = between(25, 20, 30)
-    expect(testBetweenTwo).toBe(true)
-    const testBetweenThree = between(2.5, 20, 30)
-    expect(testBetweenThree).toBe(false)
 })

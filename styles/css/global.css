@@ -41,10 +41,10 @@
 
 
 /*** BACKGROUNDS ***/
+
 .backgroundSlideShow,
 .backgroundSwipeableView,
 .backgroundModal,
-.backgroundModalGift,
 .backgroundVideo,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     width: 100%;
@@ -54,7 +54,6 @@
 
 .backgroundVideo { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     z-index: 0;
-    height: 100%;
 }
 
 
@@ -161,9 +160,6 @@
     background-color: black;
 }
 
-.backgroundModalGift {
-    position: relative!important;
-}
 
 /*** LAYOUT ***/
 
@@ -234,7 +230,7 @@
 .bottomZone,
 .bottomZonePromo,
 .bottomZoneDashboard {
-    padding: 1rem 0!important;
+    padding: 1rem 0;
 }
 
 .bottomZoneQuestions {
@@ -274,8 +270,7 @@
 }
 
 .modal-title {
-    margin-bottom: min(1rem, 30px)!important;
-    width: 80%
+    margin-bottom: 3vw!important;
 }
 
 .modal-textfield-phone {
@@ -292,7 +287,6 @@
     width: 100%
 }
 
-.buttonModal,
 .questionButton,
 .button,
 .buttonAlt {
@@ -364,7 +358,6 @@
     .backgroundSwipeableView,
     .backgroundSlideShow,
     .backgroundModal,
-    .backgroundModalGift,
     .backgroundVideo,
     .backgroundPadding,
     .backgroundGradientByTheme,
@@ -412,7 +405,6 @@
     .backgroundSwipeableView,
     .backgroundSlideShow,
     .backgroundModal,
-    .backgroundModalGift,
     .backgroundVideo,
     .backgroundPadding,
     .backgroundGradientByTheme,

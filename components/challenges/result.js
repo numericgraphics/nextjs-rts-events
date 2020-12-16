@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade/Fade'
 import { ColorBorderButton } from '../ui/button/ColorBorderButton'
 import GiftResult from '../gifts/giftResult'
+import giftsModal from '../../hoc/hasGiftsModal'
 import { preLoadImage } from '../../data/tools'
 import { useStylesGlobal } from '../../styles/jsx/global.style'
 import { ColorCard } from '../ui/card/ColorCard'
@@ -37,6 +38,10 @@ function Result (props) {
 
     function onStart () {
         props.openModal()
+    }
+
+    function setGift (gift) {
+        props.setGift(gift)
     }
 
     function imagePreCacheCallBack (result) {
@@ -89,7 +94,7 @@ function Result (props) {
                                 translation={translation.challengeResultGiftText}
                                 gift={newUnlockedGifts}
                                 onClick={onStart}
-                                setGift={props.setGift}
+                                setGift={setGift}
                             />
                         }
                     </Box>
@@ -105,11 +110,9 @@ function Result (props) {
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>
-                            { gameStats.feedbackURL &&
                             <ColorBorderButton key={'openFeedBackModal'} variant="outlined" className={'buttonAlt'} onClick={() => setOpenFeedback(!openFeedback)}>
                                 {`${translation.feedbackButtonOnResult}`}
                             </ColorBorderButton>
-                            }
                             <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonEnded}`}
                             </Button>
@@ -121,4 +124,4 @@ function Result (props) {
     )
 }
 
-export default withRouter(Result)
+export default giftsModal(withRouter(Result))
