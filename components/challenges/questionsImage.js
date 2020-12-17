@@ -21,7 +21,7 @@ function QuestionImage (props) {
     // eslint-disable-next-line no-unused-vars
     const [tempRawImage, setTempRawImage] = useState(null)
     const { store } = useContext(UserContext)
-    const { videoController } = store
+    const { videoController, setBlurVideo } = store
 
     useEffect(() => {
         if (progress >= 100) {
@@ -34,6 +34,13 @@ function QuestionImage (props) {
         console.log('useEffect - QuestionImage content ', props.content)
         setQuestionState(questionStates.CAMERA)
     }, [])
+
+    useEffect(() => {
+        if (questionState === questionStates.CAMERA) {
+            // set blur False
+            videoController.setBlurVideo(false)
+        }
+    }, [questionState])
 
     useEffect(() => {
         // TODO manage photo data
