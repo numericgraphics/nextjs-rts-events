@@ -1,11 +1,14 @@
 import React, { useRef, useEffect } from 'react'
-import Grid from '@material-ui/core/Grid'
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; const useStyles = makeStyles((theme) => ({
     root: {
+        display: 'flex',
+        flexDirection: 'column',
         height: '100%',
-        textAlign: 'center'
+        width: '100%',
+        alignItems: 'center',
+        zIndex: '4'
     },
     imgBox: {
         maxWidth: '80%',
@@ -21,8 +24,9 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
     }
 }))
 
-function ImageCapture () {
+function ImageCapture (props) {
     const videoRef = useRef()
+    const canevaRef = useRef()
     const classes = useStyles()
     /* const [source, setSource] = useState('')
 
@@ -37,6 +41,11 @@ function ImageCapture () {
         }
     } */
 
+    function takePicture () {
+        const context = canevaRef.current.getContext('2d')
+        context.drawImage(props.videoRef.current, 0, 0)
+    }
+
     useEffect(() => {
         if (videoRef) {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -44,8 +53,8 @@ function ImageCapture () {
                 navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
                     console.log(navigator.mediaDevices.getSupportedConstraints())
                     // videoRef.current.src = window.URL.createObjectURL(stream)
-                    videoRef.current.srcObject = stream
-                    videoRef.current.play()
+                    props.videoRef.current.srcObject = stream
+                    props.videoRef.current.play()
                 })
             }
         }
@@ -53,20 +62,16 @@ function ImageCapture () {
 
     return (
         <div className={classes.root}>
-            <Grid container>
-                <Grid item xs={12}>
-                    <video ref={videoRef} id="video" width="640" height="480" autoPlay/>
-                    <label htmlFor="icon-button-file">
-                        <IconButton
-                            color="primary"
-                            aria-label="upload you picture"
-                            component="span"
-                        >
-                            <PhotoCameraRoundedIcon fontSize="large" color="primary" />
-                        </IconButton>
-                    </label>
-                </Grid>
-            </Grid>
+            <canvas id="canvas" ref={canevaRef} className={'backgroundVideo'}/>
+            <video ref={videoRef} id="video" className={'backgroundVideo'} autoPlay/>
+            <IconButton
+                color="primary"
+                aria-label="upload you picture"
+                component="span"
+                onClick={takePicture}
+            >
+                <PhotoCameraRoundedIcon fontSize="large" color="primary" />
+            </IconButton>
         </div>
     )
 }

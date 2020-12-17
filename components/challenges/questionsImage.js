@@ -1,9 +1,11 @@
-import React /* , { useEffect, useRef, useState } */, { useEffect, useState } from 'react'
+import React /* , { useEffect, useRef, useState } */, { useContext, useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import { useStyles } from '../../styles/jsx/pages/questions.style'
 import QuestionTimer from '../ui/progress/questionTimer'
+import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import { ChallengeStates } from '../../data/challengeState'
+import ImageCapture from '../../components/ui/image/imageCamera'
 
 const questionStates = Object.freeze({
     CAMERA: 'camera',
@@ -18,6 +20,8 @@ function QuestionImage (props) {
     const [questionState, setQuestionState] = useState(ChallengeStates.LOADING)
     // eslint-disable-next-line no-unused-vars
     const [tempRawImage, setTempRawImage] = useState(null)
+    const { store } = useContext(UserContext)
+    const { videoController } = store
 
     useEffect(() => {
         if (progress >= 100) {
@@ -41,7 +45,7 @@ function QuestionImage (props) {
     function getChallengeContent (state) {
         switch (state) {
         case questionStates.CAMERA:
-            return null // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+            return <ImageCapture videoRef={videoController.player}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
         case questionStates.PHOTO_VALIDATION:
             return null // <ImageValidation  />
         }
