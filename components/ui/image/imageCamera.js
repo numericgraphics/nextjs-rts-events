@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; const useStyles = makeStyles((theme) => ({
@@ -25,8 +25,7 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
 }))
 
 function ImageCapture (props) {
-    const { videoController } = props
-    const canevaRef = useRef()
+    const { videoController, setData } = props
     const classes = useStyles()
     /* const [source, setSource] = useState('')
 
@@ -58,8 +57,10 @@ function ImageCapture (props) {
             canvas.toBlob(resolve, 'image/jpeg') // request a Blob from the canvas
         })
         console.log(img)
-        videoController.setVideoPoster(img)
+        // document.body.appendChild(canvas)
+        // videoController.setVideoPoster(img)
         videoController.player.current.pause()
+        setData(img)
     }
 
     useEffect(() => {
@@ -78,7 +79,6 @@ function ImageCapture (props) {
 
     return (
         <div className={classes.root}>
-            <canvas id="canvas" ref={canevaRef} className={'backgroundVideo'}/>
             <IconButton
                 color="primary"
                 aria-label="upload you picture"

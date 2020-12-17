@@ -6,6 +6,7 @@ import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import { ChallengeStates } from '../../data/challengeState'
 import ImageCapture from '../../components/ui/image/imageCamera'
+import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
 
 const questionStates = Object.freeze({
     CAMERA: 'camera',
@@ -30,6 +31,12 @@ function QuestionImage (props) {
         }
     }, [progress])
 
+    function reSnap () {
+        setTempRawImage()
+        videoController.player.current.play()
+        setQuestionState(questionStates.CAMERA)
+    }
+
     useEffect(() => {
         console.log('useEffect - QuestionImage content ', props.content)
         setQuestionState(questionStates.CAMERA)
@@ -45,16 +52,36 @@ function QuestionImage (props) {
     useEffect(() => {
         // TODO manage photo data
         if (tempRawImage) {
-
+            setQuestionState(questionStates.PHOTO_VALIDATION)
         }
     }, [tempRawImage])
+
+    function getImageValidation () {
+        return <React.Fragment>
+            <CustomDisabledButton
+                color="secondary"
+                variant="contained"
+                className={'button'}
+                onClick={reSnap}
+            >
+                Reprendre
+            </CustomDisabledButton>
+            <CustomDisabledButton
+                color="secondary"
+                variant="contained"
+                className={'button'}
+            >
+                Envoyer
+            </CustomDisabledButton>
+        </React.Fragment>
+    }
 
     function getChallengeContent (state) {
         switch (state) {
         case questionStates.CAMERA:
-            return <ImageCapture videoController={videoController}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+            return <ImageCapture videoController={videoController} setData={setTempRawImage}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
         case questionStates.PHOTO_VALIDATION:
-            return null // <ImageValidation  />
+            return getImageValidation() // <ImageValidation  />
         }
     }
 
