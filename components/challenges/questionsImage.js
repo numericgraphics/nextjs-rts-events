@@ -32,8 +32,8 @@ function QuestionImage (props) {
     }, [progress])
 
     function reSnap () {
-        setTempRawImage()
         videoController.player.current.play()
+        setTempRawImage()
         setQuestionState(questionStates.CAMERA)
     }
 
@@ -109,7 +109,7 @@ function QuestionImage (props) {
                     </Box>
                 </Box>
             </Box>
-            <Box className='bottomZoneQuestions'>
+            <Box className={['bottomZoneQuestions', classes.bottomGradient].join(' ')}>
                 {/* TODO add camera control */}
                 {getChallengeContent(questionState)}
             </Box>

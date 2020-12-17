@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core'
+import { hexToRgbA } from '../../../data/tools'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme = useTheme()) => ({
     counter: {
         display: 'flex',
         flexDirection: 'row',
@@ -60,5 +62,8 @@ export const useStyles = makeStyles({
     },
     buttonProgress: {
         position: 'absolute'
+    },
+    bottomGradient: {
+        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
     }
-})
+}))
