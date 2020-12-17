@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { ChallengeStates } from '../../data/challengeState'
 import ImageCapture from '../../components/ui/image/imageCamera'
 import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
+import { ColorBorderButton } from '../../components/ui/button/ColorBorderButton'
 
 const questionStates = Object.freeze({
     CAMERA: 'camera',
@@ -58,18 +59,18 @@ function QuestionImage (props) {
 
     function getImageValidation () {
         return <React.Fragment>
-            <CustomDisabledButton
+            <ColorBorderButton
                 color="secondary"
                 variant="contained"
-                className={'button'}
+                className={['button', classes.buttonValidImage].join(' ')}
                 onClick={reSnap}
             >
                 Reprendre
-            </CustomDisabledButton>
+            </ColorBorderButton>
             <CustomDisabledButton
                 color="secondary"
                 variant="contained"
-                className={'button'}
+                className={['button', classes.buttonValidImage].join(' ')}
             >
                 Envoyer
             </CustomDisabledButton>
@@ -109,7 +110,7 @@ function QuestionImage (props) {
                     </Box>
                 </Box>
             </Box>
-            <Box className={['bottomZoneQuestions', classes.bottomGradient].join(' ')}>
+            <Box className={['bottomZoneQuestions', classes.bottomImageQuestion].join(' ')}>
                 {/* TODO add camera control */}
                 {getChallengeContent(questionState)}
             </Box>

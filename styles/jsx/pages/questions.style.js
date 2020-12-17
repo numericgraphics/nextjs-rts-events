@@ -63,7 +63,12 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     buttonProgress: {
         position: 'absolute'
     },
-    bottomGradient: {
+    bottomImageQuestion: {
+        display: 'flex',
+        flexDirection: 'row',
         background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+    },
+    buttonValidImage: {
+        margin: '0px 5px 0px 5px'
     }
 }))
