@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "devhttps": "node httpsServer",
     "test": "jest",
     "test:ci": "jest --ci",
     "eslint": "eslint --ext .js ./components ./lib ./pages"
