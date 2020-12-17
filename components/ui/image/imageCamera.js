@@ -25,7 +25,7 @@ import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'; cons
 }))
 
 function ImageCapture (props) {
-    const videoRef = useRef()
+    const { videoController } = props
     const canevaRef = useRef()
     const classes = useStyles()
     /* const [source, setSource] = useState('')
@@ -41,34 +41,49 @@ function ImageCapture (props) {
         }
     } */
 
-    function takePicture () {
+    /* function takePicture () {
         const context = canevaRef.current.getContext('2d')
-        context.drawImage(props.videoRef.current, 0, 0)
+        context.drawImage(videoRef.current, 0, 0)
+        console.log(context)
+    } */
+
+    function takeASnap () {
+        const canvas = document.createElement('canvas') // create a canvas
+        const ctx = canvas.getContext('2d') // get its context
+        canvas.width = videoController.player.current.videoWidth // set its size to the one of the video
+        canvas.height = videoController.player.current.videoHeight
+        ctx.drawImage(videoController.player.current, 0, 0) // the video
+        console.log(ctx)
+        const img = new Promise((resolve, reject) => {
+            canvas.toBlob(resolve, 'image/jpeg') // request a Blob from the canvas
+        })
+        console.log(img)
+        videoController.setVideoPoster(img)
+        videoController.player.current.pause()
     }
 
     useEffect(() => {
-        if (videoRef) {
+        if (videoController.player) {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 // Not adding `{ audio: true }` since we only want video now
                 navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
                     console.log(navigator.mediaDevices.getSupportedConstraints())
                     // videoRef.current.src = window.URL.createObjectURL(stream)
-                    props.videoRef.current.srcObject = stream
-                    props.videoRef.current.play()
+                    videoController.player.current.srcObject = stream
+                    videoController.player.current.play()
                 })
             }
         }
-    }, [videoRef])
+    }, [videoController.player])
 
     return (
         <div className={classes.root}>
             <canvas id="canvas" ref={canevaRef} className={'backgroundVideo'}/>
-            <video ref={videoRef} id="video" className={'backgroundVideo'} autoPlay/>
             <IconButton
                 color="primary"
                 aria-label="upload you picture"
                 component="span"
-                onClick={takePicture}
+                onClick={takeASnap}
             >
                 <PhotoCameraRoundedIcon fontSize="large" color="primary" />
             </IconButton>

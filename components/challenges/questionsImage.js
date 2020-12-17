@@ -21,7 +21,7 @@ function QuestionImage (props) {
     // eslint-disable-next-line no-unused-vars
     const [tempRawImage, setTempRawImage] = useState(null)
     const { store } = useContext(UserContext)
-    const { videoController, setBlurVideo } = store
+    const { videoController } = store
 
     useEffect(() => {
         if (progress >= 100) {
@@ -52,7 +52,7 @@ function QuestionImage (props) {
     function getChallengeContent (state) {
         switch (state) {
         case questionStates.CAMERA:
-            return <ImageCapture videoRef={videoController.player}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+            return <ImageCapture videoController={videoController}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
         case questionStates.PHOTO_VALIDATION:
             return null // <ImageValidation  />
         }
