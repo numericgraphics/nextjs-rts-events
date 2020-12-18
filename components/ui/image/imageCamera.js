@@ -51,11 +51,11 @@ function ImageCapture (props) {
     } */
 
     function switchCamera () {
-        videoController.player.current.pause()
-        // videoController.player.current.srcObject = null
-        // toggle \ flip
         setShouldFaceUser(!shouldFaceUser)
-        videoController.player.current.play()
+        videoController.player.current.pause()
+        videoController.player.current.srcObject = null
+        // toggle \ flip
+        playVideo()
     }
 
     function takeASnap () {
@@ -75,32 +75,47 @@ function ImageCapture (props) {
         setData(img)
     }
 
+    function playVideo () {
+        console.log('isShow : ', videoController.showVideo)
+        console.log('isVisible : ', videoController.videoVisible)
+        const opts = {
+            audio: false,
+            video: { facingMode: (shouldFaceUser ? 'user' : { exact: 'environment' }) }
+        }
+
+        console.log(opts)
+
+        navigator.mediaDevices.getUserMedia(opts).then(function (stream) {
+            // videoRef.current.src = window.URL.createObjectURL(stream)
+            videoController.player.current.srcObject = stream
+            const track = stream.getVideoTracks()[0]
+            console.log('src', videoController.player.current.srcObject)
+            console.log(navigator.mediaDevices)
+            console.log(track)
+                .then(() => {
+                    videoController.player.current.play()
+                    // Do something with the track such as using the Image Capture API.
+                })
+                .catch(e => {
+                    // The constraints could not be satisfied by the available devices.
+                })
+        })
+    }
+
     useEffect(() => {
         if (videoController.player) {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 // Not adding `{ audio: true }` since we only want video now
                 const supports = navigator.mediaDevices.getSupportedConstraints()
                 if (supports.facingMode === true) {
+                    console.log(supports)
                     setEnableFlipBtn(true)
-                }
-                setShouldFaceUser(true) // Default is the front cam
-                const opts = {
-                    audio: false,
-                    video: true,
-                    facingMode: shouldFaceUser ? 'user' : 'environment'
-                }
-
-                navigator.mediaDevices.getUserMedia(opts).then(function (stream) {
-                    console.log(navigator.mediaDevices.getSupportedConstraints())
-                    // videoRef.current.src = window.URL.createObjectURL(stream)
-                    videoController.player.current.srcObject = stream
-                    videoController.player.current.play()
-                })
+                } // Default is the front cam
+                playVideo()
+                console.log('useEffect')
             }
         }
     }, [videoController.player])
-
-    console.log(enableFlipBtn)
 
     return (
         <div className={classes.root}>

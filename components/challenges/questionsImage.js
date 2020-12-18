@@ -47,6 +47,8 @@ function QuestionImage (props) {
         if (questionState === questionStates.CAMERA) {
             // set blur False
             videoController.setBlurVideo(false)
+            videoController.setVideoVisible(true)
+            videoController.setShowVideo(true)
         }
     }, [questionState])
 
