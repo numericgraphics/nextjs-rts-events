@@ -53,7 +53,7 @@ function ImageCapture (props) {
     function switchCamera () {
         setShouldFaceUser(!shouldFaceUser)
         videoController.player.current.pause()
-        videoController.player.current.srcObject = null
+        videoController.setVideoSource(null)
         // toggle \ flip
         playVideo()
     }
@@ -87,19 +87,20 @@ function ImageCapture (props) {
 
         navigator.mediaDevices.getUserMedia(opts).then(function (stream) {
             // videoRef.current.src = window.URL.createObjectURL(stream)
-            videoController.player.current.srcObject = stream
+            videoController.setVideoSource(stream)
             const track = stream.getVideoTracks()[0]
+            console.log('ici', stream)
             console.log('src', videoController.player.current.srcObject)
             console.log(navigator.mediaDevices)
             console.log(track)
-                .then(() => {
-                    videoController.player.current.play()
-                    // Do something with the track such as using the Image Capture API.
-                })
-                .catch(e => {
-                    // The constraints could not be satisfied by the available devices.
-                })
         })
+            .then(() => {
+                videoController.player.current.play()
+                // Do something with the track such as using the Image Capture API.
+            })
+            .catch(e => {
+                // The constraints could not be satisfied by the available devices.
+            })
     }
 
     useEffect(() => {
