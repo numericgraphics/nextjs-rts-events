@@ -53,7 +53,7 @@ function ImageCapture (props) {
     function switchCamera () {
         setShouldFaceUser(!shouldFaceUser)
         videoController.player.current.pause()
-        videoController.setVideoSource(null)
+        videoController.player.current.srcObject = null
         // toggle \ flip
         playVideo()
     }
@@ -87,9 +87,8 @@ function ImageCapture (props) {
 
         navigator.mediaDevices.getUserMedia(opts).then(function (stream) {
             // videoRef.current.src = window.URL.createObjectURL(stream)
-            videoController.setVideoSource(stream)
+            videoController.player.current.srcObject = stream
             const track = stream.getVideoTracks()[0]
-            console.log('ici', stream)
             console.log('src', videoController.player.current.srcObject)
             console.log(navigator.mediaDevices)
             console.log(track)

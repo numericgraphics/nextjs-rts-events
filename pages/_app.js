@@ -178,7 +178,6 @@ function MyApp ({ Component, pageProps }) {
         }
     }, [])
 
-    console.log(videoVisible)
     return (
         <UserContext.Provider value={{ dataProvider: DataProvider, gameStatsService: GameStatsService, uiElementsService: UiElementsServices, store }}>
             { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
