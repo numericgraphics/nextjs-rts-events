@@ -33,7 +33,6 @@ function QuestionImage (props) {
     }, [progress])
 
     function reSnap () {
-        videoController.player.current.play()
         setTempRawImage()
         setQuestionState(questionStates.CAMERA)
     }
@@ -55,6 +54,8 @@ function QuestionImage (props) {
     useEffect(() => {
         // TODO manage photo data
         if (tempRawImage) {
+            console.log('isset')
+            props.answerCallBack(tempRawImage)
             setQuestionState(questionStates.PHOTO_VALIDATION)
         }
     }, [tempRawImage])
@@ -82,7 +83,7 @@ function QuestionImage (props) {
     function getChallengeContent (state) {
         switch (state) {
         case questionStates.CAMERA:
-            return <ImageCapture setImageURL={props.setImageURL} videoController={videoController} setData={setTempRawImage}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+            return <ImageCapture setImageURL={setTempRawImage} videoController={videoController} /> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
         case questionStates.PHOTO_VALIDATION:
             return getImageValidation() // <ImageValidation  />
         }

@@ -117,7 +117,6 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_IMAGE:
             return <QuestionImage
                 content={questionsContent}
-                setImageURL={setImageURL}
                 answerCallBack={setRawImage} />
         case ChallengeStates.RESULT:
             return <Result
@@ -161,6 +160,12 @@ function Challenge () {
     }, [answer])
 
     // init Challenge or redirect to dashboard if page is reloaded (isGlobalLoading)
+    useEffect(() => {
+        if (rawImage) {
+            setImageURL(rawImage)
+        }
+    }, [rawImage])
+
     useEffect(() => {
         if (isGlobalLoading) {
             gotoDashBoard().then()
