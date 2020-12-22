@@ -82,7 +82,7 @@ function QuestionImage (props) {
     function getChallengeContent (state) {
         switch (state) {
         case questionStates.CAMERA:
-            return <ImageCapture videoController={videoController} setData={setTempRawImage}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+            return <ImageCapture setImageURL={props.setImageURL} videoController={videoController} setData={setTempRawImage}/> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
         case questionStates.PHOTO_VALIDATION:
             return getImageValidation() // <ImageValidation  />
         }

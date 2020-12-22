@@ -117,6 +117,7 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_IMAGE:
             return <QuestionImage
                 content={questionsContent}
+                setImageURL={setImageURL}
                 answerCallBack={setRawImage} />
         case ChallengeStates.RESULT:
             return <Result
@@ -185,6 +186,8 @@ function Challenge () {
             } else if (reco !== null) {
                 console.log('questionsContent', questionsContent)
                 setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
+                setImageURL(imageURL)
+                setBackgroundType('image')
             } else {
                 videoController.setShowVideo(false)
                 setImageURL(imageURL)
