@@ -51,11 +51,29 @@ function QuestionImage (props) {
         }
     }, [questionState])
 
+    function imageToBase64 (url, callback) {
+        var xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+            var reader = new FileReader()
+            reader.onloadend = function () {
+                callback(reader.result)
+            }
+            reader.readAsDataURL(xhr.response)
+        }
+        xhr.open('GET', url)
+        xhr.responseType = 'blob'
+        xhr.send()
+    }
+
     useEffect(() => {
         // TODO manage photo data
         if (tempRawImage) {
             console.log('isset')
-            props.answerCallBack(tempRawImage)
+            imageToBase64(tempRawImage, function (dataUrl) {
+                // Convert image to base64
+                console.log('RESULT:', dataUrl)
+                props.answerCallBack(dataUrl)
+            })
             setQuestionState(questionStates.PHOTO_VALIDATION)
         }
     }, [tempRawImage])

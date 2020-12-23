@@ -151,7 +151,7 @@ function Challenge () {
 
     // Call through question component callBack when user answered question
     useEffect(() => {
-        if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO) {
+        if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO || challengeState === ChallengeStates.QUESTIONS_IMAGE) {
             fetchResult().then()
             if (!hasPlayed) {
                 setHasPlayed(true)
@@ -163,6 +163,7 @@ function Challenge () {
     useEffect(() => {
         if (rawImage) {
             setImageURL(rawImage)
+            setAnswer(rawImage)
         }
     }, [rawImage])
 
