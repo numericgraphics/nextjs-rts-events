@@ -1,29 +1,8 @@
 import React from 'react'
 import { IconButton } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        alignItems: 'center',
-        zIndex: '4'
-    },
-    imgBox: {
-        maxWidth: '80%',
-        maxHeight: '80%',
-        margin: '10px'
-    },
-    img: {
-        height: 'inherit',
-        maxWidth: 'inherit'
-    },
-    input: {
-        display: 'none'
-    }
-}))
+import { useStyles } from '../../../styles/jsx/components/image/imageCapture.style'
+
 function ImageCapture (props) {
     const classes = useStyles()
 

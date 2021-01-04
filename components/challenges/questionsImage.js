@@ -5,8 +5,7 @@ import QuestionTimer from '../ui/progress/questionTimer'
 import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import { ChallengeStates } from '../../data/challengeState'
-import ImageCapture from '../../components/ui/image/imageCamera'
-import { CustomDisabledButton } from '../../components/ui/button/CustomDisabledButton'
+import ImageCapture from '../ui/image/ImageCapture'
 import { ColorBorderButton } from '../../components/ui/button/ColorBorderButton'
 
 const questionStates = Object.freeze({
@@ -68,7 +67,6 @@ function QuestionImage (props) {
     useEffect(() => {
         // TODO manage photo data
         if (tempRawImage) {
-            console.log('isset')
             imageToBase64(tempRawImage, function (dataUrl) {
                 // Convert image to base64
                 console.log('RESULT:', dataUrl)
@@ -80,6 +78,9 @@ function QuestionImage (props) {
 
     function getImageValidation () {
         return <React.Fragment>
+            <Typography variant='subtitle1'>
+        Votre photo en cours de validation
+            </Typography>
             <ColorBorderButton
                 color="secondary"
                 variant="contained"
@@ -88,13 +89,6 @@ function QuestionImage (props) {
             >
                 Reprendre
             </ColorBorderButton>
-            <CustomDisabledButton
-                color="secondary"
-                variant="contained"
-                className={['button', classes.buttonValidImage].join(' ')}
-            >
-                Envoyer
-            </CustomDisabledButton>
         </React.Fragment>
     }
 
