@@ -6,7 +6,8 @@ import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
 import { ChallengeStates } from '../../data/challengeState'
 import ImageCapture from '../ui/image/ImageCapture'
-import { ColorBorderButton } from '../../components/ui/button/ColorBorderButton'
+import ThemeFactory from '../../data/themeFactory'
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
 const questionStates = Object.freeze({
     CAMERA: 'camera',
@@ -23,6 +24,13 @@ function QuestionImage (props) {
     const [tempRawImage, setTempRawImage] = useState(null)
     const { store } = useContext(UserContext)
     const { videoController } = store
+    const [height, setHeight] = useState()
+    const [theme, setTheme] = useState({})
+
+    useEffect(() => {
+        setTheme(ThemeFactory.getCreatedTheme())
+        setHeight(window.innerHeight)
+    }, [])
 
     useEffect(() => {
         if (progress >= 100) {
@@ -30,11 +38,6 @@ function QuestionImage (props) {
             setProgress(0)
         }
     }, [progress])
-
-    function reSnap () {
-        setTempRawImage()
-        setQuestionState(questionStates.CAMERA)
-    }
 
     useEffect(() => {
         console.log('useEffect - QuestionImage content ', props.content)
@@ -44,9 +47,9 @@ function QuestionImage (props) {
     useEffect(() => {
         if (questionState === questionStates.CAMERA) {
             // set blur False
-            videoController.setBlurVideo(false)
-            videoController.setVideoVisible(true)
-            videoController.setShowVideo(true)
+            props.setBlur(false)
+        } else if (questionState === questionStates.PHOTO_VALIDATION) {
+            props.setBlur(true)
         }
     }, [questionState])
 
@@ -77,25 +80,42 @@ function QuestionImage (props) {
     }, [tempRawImage])
 
     function getImageValidation () {
-        return <React.Fragment>
-            <Typography variant='subtitle1'>
-        Votre photo en cours de validation
+        return <Box className={[classes.containerLoading, 'background'].join(' ')} style={{ height: height }} >
+            <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
+            <Typography className={classes.imageValidationText} variant='subtitle1'>
+        Votre photo est en cours de validation
             </Typography>
-            <ColorBorderButton
-                color="secondary"
-                variant="contained"
-                className={['button', classes.buttonValidImage].join(' ')}
-                onClick={reSnap}
-            >
-                Reprendre
-            </ColorBorderButton>
-        </React.Fragment>
+        </Box>
     }
 
     function getChallengeContent (state) {
         switch (state) {
         case questionStates.CAMERA:
-            return <ImageCapture setImageURL={setTempRawImage} videoController={videoController} /> // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
+            return <React.Fragment>
+                <Box>
+                    <Box className='timerZone'>
+                        <Box className={classes.counter}>
+                            <QuestionTimer timeLeft={timeLeft} progress={progress} />
+                        </Box>
+                    </Box>
+                    <Box className='topZone'>
+                        <Box className={[classes.header, 'color-White'].join(' ')}>
+                            <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
+                                {title}
+                            </Typography>
+                            <Typography variant='h3' className={classes.HeaderText} align={'left'}>
+                            question ????
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Box>
+                <Box className={['bottomZoneQuestions', classes.bottomImageQuestion].join(' ')}>
+                    {/* TODO add camera control */}
+                    <ImageCapture setImageURL={setTempRawImage} videoController={videoController} />
+                </Box>
+                <Box className='backgroundGradientTop' />
+            </React.Fragment>
+            // <ImageCapture setData={setTempRawImage} onClick={takeSnapShot}/>
         case questionStates.PHOTO_VALIDATION:
             return getImageValidation() // <ImageValidation  />
         }
@@ -108,28 +128,7 @@ function QuestionImage (props) {
 
     return (
         <Box className='content' >
-            <Box>
-                <Box className='timerZone'>
-                    <Box className={classes.counter}>
-                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                    </Box>
-                </Box>
-                <Box className='topZone'>
-                    <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
-                            {title}
-                        </Typography>
-                        <Typography variant='h3' className={classes.HeaderText} align={'left'}>
-                            question ????
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
-            <Box className={['bottomZoneQuestions', classes.bottomImageQuestion].join(' ')}>
-                {/* TODO add camera control */}
-                {getChallengeContent(questionState)}
-            </Box>
-            <Box className='backgroundGradientTop' />
+            {getChallengeContent(questionState)}
         </Box>
     )
 }

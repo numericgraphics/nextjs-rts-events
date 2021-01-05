@@ -82,8 +82,9 @@ function Challenge () {
         }
     }
 
-    async function fetchResultReco () {
+    /* async function fetchResultReco () {
         try {
+            // TODO delete test IMG
             const testImg = '/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAKAAD/4QMcaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA2LjAtYzAwMyA3OS4xNjQ1MjcsIDIwMjAvMTAvMTUtMTc6NDg6MzIgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjBGN0M0NkZFMzk0RDExRUJBODFEQTAxMjc3QTlCOEJGIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjBGN0M0NkZEMzk0RDExRUJBODFEQTAxMjc3QTlCOEJGIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCAyMDIxIE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSIxQTNFNzM3OTcyMDE4NzBGNzU1NUYxNEZBQkZDRkNGMiIgc3RSZWY6ZG9jdW1lbnRJRD0iMUEzRTczNzk3MjAxODcwRjc1NTVGMTRGQUJGQ0ZDRjIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7/7gAOQWRvYmUAZMAAAAAB/9sAhAAUEBAZEhknFxcnMiYfJjIuJiYmJi4+NTU1NTU+REFBQUFBQUREREREREREREREREREREREREREREREREREREREARUZGSAcICYYGCY2JiAmNkQ2Kys2REREQjVCRERERERERERERERERERERERERERERERERERERERERERERERERET/wAARCACAAMgDASIAAhEBAxEB/8QAdAAAAwEBAQEAAAAAAAAAAAAAAgMEAQAFBgEAAwEBAAAAAAAAAAAAAAAAAAECAwQQAAICAQQCAgICAwEAAAAAAAABEQIDITESBEEiURNhcTIFgVIUYhEBAQEBAQEAAQUBAAAAAAAAAAERAiExQWFxEiIDYv/aAAwDAQACEQMRAD8A5I1I5BpHI6WJBQakEkAYkaqhqoaqALVQuIxVCVRgvibxGQdAEXxN4hwbAGXxM4jINgMIniDxHuoPEQJdQHUogF1Ead1FupS6gOojiV1BaKHUW6iBUHQMaMguEGDgoOLSakGkYkGkQpqQaRyQaQE5INI5INIDZBsGwcMmQcaR9rtrGnVbgB5O0q7akr7lrabEWO1nrbYKzX+SoFlM7+SlZGjzqW0TH1yeq/JrEVfW8hwS0vA7m6qd0T1zvwSigxoJWVlKOMbFltANDWgWiTJdRTqUNANCMh1Bgc0C6lwi4ODg4tI0g0jKoYkZqakGkYkGkAakEYgkMnHHHDBWflwfHRngf9FL34/Hk9/sX4UbPn7Yk3I4B5Mjb02BblSC1BzzUx192VIVpuOWvXYoxr1l+CbqWU6bMszLjj5fBcTTaOUUY7QtTzer2/tfFLYtTt+ykq60S1RovDaVA0w7+tIEFhGMzqi2gWhjAYGW0C0MaMaKiSmjg2jiybUYhKDmCMUamGmTcglYeEpTCQlWDTDAYYcjQJN3MlceN8lM6JHzayQ4toe7/ZtfWlPtMpHiZ6VvSfI40nP9dNo0Hk6tOzVK2kaprckwYKuqacW8spTanz+i/wBmdb9S6vtVzOkss5fbThfZkP2VdXW2s+DMd/qev6X6HKMmL8OKtdKqCvEm9tyOmadvJZRcIguIUV40UtpNh76kmLD7ay18lajwY2fytra8yRjBYTBZmQWCw2CxAILCMZcIEHGs4si5gF2kxsxMUMxBoXUNMZHVYaFVY1ADKs691SrtbZGVIv7LI/XGvOrJvh8zaj7FXnq8j33RNhfNF9K+sEPUWrr8NmTo/QN6PBZWj0e5tkm5R6bxK9XU8y9OLa2Neax6jbUV990KwTeVkXlwbXIuUMe8fCLTKZpGaii2KqL35PdQkR437SehjrLkd6zw+ed9U1r8HKu4X8a8jsNfnyH/ACr8UDBYT0AZz0MYLCYLJDDDjDSExnHNnF/hKWzMTBtYxWCKp9WMTEKwxWAjkx1WSqw2lh0Hpnk58/25n8L1R6N7RVv4R4eJ6yZ9NOI9Oj0IsdOOey+dSrE5OWOcrt+jNpFFX4Je9i9edd1uVcNZGWryrDKlTj5dXTsXPKljhvyeb2Mf/NltT8yv0Fh5ZrJL+K3NpcjHNuPY6deT5M9elSHrY+KR6CehPN2tepk8FlfoFitoBb+Iyi8mn51nb5heTRsWNz+BDZh3Mpz2OYLObBbIPGSZJjYMlxImzgJONCQ2uYrCXY1WGFVbBq5IrhfbAgsVg65EiD7p0Q/HitbVi+/FYqtmUHkxxtB6+KlVozzOzXhmsvyK82TarmzcVYXoVVI8LKqszXTkMQlMbVjhPA/vMMulq/yb4juj1ljqkN7/AL5q1/1Uj8KhD3zBJnqnGoHyKoMK5gptGNWiEUGyb8senXSe4l0Um5Lwzk5YWS0puFWrDgy1ElIWcC1pRGT1QOEimocBpmNhkAGoRwnNklwcHg/i8vkdzJnkMVnbRE2lih5BmPHbK/wbg63mxdSiqVObfp7gsHWrXV7l1IFUZs8WbzmT4zt069ZR4vecZtfhHsKx4vfyVfYj4SRH+0zlf+d9w/DYqqyPFZNaFNWcbZQmMT0EJm8oGaHLac9v8IsxM8yt5yXf/oux3HQvoMknpYanJpyim1DdoFJg3vBrPIyvrslpMpcRe4NbwyWmeKszlSTctBrtNSV2hj6+pnwbtALsDawFnoZ2qhDtNpOFycM3/9k='
             const { challengeID } = dataProvider.getChallenge()
             const bodyContent = { img: testImg, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
@@ -107,7 +108,7 @@ function Challenge () {
         } catch (error) {
             throw new Error(error.message)
         }
-    }
+    } */
 
     // init game back from result fetch before  set result content !!! important
     function initGame () {
@@ -144,6 +145,7 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_IMAGE:
             return <QuestionImage
                 content={questionsContent}
+                setBlur={setBlur}
                 answerCallBack={setRawImage} />
         case ChallengeStates.RESULT:
             return <Result
@@ -191,7 +193,7 @@ function Challenge () {
         if (rawImage) {
             setImageURL(rawImage)
             if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO || challengeState === ChallengeStates.QUESTIONS_IMAGE) {
-                fetchResultReco().then()
+                // fetchResultReco().then()
                 if (!hasPlayed) {
                     setHasPlayed(true)
                 }

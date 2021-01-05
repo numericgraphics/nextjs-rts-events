@@ -68,9 +68,28 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         padding: '0!important',
         display: 'flex',
         flexDirection: 'row',
-        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.7) + ' 20%, ' + hexToRgbA(theme.palette.primary.dark, 1) + ' 100%)'
     },
     buttonValidImage: {
         margin: '0px 5px 0px 5px'
+    },
+    imageValidation: {
+        display: 'flex',
+        flex: 1
+    },
+    containerLoading: {
+        position: 'fixed',
+        display: 'flex',
+        zIndex: 10,
+        width: '100%',
+        height: '100vh',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        flexDirection: 'column'
+    },
+    imageValidationText: {
+        marginTop: '10px'
     }
 }))
