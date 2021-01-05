@@ -64,6 +64,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         position: 'absolute'
     },
     bottomImageQuestion: {
+        width: '100%',
+        padding: '0!important',
         display: 'flex',
         flexDirection: 'row',
         background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
