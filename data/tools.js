@@ -140,3 +140,17 @@ export function dateObjConvert (dateObj) {
 export function between (x, min, max) {
     return x >= min && x <= max
 }
+
+export function imageToBase64 (url) {
+    var xhr = new XMLHttpRequest()
+    xhr.onload = function () {
+        var reader = new FileReader()
+        reader.onloadend = function () {
+            return reader.result
+        }
+        reader.readAsDataURL(xhr.response)
+    }
+    xhr.open('GET', url)
+    xhr.responseType = 'blob'
+    xhr.send()
+}

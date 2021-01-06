@@ -68,7 +68,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         padding: '0!important',
         display: 'flex',
         flexDirection: 'row',
-        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.7) + ' 20%, ' + hexToRgbA(theme.palette.primary.dark, 1) + ' 100%)'
+        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.7) + ' 20%, ' + hexToRgbA(theme.palette.primary.dark, 0.9) + ' 100%)'
     },
     buttonValidImage: {
         margin: '0px 5px 0px 5px'
@@ -91,5 +91,30 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     imageValidationText: {
         marginTop: '10px'
+    },
+    cardContent: {
+        padding: '1.5vw min(3vw, 30px)!important',
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    colorCard: {
+        width: '90%'
+    },
+    invalidImageText: {
+        textAlign: 'center',
+        color: theme.palette.primary.contrastText,
+        marginBottom: '15px'
+    },
+    containerInvalidImage: {
+        position: 'fixed',
+        display: 'flex',
+        zIndex: 10,
+        width: '100%',
+        height: '100vh',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        flexDirection: 'column'
     }
 }))
