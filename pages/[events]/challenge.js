@@ -146,6 +146,7 @@ function Challenge () {
             return <QuestionImage
                 content={questionsContent}
                 setBlur={setBlur}
+                setColor={setColor}
                 answerCallBack={setRawImage} />
         case ChallengeStates.RESULT:
             return <Result

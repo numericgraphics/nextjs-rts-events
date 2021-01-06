@@ -49,6 +49,7 @@ function QuestionImage (props) {
             // set blur False
             props.setBlur(false)
         } else if (questionState === questionStates.PHOTO_VALIDATION) {
+            props.setColor(true)
             props.setBlur(true)
         }
     }, [questionState])
@@ -102,9 +103,6 @@ function QuestionImage (props) {
                         <Box className={[classes.header, 'color-White'].join(' ')}>
                             <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
                                 {title}
-                            </Typography>
-                            <Typography variant='h3' className={classes.HeaderText} align={'left'}>
-                            question ????
                             </Typography>
                         </Box>
                     </Box>
