@@ -92,5 +92,10 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         zIndex: 2,
         position: 'absolute',
         width: '100%'
+    },
+    videoContainer: {
+        height: '100%',
+        width: '100%',
+        display: 'flex'
     }
 }))

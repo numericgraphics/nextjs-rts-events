@@ -1,0 +1,28 @@
+//generate certificate:
+// https://anmagpie.medium.com/secure-your-local-development-server-with-https-next-js-81ac6b8b3d68
+// do not forget to add it in keychain
+
+const { createServer } = require('https');
+const { parse } = require('url');
+const next = require('next');
+const fs = require('fs');
+
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
+
+const httpsOptions = {
+  key: fs.readFileSync('./localhost.key'),
+  cert: fs.readFileSync('./localhost.crt')
+};
+
+app.prepare().then(() => {
+  createServer(httpsOptions, (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    handle(req, res, parsedUrl);
+    
+  }).listen(3005, err => {
+    if (err) throw err;
+    console.log('> Ready on https://localhost:3005');
+  });
+});

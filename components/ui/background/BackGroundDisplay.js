@@ -6,6 +6,7 @@ import { useStyles } from '../../../styles/jsx/components/background/backGroundD
 import KenBurnsImage from './KenBurnsImage'
 
 function BackGroundDisplay (props) {
+    const { imageURL, animated, className, addBlur, addColor } = props
     const [display, setDisplay] = useState(false)
     const stylesGlobal = useStylesGlobal()
     const classes = useStyles()
@@ -19,12 +20,19 @@ function BackGroundDisplay (props) {
     }, [])
 
     return (
-        <Fade in={display} timeout={timeOutValue}>
-            <KenBurnsImage imageURL={props.imageURL} animated={props.animated} className={props.className} >
-                <Fade in={!!props.addblur}>
+        <Fade
+            in={display}
+            timeout={timeOutValue}
+        >
+            <KenBurnsImage
+                imageURL={imageURL}
+                animated={animated}
+                className={className}
+            >
+                <Fade in={!!addBlur}>
                     <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
                 </Fade>
-                <Fade in={!!props.addcolor}>
+                <Fade in={!!addColor}>
                     <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
                 </Fade>
             </KenBurnsImage>

@@ -193,14 +193,22 @@ function DashBoard (props) {
     }, [isGlobalLoading])
     return (
         <React.Fragment>
-            { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
+            { openFeedback && <HasTypeFormModal
+                gameStats={gameStats}
+                setOpenFeedback={setOpenFeedback}/> }
             <EventLayout >
                 {!(isLoading && isGlobalLoading) &&
             <Box className='content' >
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
                 }
-                <Slide in={!isLoading} timeout={500} direction="down" mountOnEnter unmountOnExit>
+                <Slide
+                    in={!isLoading}
+                    timeout={500}
+                    direction="down"
+                    mountOnEnter
+                    unmountOnExit
+                >
                     <Box className='topZoneDashboard' >
                         <Box className={classes.header}>
                             <ButtonBase
@@ -211,7 +219,9 @@ function DashBoard (props) {
                             <ButtonBase
                                 onClick={onProfileClick}
                             >
-                                <Typography variant="h2" className={[classes.nickname].join(' ')}>
+                                <Typography
+                                    variant="h2"
+                                    className={[classes.nickname].join(' ')}>
                                     {user.nickname}
                                 </Typography>
                             </ButtonBase>
@@ -223,16 +233,22 @@ function DashBoard (props) {
                         </Box>
                         {availableChallenges &&
                             <Box className={classes.progressBarOverlay}>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenterOverlay].join(' ')}>
+                                <Typography
+                                    variant='subtitle1'
+                                    className={[classes.textRegularCenterOverlay].join(' ')}>
                                     {uiElements.progressBarMessageChunk}
                                 </Typography>
-                                <DashBoardChallengesProgress variant="determinate" progress={progress} />
+                                <DashBoardChallengesProgress
+                                    variant="determinate"
+                                    progress={progress} />
                             </Box>
                         }
                         {availableScores &&
                         <ColorCard>
                             <CardContent className={classes.cardContent}>
-                                <Typography variant='h1' className={[classes.scoreChunkText].join(' ')}>
+                                <Typography
+                                    variant='h1'
+                                    className={[classes.scoreChunkText].join(' ')}>
                                     {uiElements.scoreChunk}
                                 </Typography>
                             </CardContent>
@@ -243,21 +259,32 @@ function DashBoard (props) {
                             <CardContent className={classes.cardContent}>
                                 <Box className={classes.rateBox}>
                                     <Box className={classes.goodRateBox}>
-                                        <CheckIcon fontSize="small" className={classes.rateIcon} />
-                                        <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
+                                        <CheckIcon
+                                            fontSize="small"
+                                            className={classes.rateIcon}
+                                        />
+                                        <Typography
+                                            variant="subtitle2"
+                                            className={[classes.rateText].join(' ')}>
                                             {uiElements.successChunk}
                                         </Typography>
                                     </Box>
                                     <Box className={classes.badRateBox}>
-                                        <CloseIcon fontSize="small" className={classes.rateIcon} />
-                                        <Typography variant="subtitle2" className={[classes.rateText].join(' ')}>
+                                        <CloseIcon
+                                            fontSize="small"
+                                            className={classes.rateIcon}
+                                        />
+                                        <Typography
+                                            variant="subtitle2"
+                                            className={[classes.rateText].join(' ')}>
                                             {uiElements.failChunk}
                                         </Typography>
                                     </Box>
                                 </Box>
-                                <Typography variant='subtitle1' className={[classes.textRegularCenter].join(' ')}
-                                    dangerouslySetInnerHTML={{ __html: uiElements.challengesLeftChunk }} >
-                                </Typography>
+                                <Typography
+                                    variant='subtitle1'
+                                    className={[classes.textRegularCenter].join(' ')}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.challengesLeftChunk }} />
                             </CardContent>
                         </ColorCard>
                         }
@@ -298,7 +325,12 @@ function DashBoard (props) {
                         </CustomDisabledButton>
                     </Box>
                 </Slide>
-                <BackGroundDisplay addcolor={1} addblur={1} className={'background'} imageURL={imageURL} />
+                <BackGroundDisplay
+                    addColor={1}
+                    addBlur={1}
+                    className={'background'}
+                    imageURL={imageURL}
+                />
                 {(isSafari && isMobile && isIOS) && <PWAPrompt
                     delay={2000}
                     copyTitle={translation.dashboardCopyTitle}

@@ -29,6 +29,10 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# local certificates
+localhost.crt
+localhost.key
+
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*

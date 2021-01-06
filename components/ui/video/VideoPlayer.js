@@ -17,7 +17,12 @@ function VideoPlayer (props, videoRef) {
 
     return (
         <Box className={['container', 'z-index-media'].join(' ')}>
-            <Fade in={showVideo} timeout={1000} style={{ transitionDelay: showVideo ? '500ms' : '500ms' }} onEnter={onEnter} onExited={onExited}>
+            <Fade in={showVideo}
+                timeout={1000}
+                style={{ transitionDelay: showVideo ? '500ms' : '500ms' }}
+                onEnter={onEnter}
+                onExited={onExited}
+            >
                 <Box>
                     <video
                         ref={videoRef}
@@ -26,12 +31,16 @@ function VideoPlayer (props, videoRef) {
                         poster={videoPoster}
                         loop
                         playsInline
-                        className='backgroundVideo'
+                        className={'backgroundVideo'}
                         autoPlay={false}
                         style={{ ...props.style, backgroundColor: theme.palette.primary.main, minHeight: '100vh', objectFit: 'cover' }}
                     >
                     </video>
-                    <BackGroundDisplay addcolor={blurVideo} addblur={blurVideo} className={'backgroundGradientVideoPlayer'}/>
+                    <BackGroundDisplay
+                        addColor={blurVideo}
+                        addBlur={blurVideo}
+                        className={'backgroundGradientVideoPlayer'}
+                    />
                     <Box className="backgroundVideoPlayer" style={{ background: theme.palette.primary.main }}/>
                 </Box>
             </Fade>
