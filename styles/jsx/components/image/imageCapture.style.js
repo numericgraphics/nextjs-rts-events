@@ -36,7 +36,13 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     cameraIcon: {
         fill: 'white',
-        padding: '5px'
+        padding: '5px',
+        minHeight: '34px',
+        minWidth: '34px',
+        fontSize: '5rem!important',
+        maxWidth: '50px',
+        maxHeight: '50px',
+        borderRadius: '100%'
     },
     gradient: {
         flexGrow: 3,

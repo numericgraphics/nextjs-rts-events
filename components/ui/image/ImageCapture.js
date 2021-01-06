@@ -63,7 +63,7 @@ function ImageCapture (props) {
                         component="span"
                         className={classes.captureBtn}
                     >
-                        <PhotoCameraRoundedIcon className={classes.cameraIcon} fontSize="large" />
+                        <PhotoCameraRoundedIcon className={classes.cameraIcon} />
                     </IconButton>
                 </label>
             </Box>
