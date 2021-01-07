@@ -1,16 +1,8 @@
-import React /* , { useEffect, useRef, useState } */, { useContext, useEffect, useState } from 'react'
+import React /* , { useEffect, useRef, useState } */, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
-import { useStyles } from '../../styles/jsx/pages/questions.style'
-import QuestionTimer from '../ui/progress/questionTimer'
-import UserContext from '../../hooks/userContext'
-import Typography from '@material-ui/core/Typography'
-import ImageCapture from '../ui/image/ImageCapture'
-import ThemeFactory from '../../data/themeFactory'
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
-import { ColorCard } from '../ui/card/ColorCard'
-import CardContent from '@material-ui/core/CardContent'
-import { ColorBorderButton } from '../ui/button/ColorBorderButton'
-import Button from '@material-ui/core/Button'
+import InvalidImage from '../ui/image/InvalidImage'
+import Camera from '../ui/image/Camera'
+import ImageValidation from '../ui/image/ImageValidation'
 
 const questionStates = Object.freeze({
     CAMERA: 'camera',
@@ -19,22 +11,12 @@ const questionStates = Object.freeze({
 })
 
 function QuestionImage (props) {
-    const classes = useStyles()
     const { title, duration } = props.content
     const [progress, setProgress] = useState(0)
     const [timeLeft, setTimeLeft] = useState(duration)
     const [questionState, setQuestionState] = useState(questionStates.CAMERA)
     // eslint-disable-next-line no-unused-vars
     const [tempRawImage, setTempRawImage] = useState(null)
-    const { store } = useContext(UserContext)
-    const { videoController } = store
-    const [height, setHeight] = useState()
-    const [theme, setTheme] = useState({})
-
-    useEffect(() => {
-        setTheme(ThemeFactory.getCreatedTheme())
-        setHeight(window.innerHeight)
-    }, [])
 
     useEffect(() => {
         if (progress >= 100) {
@@ -73,54 +55,15 @@ function QuestionImage (props) {
     }, [tempRawImage])
 
     function getImageValidation () {
-        return <Box className={[classes.containerLoading, 'background'].join(' ')} style={{ height: height }} >
-            <CircularProgress style={{ color: theme.palette ? theme.palette.primary.contrastText : ThemeFactory.getDefaultTheme().palette.primary.contrastText }} />
-            <Typography className={classes.imageValidationText} variant='subtitle1'>
-        Votre photo est en cours de validation
-            </Typography>
-        </Box>
+        return <ImageValidation/>
     }
 
     function getInvalidImage () {
-        return <Box className={[classes.containerInvalidImage, 'background'].join(' ')}>
-            <ColorCard className={classes.colorCard}>
-                <CardContent className={classes.cardContent}>
-                    <Typography className={classes.invalidImageText} variant="h3">
-                    Votre photo n est pas valide. Voulez vous recommencer ?
-                    </Typography>
-                    <Button key={'cancel'} color="secondary" variant="contained" className={'button'} onClick={reSnap} >
-                    Reprendre
-                    </Button>
-                    <ColorBorderButton key={'resnap'} variant="outlined" className={'buttonAlt'} onClick={props.gotoDashBoard} >
-                    Annuler
-                    </ColorBorderButton>
-                </CardContent>
-            </ColorCard>
-        </Box>
+        return <InvalidImage reSnap={reSnap} gotoDashBoard={props.gotoDashBoard} />
     }
 
     function getCamera () {
-        return <React.Fragment>
-            <Box>
-                <Box className='timerZone'>
-                    <Box className={classes.counter}>
-                        <QuestionTimer timeLeft={timeLeft} progress={progress} />
-                    </Box>
-                </Box>
-                <Box className='topZone'>
-                    <Box className={[classes.header, 'color-White'].join(' ')}>
-                        <Typography variant='subtitle1' className={classes.HeaderTitle} align={'left'}>
-                            {title}
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
-            <Box className={['bottomZoneQuestions', classes.bottomImageQuestion].join(' ')}>
-                {/* TODO add camera control */}
-                <ImageCapture setImageURL={setTempRawImage} videoController={videoController} />
-            </Box>
-            <Box className='backgroundGradientTop' />
-        </React.Fragment>
+        return <Camera timeLeft={timeLeft} progress={progress} setTempRawImage={setTempRawImage} title={title} />
     }
 
     function getChallengeContent (state) {
