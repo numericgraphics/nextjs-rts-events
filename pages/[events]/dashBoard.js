@@ -126,7 +126,6 @@ function DashBoard (props) {
                 onOpenModal(ModalStates.END_GAME)
             }, 1000)
         } else if (dataProvider.getGameStats().nextAvailableChallengeID != null && /RECO{1}/.test(dataProvider.getGameStats().nextAvailableChallengeID)) {
-            console.log('Next challenge is Reco')
             // Test if desktop
             if (!isMobile) {
                 setBlockReco(true)
@@ -362,7 +361,7 @@ function DashBoard (props) {
             <GenericModal
                 handleClose={closeModal}
                 open={open}
-                hideBackdrop={modalState !== ModalStates.END_GAME}
+                hideBackdrop={false}
             >
                 {getModalContent()}
             </GenericModal>

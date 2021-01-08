@@ -25,5 +25,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     buttonClose: {
         alignSelf: 'flex-end!important'
+    },
+    QRBox: {
+        width: '100%',
+        height: '100%'
     }
 }))

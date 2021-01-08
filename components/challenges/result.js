@@ -13,6 +13,7 @@ import { ColorCard } from '../ui/card/ColorCard'
 import CardContent from '@material-ui/core/CardContent'
 import { useStyles } from '../../styles/jsx/pages/result.style'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
+import { isMobile } from 'react-device-detect'
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
@@ -24,6 +25,7 @@ function Result (props) {
     const [showComponent, setShowComponent] = useState(false)
     const { dataProvider, uiElementsService } = useContext(UserContext)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const [blockReco, setBlockReco] = useState(false)
 
     async function continueGame () {
         setShowComponent(false)
@@ -54,6 +56,12 @@ function Result (props) {
     useEffect(() => {
         if (nextAvailableChallengeImageURL) {
             preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
+        }
+        if (gameStats.nextAvailableChallengeID != null && /RECO{1}/.test(gameStats.nextAvailableChallengeID)) {
+            // Test if desktop
+            if (!isMobile) {
+                setBlockReco(true)
+            }
         }
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
@@ -100,9 +108,11 @@ function Result (props) {
                             <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={'buttonAlt'} onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
+                            {!blockReco &&
                             <Button key={'continueGame'} color="secondary" variant="contained" className={'button'} onClick={continueGame}>
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
+                            }
                         </React.Fragment>
                         : <React.Fragment>
                             { gameStats.feedbackURL &&
