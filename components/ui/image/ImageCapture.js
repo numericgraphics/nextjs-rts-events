@@ -7,35 +7,15 @@ import Typography from '@material-ui/core/Typography'
 
 function ImageCapture (props) {
     const classes = useStyles()
-
-    function toDataURL (url, callback) {
-        var xhr = new XMLHttpRequest()
-        xhr.onload = function () {
-            var reader = new FileReader()
-            reader.onloadend = function () {
-                callback(reader.result)
-            }
-            reader.readAsDataURL(xhr.response)
-        }
-        xhr.open('GET', url)
-        xhr.responseType = 'blob'
-        xhr.send()
-    }
+    const { result, text } = props
 
     // Select the image
-
     const handleCapture = (target) => {
         if (target.files) {
             if (target.files.length !== 0) {
                 const file = target.files[0]
                 const newUrl = URL.createObjectURL(file)
-                // console.log('file', Object.keys(file))
-                // console.log('file2', getDataUrl(file))
-                toDataURL(newUrl, function (dataUrl) {
-                    console.log('RESULT:', dataUrl)
-                })
-                // console.log(blobToBase64(newUrl))
-                props.setImageURL(newUrl)
+                result(newUrl)
             }
         }
     }
@@ -53,7 +33,7 @@ function ImageCapture (props) {
                     onChange={(e) => handleCapture(e.target)}
                 />
                 <Typography className={classes.text} variant='h3'>
-                Prends une photo de ton animal de compagnie.
+                    {text}
                 </Typography>
 
                 <label htmlFor="icon-button-file">

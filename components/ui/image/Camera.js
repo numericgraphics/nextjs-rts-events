@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Box from '@material-ui/core/Box'
 import { useStyles } from '../../../styles/jsx/components/image/Camera.style'

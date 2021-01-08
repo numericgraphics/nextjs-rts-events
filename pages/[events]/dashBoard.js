@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import { isSafari, isMobile, isIOS } from 'react-device-detect'
 import dynamic from 'next/dynamic'
 import UserContext from '../../hooks/userContext'
@@ -66,6 +66,9 @@ function DashBoard (props) {
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const modalGiftRef = createRef()
+    const modalEndGameRef = createRef()
+    const modalProfilRef = createRef()
     let timeout
 
     async function fetchData () {
@@ -146,12 +149,14 @@ function DashBoard (props) {
         switch (modalState) {
         case ModalStates.GIFT:
             return <Gift
+                ref={modalGiftRef}
                 gift={gift}
                 handleClose={closeModal}
                 open={open}
             />
         case ModalStates.END_GAME:
             return <EndgameInformation
+                ref={modalEndGameRef}
                 uiElements={uiElements}
                 translation={translation}
                 handleClose={closeModal}
@@ -161,6 +166,7 @@ function DashBoard (props) {
             />
         case ModalStates.PROFILE:
             return <Profile
+                ref={modalProfilRef}
                 handleClose={closeModal}
                 open={open}
             />

@@ -6,8 +6,11 @@ const { serverRuntimeConfig } = getConfig()
 export default async (req, res) => {
     let rtsEventCookie = null
     let cookies = null
+    // TODO REMOVE RETURN
+    res.status(300).send({ test })
+    return
 
-    // Check if rts-event cookie is available
+    // eslint-disable-next-line no-unreachable
     try {
         const { img, challengeID, eventName, date, time, locale } = await req.body
         const finalDate = ((date && time) || date) ? dateCreator(date, time) : false

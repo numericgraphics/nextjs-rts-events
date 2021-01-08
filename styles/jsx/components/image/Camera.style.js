@@ -22,10 +22,6 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         textShadow: '0px 3px 6px #00000040'
     },
     bottomImageQuestion: {
-        width: '100%',
-        padding: '0!important',
-        display: 'flex',
-        flexDirection: 'row',
-        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.7) + ' 20%, ' + hexToRgbA(theme.palette.primary.dark, 0.9) + ' 100%)'
+        padding: 0
     }
 }))

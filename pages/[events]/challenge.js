@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../hooks/userContext'
 import EventLayout from '../../components/ui/layout/eventLayout'
@@ -13,6 +13,8 @@ import Gift from '../../components/gifts/gift'
 import GenericModal from '../../components/ui/modal/genericModal'
 import QuestionImage from '../../components/challenges/questionsImage'
 import { imageToBase64 } from '../../data/tools'
+import InvalidImage from '../../components/ui/image/InvalidImage'
+import ImageValidation from '../../components/ui/image/ImageValidation'
 
 function Challenge () {
     const router = useRouter()
@@ -32,8 +34,8 @@ function Challenge () {
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     // eslint-disable-next-line no-unused-vars
     const [rawImage, setRawImage] = useState(null)
-    const [invalidImageFunc, setInvalidImageFunc] = useState()
-
+    const modalGiftRef = createRef()
+    const modalInvalidImageRef = createRef()
     async function fetchQuestions () {
         try {
             const bodyContent = { eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
@@ -84,9 +86,9 @@ function Challenge () {
         }
     }
 
+    // TODO Fix backend result - check fetchQuizRecoResult api
     async function fetchResultReco () {
         try {
-            // TODO delete test IMG
             const img = imageToBase64(imageURL)
             const { challengeID } = dataProvider.getChallenge()
             const bodyContent = { img: img, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
@@ -99,14 +101,12 @@ function Challenge () {
             console.log(response)
             if (response.status === 200) {
                 const content = await response.json()
+                console.log('content from result', content)
                 dataProvider.setData(content)
                 setResultContent(content)
             } else {
-                invalidImageFunc()
-                /* await Router.push('/[events]/dashBoard', {
-                    pathname: `/${events}/dashBoard`,
-                    query: { quiz: false }
-                }) */
+                setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
+                onOpenModal()
             }
         } catch (error) {
             throw new Error(error.message)
@@ -129,7 +129,6 @@ function Challenge () {
     }
 
     // Get the good component by challenge state
-    // return <Progress />
     function getChallengeContent (state) {
         switch (state) {
         case ChallengeStates.LOADING:
@@ -148,11 +147,11 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_IMAGE:
             return <QuestionImage
                 content={questionsContent}
-                setBlur={setBlur}
-                setColor={setColor}
-                setInvalidImageFunc={setInvalidImageFunc}
-                gotoDashBoard={gotoDashBoard}
                 answerCallBack={setRawImage} />
+        case ChallengeStates.QUESTIONS_IMAGE_VALIDATION:
+            return <ImageValidation/>
+        case ChallengeStates.QUESTIONS_IMAGE_INVALID:
+            return null
         case ChallengeStates.RESULT:
             return <Result
                 openModal={onOpenModal}
@@ -168,12 +167,21 @@ function Challenge () {
             videoController.setVideoSource('')
             videoController.setVideoPoster('')
             videoController.setShowVideo(false)
+        } else if (challengeState === ChallengeStates.QUESTIONS_IMAGE_INVALID) {
+
         }
+        console.log('challenge gotoDashboard')
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
 
-    function getModalContent () {
-        return <Gift gift={gift} handleClose={closeModal} open={open}/>
+    function getModalContent (state) {
+        switch (state) {
+        case ChallengeStates.QUESTIONS_IMAGE_INVALID:
+            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={gotoDashBoard} open={open}/>
+        default:
+        case ChallengeStates.RESULT:
+            return <Gift ref={modalGiftRef} gift={gift} handleClose={closeModal} open={open}/>
+        }
     }
 
     function onOpenModal () {
@@ -184,9 +192,27 @@ function Challenge () {
         setOpen(false)
     }
 
+    function reSnap () {
+        closeModal()
+        setRawImage(null)
+        setImageURL(questionsContent.imageURL)
+        setTimeout(() => {
+            setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
+        }, 500)
+    }
+
+    useEffect(() => {
+        if (isGlobalLoading) {
+            gotoDashBoard().then()
+        } else {
+            setEventName(events)
+            fetchQuestions().then()
+        }
+    }, [])
+
     // Call through question component callBack when user answered question
     useEffect(() => {
-        if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO || challengeState === ChallengeStates.QUESTIONS_IMAGE) {
+        if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO) {
             fetchResult().then()
             if (!hasPlayed) {
                 setHasPlayed(true)
@@ -198,23 +224,15 @@ function Challenge () {
     useEffect(() => {
         if (rawImage) {
             setImageURL(rawImage)
-            if (challengeState === ChallengeStates.QUESTIONS || challengeState === ChallengeStates.QUESTIONS_VIDEO || challengeState === ChallengeStates.QUESTIONS_IMAGE) {
+            setChallengeState(ChallengeStates.QUESTIONS_IMAGE_VALIDATION)
+            setTimeout(() => {
                 fetchResultReco().then()
-                if (!hasPlayed) {
-                    setHasPlayed(true)
-                }
+            }, 2000)
+            if (!hasPlayed) {
+                setHasPlayed(true)
             }
         }
     }, [rawImage])
-
-    useEffect(() => {
-        if (isGlobalLoading) {
-            gotoDashBoard().then()
-        } else {
-            setEventName(events)
-            fetchQuestions().then()
-        }
-    }, [])
 
     // Back from fetchQuizz call
     useEffect(() => {
@@ -222,18 +240,14 @@ function Challenge () {
             if (isLoading) {
                 setLoading(false)
             }
-            const { imageURL } = questionsContent
-            const { videoURL } = questionsContent
-            const { reco } = questionsContent
+            const { imageURL, videoURL, reco } = questionsContent
             if (videoURL) {
                 setBackgroundType('video')
                 setChallengeState(ChallengeStates.QUESTIONS_VIDEO)
-            //    TODO check RECO propertie in challange object
             } else if (reco !== null) {
-                console.log('questionsContent', questionsContent)
-                setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
                 setImageURL(imageURL)
                 setBackgroundType('image')
+                setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
             } else {
                 videoController.setShowVideo(false)
                 setImageURL(imageURL)
@@ -252,7 +266,7 @@ function Challenge () {
         videoController.setVideoVisible(backgroundType === 'video')
     }, [backgroundType])
 
-    // Back from fetchQuizzResult
+    // initialize the game back from fetch result
     useEffect(() => {
         if (Object.keys(resultContent).length !== 0) {
             setChallengeState(ChallengeStates.RESULT)
@@ -260,12 +274,15 @@ function Challenge () {
         }
     }, [resultContent])
 
+    // Only set background value, for blud and color if background type is image
     useEffect(() => {
         if (backgroundType === 'image') {
             const needBackGround = (
                 challengeState === ChallengeStates.COUNTDOWN ||
                 challengeState === ChallengeStates.RESULT ||
-                challengeState === ChallengeStates.LOADING)
+                challengeState === ChallengeStates.LOADING ||
+                challengeState === ChallengeStates.QUESTIONS_IMAGE_VALIDATION ||
+                challengeState === ChallengeStates.QUESTIONS_IMAGE_INVALID)
             setColor(needBackGround)
             setBlur(needBackGround)
         }
@@ -291,7 +308,7 @@ function Challenge () {
                 open={open}
                 hideBackdrop={true}
             >
-                {getModalContent()}
+                {getModalContent(challengeState)}
             </GenericModal>
         </React.Fragment>
     )

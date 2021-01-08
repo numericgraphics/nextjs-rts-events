@@ -27,7 +27,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     container: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '100%'
     },
     captureBtn: {
         marginTop: '15px',

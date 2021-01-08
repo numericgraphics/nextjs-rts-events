@@ -62,12 +62,23 @@ function Result (props) {
     return (
         <Fade in={showComponent} timeout={1000}>
             <Box className='content' >
-                { openFeedback && <HasTypeFormModal gameStats={gameStats} setOpenFeedback={setOpenFeedback}/> }
+                { openFeedback && <HasTypeFormModal
+                    gameStats={gameStats}
+                    setOpenFeedback={setOpenFeedback}/>
+                }
                 <Box className='topZoneResult'>
                     <Box className={classes.content}>
                         <Box className={classes.header}>
-                            <Typography variant="h1" className={classes.title} dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}/>
-                            <Typography variant="subtitle1" className={classes.subTitle} dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}/>
+                            <Typography
+                                variant="h1"
+                                className={classes.title}
+                                dangerouslySetInnerHTML={{ __html: uiElements.resultTitleChunk }}
+                            />
+                            <Typography
+                                variant="subtitle1"
+                                className={classes.subTitle}
+                                dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}
+                            />
                             {!gameStats.hasAvailableChallenges &&
                                 <Typography
                                     className={classes.secondCardTitle}
@@ -76,9 +87,16 @@ function Result (props) {
                         </Box>
                         <ColorCard className={classes.colorCard}>
                             <CardContent className={classes.cardContent}>
-                                <Typography className={classes.winPointText} variant={successVariant()}
-                                    dangerouslySetInnerHTML={{ __html: `${uiElements.resultBoxChunk}` }}/>
-                                {newUnlockedGifts.length ? <Typography variant="h3" className={classes.secondCardText} dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}/> : null
+                                <Typography
+                                    className={classes.winPointText}
+                                    variant={successVariant()}
+                                    dangerouslySetInnerHTML={{ __html: `${uiElements.resultBoxChunk}` }}
+                                />
+                                {newUnlockedGifts.length ? <Typography
+                                    variant="h3"
+                                    className={classes.secondCardText}
+                                    dangerouslySetInnerHTML={{ __html: translation.challengeResultWinGift }}
+                                /> : null
                                 }
                             </CardContent>
                         </ColorCard>
@@ -97,20 +115,39 @@ function Result (props) {
                 <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZone'].join(' ')}>
                     {gameStats.hasAvailableChallenges
                         ? <React.Fragment>
-                            <ColorBorderButton key={'gotoDashBoard'} variant="outlined" className={'buttonAlt'} onClick={gotoDashBoard}>
+                            <ColorBorderButton
+                                key={'gotoDashBoard'}
+                                variant="outlined"
+                                className={'buttonAlt'}
+                                onClick={gotoDashBoard}>
                                 {`${translation.challengeResultButtonDashBoard}`}
                             </ColorBorderButton>
-                            <Button key={'continueGame'} color="secondary" variant="contained" className={'button'} onClick={continueGame}>
+                            <Button key={'continueGame'}
+                                color="secondary"
+                                variant="contained"
+                                className={'button'}
+                                onClick={continueGame}
+                            >
                                 {`${translation.challengeResultButtonContinue}`}
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>
                             { gameStats.feedbackURL &&
-                            <ColorBorderButton key={'openFeedBackModal'} variant="outlined" className={'buttonAlt'} onClick={() => setOpenFeedback(!openFeedback)}>
+                            <ColorBorderButton
+                                key={'openFeedBackModal'}
+                                variant="outlined"
+                                className={'buttonAlt'}
+                                onClick={() => setOpenFeedback(!openFeedback)}
+                            >
                                 {`${translation.feedbackButtonOnResult}`}
                             </ColorBorderButton>
                             }
-                            <Button color="secondary" variant="contained" className={'button'} onClick={gotoDashBoard}>
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                className={'button'}
+                                onClick={gotoDashBoard}
+                            >
                                 {`${translation.challengeResultButtonEnded}`}
                             </Button>
                         </React.Fragment>

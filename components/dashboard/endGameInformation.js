@@ -22,7 +22,7 @@ function EndgameInformation (props, ref) {
     useEffect(() => {
         setTransition(open)
     }, [])
-    console.log(gameStats)
+
     return (
         <Grow
             in={onTransition}

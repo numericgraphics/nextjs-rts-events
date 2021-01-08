@@ -1,93 +1,55 @@
-import React /* , { useEffect, useRef, useState } */, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
-import InvalidImage from '../ui/image/InvalidImage'
-import Camera from '../ui/image/Camera'
-import ImageValidation from '../ui/image/ImageValidation'
-
-const questionStates = Object.freeze({
-    CAMERA: 'camera',
-    PHOTO_VALIDATION: 'photoValidation',
-    PHOTO_INVALID: 'photoInvalid'
-})
+import { useStyles } from '../../styles/jsx/components/image/Camera.style'
+import Typography from '@material-ui/core/Typography'
+import ImageCapture from '../ui/image/ImageCapture'
+import Fade from '@material-ui/core/Fade/Fade'
 
 function QuestionImage (props) {
-    const { title, duration } = props.content
-    const [progress, setProgress] = useState(0)
-    const [timeLeft, setTimeLeft] = useState(duration)
-    const [questionState, setQuestionState] = useState(questionStates.CAMERA)
-    // eslint-disable-next-line no-unused-vars
+    const classes = useStyles()
+    const { answerCallBack, content } = props
+    const { title, reco } = content
+    const { instructions } = reco
     const [tempRawImage, setTempRawImage] = useState(null)
+    const [showComponent, setShowComponent] = useState(false)
 
     useEffect(() => {
-        if (progress >= 100) {
-            setTimeLeft(0)
-            setProgress(0)
-        }
-    }, [progress])
+        setShowComponent(true)
+    }, [])
 
     useEffect(() => {
-        console.log(questionState)
-        if (questionState === questionStates.CAMERA) {
-            // set blur False
-            props.setColor(false)
-            props.setBlur(false)
-        } else if (questionState === questionStates.PHOTO_VALIDATION) {
-            props.setColor(true)
-            props.setBlur(true)
-        } else if (questionState === questionStates.PHOTO_INVALID) {
-            props.setColor(true)
-            props.setBlur(true)
-        }
-    }, [questionState])
-
-    function reSnap () {
-        setTempRawImage()
-        setQuestionState(questionStates.CAMERA)
-    }
-
-    useEffect(() => {
-        // TODO manage photo data
         if (tempRawImage) {
-            props.answerCallBack(tempRawImage)
-            props.setInvalidImageFunc(() => setQuestionState(questionStates.PHOTO_INVALID))
-            setQuestionState(questionStates.PHOTO_VALIDATION)
+            answerCallBack(tempRawImage)
         }
     }, [tempRawImage])
 
-    function getImageValidation () {
-        return <ImageValidation/>
-    }
-
-    function getInvalidImage () {
-        return <InvalidImage reSnap={reSnap} gotoDashBoard={props.gotoDashBoard} />
-    }
-
-    function getCamera () {
-        return <Camera timeLeft={timeLeft} progress={progress} setTempRawImage={setTempRawImage} title={title} />
-    }
-
-    function getChallengeContent (state) {
-        switch (state) {
-        case questionStates.CAMERA:
-            return getCamera()
-        case questionStates.PHOTO_VALIDATION:
-            return getImageValidation() // getImageValidation() // <ImageValidation  />
-        case questionStates.PHOTO_INVALID:
-            return getInvalidImage()
-        }
-    }
-
-    // eslint-disable-next-line no-unused-vars
-
     return (
-        <Box className='content' >
-            {getChallengeContent(questionState)}
-        </Box>
+        <Fade
+            in={showComponent}
+            timeout={1000}
+        >
+            <Box className='content' >
+                <Box className='topZone'>
+                    <Box className={[classes.header, 'color-White'].join(' ')}>
+                        <Typography
+                            variant='subtitle1'
+                            className={classes.HeaderTitle}
+                            align={'left'}
+                        >
+                            {title}
+                        </Typography>
+                    </Box>
+                </Box>
+                <Box className={['bottomZoneQuestions', classes.bottomImageQuestion].join(' ')}>
+                    <ImageCapture
+                        result={setTempRawImage}
+                        text={instructions}
+                    />
+                </Box>
+                <Box className='backgroundGradientTop' />
+            </Box>
+        </Fade>
     )
 }
 
 export default QuestionImage
-
-/*
-
- */
