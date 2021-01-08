@@ -27,6 +27,7 @@ import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformation from '../../components/dashboard/endGameInformation'
+import DesktopReco from '../../components/dashboard/desktopReco'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
@@ -39,6 +40,7 @@ export const ModalStates = Object.freeze({
     END_GAME: 'endGame',
     PROFILE: 'profile',
     MESSAGE: 'message',
+    DESKTOP_RECO: 'desktopReco',
     WIN: 'win'
 })
 
@@ -66,6 +68,7 @@ function DashBoard (props) {
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const [blockReco, setBlockReco] = useState(false)
     let timeout
 
     async function fetchData () {
@@ -122,6 +125,13 @@ function DashBoard (props) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
             }, 1000)
+        } else if (dataProvider.getGameStats().nextAvailableChallengeID != null && /RECO{1}/.test(dataProvider.getGameStats().nextAvailableChallengeID)) {
+            console.log('Next challenge is Reco')
+            // Test if desktop
+            if (!isMobile) {
+                setBlockReco(true)
+                onOpenModal(ModalStates.DESKTOP_RECO)
+            }
         }
     }
 
@@ -161,6 +171,11 @@ function DashBoard (props) {
             />
         case ModalStates.PROFILE:
             return <Profile
+                handleClose={closeModal}
+                open={open}
+            />
+        case ModalStates.DESKTOP_RECO:
+            return <DesktopReco
                 handleClose={closeModal}
                 open={open}
             />
@@ -319,7 +334,7 @@ function DashBoard (props) {
                             variant="contained"
                             className={'button'}
                             onClick={startGame}
-                            disabled={!availableChallenges}
+                            disabled={availableChallenges ? blockReco : true}
                         >
                             {`${translation.dashBoardChallengesButton}`}
                         </CustomDisabledButton>
