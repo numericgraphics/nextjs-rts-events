@@ -11,7 +11,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         alignItems: 'center',
         zIndex: '4',
         color: theme.palette.primary.contrastText,
-        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
+        paddingTop: '20px',
+        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.8) + ' 30%, ' + hexToRgbA(theme.palette.primary.dark, 1) + ' 100%)'
     },
     imgBox: {
         maxWidth: '80%',

@@ -155,3 +155,19 @@ export function ArrowIcon (props) {
         </SvgIcon>
     )
 }
+
+export function CameraIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 56 56" {...props}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+                <g id="icone_camera" data-name="icone camera" transform="translate(-160 -640)">
+                    <rect id="Rectangle_2380" data-name="Rectangle 2380" width="56" height="56" transform="translate(160 640)" opacity="0.004"/>
+                    <g id="Groupe_9916" data-name="Groupe 9916" transform="translate(-236.899 182.174)">
+                        <circle id="Ellipse_1136" data-name="Ellipse 1136" cx="6" cy="6" r="6" transform="translate(418.899 481.826)"/>
+                        <path id="Tracé_55205" data-name="Tracé 55205" d="M438.494,476.869h-5.7a4.015,4.015,0,0,0-4-3.869h-7.464a4.015,4.015,0,0,0-4,3.869h-6.606A2.739,2.739,0,0,0,408,479.6v16.385a2.739,2.739,0,0,0,2.731,2.731h27.763a2.739,2.739,0,0,0,2.731-2.731V479.6A2.739,2.739,0,0,0,438.494,476.869Zm-13.426,19.116a8.192,8.192,0,1,1,8.192-8.192A8.2,8.2,0,0,1,425.067,495.984Z" transform="translate(0 0)"/>
+                    </g>
+                </g>
+            </svg>
+        </SvgIcon>
+    )
+}

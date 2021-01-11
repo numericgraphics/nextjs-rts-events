@@ -1,9 +1,9 @@
 import React from 'react'
 import { IconButton } from '@material-ui/core'
-import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded'
 import Box from '@material-ui/core/Box'
 import { useStyles } from '../../../styles/jsx/components/image/imageCapture.style'
 import Typography from '@material-ui/core/Typography'
+import { CameraIcon } from '../../../data/icon'
 
 function ImageCapture (props) {
     const classes = useStyles()
@@ -22,7 +22,6 @@ function ImageCapture (props) {
 
     return (
         <Box className={classes.container}>
-            <Box className={classes.gradient}/>
             <Box className={classes.root}>
                 <input
                     accept="image/*"
@@ -43,7 +42,7 @@ function ImageCapture (props) {
                         component="span"
                         className={classes.captureBtn}
                     >
-                        <PhotoCameraRoundedIcon className={classes.cameraIcon} />
+                        <CameraIcon className={classes.cameraIcon} />
                     </IconButton>
                 </label>
             </Box>
