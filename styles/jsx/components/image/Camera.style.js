@@ -19,8 +19,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center'
     },
     HeaderTitle: {
-        textShadow: '0px 3px 6px #00000040',
-        padding: '4vw'
+        textShadow: '0px 3px 6px #00000040'
     },
     bottomImageQuestion: {
         padding: 0

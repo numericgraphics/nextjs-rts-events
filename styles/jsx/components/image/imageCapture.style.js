@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         alignItems: 'center',
         zIndex: '4',
         color: theme.palette.primary.contrastText,
-        paddingTop: '20px',
+        paddingTop: '10vh',
         background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.8) + ' 30%, ' + hexToRgbA(theme.palette.primary.dark, 1) + ' 100%)'
     },
     imgBox: {
@@ -56,6 +56,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
     },
     text: {
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: '0 4vh 0 4vh'
     }
 }))
