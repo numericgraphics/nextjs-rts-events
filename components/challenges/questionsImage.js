@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
-import { useStyles } from '../../styles/jsx/components/image/Camera.style'
+import { useStyles } from '../../styles/jsx/pages/questionsImage.style'
 import Typography from '@material-ui/core/Typography'
 import ImageCapture from '../ui/image/ImageCapture'
 import Fade from '@material-ui/core/Fade/Fade'
