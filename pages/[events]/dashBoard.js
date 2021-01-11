@@ -125,13 +125,14 @@ function DashBoard (props) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
             }, 1000)
-        } else if (dataProvider.getGameStats().nextAvailableChallengeID != null && /RECO{1}/.test(dataProvider.getGameStats().nextAvailableChallengeID)) {
+            setBlockReco(false)
+        } /* else if (dataProvider.getGameStats().nextAvailableChallengeID != null && /RECO{1}/.test(dataProvider.getGameStats().nextAvailableChallengeID)) {
             // Test if desktop
             if (!isMobile) {
                 setBlockReco(true)
                 onOpenModal(ModalStates.DESKTOP_RECO)
             }
-        }
+        } */
     }
 
     async function startGame () {
