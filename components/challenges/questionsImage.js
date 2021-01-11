@@ -46,7 +46,6 @@ function QuestionImage (props) {
                         text={instructions}
                     />
                 </Box>
-                <Box className='backgroundGradientTop' />
             </Box>
         </Fade>
     )
