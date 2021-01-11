@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { useTheme } from '@material-ui/core'
-import { hexToRgbA } from '../../../../data/tools'
+// import { hexToRgbA } from '../../../../data/tools'
 
 export const useStyles = makeStyles((theme = useTheme()) => ({
     counter: {
@@ -19,7 +19,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         textAlign: 'center'
     },
     HeaderTitle: {
-        textShadow: '0px 3px 6px #00000040'
+        textShadow: '0px 3px 6px #00000040',
+        padding: '4vw'
     },
     bottomImageQuestion: {
         padding: 0

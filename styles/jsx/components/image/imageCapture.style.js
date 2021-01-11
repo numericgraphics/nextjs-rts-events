@@ -33,7 +33,10 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     captureBtn: {
         marginTop: '15px',
         marginBottom: '20px',
-        backgroundColor: theme.palette.secondary.main
+        backgroundColor: theme.palette.secondary.main,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.dark
+        }
     },
     cameraIcon: {
         fill: 'white',
