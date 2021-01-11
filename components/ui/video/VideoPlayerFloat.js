@@ -5,7 +5,7 @@ import { useStyles } from '../../../styles/jsx/gifts/videoPlayerGift.style'
 import Zoom from '@material-ui/core/Zoom'
 import ButtonCloseModal from '../modal/buttonCloseModal'
 
-function VideoController (props, ref) {
+function VideoPlayerFloat (props, ref) {
     const { handleClose, source, open } = props
     const videoPlayer = ref.current
     const theme = useTheme()
@@ -64,4 +64,4 @@ function VideoController (props, ref) {
     )
 }
 
-export default forwardRef(VideoController)
+export default forwardRef(VideoPlayerFloat)
