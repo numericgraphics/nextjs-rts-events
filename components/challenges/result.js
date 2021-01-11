@@ -13,7 +13,7 @@ import { ColorCard } from '../ui/card/ColorCard'
 import CardContent from '@material-ui/core/CardContent'
 import { useStyles } from '../../styles/jsx/pages/result.style'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
-import { isMobile } from 'react-device-detect'
+// import { isMobile } from 'react-device-detect'
 
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
@@ -57,12 +57,13 @@ function Result (props) {
         if (nextAvailableChallengeImageURL) {
             preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
         }
-        if (gameStats.nextAvailableChallengeID != null && /RECO{1}/.test(gameStats.nextAvailableChallengeID)) {
+        /* if (gameStats.nextAvailableChallengeID != null && /RECO{1}/.test(gameStats.nextAvailableChallengeID)) {
             // Test if desktop
             if (!isMobile) {
                 setBlockReco(true)
             }
-        }
+        } */
+        setBlockReco(false)
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
