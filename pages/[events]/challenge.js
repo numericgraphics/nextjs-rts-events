@@ -12,7 +12,6 @@ import Box from '@material-ui/core/Box'
 import Gift from '../../components/gifts/gift'
 import GenericModal from '../../components/ui/modal/genericModal'
 import QuestionImage from '../../components/challenges/questionsImage'
-import { imageToBase64 } from '../../data/tools'
 import InvalidImage from '../../components/ui/image/InvalidImage'
 import ImageValidation from '../../components/ui/image/ImageValidation'
 
@@ -36,7 +35,6 @@ function Challenge () {
     const [rawImage, setRawImage] = useState(null)
     const modalGiftRef = createRef()
     const modalInvalidImageRef = createRef()
-    const [b64Image, setB64Image] = useState()
 
     async function fetchQuestions () {
         try {
@@ -92,10 +90,10 @@ function Challenge () {
     async function fetchResultReco () {
         try {
             // console.log(b64Image)
-            const img = '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'
-            console.log(b64Image)
             const { challengeID } = dataProvider.getChallenge()
-            const bodyContent = { img: img, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            const cleanB64 = rawImage.replace(/^data:image.+;base64,/, '')
+            console.log(cleanB64)
+            const bodyContent = { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             console.log(bodyContent)
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',
@@ -229,7 +227,6 @@ function Challenge () {
     useEffect(() => {
         if (rawImage) {
             setImageURL(rawImage)
-            imageToBase64(rawImage, setB64Image)
             setChallengeState(ChallengeStates.QUESTIONS_IMAGE_VALIDATION)
             setTimeout(() => {
                 fetchResultReco().then()

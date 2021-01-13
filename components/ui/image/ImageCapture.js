@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 import { useStyles } from '../../../styles/jsx/components/image/imageCapture.style'
 import Typography from '@material-ui/core/Typography'
 import { CameraIcon } from '../../../data/icon'
+import { b64Conv } from '../../../data/tools'
 
 function ImageCapture (props) {
     const classes = useStyles()
@@ -14,8 +15,13 @@ function ImageCapture (props) {
         if (target.files) {
             if (target.files.length !== 0) {
                 const file = target.files[0]
-                const newUrl = URL.createObjectURL(file)
-                result(newUrl)
+                console.log('file', file)
+                const img = b64Conv(file)
+                console.log(img)
+                img.then(function (res) {
+                    console.log(res)
+                    result(res)
+                })
             }
         }
     }
