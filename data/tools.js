@@ -154,3 +154,11 @@ export async function b64Conv (file) {
     const image = await toBase64(file)
     return image
 }
+
+export function isBrowserSimulation () {
+    return (
+        ('ontouchstart' in document.documentElement) &&
+        navigator.maxTouchPoints === 1 &&
+        (window.navigator.userAgent.indexOf('Mobile') !== -1)
+    )
+}

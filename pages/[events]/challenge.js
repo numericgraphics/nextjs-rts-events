@@ -89,6 +89,7 @@ function Challenge () {
     // TODO Fix backend result - check fetchQuizRecoResult api
     async function fetchResultReco () {
         try {
+            let content
             const { challengeID } = dataProvider.getChallenge()
             const cleanB64 = rawImage.replace(/^data:image.+;base64,/, '')
             const bodyContent = { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
@@ -99,12 +100,18 @@ function Challenge () {
                 body: JSON.stringify(bodyContent)
             })
             if (response.status === 200) {
-                const content = await response.json()
+                content = await response.json()
+                if (!content.success) {
+                    setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
+                    onOpenModal()
+                }
                 dataProvider.setData(content)
                 setResultContent(content)
             } else {
-                setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
-                onOpenModal()
+                await Router.push('/[events]/dashBoard', {
+                    pathname: `/${events}/dashBoard`,
+                    query: { quiz: false }
+                })
             }
         } catch (error) {
             throw new Error(error.message)
@@ -165,17 +172,22 @@ function Challenge () {
             videoController.setVideoSource('')
             videoController.setVideoPoster('')
             videoController.setShowVideo(false)
-        } else if (challengeState === ChallengeStates.QUESTIONS_IMAGE_INVALID) {
-
         }
-        console.log('challenge gotoDashboard')
         await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
+    }
+
+    function goToResult () {
+        if (open) {
+            setOpen(false)
+        }
+        setChallengeState(ChallengeStates.RESULT)
+        initGame()
     }
 
     function getModalContent (state) {
         switch (state) {
         case ChallengeStates.QUESTIONS_IMAGE_INVALID:
-            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={gotoDashBoard} open={open}/>
+            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={goToResult} open={open}/>
         default:
         case ChallengeStates.RESULT:
             return <Gift ref={modalGiftRef} gift={gift} handleClose={closeModal} open={open}/>
@@ -266,9 +278,8 @@ function Challenge () {
 
     // initialize the game back from fetch result
     useEffect(() => {
-        if (Object.keys(resultContent).length !== 0) {
-            setChallengeState(ChallengeStates.RESULT)
-            initGame()
+        if (Object.keys(resultContent).length !== 0 && challengeState !== ChallengeStates.QUESTIONS_IMAGE_INVALID) {
+            goToResult()
         }
     }, [resultContent])
 
