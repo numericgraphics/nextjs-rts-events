@@ -19,6 +19,7 @@
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "latest",
     "@typeform/embed": "^0.29.0",
+    "browser-image-compression": "^1.0.14",
     "canvas": "^2.6.1",
     "cookie": "0.4.1",
     "date-fns": "^2.16.1",
