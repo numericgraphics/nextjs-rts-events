@@ -89,22 +89,17 @@ function Challenge () {
     // TODO Fix backend result - check fetchQuizRecoResult api
     async function fetchResultReco () {
         try {
-            // console.log(b64Image)
             const { challengeID } = dataProvider.getChallenge()
             const cleanB64 = rawImage.replace(/^data:image.+;base64,/, '')
-            console.log(cleanB64)
             const bodyContent = { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
-            console.log(bodyContent)
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bodyContent)
             })
-            console.log(response)
             if (response.status === 200) {
                 const content = await response.json()
-                console.log('content from result', content)
                 dataProvider.setData(content)
                 setResultContent(content)
             } else {
