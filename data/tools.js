@@ -141,27 +141,9 @@ export function between (x, min, max) {
     return x >= min && x <= max
 }
 
-/* export async function imageToBase64 (url) {
-    new Promise((resolve) => {
-        var xhr = new XMLHttpRequest()
-        xhr.onload = function () {
-            var reader = new FileReader()
-            reader.readAsDataURL(xhr.response)
-            reader.onloadend = function () {
-                console.log(reader.result)
-                return reader.result
-            }
-        }
-        xhr.open('GET', url)
-        xhr.responseType = 'blob'
-        xhr.send()
-    })
-} */
-
 function toBase64 (file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader()
-        console.log('file in tool', file)
         reader.readAsDataURL(file)
         reader.onload = () => resolve(reader.result)
         reader.onerror = error => reject(error)

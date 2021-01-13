@@ -6,10 +6,6 @@ const { serverRuntimeConfig } = getConfig()
 export default async (req, res) => {
     let rtsEventCookie = null
     let cookies = null
-    // TODO REMOVE RETURN
-    res.status(300).send({ test })
-    return
-
     // eslint-disable-next-line no-unreachable
     try {
         const { img, challengeID, eventName, date, time, locale } = await req.body
@@ -36,7 +32,6 @@ export default async (req, res) => {
                     body: JSON.stringify({ code, img })
                 }
                 )
-                console.log('status reco', response.status)
                 if (response.status === 200) {
                     const content = await response.json()
                     res.status(200).send(JSON.stringify(content))

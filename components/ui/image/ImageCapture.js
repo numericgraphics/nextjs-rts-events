@@ -15,11 +15,8 @@ function ImageCapture (props) {
         if (target.files) {
             if (target.files.length !== 0) {
                 const file = target.files[0]
-                console.log('file', file)
                 const img = b64Conv(file)
-                console.log(img)
                 img.then(function (res) {
-                    console.log(res)
                     result(res)
                 })
             }
