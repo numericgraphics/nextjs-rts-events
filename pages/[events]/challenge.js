@@ -14,6 +14,8 @@ import GenericModal from '../../components/ui/modal/genericModal'
 import QuestionImage from '../../components/challenges/questionsImage'
 import InvalidImage from '../../components/ui/image/InvalidImage'
 import ImageValidation from '../../components/ui/image/ImageValidation'
+import imageCompression from 'browser-image-compression'
+import { b64Conv } from '../../data/tools'
 
 function Challenge () {
     const router = useRouter()
@@ -89,13 +91,15 @@ function Challenge () {
         }
     }
 
-    // TODO Fix backend result - check fetchQuizRecoResult api
     async function fetchResultReco () {
         try {
             let content
             const { challengeID } = dataProvider.getChallenge()
-            console.log('DEBUG - fetchResultReco - challengeID', challengeID)
-            const cleanB64 = rawImage.replace(/^data:image.+;base64,/, '')
+
+            const imageCompressed = await imageCompression(rawImage, { maxSizeMB: 0.7 })
+            const imageInBase64 = await b64Conv(imageCompressed)
+            const cleanB64 = imageInBase64.replace(/^data:image.+;base64,/, '')
+
             const bodyContent = { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',

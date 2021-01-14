@@ -4,8 +4,6 @@ import Box from '@material-ui/core/Box'
 import { useStyles } from '../../../styles/jsx/components/image/imageCapture.style'
 import Typography from '@material-ui/core/Typography'
 import { CameraIcon } from '../../../data/icon'
-import { b64Conv } from '../../../data/tools'
-import imageCompression from 'browser-image-compression'
 
 function ImageCapture (props) {
     const classes = useStyles()
@@ -13,17 +11,8 @@ function ImageCapture (props) {
 
     // Select the image
     const handleCapture = (target) => {
-        if (target.files) {
-            if (target.files.length !== 0) {
-                const file = target.files[0]
-                const compress = imageCompression(file, { maxSizeMB: 0.7 })
-                compress.then(function (res) {
-                    const img = b64Conv(res)
-                    img.then(function (res) {
-                        result(res)
-                    })
-                })
-            }
+        if (target.files && target.files.length !== 0) {
+            result(target.files[0])
         }
     }
 
