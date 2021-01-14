@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         zIndex: '4',
         color: theme.palette.primary.contrastText,
         paddingTop: '10vh',
-        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.dark, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.dark, 0.8) + ' 30%, ' + hexToRgbA(theme.palette.primary.dark, 1) + ' 100%)'
+        background: 'linear-gradient(to bottom, ' + hexToRgbA(theme.palette.primary.main, 0) + ' 0%,  ' + hexToRgbA(theme.palette.primary.main, 0.8) + ' 30%, ' + hexToRgbA(theme.palette.primary.main, 1) + ' 100%)'
     },
     imgBox: {
         maxWidth: '80%',
