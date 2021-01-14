@@ -27,6 +27,7 @@ import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformation from '../../components/dashboard/endGameInformation'
+import DesktopReco from '../../components/dashboard/desktopReco'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
@@ -39,6 +40,7 @@ export const ModalStates = Object.freeze({
     END_GAME: 'endGame',
     PROFILE: 'profile',
     MESSAGE: 'message',
+    DESKTOP_RECO: 'desktopReco',
     WIN: 'win'
 })
 
@@ -120,12 +122,6 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
-
-        if (!availableChallenges) {
-            timeout = setTimeout(() => {
-                onOpenModal(ModalStates.END_GAME)
-            }, 1000)
-        }
     }
 
     async function startGame () {
@@ -170,6 +166,11 @@ function DashBoard (props) {
                 handleClose={closeModal}
                 open={open}
             />
+        case ModalStates.DESKTOP_RECO:
+            return <DesktopReco
+                handleClose={closeModal}
+                open={open}
+            />
         }
     }
 
@@ -178,6 +179,19 @@ function DashBoard (props) {
             clearTimeout(timeout)
         }
     }, [])
+
+    /*
+     Photo challenge can be available in mobile devices.
+      we need to check : availableChallengesCount,
+      availableChallenges state (dataprovider) deliver available challenge by platform,
+     */
+    useEffect(() => {
+        if (!availableChallenges) {
+            timeout = setTimeout(() => {
+                dataProvider.getGameStats().availableChallengesCount > 0 ? onOpenModal(ModalStates.DESKTOP_RECO) : onOpenModal(ModalStates.END_GAME)
+            }, 1000)
+        }
+    }, [availableChallenges])
 
     // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
@@ -197,6 +211,7 @@ function DashBoard (props) {
             fetchData().then()
         }
     }, [isGlobalLoading])
+
     return (
         <React.Fragment>
             { openFeedback && <HasTypeFormModal
@@ -353,7 +368,7 @@ function DashBoard (props) {
             <GenericModal
                 handleClose={closeModal}
                 open={open}
-                hideBackdrop={modalState !== ModalStates.END_GAME}
+                hideBackdrop={false}
             >
                 {getModalContent()}
             </GenericModal>

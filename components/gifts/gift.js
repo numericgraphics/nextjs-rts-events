@@ -6,7 +6,7 @@ import { useHeight } from '../../hooks/useHeight'
 import IconButton from '@material-ui/core/IconButton'
 import { lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
-import VideoPlayerGift from '../ui/video/VideoPlayerFloat'
+import VideoPlayerFloat from '../ui/video/VideoPlayerFloat'
 import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 
 export const ModalStates = Object.freeze({
@@ -113,7 +113,7 @@ function Gift (props, ref) {
                 </Box>
             </Slide>
             {videoURL &&
-            <VideoPlayerGift
+            <VideoPlayerFloat
                 ref={videoRef}
                 source={videoURL}
                 handleClose={() => playVideo(false)}
