@@ -38,8 +38,10 @@ function Challenge () {
 
     async function fetchQuestions () {
         try {
-            const bodyContent = { eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
-            const response = await fetch('/api/fetchQuiz', {
+            const challengeID = dataProvider.getNextAvailableChallengeID()
+            console.log('DEBUG - fetchQuestions - challengeID', challengeID)
+            const bodyContent = { challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            const response = await fetch('/api/fetchQuizStart', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bodyContent)
@@ -62,6 +64,7 @@ function Challenge () {
     async function fetchResult () {
         try {
             const { challengeID } = dataProvider.getChallenge()
+            console.log('DEBUG - fetchResult - challengeID', challengeID)
             const answerToString = String(answer)
             const bodyContent = { answer: answerToString, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuizResult', {
@@ -91,6 +94,7 @@ function Challenge () {
         try {
             let content
             const { challengeID } = dataProvider.getChallenge()
+            console.log('DEBUG - fetchResultReco - challengeID', challengeID)
             const cleanB64 = rawImage.replace(/^data:image.+;base64,/, '')
             const bodyContent = { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuizRecoResult', {

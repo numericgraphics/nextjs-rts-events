@@ -1,3 +1,6 @@
+import { isMobile } from 'react-device-detect'
+import { isBrowserSimulation } from './tools'
+
 class DataProvider {
     constructor () {
         this.data = {
@@ -94,7 +97,11 @@ class DataProvider {
     }
 
     hasAvailableChallenges () {
-        return this.data.gameStats.hasAvailableChallenges
+        return (isMobile && !isBrowserSimulation()) ? this.data.gameStats.hasAvailableChallenges : this.data.gameStats.hasAvailableChallengesDesktop
+    }
+
+    getNextAvailableChallengeID () {
+        return (isMobile && !isBrowserSimulation()) ? this.data.gameStats.nextAvailableChallengeID : this.data.gameStats.nextAvailableChallengeIDDesktop
     }
 
     getAvatars () {

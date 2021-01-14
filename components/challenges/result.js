@@ -17,13 +17,14 @@ import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 function Result (props) {
     const stylesGlobal = useStylesGlobal()
     const { success, gameStats, newUnlockedGifts } = props.content
-    const { nextAvailableChallengeImageURL } = gameStats || {}
+    const { nextAvailableChallengeImageURL, nextAvailableChallengeImageURLDesktop } = gameStats || {}
     const classes = useStyles()
     const [translation, setTranslation] = useState([])
     const [uiElements, setUiElements] = useState({})
     const [showComponent, setShowComponent] = useState(false)
     const { dataProvider, uiElementsService } = useContext(UserContext)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const [hasAvailableChallenges, setHasAvailableChallenges] = useState(true)
 
     async function continueGame () {
         setShowComponent(false)
@@ -54,10 +55,13 @@ function Result (props) {
     useEffect(() => {
         if (nextAvailableChallengeImageURL) {
             preLoadImage(nextAvailableChallengeImageURL, imagePreCacheCallBack)
+        } else if (nextAvailableChallengeImageURLDesktop) {
+            preLoadImage(nextAvailableChallengeImageURLDesktop, imagePreCacheCallBack)
         }
         setTranslation(dataProvider.getTranslation())
         setUiElements(uiElementsService.getUiElements())
         setShowComponent(true)
+        setHasAvailableChallenges(dataProvider.hasAvailableChallenges())
     }, [])
     return (
         <Fade in={showComponent} timeout={1000}>
@@ -79,7 +83,7 @@ function Result (props) {
                                 className={classes.subTitle}
                                 dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}
                             />
-                            {!gameStats.hasAvailableChallenges &&
+                            {!hasAvailableChallenges &&
                                 <Typography
                                     className={classes.secondCardTitle}
                                     dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
@@ -113,7 +117,7 @@ function Result (props) {
                     </Box>
                 </Box>
                 <Box className={[stylesGlobal.bottomZoneGradient, 'bottomZone'].join(' ')}>
-                    {gameStats.hasAvailableChallenges
+                    {hasAvailableChallenges
                         ? <React.Fragment>
                             <ColorBorderButton
                                 key={'gotoDashBoard'}

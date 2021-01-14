@@ -121,8 +121,6 @@ function DashBoard (props) {
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
 
-        // console.log('------ isBrowserSimulation ------', isBrowserSimulation())
-
         if (!availableChallenges) {
             timeout = setTimeout(() => {
                 onOpenModal(ModalStates.END_GAME)
