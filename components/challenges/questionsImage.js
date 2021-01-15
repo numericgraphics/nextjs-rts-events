@@ -9,7 +9,7 @@ function QuestionImage (props) {
     const classes = useStyles()
     const { answerCallBack, content } = props
     const { title, reco } = content
-    const { instructions } = reco
+    const { instructions } = reco && reco
     const [tempRawImage, setTempRawImage] = useState(null)
     const [showComponent, setShowComponent] = useState(false)
 

@@ -95,7 +95,7 @@ function Challenge () {
         try {
             let content
             const { challengeID } = dataProvider.getChallenge()
-
+            console.log('imageUrl', imageURL)
             const imageCompressed = await imageCompression(rawImage, { maxSizeMB: 0.7 })
             const imageInBase64 = await b64Conv(imageCompressed)
             const cleanB64 = imageInBase64.replace(/^data:image.+;base64,/, '')
@@ -241,7 +241,8 @@ function Challenge () {
     // init Challenge or redirect to dashboard if page is reloaded (isGlobalLoading)
     useEffect(() => {
         if (rawImage) {
-            setImageURL(rawImage)
+            const bg = URL.createObjectURL(rawImage)
+            setImageURL(bg)
             setChallengeState(ChallengeStates.QUESTIONS_IMAGE_VALIDATION)
             setTimeout(() => {
                 fetchResultReco().then()
