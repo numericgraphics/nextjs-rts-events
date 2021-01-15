@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
         zIndex: 2
     },
     imageValidationText: {
+        textAlign: 'center',
         marginTop: '10px'
     }
 }))
