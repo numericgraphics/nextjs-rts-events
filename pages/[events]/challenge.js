@@ -109,11 +109,15 @@ function Challenge () {
             })
             if (response.status === 200) {
                 content = await response.json()
+                /* TODO
+                    - check to dispatch result data correclty in the dataprovider.data structure (gameStats, recoScore...)
+                    - check translation and uiElement
+                 */
+                dataProvider.setData(content)
                 if (!content.success) {
                     setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
                     onOpenModal()
                 }
-                dataProvider.setData(content)
                 setResultContent(content)
             } else {
                 await Router.push('/[events]/dashBoard', {
@@ -195,7 +199,7 @@ function Challenge () {
     function getModalContent (state) {
         switch (state) {
         case ChallengeStates.QUESTIONS_IMAGE_INVALID:
-            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={goToResult} open={open}/>
+            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={goToResult} open={open} recoScore={dataProvider.data.recoScore} uiElements={dataProvider.getUiElements()}/>
         default:
         case ChallengeStates.RESULT:
             return <Gift ref={modalGiftRef} gift={gift} handleClose={closeModal} open={open}/>
