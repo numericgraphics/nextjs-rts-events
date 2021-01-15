@@ -5,10 +5,12 @@ import Typography from '@material-ui/core/Typography'
 import { ColorBorderButton } from '../button/ColorBorderButton'
 import Button from '@material-ui/core/Button'
 import Grow from '@material-ui/core/Grow/Grow'
+import InvalidImageProgress from '../progress/InvalidImageProgress'
 
 function InvalidImage (props, ref) {
     const classes = useStyles()
-    const { open, reSnap, gotoDashBoard } = props
+    // TODO add uiElements for translation
+    const { open, reSnap, gotoDashBoard, recoScore } = props
     const [onTransition, setTransition] = useState(undefined)
     const [onRetry, setRetry] = useState(false)
 
@@ -47,6 +49,10 @@ function InvalidImage (props, ref) {
                     className={'modal-title'}
                     align={'center'}
                     dangerouslySetInnerHTML={{ __html: 'Votre photo n est pas valide. Voulez vous recommencer ?' }}
+                />
+                <InvalidImageProgress
+                    variant="determinate"
+                    progress={recoScore}
                 />
                 <Button
                     key={'resnap'}

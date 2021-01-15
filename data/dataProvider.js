@@ -7,6 +7,7 @@ class DataProvider {
             gameID: '',
             userID: '',
             EventShortName: '',
+            recoScore: 0,
             user: {},
             event: {
                 shortName: '',
