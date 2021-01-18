@@ -10,7 +10,7 @@ import InvalidImageProgress from '../progress/InvalidImageProgress'
 function InvalidImage (props, ref) {
     const classes = useStyles()
     // TODO add uiElements for translation
-    const { open, reSnap, gotoDashBoard, recoScore } = props
+    const { open, reSnap, gotoDashBoard, recoScore, translation } = props
     const [onTransition, setTransition] = useState(undefined)
     const [onRetry, setRetry] = useState(false)
 
@@ -48,7 +48,7 @@ function InvalidImage (props, ref) {
                     variant="h3"
                     className={'modal-title'}
                     align={'center'}
-                    dangerouslySetInnerHTML={{ __html: 'Votre photo n est pas valide. Voulez vous recommencer ?' }}
+                    dangerouslySetInnerHTML={{ __html: translation.challengeQuestionImageInvalidText }}
                 />
                 <InvalidImageProgress
                     variant="determinate"
@@ -60,14 +60,14 @@ function InvalidImage (props, ref) {
                     variant="contained"
                     className={'button'}
                     onClick={onTryAgain} >
-                    Reprendre
+                    {translation.challengeQuestionImageReSnap}
                 </Button>
                 <ColorBorderButton
                     key={'cancel'}
                     variant="outlined"
                     className={'buttonAlt'}
                     onClick={onCancel} >
-                    Annuler
+                    {translation.challengeQuestionImageCancel}
                 </ColorBorderButton>
             </Box>
         </Grow>

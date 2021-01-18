@@ -7,9 +7,10 @@ import { useHeight } from '../../../hooks/useHeight'
 import Fade from '@material-ui/core/Fade/Fade'
 import ImageRecoLoader from '../../challenges/imageRecoLoader'
 
-function ImageValidation () {
+function ImageValidation (props) {
     const classes = useStyles()
     const theme = useTheme()
+    const { translation } = props
     const [showComponent, setShowComponent] = useState(false)
 
     useEffect(() => {
@@ -35,7 +36,7 @@ function ImageValidation () {
                         className={classes.imageValidationText}
                         variant='h3'
                     >
-            Votre photo est en cours de validation
+                        {translation.challengeQuestionImageValidation}
                     </Typography>
                 </Box>
             </Box>

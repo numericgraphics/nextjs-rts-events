@@ -164,9 +164,12 @@ function Challenge () {
         case ChallengeStates.QUESTIONS_IMAGE:
             return <QuestionImage
                 content={questionsContent}
-                answerCallBack={setRawImage} />
+                answerCallBack={setRawImage}
+            />
         case ChallengeStates.QUESTIONS_IMAGE_VALIDATION:
-            return <ImageValidation/>
+            return <ImageValidation
+                translation={dataProvider.getTranslation()}
+            />
         case ChallengeStates.QUESTIONS_IMAGE_INVALID:
             return null
         case ChallengeStates.RESULT:
@@ -199,7 +202,7 @@ function Challenge () {
     function getModalContent (state) {
         switch (state) {
         case ChallengeStates.QUESTIONS_IMAGE_INVALID:
-            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={goToResult} open={open} recoScore={dataProvider.data.recoScore} uiElements={dataProvider.getUiElements()}/>
+            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={goToResult} translation={dataProvider.getTranslation()} open={open} recoScore={dataProvider.data.recoScore} uiElements={dataProvider.getUiElements()}/>
         default:
         case ChallengeStates.RESULT:
             return <Gift ref={modalGiftRef} gift={gift} handleClose={closeModal} open={open}/>
