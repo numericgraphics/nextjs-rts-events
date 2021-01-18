@@ -54,6 +54,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         position: 'relative',
         padding: '3vw 6vw 6vw 6vw',
         flexGrow: 0,
+        width: '100%',
         color: theme.palette.primary.contrastText,
         backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
     },
