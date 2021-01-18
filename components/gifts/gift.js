@@ -76,7 +76,6 @@ function Gift (props, ref) {
                     />
                     <Box
                         className={classes.content}
-                        style={{ height: height }}
                     >
                         {locked
                             ? <Box className={classes.iconContainer} >

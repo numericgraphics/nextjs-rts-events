@@ -19,6 +19,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'flex-end',
         zIndex: 2
