@@ -202,10 +202,23 @@ function Challenge () {
     function getModalContent (state) {
         switch (state) {
         case ChallengeStates.QUESTIONS_IMAGE_INVALID:
-            return <InvalidImage ref={modalInvalidImageRef} reSnap={reSnap} gotoDashBoard={goToResult} translation={dataProvider.getTranslation()} open={open} recoScore={dataProvider.data.recoScore} uiElements={dataProvider.getUiElements()}/>
+            return <InvalidImage
+                ref={modalInvalidImageRef}
+                reSnap={reSnap}
+                gotoDashBoard={goToResult}
+                translation={dataProvider.getTranslation()}
+                open={open}
+                recoScore={dataProvider.data.recoScore}
+                uiElements={dataProvider.getUiElements()}
+            />
         default:
         case ChallengeStates.RESULT:
-            return <Gift ref={modalGiftRef} gift={gift} handleClose={closeModal} open={open}/>
+            return <Gift
+                ref={modalGiftRef}
+                gift={gift}
+                handleClose={closeModal}
+                open={open}
+            />
         }
     }
 
@@ -324,7 +337,8 @@ function Challenge () {
                         addColor={ addColor }
                         className='background'
                         animated={true}
-                        imageURL={imageURL}/>}
+                        imageURL={imageURL}
+                    />}
                 </Box>
                 }
             </EventLayout>
