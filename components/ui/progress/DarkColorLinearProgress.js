@@ -4,7 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 // TODO - issue importation svg in content pseudo element in chrome, android, color hard coded for review
 export const DarkColorLinearProgress = withStyles((theme) => ({
     root: {
-        height: 40,
+        height: 30,
         borderRadius: 20
     },
     colorPrimary: {
@@ -23,7 +23,6 @@ export const DarkColorLinearProgress = withStyles((theme) => ({
         }
     },
     determinate: {
-        border: `5px ${theme.palette.primary.dark} solid`,
         '&::after': {
             position: 'absolute',
             top: 5,
