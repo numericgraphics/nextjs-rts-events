@@ -63,6 +63,7 @@ function Result (props) {
         setShowComponent(true)
         setHasAvailableChallenges(dataProvider.hasAvailableChallenges())
     }, [])
+
     return (
         <Fade in={showComponent} timeout={1000}>
             <Box className='content' >
