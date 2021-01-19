@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import { useStyles } from '../../../styles/jsx/components/image/invalidImage.style'
 import Typography from '@material-ui/core/Typography'
-import { ColorBorderButton } from '../button/ColorBorderButton'
 import Button from '@material-ui/core/Button'
 import Grow from '@material-ui/core/Grow/Grow'
 import InvalidImageProgress from '../progress/InvalidImageProgress'
@@ -62,13 +61,12 @@ function InvalidImage (props, ref) {
                     onClick={onTryAgain} >
                     {translation.challengeQuestionImageReSnap}
                 </Button>
-                <ColorBorderButton
+                <Button
                     key={'cancel'}
-                    variant="outlined"
-                    className={'buttonAlt'}
+                    className={['text2', classes.textButton].join(' ')}
                     onClick={onCancel} >
                     {translation.challengeQuestionImageCancel}
-                </ColorBorderButton>
+                </Button>
             </Box>
         </Grow>
     )
