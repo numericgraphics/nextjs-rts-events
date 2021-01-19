@@ -51,5 +51,12 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         justifyContent: 'center',
         overflow: 'hidden',
         flexDirection: 'column'
+    },
+    textButton: {
+        textTransform: 'none',
+        lineHeight: 1,
+        padding: '0!important',
+        marginBottom: '1rem',
+        color: theme.palette.secondary.main
     }
 }))
