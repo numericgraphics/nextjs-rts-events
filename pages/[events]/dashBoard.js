@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import { isSafari, isMobile, isIOS } from 'react-device-detect'
 import dynamic from 'next/dynamic'
 import UserContext from '../../hooks/userContext'
@@ -27,6 +27,7 @@ import Slide from '@material-ui/core/Slide'
 import HasTypeFormModal from '../../hoc/hasTypeFormModal'
 import GenericModal from '../../components/ui/modal/genericModal'
 import EndgameInformation from '../../components/dashboard/endGameInformation'
+import DesktopReco from '../../components/dashboard/desktopReco'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
@@ -39,6 +40,7 @@ export const ModalStates = Object.freeze({
     END_GAME: 'endGame',
     PROFILE: 'profile',
     MESSAGE: 'message',
+    DESKTOP_RECO: 'desktopReco',
     WIN: 'win'
 })
 
@@ -66,6 +68,9 @@ function DashBoard (props) {
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     const [modalState, setModalState] = useState(ModalStates.GIFT)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const modalGiftRef = createRef()
+    const modalEndGameRef = createRef()
+    const modalProfilRef = createRef()
     let timeout
 
     async function fetchData () {
@@ -117,12 +122,6 @@ function DashBoard (props) {
         setImageURL(ThemeFactory.getBackgroundImageURL())
         setGameStats(dataProvider.getGameStats())
         setLoading(false)
-
-        if (!availableChallenges) {
-            timeout = setTimeout(() => {
-                onOpenModal(ModalStates.END_GAME)
-            }, 1000)
-        }
     }
 
     async function startGame () {
@@ -146,12 +145,14 @@ function DashBoard (props) {
         switch (modalState) {
         case ModalStates.GIFT:
             return <Gift
+                ref={modalGiftRef}
                 gift={gift}
                 handleClose={closeModal}
                 open={open}
             />
         case ModalStates.END_GAME:
             return <EndgameInformation
+                ref={modalEndGameRef}
                 uiElements={uiElements}
                 translation={translation}
                 handleClose={closeModal}
@@ -161,6 +162,12 @@ function DashBoard (props) {
             />
         case ModalStates.PROFILE:
             return <Profile
+                ref={modalProfilRef}
+                handleClose={closeModal}
+                open={open}
+            />
+        case ModalStates.DESKTOP_RECO:
+            return <DesktopReco
                 handleClose={closeModal}
                 open={open}
             />
@@ -172,6 +179,19 @@ function DashBoard (props) {
             clearTimeout(timeout)
         }
     }, [])
+
+    /*
+     Photo challenge can be available in mobile devices.
+      we need to check : availableChallengesCount,
+      availableChallenges state (dataprovider) deliver available challenge by platform,
+     */
+    useEffect(() => {
+        if (!availableChallenges) {
+            timeout = setTimeout(() => {
+                dataProvider.getGameStats().availableChallengesCount > 0 ? onOpenModal(ModalStates.DESKTOP_RECO) : onOpenModal(ModalStates.END_GAME)
+            }, 1000)
+        }
+    }, [availableChallenges])
 
     // after fetching, useImagesServices is running and initialize.
     useEffect(() => {
@@ -191,6 +211,7 @@ function DashBoard (props) {
             fetchData().then()
         }
     }, [isGlobalLoading])
+
     return (
         <React.Fragment>
             { openFeedback && <HasTypeFormModal
@@ -347,7 +368,7 @@ function DashBoard (props) {
             <GenericModal
                 handleClose={closeModal}
                 open={open}
-                hideBackdrop={modalState !== ModalStates.END_GAME}
+                hideBackdrop={false}
             >
                 {getModalContent()}
             </GenericModal>

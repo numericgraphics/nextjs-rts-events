@@ -140,3 +140,25 @@ export function dateObjConvert (dateObj) {
 export function between (x, min, max) {
     return x >= min && x <= max
 }
+
+function toBase64 (file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+    })
+}
+
+export async function b64Conv (file) {
+    const image = await toBase64(file)
+    return image
+}
+
+export function isBrowserSimulation () {
+    return (
+        ('ontouchstart' in document.documentElement) &&
+        navigator.maxTouchPoints === 1 &&
+        (window.navigator.userAgent.indexOf('Mobile') !== -1)
+    )
+}

@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { useStyles } from '../../../styles/jsx/gifts/videoPlayerGift.style'
+import { useStyles } from '../../../styles/jsx/components/video/videoPlayerFloat.style'
 import Zoom from '@material-ui/core/Zoom'
 import ButtonCloseModal from '../modal/buttonCloseModal'
 
-function VideoController (props, ref) {
+function VideoPlayerFloat (props, ref) {
     const { handleClose, source, open } = props
     const videoPlayer = ref.current
     const theme = useTheme()
@@ -64,4 +64,4 @@ function VideoController (props, ref) {
     )
 }
 
-export default forwardRef(VideoController)
+export default forwardRef(VideoPlayerFloat)

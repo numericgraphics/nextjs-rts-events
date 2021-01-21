@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme = useTheme()) => ({
     counter: {
         display: 'flex',
         flexDirection: 'row',
@@ -15,6 +16,9 @@ export const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         textAlign: 'center'
+    },
+    HeaderTitle: {
+        textShadow: '0px 3px 6px #00000040'
     },
     footer: {
         display: 'flex',
@@ -39,9 +43,6 @@ export const useStyles = makeStyles({
         lineHeight: '1.2em',
         textShadow: '0px 3px 6px #00000040'
     },
-    HeaderTitle: {
-        textShadow: '0px 3px 6px #00000040'
-    },
     content: {
         display: 'flex',
         flexDirection: 'column',
@@ -61,4 +62,4 @@ export const useStyles = makeStyles({
     buttonProgress: {
         position: 'absolute'
     }
-})
+}))

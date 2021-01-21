@@ -14,8 +14,8 @@ module.exports = {
         IMAGE_BASE_URL: 'https://cdn.rts.ch/rtschallengeassets',
         API_BASE_URL: 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com',
         // API_STAGE: '/prod'
-        API_STAGE: '/dev'
-        // API_STAGE: '/latest'
+        // API_STAGE: '/dev'
+        API_STAGE: '/latest'
         // API_STAGE: '/beta'
         // API_BASE_URL: 'http://localhost:3001',
         // API_STAGE: ''
