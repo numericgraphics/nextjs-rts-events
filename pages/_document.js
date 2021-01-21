@@ -5,6 +5,7 @@ import { ServerStyleSheets } from '@material-ui/core/styles'
 const { serverRuntimeConfig } = getConfig()
 /*
  SOURCE : https://github.com/mui-org/material-ui/tree/next/examples/nextjs
+ __NEXT_DATA__ explain : https://github.com/vercel/next.js/discussions/13418#discussioncomment-103456
  */
 export default class MyDocument extends Document {
     constructor (props) {
