@@ -11,7 +11,6 @@ export default class MyDocument extends Document {
         super(props)
         const { __NEXT_DATA__, ids } = props
         const { query } = __NEXT_DATA__
-        const { IMAGE_BASE_URL } = serverRuntimeConfig
 
         if (ids) {
             __NEXT_DATA__.ids = ids
@@ -20,7 +19,7 @@ export default class MyDocument extends Document {
         try {
             this.query = query
             this.data = __NEXT_DATA__
-            this.manifestUrl = `${IMAGE_BASE_URL}/manifests/${query.events}`
+            this.manifestUrl = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${this.query.events}`
         } catch (e) {
             console.log('MyDocument constructor - error', e)
         }
