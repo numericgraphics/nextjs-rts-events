@@ -98,11 +98,11 @@ class DataProvider {
     }
 
     hasAvailableChallenges () {
-        return (isMobile && !isBrowserSimulation()) ? this.data.gameStats.hasAvailableChallenges : this.data.gameStats.hasAvailableChallengesDesktop
+        return this.data.gameStats.hasAvailableChallenges// (isMobile && !isBrowserSimulation()) ? this.data.gameStats.hasAvailableChallenges : this.data.gameStats.hasAvailableChallengesDesktop
     }
 
     getNextAvailableChallengeID () {
-        return (isMobile && !isBrowserSimulation()) ? this.data.gameStats.nextAvailableChallengeID : this.data.gameStats.nextAvailableChallengeIDDesktop
+        return this.data.gameStats.nextAvailableChallengeID // (isMobile && !isBrowserSimulation()) ? this.data.gameStats.nextAvailableChallengeID : this.data.gameStats.nextAvailableChallengeIDDesktop
     }
 
     getAvatars () {

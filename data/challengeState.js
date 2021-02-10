@@ -7,5 +7,6 @@ export const ChallengeStates = Object.freeze({
     QUESTIONS_IMAGE_INVALID: 'questionsImageInvalid',
     RESULT: 'result',
     LOADING: 'loading',
-    ERROR: 'error'
+    ERROR: 'error',
+    GET_LOCATION: 'getLocation'
 })

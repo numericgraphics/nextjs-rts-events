@@ -16,6 +16,7 @@ import InvalidImage from '../../components/ui/image/InvalidImage'
 import ImageValidation from '../../components/ui/image/ImageValidation'
 import imageCompression from 'browser-image-compression'
 import { b64Conv } from '../../data/tools'
+import GetLocation from '../../components/ui/image/GetLocation'
 
 function Challenge () {
     const router = useRouter()
@@ -32,11 +33,13 @@ function Challenge () {
     const [addColor, setColor] = useState(false)
     const [addBlur, setBlur] = useState(false)
     const [open, setOpen] = useState(false)
+    const [location, setLocation] = useState(false)
     const [gift, setGift] = useState({ description: '', title: '', locked: true })
     // eslint-disable-next-line no-unused-vars
     const [rawImage, setRawImage] = useState(null)
     const modalGiftRef = createRef()
     const modalInvalidImageRef = createRef()
+    const modalGetLocation = createRef()
 
     async function fetchQuestions () {
         try {
@@ -94,13 +97,14 @@ function Challenge () {
     async function fetchResultReco () {
         try {
             let content
-            const { challengeID } = dataProvider.getChallenge()
+            const { challengeID, reco } = dataProvider.getChallenge()
             console.log('imageUrl', imageURL)
             const imageCompressed = await imageCompression(rawImage, { maxSizeMB: 0.7 })
             const imageInBase64 = await b64Conv(imageCompressed)
             const cleanB64 = imageInBase64.replace(/^data:image.+;base64,/, '')
-
-            const bodyContent = { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            const position = location ? { lat: location.coords.latitude, long: location.coords.longitude } : { lat: null, long: null }
+            console.log(position)
+            const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.long, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',
                 method: 'POST',
@@ -166,6 +170,8 @@ function Challenge () {
                 content={questionsContent}
                 answerCallBack={setRawImage}
             />
+        case ChallengeStates.GET_LOCATION:
+            return null
         case ChallengeStates.QUESTIONS_IMAGE_VALIDATION:
             return <ImageValidation
                 translation={dataProvider.getTranslation()}
@@ -210,6 +216,15 @@ function Challenge () {
                 open={open}
                 recoScore={dataProvider.data.recoScore}
                 uiElements={dataProvider.getUiElements()}
+            />
+        case ChallengeStates.GET_LOCATION:
+            return <GetLocation
+                ref={modalGetLocation}
+                gotoDashBoard={goToResult}
+                open={open}
+                setLocation={setLocation}
+                uiElements={dataProvider.getUiElements()}
+                translation={dataProvider.getTranslation()}
             />
         default:
         case ChallengeStates.RESULT:
@@ -273,6 +288,15 @@ function Challenge () {
         }
     }, [rawImage])
 
+    useEffect(() => {
+        console.log(location)
+        if (location) {
+            closeModal()
+            setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
+            console.log(location)
+        }
+    }, [location])
+
     // Back from fetchQuizz call
     useEffect(() => {
         if (Object.keys(questionsContent).length !== 0) {
@@ -284,9 +308,17 @@ function Challenge () {
                 setBackgroundType('video')
                 setChallengeState(ChallengeStates.QUESTIONS_VIDEO)
             } else if (reco !== null) {
-                setImageURL(imageURL)
-                setBackgroundType('image')
-                setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
+                if (reco.geo && !location) {
+                    setImageURL(imageURL)
+                    setBackgroundType('image')
+                    setChallengeState(ChallengeStates.GET_LOCATION)
+                    onOpenModal()
+                    console.log('geo')
+                } else {
+                    setImageURL(imageURL)
+                    setBackgroundType('image')
+                    setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
+                }
             } else {
                 videoController.setShowVideo(false)
                 setImageURL(imageURL)
@@ -318,6 +350,7 @@ function Challenge () {
             const needBackGround = (
                 challengeState === ChallengeStates.COUNTDOWN ||
                 challengeState === ChallengeStates.RESULT ||
+                challengeState === ChallengeStates.GET_LOCATION ||
                 challengeState === ChallengeStates.LOADING ||
                 challengeState === ChallengeStates.QUESTIONS_IMAGE_VALIDATION ||
                 challengeState === ChallengeStates.QUESTIONS_IMAGE_INVALID)
