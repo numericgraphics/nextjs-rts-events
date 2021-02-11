@@ -1,0 +1,7 @@
+.container{
+    display: 'flex'
+}
+#mapDiv {
+    padding: 0;
+    margin: 0;
+  }

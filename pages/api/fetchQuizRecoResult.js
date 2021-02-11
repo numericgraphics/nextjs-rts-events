@@ -8,7 +8,7 @@ export default async (req, res) => {
     let cookies = null
     // eslint-disable-next-line no-unreachable
     try {
-        const { img, challengeID, eventName, date, time, locale } = await req.body
+        const { img, challengeID, eventName, date, time, locale, lat, lon } = await req.body
         const finalDate = ((date && time) || date) ? dateCreator(date, time) : false
         const cookieName = `rtsevents-${eventName}`
 
@@ -29,7 +29,7 @@ export default async (req, res) => {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code, img })
+                    body: JSON.stringify({ code, img, lat, lon })
                 }
                 )
                 if (response.status === 200) {

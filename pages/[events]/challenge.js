@@ -102,9 +102,9 @@ function Challenge () {
             const imageCompressed = await imageCompression(rawImage, { maxSizeMB: 0.7 })
             const imageInBase64 = await b64Conv(imageCompressed)
             const cleanB64 = imageInBase64.replace(/^data:image.+;base64,/, '')
-            const position = location ? { lat: location.coords.latitude, long: location.coords.longitude } : { lat: null, long: null }
+            const position = location ? { lat: location.coords.latitude, lon: location.coords.longitude } : { lat: null, lon: null }
             console.log(position)
-            const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.long, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.lon, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',
                 method: 'POST',
