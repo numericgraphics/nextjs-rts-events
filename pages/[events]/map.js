@@ -4,14 +4,13 @@ import { useRouter } from 'next/router'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import Box from '@material-ui/core/Box'
-import MainMap from '../../components/map/MainMap'
+// import MainMap from '../../components/map/MainMap'
 import EventLayout from '../../components/ui/layout/eventLayout'
 
 function Map (props) {
-    const test = 'miaou'
     const router = useRouter()
     const { store, dataProvider } = useContext(UserContext)
-    const { setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
+    const { setTheme, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const { events } = router.query
     const { eventData } = props
     setLoading(false)
