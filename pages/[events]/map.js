@@ -4,8 +4,12 @@ import { useRouter } from 'next/router'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import Box from '@material-ui/core/Box'
-import MainMap from '../../components/map/MainMap'
+// import MainMap from '../../components/map/MainMap'
 import EventLayout from '../../components/ui/layout/eventLayout'
+import dynamic from 'next/dynamic'
+const MainMap = dynamic(() => import('../../components/map/MainMap'), {
+    ssr: false
+})
 
 function Map (props) {
     const router = useRouter()
@@ -13,11 +17,10 @@ function Map (props) {
     const { setTheme, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const { events } = router.query
     const { eventData } = props
-    setLoading(false)
-    setEventName(events)
 
     useEffect(() => {
         if (isGlobalLoading) {
+            setLoading(false)
             setEventData(eventData.content)
             setEventName(events)
             dataProvider.setEventData(eventData.content)

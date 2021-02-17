@@ -1,0 +1,37 @@
+{"type": "FeatureCollection",
+    "features":
+        [{"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [6.20336, 46.3256905]},
+            "properties":{
+                "titre": "Salle des fête",
+                "eventTitle": "Fête de Bryan",
+                "eventDescription": "Fête à fontaines - Belle soir assurée",
+                "eventDate": "02-11-2019",
+                "eventHour": "19:00"
+            }
+        },
+        {"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [6.2327838, 46.5777555]},
+            "properties": {
+                "titre": "Maison de Paul",
+                "eventTitle": "Fête de Paul",
+                "eventDescription": "Belle soir assurée",
+                "eventDate": "02-11-2019",
+                "eventHour": "19:00"
+            }
+        },
+        {"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [7.1847379, 46.8982978]},
+            "properties": {
+                "titre": "Maison de Anne",
+                "eventTitle": "Souper chez Anne",
+                "eventDescription": "Souper autour d'une fontaines",
+                "eventDate": "02-11-2019",
+                "eventHour": "20:00 - 21:15"
+            }
+        }
+    ]
+        }

@@ -7,6 +7,8 @@ import Locate from '@arcgis/core/widgets/Locate'
 import LayerList from '@arcgis/core/widgets/LayerList'
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer'
 import '@arcgis/core/assets/esri/themes/dark/main.css'
+import config from '@arcgis/core/config.js'
+config.assetsPath = '/assets'
 
 function MainMap (props) {
     const baseURL = window.location.origin
@@ -152,9 +154,9 @@ function MainMap (props) {
                         breakpoint: true,
                         buttonEnabled: false
                     }
-                }
-            // zoom: 8,
-            // center: [7.096432,47.064489] // longitude, latitude
+                },
+                zoom: 8,
+                center: [7.096432, 47.064489] // longitude, latitude
             })
 
             view.when(function () {
@@ -204,7 +206,7 @@ function MainMap (props) {
 
     return (
         <Box className="mapContainer">
-            <div style={{ height: window.innerHeight, width: '100vw' }} id="mapDiv" ref={mapDiv}></div>
+            <div style={{ height: window.innerHeight, width: '100%' }} id="mapDiv" ref={mapDiv}></div>
         </Box>
     )
 }
