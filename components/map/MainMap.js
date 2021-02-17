@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
-import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer'
 import WebMap from '@arcgis/core/Map'
 import MapView from '@arcgis/core/views/MapView'
 import Layer from '@arcgis/core/layers/Layer'
 import Locate from '@arcgis/core/widgets/Locate'
 import LayerList from '@arcgis/core/widgets/LayerList'
+import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer'
 import '@arcgis/core/assets/esri/themes/dark/main.css'
 
 function MainMap (props) {

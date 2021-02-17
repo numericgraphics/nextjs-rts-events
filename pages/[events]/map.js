@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
 import Box from '@material-ui/core/Box'
-// import MainMap from '../../components/map/MainMap'
+import MainMap from '../../components/map/MainMap'
 import EventLayout from '../../components/ui/layout/eventLayout'
 
 function Map (props) {
@@ -31,7 +31,7 @@ function Map (props) {
         <React.Fragment>
             <EventLayout>
                 <Box className='content' >
-                    test
+                    <MainMap/>
                 </Box>
             </EventLayout>
         </React.Fragment>

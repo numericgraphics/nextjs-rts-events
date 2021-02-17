@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "copy": "ncp ./node_modules/@arcgis/core/assets ./public/assets",
-    "postinstall": "npm run copy",
-    "dev": "npm run copy && next dev",
-    "build": "npm run copy && next build",
-    "start": "npm run copy && next start",
-    "devhttps": "npm run copy && node httpsServer",
+    "copy:auth": "cp ./node_modules/@esri/arcgis-rest-auth/dist/umd/auth.umd.min.js ./static/auth.umd.min.js",
+    "prebuild": "npm run copy:auth",
+    "prestart": "npm run copy:auth",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "devhttps": "node httpsServer",
     "test": "jest",
     "test:ci": "jest --ci",
     "eslint": "eslint --ext .js ./components ./lib ./pages"
