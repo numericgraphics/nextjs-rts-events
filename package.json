@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "copy": "ncp ./node_modules/@arcgis/core/assets ./public/assets",
-    "copy:auth": "cp ./node_modules/@esri/arcgis-rest-auth/dist/umd/auth.umd.min.js ./static/auth.umd.min.js",
-    "prebuild": "npm run copy:auth",
-    "prestart": "npm run copy:auth",
+    "prebuild": "npm run copy",
+    "prestart": "npm run copy",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

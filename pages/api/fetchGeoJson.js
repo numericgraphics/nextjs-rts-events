@@ -6,7 +6,6 @@ export default async (req, res) => {
     try {
         const { eventName } = await req.body
         const url = `${serverRuntimeConfig.API_BASE_URL}${serverRuntimeConfig.API_STAGE}/events/${eventName}/geoJSONList`
-        console.log(url)
         const response = await fetch(url, {
             credentials: 'include',
             method: 'GET',
@@ -15,7 +14,6 @@ export default async (req, res) => {
         })
         if (response.status === 200) {
             const content = await response.json()
-            console.log(content)
             res.status(200).send(JSON.stringify(content))
         } else {
             throw new Error('There is a probleme with the getData fetch')

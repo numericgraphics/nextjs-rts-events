@@ -115,7 +115,6 @@ function MainMap (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
-                console.log(content)
                 // initGame(content)
                 getFinalLay(content)
             } else {
@@ -133,7 +132,6 @@ function MainMap (props) {
         var final = []
         if (layersJson.geoJSONList) {
             for (const layer in layersJson.geoJSONList) {
-                console.log(layer)
                 const newLayer = new GeoJSONLayer({
                     url: 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest' + layersJson.geoJSONList[layer].relativeURL,
                     title: layersJson.geoJSONList[layer].title,
@@ -141,7 +139,6 @@ function MainMap (props) {
                     renderer: renderer, // optional,
                     popupTemplate
                 })
-                console.log(newLayer.url)
                 // webmap.add(newLayer)
                 final.push(newLayer)
             }
@@ -184,7 +181,6 @@ function MainMap (props) {
                     multipleSelectionEnabled: false,
                     view: view
                 })
-                console.log(layerList.visibleElements)
                 // Add widget to the top right corner of the view
                 view.ui.add(layerList, 'top-right')
             })
