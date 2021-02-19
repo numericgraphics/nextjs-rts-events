@@ -4,12 +4,14 @@ import { useStyles } from '../../../styles/jsx/components/image/invalidImage.sty
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grow from '@material-ui/core/Grow/Grow'
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 
 function GetLocation (props, ref) {
     const classes = useStyles()
     // TODO add uiElements for translation
     const { open, gotoDashBoard, translation, setLocation } = props
     const [onTransition, setTransition] = useState(undefined)
+    const [isLoading, setIsLoading] = useState(false)
 
     function onExited () {
         gotoDashBoard()
@@ -20,6 +22,7 @@ function GetLocation (props, ref) {
     }
 
     function onGetLocation () {
+        setIsLoading(true)
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 setLocation(position)
@@ -45,27 +48,28 @@ function GetLocation (props, ref) {
             }}
             onExited={onExited}
         >
-            <Box ref={ref}
-                className={classes.modalContent}
-                tabIndex={'-1'} >
-                <Typography
-                    variant="h3"
-                    className={'modal-title'}
-                    align={'center'}
-                >Pour accéder à se défi, vous devez activer la localisation</Typography>
-                <Button
-                    key={'ok'}
-                    className={['text2', classes.textButton].join(' ')}
-                    onClick={onGetLocation} >
+            {!isLoading
+                ? <Box ref={ref}
+                    className={classes.modalContent}
+                    tabIndex={'-1'} >
+                    <Typography
+                        variant="h3"
+                        className={'modal-title'}
+                        align={'center'}
+                    >Pour accéder à se défi, vous devez activer la localisation</Typography>
+                    <Button
+                        key={'ok'}
+                        className={['text2', classes.textButton].join(' ')}
+                        onClick={onGetLocation} >
                     Continuer
-                </Button>
-                <Button
-                    key={'cancel'}
-                    className={['text2', classes.textButton].join(' ')}
-                    onClick={onCancel} >
-                    {translation.challengeQuestionImageCancel}
-                </Button>
-            </Box>
+                    </Button>
+                    <Button
+                        key={'cancel'}
+                        className={['text2', classes.textButton].join(' ')}
+                        onClick={onCancel} >
+                        {translation.challengeQuestionImageCancel}
+                    </Button>
+                </Box> : <CircularProgress/>}
         </Grow>
     )
 }
