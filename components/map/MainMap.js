@@ -7,12 +7,14 @@ import LayerList from '@arcgis/core/widgets/LayerList'
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer'
 import '@arcgis/core/assets/esri/themes/dark/main.css'
 import config from '@arcgis/core/config.js'
+import { useStyles } from '../../styles/jsx/components/map/mainMap.style.js'
 import Router, { useRouter } from 'next/router'
 config.assetsPath = '/assets'
 
 function MainMap (props) {
     const router = useRouter()
     const mapDiv = useRef(null)
+    const classes = useStyles()
     const [layers, setLayers] = useState()
     const { events } = router.query
 
@@ -75,18 +77,6 @@ function MainMap (props) {
         title: '{titre}',
         content: [
             {
-                // It is also possible to set the fieldInfos outside of the content
-                // directly in the popupTemplate. If no fieldInfos is specifically set
-                // in the content, it defaults to whatever may be set within the popupTemplate.
-                type: 'fields',
-                fieldInfos: [
-                    {
-                        fieldName: 'nickname',
-                        label: 'Utilisateur :'
-                    }
-                ]
-            },
-            {
                 // The following creates a piechart in addition to an image. The chart is
                 // also set  up to work with related tables.
                 // Autocasts as new MediaContent()
@@ -101,6 +91,18 @@ function MainMap (props) {
                         sourceURL: '{imageURL}'
                     }
                 }]
+            },
+            {
+                // It is also possible to set the fieldInfos outside of the content
+                // directly in the popupTemplate. If no fieldInfos is specifically set
+                // in the content, it defaults to whatever may be set within the popupTemplate.
+                type: 'fields',
+                fieldInfos: [
+                    {
+                        fieldName: 'nickname',
+                        label: 'Utilisateur :'
+                    }
+                ]
             }
         ]
     }
@@ -198,8 +200,8 @@ function MainMap (props) {
         }
     }, [layers])
     return (
-        <Box className="mapContainer">
-            <div style={{ height: window.innerHeight, width: '100%' }} id="mapDiv" ref={mapDiv}></div>
+        <Box className={classes.mapContainer}>
+            <div style={{ height: window.innerHeight, width: '100%' }} className={classes.mapDiv} id="mapDiv" ref={mapDiv}></div>
         </Box>
     )
 }
