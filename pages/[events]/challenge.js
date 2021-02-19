@@ -218,7 +218,7 @@ function Challenge () {
         case ChallengeStates.GET_LOCATION:
             return <GetLocation
                 ref={modalGetLocation}
-                gotoDashBoard={goToResult}
+                gotoDashBoard={gotoDashBoard}
                 open={open}
                 setLocation={setLocation}
                 uiElements={dataProvider.getUiElements()}
