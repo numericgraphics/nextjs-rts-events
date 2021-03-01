@@ -1,0 +1,48 @@
+{"type": "FeatureCollection",
+    "features":
+        [{"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [6.70336, 46.5256905]},
+            "properties":{
+                "titre": "Maison de David",
+                "eventTitle": "Fête de David",
+                "eventDescription": "Fête assurée",
+                "eventDate": "02-11-2021",
+                "eventHour": "19:00"
+            }
+        },
+        {"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [6.8327838, 47.0034892]},
+            "properties": {
+                "titre": "Maison de Daniel",
+                "eventTitle": "Fête de Noël",
+                "eventDescription": "Fête à fontaines - Belle soirée assurée",
+                "eventDate": "03-12-2021",
+                "eventHour": "13:00"
+            }
+        },
+        {"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [7.0847379, 46.4882978]},
+            "properties": {
+                "titre": "Maison de Sandrine",
+                "eventTitle": "Fête de Sandrine",
+                "eventDescription": "Fête à fontaines - Belle soirée assurée",
+                "eventDate": "04-11-2021",
+                "eventHour": "20:15 - 03:15"
+            }
+        },
+        {"type":
+            "Feature",
+            "geometry": {"type": "Point", "coordinates": [7.0847379, 46.4882978]},
+            "properties": {
+                "titre": "Maison de Sandrine",
+                "eventTitle": "Souper chez Sandrine",
+                "eventDescription": "Souper autour d'une fontaines",
+                "eventDate": "21-11-2021",
+                "eventHour": "10:00 - 21:15"
+            }
+        }
+    ]
+        }

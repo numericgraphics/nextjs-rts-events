@@ -352,8 +352,16 @@
     -webkit-animation-timing-function: ease-in;
     -webkit-animation-delay: 0.5s;
     -webkit-animation-fill-mode: forwards;
-
 }
+
+.mapContainer{
+    display: 'flex'
+}
+
+#mapDiv {
+    padding: 0;
+    margin: 0;
+  }
 
 /*** MEDIA QUERY ***/
 
