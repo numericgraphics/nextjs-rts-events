@@ -56,7 +56,7 @@ function GetLocation (props, ref) {
                         variant="h3"
                         className={'modal-title'}
                         align={'center'}
-                    >Pour accéder à se défi, vous devez activer la localisation</Typography>
+                    >Pour accéder à ce défi, vous devez activer la localisation</Typography>
                     <Button
                         key={'ok'}
                         className={['text2', classes.textButton].join(' ')}

@@ -40,7 +40,7 @@ function MainMap (props) {
         // the number of features comprised by the cluster
         popupTemplate: {
             // Desactiver le zoom overwriteActions: false,
-            content: '{cluster_count} défi(s) ont été réalisé dans cette region. Zoom pour en voir plus !',
+            content: '{cluster_count} défis ont été réalisés dans cette region. Zoomez pour en voir plus !',
             fieldInfos: [
                 {
                     fieldName: 'cluster_count',
