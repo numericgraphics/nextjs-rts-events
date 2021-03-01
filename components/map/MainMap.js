@@ -4,6 +4,7 @@ import WebMap from '@arcgis/core/Map'
 import MapView from '@arcgis/core/views/MapView'
 import Locate from '@arcgis/core/widgets/Locate'
 import LayerList from '@arcgis/core/widgets/LayerList'
+import GroupLayer from '@arcgis/core/layers/GroupLayer'
 import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer'
 import '@arcgis/core/assets/esri/themes/dark/main.css'
 import config from '@arcgis/core/config.js'
@@ -139,13 +140,21 @@ function MainMap (props) {
                     title: layersJson.geoJSONList[layer].title,
                     featureReduction: cluster,
                     renderer: renderer, // optional,
-                    popupTemplate
+                    popupTemplate,
+                    visible: true,
+                    visibilityMode: 'exclusive'
                 })
                 // webmap.add(newLayer)
                 final.push(newLayer)
             }
+            const group = new GroupLayer({
+                title: 'Les défis RTS !',
+                visible: true,
+                visibilityMode: 'exclusive',
+                layers: final
+            })
+            setLayers(group)
         }
-        setLayers(final)
     }
 
     useEffect(() => {
@@ -180,12 +189,26 @@ function MainMap (props) {
 
             view.watch('scale', function (scale) {
                 console.log(view.scale)
-                for (const layer in layers) {
-                    console.log(layers[layer])
+                console.log(layers.layers._items)
+                /* if (view.scale < 150000) {
+                    layers.featureReduction = null
+                } else {
+                    layers.featureReduction = cluster
+                }
+                  for (const layer in layers) {
+                    // console.log(layers[layer])
                     if (view.scale < 150000) {
                         layers[layer].featureReduction = null
                     } else {
                         layers[layer].featureReduction = cluster
+                    }
+                } */
+                for (const layer in layers.layers._items) {
+                    // console.log(layers[layer])
+                    if (view.scale < 150000) {
+                        layers.layers._items[layer].featureReduction = null
+                    } else {
+                        layers.layers._items[layer].featureReduction = cluster
                     }
                 }
             })
