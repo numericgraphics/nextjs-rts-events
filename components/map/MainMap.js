@@ -178,6 +178,18 @@ function MainMap (props) {
                 center: [7.096432, 47.064489] // longitude, latitude
             })
 
+            view.watch('scale', function (scale) {
+                console.log(view.scale)
+                for (const layer in layers) {
+                    console.log(layers[layer])
+                    if (view.scale < 150000) {
+                        layers[layer].featureReduction = null
+                    } else {
+                        layers[layer].featureReduction = cluster
+                    }
+                }
+            })
+
             view.when(function () {
                 var layerList = new LayerList({
                     multipleSelectionEnabled: false,
