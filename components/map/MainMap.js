@@ -140,9 +140,7 @@ function MainMap (props) {
                     title: layersJson.geoJSONList[layer].title,
                     featureReduction: cluster,
                     renderer: renderer, // optional,
-                    popupTemplate,
-                    visible: true,
-                    visibilityMode: 'exclusive'
+                    popupTemplate
                 })
                 // webmap.add(newLayer)
                 final.push(newLayer)
@@ -189,8 +187,9 @@ function MainMap (props) {
 
             view.watch('scale', function (scale) {
                 console.log(view.scale)
-                console.log(layers.layers._items)
-                /* if (view.scale < 150000) {
+                console.log(layers)
+                /* console.log(layers.layers._items)
+                 if (view.scale < 150000) {
                     layers.featureReduction = null
                 } else {
                     layers.featureReduction = cluster
@@ -203,7 +202,7 @@ function MainMap (props) {
                         layers[layer].featureReduction = cluster
                     }
                 } */
-                for (const layer in layers.layers._items) {
+                for (const layer in layers.layers.items) {
                     // console.log(layers[layer])
                     if (view.scale < 150000) {
                         layers.layers._items[layer].featureReduction = null
@@ -216,7 +215,14 @@ function MainMap (props) {
             view.when(function () {
                 var layerList = new LayerList({
                     multipleSelectionEnabled: false,
-                    view: view
+                    view: view,
+                    listItemCreatedFunction: function (event) {
+                        // The event object contains properties of the
+                        // layer in the LayerList widget.
+
+                        var item = event.item
+                        item.open = true
+                    }
                 })
                 // Add widget to the top right corner of the view
                 view.ui.add(layerList, 'top-right')
