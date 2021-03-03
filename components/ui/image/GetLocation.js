@@ -12,6 +12,11 @@ function GetLocation (props, ref) {
     const { open, gotoDashBoard, translation, setLocation } = props
     const [onTransition, setTransition] = useState(undefined)
     const [isLoading, setIsLoading] = useState(false)
+    const LocationStates = Object.freeze({
+        ERROR: 'error',
+        GET_LOCATION: 'getLocation'
+    })
+    const [locationState, setLocationState] = useState(LocationStates.GET_LOCATION)
 
     function onExited () {
         gotoDashBoard()
@@ -21,16 +26,60 @@ function GetLocation (props, ref) {
         setTransition(false)
     }
 
+    function onLocationError (error) {
+        setLocationState(LocationStates.ERROR)
+        setIsLoading(false)
+        switch (error.code) {
+        case error.PERMISSION_DENIED:
+            console.log('User denied the request for Geolocation.')
+            break
+        case error.POSITION_UNAVAILABLE:
+            console.log('Location information is unavailable.')
+            break
+        case error.TIMEOUT:
+            console.log('The request to get user location timed out.')
+            break
+        case error.UNKNOWN_ERROR:
+            console.log('An unknown error occurred.')
+            break
+        }
+    }
+
     function onGetLocation () {
         setIsLoading(true)
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 setLocation(position)
-            })
+            }, onLocationError)
             /* la géolocalisation est disponible */
         } else {
             console.log('Non disponible')
             /* la géolocalisation n'est pas disponible */
+        }
+    }
+
+    function getModalContent (state) {
+        switch (state) {
+        case LocationStates.GET_LOCATION:
+            return <React.Fragment>
+                <Typography
+                    variant="h3"
+                    className={'modal-title'}
+                    align={'center'}
+                >Pour accéder à ce défi, vous devez activer la localisation</Typography>
+                <Button
+                    key={'ok'}
+                    className={['text2', classes.textButton].join(' ')}
+                    onClick={onGetLocation} >
+            Continuer
+                </Button>
+            </React.Fragment>
+        case LocationStates.ERROR:
+            return <Typography
+                variant="h3"
+                className={'modal-title'}
+                align={'center'}
+            >Problème pour vous localisez</Typography>
         }
     }
 
@@ -52,24 +101,15 @@ function GetLocation (props, ref) {
                 ? <Box ref={ref}
                     className={classes.modalContent}
                     tabIndex={'-1'} >
-                    <Typography
-                        variant="h3"
-                        className={'modal-title'}
-                        align={'center'}
-                    >Pour accéder à ce défi, vous devez activer la localisation</Typography>
-                    <Button
-                        key={'ok'}
-                        className={['text2', classes.textButton].join(' ')}
-                        onClick={onGetLocation} >
-                    Continuer
-                    </Button>
+                    {getModalContent(locationState)}
                     <Button
                         key={'cancel'}
                         className={['text2', classes.textButton].join(' ')}
                         onClick={onCancel} >
                         {translation.challengeQuestionImageCancel}
                     </Button>
-                </Box> : <CircularProgress/>}
+                </Box>
+                : <CircularProgress/>}
         </Grow>
     )
 }
