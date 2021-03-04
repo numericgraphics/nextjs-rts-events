@@ -23,11 +23,14 @@ function GetLocation (props, ref) {
     }
 
     function onCancel () {
-        setTransition(false)
+        console.log('cancel clicked')
+        setLocation(null)
+        setIsLoading(false)
     }
 
-    function onLocationError (error) {
-        setLocationState(LocationStates.ERROR)
+    /* function onLocationError (error) {
+        setLocation(null)
+        // setLocationState(LocationStates.ERROR)
         setIsLoading(false)
         switch (error.code) {
         case error.PERMISSION_DENIED:
@@ -43,18 +46,18 @@ function GetLocation (props, ref) {
             console.log('An unknown error occurred.')
             break
         }
-    }
+    } */
 
     function onGetLocation () {
         setIsLoading(true)
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 setLocation(position)
-            }, onLocationError)
+            }, onCancel)
             /* la géolocalisation est disponible */
         } else {
             console.log('Non disponible')
-            /* la géolocalisation n'est pas disponible */
+            onCancel()
         }
     }
 
@@ -73,17 +76,25 @@ function GetLocation (props, ref) {
                     onClick={onGetLocation} >
             Continuer
                 </Button>
+                <Button
+                    key={'cancel'}
+                    className={['text2', classes.textButton].join(' ')}
+                    onClick={onCancel} >
+                    {translation.challengeQuestionImageCancel}
+                </Button>
             </React.Fragment>
         case LocationStates.ERROR:
             return <Typography
                 variant="h3"
                 className={'modal-title'}
                 align={'center'}
-            >Problème pour vous localisez</Typography>
+            >Problème pour vous localiser</Typography>
         }
     }
 
     useEffect(() => {
+        console.log('init')
+        setLocation(false)
         setTransition(open)
     }, [])
 
@@ -102,12 +113,6 @@ function GetLocation (props, ref) {
                     className={classes.modalContent}
                     tabIndex={'-1'} >
                     {getModalContent(locationState)}
-                    <Button
-                        key={'cancel'}
-                        className={['text2', classes.textButton].join(' ')}
-                        onClick={onCancel} >
-                        {translation.challengeQuestionImageCancel}
-                    </Button>
                 </Box>
                 : <CircularProgress/>}
         </Grow>

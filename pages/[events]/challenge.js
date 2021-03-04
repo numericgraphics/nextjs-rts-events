@@ -95,14 +95,20 @@ function Challenge () {
     }
 
     async function fetchResultReco () {
-        try {
-            let content
-            const { challengeID, reco } = dataProvider.getChallenge()
+        async function imageComp (rawImage) {
             const imageCompressed = await imageCompression(rawImage, { maxSizeMB: 0.7 })
             const imageInBase64 = await b64Conv(imageCompressed)
             const cleanB64 = imageInBase64.replace(/^data:image.+;base64,/, '')
+            return cleanB64
+        }
+
+        try {
+            let content
+            const { challengeID, reco } = dataProvider.getChallenge()
+            const cleanB64 = rawImage ? await imageComp(rawImage) : null
             const position = location ? { lat: location.coords.latitude, lon: location.coords.longitude } : { lat: null, lon: null }
             const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.lon, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
+            console.log(bodyContent)
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',
                 method: 'POST',
@@ -116,7 +122,8 @@ function Challenge () {
                     - check translation and uiElement
                  */
                 dataProvider.setData(content)
-                if (!content.success) {
+                console.log(content.success)
+                if (!content.success && position.lat !== null && position.lon !== null) {
                     setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
                     onOpenModal()
                 }
@@ -290,6 +297,10 @@ function Challenge () {
         if (location) {
             closeModal()
             setChallengeState(ChallengeStates.QUESTIONS_IMAGE)
+        } else if (location === null) {
+            setTimeout(() => {
+                fetchResultReco().then()
+            }, 2000)
         }
     }, [location])
 
