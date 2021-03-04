@@ -95,6 +95,7 @@ function GetLocation (props, ref) {
     useEffect(() => {
         console.log('init')
         setLocation(false)
+        setLocationState(LocationStates.GET_LOCATION)
         setTransition(open)
     }, [])
 
