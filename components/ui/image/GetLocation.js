@@ -11,9 +11,8 @@ function GetLocation (props, ref) {
     // TODO add uiElements for translation
     const { open, gotoDashBoard, translation, setLocation } = props
     const [onTransition, setTransition] = useState(undefined)
-    const [isLoading, setIsLoading] = useState(false)
     const LocationStates = Object.freeze({
-        ERROR: 'error',
+        LOADING: 'loading',
         GET_LOCATION: 'getLocation'
     })
     const [locationState, setLocationState] = useState(LocationStates.GET_LOCATION)
@@ -25,7 +24,7 @@ function GetLocation (props, ref) {
     function onCancel () {
         console.log('cancel clicked')
         setLocation(null)
-        setIsLoading(false)
+        setLocationState(LocationStates.LOADING)
     }
 
     /* function onLocationError (error) {
@@ -49,7 +48,7 @@ function GetLocation (props, ref) {
     } */
 
     function onGetLocation () {
-        setIsLoading(true)
+        setLocationState(LocationStates.LOADING)
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 setLocation(position)
@@ -83,12 +82,8 @@ function GetLocation (props, ref) {
                     {translation.challengeQuestionImageCancel}
                 </Button>
             </React.Fragment>
-        case LocationStates.ERROR:
-            return <Typography
-                variant="h3"
-                className={'modal-title'}
-                align={'center'}
-            >Problème pour vous localiser</Typography>
+        case LocationStates.LOADING:
+            return <CircularProgress/>
         }
     }
 
@@ -109,13 +104,11 @@ function GetLocation (props, ref) {
             }}
             onExited={onExited}
         >
-            {!isLoading
-                ? <Box ref={ref}
-                    className={classes.modalContent}
-                    tabIndex={'-1'} >
-                    {getModalContent(locationState)}
-                </Box>
-                : <CircularProgress/>}
+            <Box ref={ref}
+                className={classes.modalContent}
+                tabIndex={'-1'} >
+                {getModalContent(locationState)}
+            </Box>
         </Grow>
     )
 }
