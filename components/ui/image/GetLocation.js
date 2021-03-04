@@ -68,18 +68,23 @@ function GetLocation (props, ref) {
                     variant="h3"
                     className={'modal-title'}
                     align={'center'}
-                >Pour accéder à ce défi, vous devez activer la localisation</Typography>
+                >{translation.challengeRecoGeoGetLocationTitle}</Typography>
+                <Typography
+                    variant="h4"
+                    className={'modal-title'}
+                    align={'center'}
+                >{translation.challengeRecoGeoGetLocationSubtitle}</Typography>
                 <Button
                     key={'ok'}
                     className={['text2', classes.textButton].join(' ')}
                     onClick={onGetLocation} >
-            Continuer
+                    {translation.challengeRecoGeoGetLocationButtonValidation}
                 </Button>
                 <Button
                     key={'cancel'}
                     className={['text2', classes.textButton].join(' ')}
                     onClick={onCancel} >
-                    {translation.challengeQuestionImageCancel}
+                    {translation.challengeRecoGeoGetLocationButtonCancel}
                 </Button>
             </React.Fragment>
         case LocationStates.LOADING:
