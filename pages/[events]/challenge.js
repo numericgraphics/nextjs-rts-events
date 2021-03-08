@@ -106,6 +106,7 @@ function Challenge () {
             let content
             const { challengeID, reco } = dataProvider.getChallenge()
             const cleanB64 = rawImage ? await imageComp(rawImage) : null
+            console.log(location)
             const position = location ? { lat: location.coords.latitude, lon: location.coords.longitude } : { lat: null, lon: null }
             const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.lon, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
             console.log(bodyContent)

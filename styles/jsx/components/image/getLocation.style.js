@@ -24,11 +24,43 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
             padding: 'min(1.5vw, 15px)'
         }
     },
+    buttonClose: {
+        alignSelf: 'flex-end!important'
+    },
+    cardContent: {
+        padding: '1.5vw min(3vw, 30px)!important',
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    colorCard: {
+        width: '90%'
+    },
+    invalidImageText: {
+        textAlign: 'center',
+        color: theme.palette.primary.contrastText,
+        marginBottom: '15px'
+    },
+    containerInvalidImage: {
+        position: 'fixed',
+        display: 'flex',
+        zIndex: 10,
+        width: '100%',
+        height: '100vh',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        flexDirection: 'column'
+    },
     textButton: {
         textTransform: 'none',
         lineHeight: 1,
         padding: '0!important',
         marginBottom: '1rem',
         color: theme.palette.secondary.main
+    },
+    autoComplete: {
+        width: '80%',
+        paddingBottom: '1rem'
     }
 }))

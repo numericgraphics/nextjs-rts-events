@@ -42,6 +42,7 @@
     "react-device-detect": "^1.14.0",
     "react-div-100vh": "^0.3.8",
     "react-dom": "^16.14.0",
+    "react-google-places-autocomplete": "^3.2.1",
     "react-ios-pwa-prompt": "^1.8.4",
     "react-phone-input-2": "^2.13.8",
     "react-phone-input-material-ui": "^2.13.11",

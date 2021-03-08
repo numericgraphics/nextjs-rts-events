@@ -191,6 +191,10 @@ function MyApp ({ Component, pageProps }) {
                     name="description"
                     content={'RTS - Events'}
                 />
+                <script
+                    type="text/javascript"
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqq7GNv66TpgfLkbIjuHVZXl-_sabL1_o&libraries=places"
+                />
             </Head>
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />
