@@ -102,8 +102,22 @@ function GetLocation (props, ref) {
             return <React.Fragment>
                 <Box className={classes.autoComplete} >
                     <GooglePlacesAutocomplete
+                        apiOptions={{ language: 'fr', region: 'ch' }}
+                        autocompletionRequest={{
+                            componentRestrictions: {
+                                country: ['ch', 'fr']
+                            }
+                        }}
                         selectProps={{
-                        // apiKey: 'AIzaSyCqq7GNv66TpgfLkbIjuHVZXl-_sabL1_o',
+                            DropdownIndicator: () => null,
+                            isClearable: true,
+                            blurInputOnSelect: true,
+                            IndicatorSeparator: () => null,
+                            // indicatorsContainer: () => null,
+                            // DropdownIndicator: () => null,
+                            noOptionsMessage: (value) => 'Pas doption',
+                            placeholder: 'Votre adresse',
+                            // apiKey: 'AIzaSyCqq7GNv66TpgfLkbIjuHVZXl-_sabL1_o',
                             adresse,
                             onLoadFailed: (error) => (
                                 console.error('Could not inject Google script', error)
