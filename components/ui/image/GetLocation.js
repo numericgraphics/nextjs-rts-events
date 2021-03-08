@@ -112,7 +112,7 @@ function GetLocation (props, ref) {
                             DropdownIndicator: () => null,
                             isClearable: true,
                             blurInputOnSelect: true,
-                            IndicatorSeparator: () => null,
+                            components: { DropdownIndicator: null },
                             // indicatorsContainer: () => null,
                             // DropdownIndicator: () => null,
                             noOptionsMessage: (value) => 'Pas doption',
