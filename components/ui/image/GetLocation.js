@@ -37,6 +37,10 @@ function GetLocation (props, ref) {
         setLocation(manualLocation)
     }
 
+    function handledFieldClear () {
+        setAdresse('')
+    }
+
     function onLocationError (error) {
         setLocationState(LocationStates.AUTO_COMPLETE)
         switch (error.code) {
@@ -64,7 +68,7 @@ function GetLocation (props, ref) {
             /* la géolocalisation est disponible */
         } else {
             console.log('Non disponible')
-            onCancel()
+            setLocationState(LocationStates.AUTO_COMPLETE)
         }
     }
 
@@ -105,21 +109,19 @@ function GetLocation (props, ref) {
                         apiOptions={{ language: 'fr', region: 'ch' }}
                         autocompletionRequest={{
                             componentRestrictions: {
-                                country: ['ch', 'fr']
+                                country: ['ch']
                             }
                         }}
                         selectProps={{
+                            onFocus: handledFieldClear,
                             DropdownIndicator: () => null,
                             isClearable: true,
                             blurInputOnSelect: true,
                             openMenuOnClick: false,
                             components: { DropdownIndicator: null },
-                            // indicatorsContainer: () => null,
-                            // DropdownIndicator: () => null,
                             noOptionsMessage: (value) => 'Pas doption',
-                            placeholder: 'Votre adresse',
-                            // apiKey: 'AIzaSyCqq7GNv66TpgfLkbIjuHVZXl-_sabL1_o',
-                            adresse,
+                            placeholder: 'Sélectionner un lieu',
+                            value: adresse,
                             onLoadFailed: (error) => (
                                 console.error('Could not inject Google script', error)
                             ),
