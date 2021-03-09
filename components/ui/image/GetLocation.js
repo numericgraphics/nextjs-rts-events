@@ -88,7 +88,9 @@ function GetLocation (props, ref) {
                 >{translation.challengeRecoGeoGetLocationSubtitle}</Typography>
                 <Button
                     key={'ok'}
-                    className={['text2', classes.textButton].join(' ')}
+                    color="secondary"
+                    variant="contained"
+                    className={'button'}
                     onClick={onGetLocation} >
                     {translation.challengeRecoGeoGetLocationButtonValidation}
                 </Button>
@@ -104,6 +106,16 @@ function GetLocation (props, ref) {
         case LocationStates.AUTO_COMPLETE:
             // TODO Ajouter restriction sur la clé d'API
             return <React.Fragment>
+                <Typography
+                    variant="h3"
+                    className={'modal-title'}
+                    align={'center'}
+                >{translation.challengeRecoGeoGetLocationTitle}</Typography>
+                <Typography
+                    variant="h4"
+                    className={'modal-title'}
+                    align={'center'}
+                >{translation.challengeRecoGeoGetLocationSubtitle}</Typography>
                 <Box className={classes.autoComplete} >
                     <GooglePlacesAutocomplete
                         apiOptions={{ language: 'fr', region: 'ch' }}
@@ -182,11 +194,7 @@ function GetLocation (props, ref) {
             }}
             onExited={onExited}
         >
-            <Box ref={ref}
-                className={classes.modalContent}
-                tabIndex={'-1'} >
-                {getModalContent(locationState)}
-            </Box>
+            {getModalContent(locationState)}
         </Grow>
     )
 }
