@@ -7,6 +7,8 @@ import Grow from '@material-ui/core/Grow/Grow'
 import { CommunityIcon } from '../../../data/icon'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete'
+import { CustomDisabledButton } from '../button/CustomDisabledButton'
+import { useTheme } from '@material-ui/core/styles'
 
 function GetLocation (props, ref) {
     const classes = useStyles()
@@ -21,13 +23,13 @@ function GetLocation (props, ref) {
         AUTO_COMPLETE: 'autoComplete'
     })
     const [locationState, setLocationState] = useState(LocationStates.GET_LOCATION)
+    const theme = useTheme()
 
     function onExited () {
         gotoDashBoard()
     }
 
     function onCancel () {
-        console.log('cancel clicked')
         setLocation(null)
         setLocationState(LocationStates.LOADING)
     }
@@ -68,9 +70,15 @@ function GetLocation (props, ref) {
             }, onLocationError)
             /* la géolocalisation est disponible */
         } else {
-            console.log('Non disponible')
             setLocationState(LocationStates.AUTO_COMPLETE)
         }
+    }
+
+    const customStyles = {
+        clearIndicator: (provided, state) => ({
+            ...provided,
+            color: theme.palette.secondary.main
+        })
     }
 
     function getModalContent (state) {
@@ -108,6 +116,7 @@ function GetLocation (props, ref) {
         case LocationStates.AUTO_COMPLETE:
             // TODO Ajouter restriction sur la clé d'API
             return <React.Fragment>
+                {CommunityIcon({ className: classes.icon })}
                 <Typography
                     variant="h3"
                     className={'modal-title'}
@@ -134,6 +143,7 @@ function GetLocation (props, ref) {
                             isClearable: true,
                             blurInputOnSelect: true,
                             openMenuOnClick: false,
+                            styles: customStyles,
                             components: { DropdownIndicator: null },
                             noOptionsMessage: (value) => translation.challengeRecoAutoCompleteNoResults,
                             loadingMessage: (value) => translation.challengeRecoAutoCompleteLoading,
@@ -142,11 +152,19 @@ function GetLocation (props, ref) {
                             onLoadFailed: (error) => (
                                 console.error('Could not inject Google script', error)
                             ),
-                            onChange: setAdresse
+                            onChange: setAdresse,
+                            theme: (themeComp) => ({
+                                ...themeComp,
+                                borderRadius: 0,
+                                colors: {
+                                    ...themeComp.colors,
+                                    primary: theme.palette.secondary.main
+                                }
+                            })
                         }}
                     />
                 </Box>
-                <Button
+                <CustomDisabledButton
                     key={'ok'}
                     color="secondary"
                     variant="contained"
@@ -156,7 +174,7 @@ function GetLocation (props, ref) {
                     disabled={!adresse}
                 >
                     {translation.challengeRecoAutoCompleteStart}
-                </Button>
+                </CustomDisabledButton>
                 <Button
                     key={'cancel'}
                     className={['text2', classes.textButton].join(' ')}
@@ -167,10 +185,7 @@ function GetLocation (props, ref) {
         }
     }
 
-    console.log(translation)
-
     useEffect(() => {
-        console.log('init')
         setLocation(false)
         setLocationState(LocationStates.GET_LOCATION)
         setTransition(open)
@@ -180,14 +195,10 @@ function GetLocation (props, ref) {
         const location = results[0].geometry.location
         const manualLocation = { lat: location.lat(), lon: location.lng() }
         setManualPosition(manualLocation)
-        console.log('Lat ', location.lat())
-        console.log('Long ', location.lng())
     }
 
     useEffect(() => {
         if (adresse) {
-            console.log(adresse)
-            console.log(adresse.value.place_id)
             geocodeByPlaceId(adresse.value.place_id)
                 .then(results => getCoordinate(results))
                 .catch(error => console.error(error))

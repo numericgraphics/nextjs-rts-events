@@ -25,8 +25,6 @@ function Map (props) {
             setEventName(events)
             dataProvider.setEventData(eventData.content)
             setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
-        } else {
-            console.log('else')
         }
     }, [isGlobalLoading])
 

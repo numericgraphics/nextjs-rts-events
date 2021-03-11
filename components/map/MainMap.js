@@ -186,8 +186,6 @@ function MainMap (props) {
             })
 
             view.watch('scale', function (scale) {
-                console.log(view.scale)
-                console.log(layers)
                 /* console.log(layers.layers._items)
                  if (view.scale < 150000) {
                     layers.featureReduction = null

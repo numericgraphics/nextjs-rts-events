@@ -106,10 +106,8 @@ function Challenge () {
             let content
             const { challengeID, reco } = dataProvider.getChallenge()
             const cleanB64 = rawImage ? await imageComp(rawImage) : null
-            console.log(location)
             const position = location ? { lat: location.coords.latitude, lon: location.coords.longitude } : { lat: null, lon: null }
             const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.lon, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
-            console.log(bodyContent)
             const response = await fetch('/api/fetchQuizRecoResult', {
                 credentials: 'include',
                 method: 'POST',
@@ -123,7 +121,6 @@ function Challenge () {
                     - check translation and uiElement
                  */
                 dataProvider.setData(content)
-                console.log(content.success)
                 if (!content.success && position.lat !== null && position.lon !== null) {
                     setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
                     onOpenModal()
@@ -321,7 +318,6 @@ function Challenge () {
                     setBackgroundType('image')
                     setChallengeState(ChallengeStates.GET_LOCATION)
                     onOpenModal()
-                    console.log('geo')
                 } else {
                     setImageURL(imageURL)
                     setBackgroundType('image')
