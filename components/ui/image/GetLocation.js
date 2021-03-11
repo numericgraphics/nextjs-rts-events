@@ -78,6 +78,12 @@ function GetLocation (props, ref) {
         clearIndicator: (provided, state) => ({
             ...provided,
             color: theme.palette.secondary.main
+        }),
+        control: base => ({
+            ...base,
+            height: 50,
+            minHeight: 50,
+            fontSize: '1.4rem'
         })
     }
 
