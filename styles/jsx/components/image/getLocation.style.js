@@ -64,8 +64,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         paddingBottom: '1rem'
     },
     icon: {
-        height: '8.5rem',
-        width: '8.5rem'
+        height: '6rem',
+        width: '6rem'
     },
     button: {
         width: '60%'
