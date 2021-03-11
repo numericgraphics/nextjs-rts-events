@@ -65,9 +65,13 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     icon: {
         height: '6rem',
-        width: '6rem'
+        width: '6rem',
+        fill: theme.palette.primary.contrastText
     },
     button: {
         width: '60%'
+    },
+    text: {
+        color: theme.palette.primary.contrastText
     }
 }))

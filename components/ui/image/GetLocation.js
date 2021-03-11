@@ -94,12 +94,12 @@ function GetLocation (props, ref) {
                 {CommunityIcon({ className: classes.icon })}
                 <Typography
                     variant="h3"
-                    className={'modal-title'}
+                    className={['modal-title', classes.text].join(' ')}
                     align={'center'}
                 >{translation.challengeRecoGeoGetLocationTitle}</Typography>
                 <Typography
                     variant="h4"
-                    className={'modal-title'}
+                    className={['modal-title', classes.text].join(' ')}
                     align={'center'}
                 >{translation.challengeRecoGeoGetLocationSubtitle}</Typography>
                 <Button
@@ -125,15 +125,15 @@ function GetLocation (props, ref) {
                 {CommunityIcon({ className: classes.icon })}
                 <Typography
                     variant="h3"
-                    className={'modal-title'}
+                    className={['modal-title', classes.text].join(' ')}
                     align={'center'}
-                    color='textPrimary'
+                    color='primary'
                 >{translation.challengeRecoAutoCompleteTitle}</Typography>
                 <Typography
                     variant="h4"
-                    className={'modal-title'}
+                    className={['modal-title', classes.text].join(' ')}
                     align={'center'}
-                    color='textPrimary'
+                    color='primary'
                 >{translation.challengeRecoAutoCompleteSubtitle}</Typography>
                 <Box className={classes.autoComplete} >
                     <GooglePlacesAutocomplete
