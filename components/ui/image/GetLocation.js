@@ -4,6 +4,7 @@ import { useStyles } from '../../../styles/jsx/components/image/getLocation.styl
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grow from '@material-ui/core/Grow/Grow'
+import { CommunityIcon } from '../../../data/icon'
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete'
 
@@ -76,6 +77,7 @@ function GetLocation (props, ref) {
         switch (state) {
         case LocationStates.GET_LOCATION:
             return <React.Fragment>
+                {CommunityIcon({ className: classes.icon })}
                 <Typography
                     variant="h3"
                     className={'modal-title'}
@@ -90,7 +92,7 @@ function GetLocation (props, ref) {
                     key={'ok'}
                     color="secondary"
                     variant="contained"
-                    className={'button'}
+                    className={['button', classes.button].join(' ')}
                     onClick={onGetLocation} >
                     {translation.challengeRecoGeoGetLocationButtonValidation}
                 </Button>
@@ -110,12 +112,14 @@ function GetLocation (props, ref) {
                     variant="h3"
                     className={'modal-title'}
                     align={'center'}
-                >{translation.challengeRecoGeoGetLocationTitle}</Typography>
+                    color='textPrimary'
+                >{translation.challengeRecoAutoCompleteTitle}</Typography>
                 <Typography
                     variant="h4"
                     className={'modal-title'}
                     align={'center'}
-                >{translation.challengeRecoGeoGetLocationSubtitle}</Typography>
+                    color='textPrimary'
+                >{translation.challengeRecoAutoCompleteSubtitle}</Typography>
                 <Box className={classes.autoComplete} >
                     <GooglePlacesAutocomplete
                         apiOptions={{ language: 'fr', region: 'ch' }}
@@ -131,8 +135,9 @@ function GetLocation (props, ref) {
                             blurInputOnSelect: true,
                             openMenuOnClick: false,
                             components: { DropdownIndicator: null },
-                            noOptionsMessage: (value) => 'Pas doption',
-                            placeholder: 'Sélectionner un lieu',
+                            noOptionsMessage: (value) => translation.challengeRecoAutoCompleteNoResults,
+                            loadingMessage: (value) => translation.challengeRecoAutoCompleteLoading,
+                            placeholder: translation.challengeRecoAutoCompletePlaceholder,
                             value: adresse,
                             onLoadFailed: (error) => (
                                 console.error('Could not inject Google script', error)
@@ -143,22 +148,26 @@ function GetLocation (props, ref) {
                 </Box>
                 <Button
                     key={'ok'}
-                    className={['text2', classes.textButton].join(' ')}
+                    color="secondary"
+                    variant="contained"
+                    className={['button', classes.button].join(' ')}
                     onClick={manualPositionSend}
                     // eslint-disable-next-line no-unneeded-ternary
                     disabled={!adresse}
                 >
-                    {translation.challengeRecoGeoGetLocationButtonValidation}
+                    {translation.challengeRecoAutoCompleteStart}
                 </Button>
                 <Button
                     key={'cancel'}
                     className={['text2', classes.textButton].join(' ')}
                     onClick={onCancel} >
-                    {translation.challengeRecoGeoGetLocationButtonCancel}
+                    {translation.challengeRecoAutoCompleteCancel}
                 </Button>
             </React.Fragment>
         }
     }
+
+    console.log(translation)
 
     useEffect(() => {
         console.log('init')

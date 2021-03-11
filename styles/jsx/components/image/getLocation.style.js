@@ -62,5 +62,12 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     autoComplete: {
         width: '80%',
         paddingBottom: '1rem'
+    },
+    icon: {
+        height: '8.5rem',
+        width: '8.5rem'
+    },
+    button: {
+        width: '60%'
     }
 }))

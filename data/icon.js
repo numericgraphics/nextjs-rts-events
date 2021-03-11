@@ -171,3 +171,17 @@ export function CameraIcon (props) {
         </SvgIcon>
     )
 }
+
+export function CommunityIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 24 24" {...props}>
+            <circle id="Ellipse_1159" cx="12" cy="2.2" r="2.2"/>
+            <circle id="Ellipse_1160" cx="3.7" cy="4.5" r="2.2"/>
+            <circle id="Ellipse_1161" cx="20.2" cy="4.5" r="2.2"/>
+            <path id="Tracé_55231" d="M12.7,15.6l3.8-2.2V18H24v-6c0-2.1-1.6-3.7-3.7-3.7c0,0,0,0-0.1,0c-0.7,0-1.3,0.2-1.9,0.5L12,12.5
+                L5.6,8.8C5.1,8.5,4.4,8.3,3.8,8.2C1.7,8.2,0,9.9,0,11.9c0,0,0,0,0,0.1v6h7.5v-4.7l3.7,2.3c0.2,0.1,0.5,0.2,0.8,0.2
+                C12.3,15.8,12.5,15.7,12.7,15.6z"/>
+            <path id="Tracé_55232" d="M12,10.8l3.6-2.1c-0.5-1.6-2-2.6-3.6-2.6c-1.6,0-3.1,1.1-3.6,2.6L12,10.8z"/>
+        </SvgIcon>
+    )
+}
