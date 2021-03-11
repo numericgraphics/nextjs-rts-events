@@ -161,7 +161,6 @@ function GetLocation (props, ref) {
                             onChange: setAdresse,
                             theme: (themeComp) => ({
                                 ...themeComp,
-                                borderRadius: 0,
                                 colors: {
                                     ...themeComp.colors,
                                     primary: theme.palette.secondary.main
