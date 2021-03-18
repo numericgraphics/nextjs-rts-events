@@ -193,7 +193,7 @@ function MyApp ({ Component, pageProps }) {
                 />
                 <script
                     type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqq7GNv66TpgfLkbIjuHVZXl-_sabL1_o&libraries=places"
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhlXon0MaJbKeBOlZ2w4YmZ23YqkwdlTs&libraries=places"
                 />
             </Head>
             { <ThemeProvider theme={ theme }>
