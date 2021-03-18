@@ -40,7 +40,7 @@ function MainMap (props) {
         // the number of features comprised by the cluster
         popupTemplate: {
             // Desactiver le zoom overwriteActions: false,
-            content: '{cluster_count} défis ont été réalisés dans cette region. Zoomez pour en voir plus !',
+            content: '{cluster_count} résultats dans cette region. Zoomez pour en voir plus !',
             fieldInfos: [
                 {
                     fieldName: 'cluster_count',
@@ -145,13 +145,17 @@ function MainMap (props) {
                 // webmap.add(newLayer)
                 final.push(newLayer)
             }
-            const group = new GroupLayer({
-                title: 'Les défis RTS !',
-                visible: true,
-                visibilityMode: 'exclusive',
-                layers: final
-            })
-            setLayers(group)
+            if (final.length > 1) {
+                const group = new GroupLayer({
+                    title: 'Les défis RTS !',
+                    visible: false,
+                    visibilityMode: 'exclusive',
+                    layers: final
+                })
+                setLayers(group)
+            } else {
+                setLayers(final[0])
+            }
         }
     }
 
@@ -200,12 +204,23 @@ function MainMap (props) {
                         layers[layer].featureReduction = cluster
                     }
                 } */
-                for (const layer in layers.layers.items) {
+                if (layers.length > 1) {
+                    for (const layer in layers.layers.items) {
                     // console.log(layers[layer])
+                        if (view.scale < 150000) {
+                            layers.layers._items[layer].featureReduction = null
+                        } else {
+                            layers.layers._items[layer].featureReduction = cluster
+                        }
+                    }
+                } else {
+                    if (layers.title === 'Participants') {
+                        layers.popupEnabled = false
+                    }
                     if (view.scale < 150000) {
-                        layers.layers._items[layer].featureReduction = null
+                        layers.featureReduction = null
                     } else {
-                        layers.layers._items[layer].featureReduction = cluster
+                        layers.featureReduction = cluster
                     }
                 }
             })
