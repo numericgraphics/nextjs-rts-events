@@ -1,12 +1,22 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 export const useStyles = makeStyles(() => ({
-    mapDiv: {
-        padding: '0',
-        margin: '0'
+    clusterMarker: {
+        color: '#fff',
+        background: '#1978c8',
+        borderRadius: '50%',
+        padding: '10px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    mapContainer: {
-        backgroundColor: 'white'
+    pointMarker: {
+        color: '#fff',
+        background: '#1978c8',
+        borderRadius: '50%',
+        padding: '5px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
-
 }))
