@@ -20,7 +20,7 @@ function MainMap (props) {
 
     const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     const { data, error } = useSwr(url, { fetcher })
-    const points = data && !error ? data.features.slice(0, 2000) : []
+    const points = data && !error ? data.features : []
     /* const points = crimes.map(crime => ({
         type: 'Feature',
         properties: { cluster: false, crimeId: crime.id, category: crime.category },
@@ -37,7 +37,7 @@ function MainMap (props) {
         points,
         bounds,
         zoom,
-        options: { radius: 75, maxZoom: 20 }
+        options: { radius: 75, maxZoom: 11 }
     })
 
     async function fetchData () {
@@ -51,7 +51,7 @@ function MainMap (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 // initGame(content)
-                getFinalLay(content)
+                // getFinalLay(content)
             } else {
                 await Router.push('/[events]', {
                     pathname: `/${events}`,
@@ -60,17 +60,6 @@ function MainMap (props) {
             }
         } catch (error) {
             throw new Error(error.message)
-        }
-    }
-
-    fetchData()
-
-    async function getFinalLay (layersJson) {
-        if (layersJson.geoJSONList) {
-            for (const layer in layersJson.geoJSONList) {
-                console.log(layersJson.geoJSONList[layer])
-                // webmap.add(newLayer)
-            }
         }
     }
 
@@ -124,6 +113,8 @@ function MainMap (props) {
                                         height: `${10 + (pointCount / points.length) * 20}px`
                                     }}
                                     onClick={() => {
+                                        console.log(supercluster)
+                                        console.log(cluster)
                                         const expansionZoom = Math.min(
                                             supercluster.getClusterExpansionZoom(cluster.id),
                                             20
@@ -134,6 +125,17 @@ function MainMap (props) {
                                 >
                                     {pointCount}
                                 </div>
+                            </Marker>
+                        )
+                    } else {
+                        return (
+                            <Marker
+                                key={cluster.id}
+                                lat={latitude}
+                                lng={longitude}
+                            >
+                                <button className={classes.pointMarker} onClick={() => { console.log(cluster) }}>
+                                </button>
                             </Marker>
                         )
                     }
