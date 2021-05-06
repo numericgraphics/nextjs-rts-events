@@ -37,7 +37,7 @@ function MainMap (props) {
         points,
         bounds,
         zoom,
-        options: { radius: 75, maxZoom: 11 }
+        options: { radius: 100, maxZoom: 1000 }
     })
 
     async function fetchData () {
@@ -80,6 +80,7 @@ function MainMap (props) {
                 defaultZoom={defaultProps.zoom}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map }) => {
+                    console.log(map)
                     mapRef.current = map
                 }}
                 onChange={({ zoom, bounds }) => {
@@ -113,14 +114,21 @@ function MainMap (props) {
                                         height: `${10 + (pointCount / points.length) * 20}px`
                                     }}
                                     onClick={() => {
-                                        console.log(supercluster)
                                         console.log(cluster)
-                                        const expansionZoom = Math.min(
+                                        console.log(cluster.id)
+                                        console.log(supercluster.getLeaves(cluster.id))
+                                        /* if (cluster.properties.cluster === true) {
+                                            console.log(cluster.type)
+                                            console.log(supercluster.getLeaves(cluster.id))
+                                        } else {
+                                            console.log('isnt')
+                                        }
+                                        /* const expansionZoom = Math.min(
                                             supercluster.getClusterExpansionZoom(cluster.id),
                                             20
                                         )
                                         mapRef.current.setZoom(expansionZoom)
-                                        mapRef.current.panTo({ lat: latitude, lng: longitude })
+                                        mapRef.current.panTo({ lat: latitude, lng: longitude }) */
                                     }}
                                 >
                                     {pointCount}
