@@ -1,20 +1,16 @@
 import React, { useRef, useState } from 'react'
 import useSwr from 'swr'
-import '@arcgis/core/assets/esri/themes/dark/main.css'
-import config from '@arcgis/core/config.js'
 import GoogleMapReact from 'google-map-react'
 import { useStyles } from '../../styles/jsx/components/map/mainMap.style.js'
-import Router, { useRouter } from 'next/router'
 import useSupercluster from 'use-supercluster'
-config.assetsPath = '/assets'
+import PointDetail from './PointsDetail'
 
 function MainMap (props) {
-    const router = useRouter()
     const mapRef = useRef(null)
     const classes = useStyles()
     const [bounds, setBounds] = useState(null)
     const [zoom, setZoom] = useState(10)
-    const { events } = router.query
+    const [pointList, setPointList] = useState(null)
     const fetcher = (...args) => fetch(...args).then(response => response.json())
     const Marker = ({ children }) => children
 
@@ -40,28 +36,6 @@ function MainMap (props) {
         options: { radius: 100, maxZoom: 30 }
     })
 
-    async function fetchData () {
-        try {
-            const bodyContent = { eventName: events }
-            const response = await fetch('/api/fetchGeoJson', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(bodyContent)
-            })
-            if (response.status === 200) {
-                const content = await response.json()
-                // initGame(content)
-                // getFinalLay(content)
-            } else {
-                await Router.push('/[events]', {
-                    pathname: `/${events}`,
-                    query: { modal: true }
-                })
-            }
-        } catch (error) {
-            throw new Error(error.message)
-        }
-    }
 
     const defaultProps = {
         center: {
@@ -114,9 +88,7 @@ function MainMap (props) {
                                         height: `${10 + (pointCount / points.length) * 20}px`
                                     }}
                                     onClick={() => {
-                                        console.log(cluster)
-                                        console.log(cluster.id)
-                                        console.log(supercluster.getLeaves(cluster.id, Infinity))
+                                        setPointList(supercluster.getLeaves(cluster.id, Infinity))
                                         /* if (cluster.properties.cluster === true) {
                                             console.log(cluster.type)
                                             console.log(supercluster.getLeaves(cluster.id))
@@ -149,6 +121,7 @@ function MainMap (props) {
                     }
                 })}
             </GoogleMapReact>
+            {pointList && <PointDetail pointList={pointList} setPointList={setPointList} />}
         </div>
     )
 }
