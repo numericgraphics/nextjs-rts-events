@@ -37,7 +37,7 @@ function MainMap (props) {
         points,
         bounds,
         zoom,
-        options: { radius: 100, maxZoom: 1000 }
+        options: { radius: 100, maxZoom: 30 }
     })
 
     async function fetchData () {
@@ -116,7 +116,7 @@ function MainMap (props) {
                                     onClick={() => {
                                         console.log(cluster)
                                         console.log(cluster.id)
-                                        console.log(supercluster.getLeaves(cluster.id))
+                                        console.log(supercluster.getLeaves(cluster.id, Infinity))
                                         /* if (cluster.properties.cluster === true) {
                                             console.log(cluster.type)
                                             console.log(supercluster.getLeaves(cluster.id))
