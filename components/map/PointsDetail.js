@@ -13,7 +13,7 @@ function MainMap (props) {
         console.log('index', index)
         console.log('plistLenght', pointListIndex)
         if (index < pointListIndex) {
-            setIndex(index + 1)
+            setIndex(index + 1, () => console.log('ici', index))
         } else if (index === pointListIndex) {
             setIndex(0)
         }
@@ -32,14 +32,11 @@ function MainMap (props) {
     function getDisplay (index) {
         if (index >= pointList.length) {
             setIndex(0)
+            index = 0
         }
         console.log(pointList)
         const nickname = pointList[index].properties.nickname
         const imageURL = pointList[index].properties.imageURL
-
-        useEffect(() => {
-            setIndex(0)
-        }, [pointList])
 
         return (
             <Box>

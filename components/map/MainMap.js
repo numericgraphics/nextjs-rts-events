@@ -45,6 +45,15 @@ function MainMap (props) {
         zoom: 9
     }
 
+    function closeDetail () {
+        setPointList(null)
+    }
+
+    function onClickCluster (clusterId) {
+        closeDetail()
+        setPointList(supercluster.getLeaves(clusterId, Infinity))
+    }
+
     return (
         <div style={{ height: '100vh', width: '100%' }}>
             <GoogleMapReact
@@ -88,7 +97,7 @@ function MainMap (props) {
                                         height: `${10 + (pointCount / points.length) * 20}px`
                                     }}
                                     onClick={() => {
-                                        setPointList(supercluster.getLeaves(cluster.id, Infinity))
+                                        onClickCluster(cluster.id)
                                         /* if (cluster.properties.cluster === true) {
                                             console.log(cluster.type)
                                             console.log(supercluster.getLeaves(cluster.id))
