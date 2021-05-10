@@ -17,6 +17,7 @@ function MainMap (props) {
     const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     const { data, error } = useSwr(url, { fetcher })
     const points = data && !error ? data.features : []
+    const bound = data && !error ? data.properties.bound : []
     /* const points = crimes.map(crime => ({
         type: 'Feature',
         properties: { cluster: false, crimeId: crime.id, category: crime.category },
@@ -35,7 +36,6 @@ function MainMap (props) {
         zoom,
         options: { radius: 100, maxZoom: 30 }
     })
-
 
     const defaultProps = {
         center: {
