@@ -3,20 +3,24 @@ import Box from '@material-ui/core/Box'
 import { useStyles } from '../../styles/jsx/components/map/pointDetail.style.js'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import CardMedia from '@material-ui/core/CardMedia'
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress'
+import { useTheme } from '@material-ui/core'
 
 function MainMap (props) {
     const classes = useStyles()
     const { pointList, setPointList } = props
     const pointListIndex = pointList.length - 1
     const [index, setIndex] = useState(0)
+    const theme = useTheme()
 
     useEffect(() => {
         setIndex(0)
         console.log(index)
         console.log(pointList)
     }, [pointList])
+
+    function closeDetail () {
+        setPointList(null)
+    }
 
     function nextPicture () {
         if (index < pointListIndex) {
@@ -44,8 +48,8 @@ function MainMap (props) {
 
         return (
             <Box className={classes.detailContainer}>
-                <Box>
-                    Test
+                <Box style={{ zIndex: '2', backgroundColor: theme.palette.primary.main, height: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={closeDetail} >
+                    <Box style={{ border: 'solid 2px' + theme.palette.primary.dark, width: '40px', height: '6px', borderRadius: '30px', backgroundColor: theme.palette.primary.dark }} />
                 </Box>
                 <Typography className={classes.title}>{nickname}</Typography>
                 <Box className={classes.imageContainer}>

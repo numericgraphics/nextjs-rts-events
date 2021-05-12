@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import useSwr from 'swr'
 import GoogleMapReact from 'google-map-react'
 import { useStyles } from '../../styles/jsx/components/map/mainMap.style.js'
 import useSupercluster from 'use-supercluster'
 import PointDetail from './PointsDetail'
+import { Typography } from '@material-ui/core'
 
 function MainMap (props) {
     const mapRef = useRef(null)
@@ -17,7 +18,7 @@ function MainMap (props) {
     const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     const { data, error } = useSwr(url, { fetcher })
     const points = data && !error ? data.features : []
-    const bound = data && !error ? data.properties.bound : []
+    const boundCenter = data && !error ? data.properties.bound : false
     /* const points = crimes.map(crime => ({
         type: 'Feature',
         properties: { cluster: false, crimeId: crime.id, category: crime.category },
@@ -29,13 +30,21 @@ function MainMap (props) {
             ]
         }
     })) */
-
+    console.log(boundCenter)
     const { clusters, supercluster } = useSupercluster({
         points,
         bounds,
         zoom,
         options: { radius: 100, maxZoom: 30 }
     })
+
+    useEffect(() => {
+        console.log(mapRef)
+        if (boundCenter) {
+            mapRef.current.fitBounds(boundCenter)
+            console.log('set bounds')
+        }
+    }, [boundCenter])
 
     const defaultProps = {
         center: {
@@ -131,6 +140,7 @@ function MainMap (props) {
                 })}
             </GoogleMapReact>
             {pointList && <PointDetail pointList={pointList} setPointList={setPointList} />}
+            <Typography onClick={() => { mapRef.current.fitBounds(boundCenter); console.log(mapRef.current.getZoom()) }}>Test</Typography>
         </div>
     )
 }
