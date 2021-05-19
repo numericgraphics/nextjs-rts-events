@@ -8,6 +8,10 @@ import UserLocation from './markers/UserLocation'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import Box from '@material-ui/core/Box'
+import { Typography } from '@material-ui/core'
+import AvatarEvent from '../../components/ui/avatar/avatarEvent'
+import Avatar from '@material-ui/core/Avatar'
 
 function MainMap (props) {
     const mapRef = useRef(null)
@@ -20,9 +24,10 @@ function MainMap (props) {
     const fetcher = (...args) => fetch(...args).then(response => response.json())
     const Marker = ({ children }) => children
     const [activeClusterId, setActiveClusterId] = useState(0)
-    const onLoad = () => console.log(Date.now())
+    const onLoad = () => console.log('loaded')
+    const [loadedItem, setLoadedItem] = useState([])
 
-    const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/RECOGEO1'
+    const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     const { data, error } = useSwr(url, { fetcher })
     const points = data && !error ? data.features : []
     const boundCenter = data && !error ? data.properties.bound : false
@@ -113,7 +118,7 @@ function MainMap (props) {
     }
 
     function closeDetail () {
-        setPointList(null)
+        setImgList(false)
     }
 
     function onClickCluster (cluster) {
@@ -128,12 +133,21 @@ function MainMap (props) {
         points2.sort((a, b) => a.distance - b.distance)
 
         setPointList(points2) */
+        const pos = {
+            lat: cluster.geometry.coordinates[1],
+            lng: cluster.geometry.coordinates[0]
+        }
+        mapRef.current.setCenter(pos)
         setActiveClusterId(cluster.id)
         setPointList(supercluster.getLeaves(cluster.id, Infinity))
     }
 
     function onClickPoint (cluster) {
-        console.log(cluster)
+        const pos = {
+            lat: cluster.geometry.coordinates[1],
+            lng: cluster.geometry.coordinates[0]
+        }
+        mapRef.current.setCenter(pos)
         closeDetail()
         setActiveClusterId(cluster.geometry.coordinates)
         setPointList([cluster])
@@ -165,7 +179,19 @@ function MainMap (props) {
     useEffect(() => {
         if (pointList) {
             var imageArray = []
-            pointList.map((point) => imageArray.push(<LazyLoadImage src={point.properties.imageURL} onLoad={onLoad} onDragStart={handleDragStart} onClick={() => onClickImage(point)} style={{ objectFit: 'cover', height: '30vh', width: '100%', borderRadius: '10px', maxWidth: '300px' }} />))
+            pointList.map((point, index) => {
+                imageArray.push(
+                    <Box className={classes.slideContainer}>
+                        <Box className={classes.slideHeader}>
+                            <Avatar className={classes.avatar} src={point.properties.avatarURL} />
+                            <Typography className={classes.headerText}>
+                                {point.properties.nickname}
+                            </Typography>
+                        </Box>
+                        <LazyLoadImage className={classes.slideImage} src={point.properties.imageURL} onLoad={() => console.log('is loaded')} onDragStart={handleDragStart} onClick={() => onClickImage(point)} />
+                    </Box>
+                )
+            })
             setImgList(imageArray)
         }
     }, [pointList])
@@ -173,6 +199,12 @@ function MainMap (props) {
     useEffect(() => {
         console.log(imgList)
     }, [imgList])
+
+    const responsive = {
+        0: { items: 1 },
+        568: { items: 3 },
+        1024: { items: 5 }
+    }
 
     return (
         <div style={{ height: '100vh', width: '100%' }}>
@@ -186,11 +218,29 @@ function MainMap (props) {
                 onGoogleApiLoaded={({ map }) => {
                     console.log(map)
                     mapRef.current = map
-                    const locationButton = document.createElement('button')
+                    /* const locationButton = document.createElement('button')
                     locationButton.textContent = '📍'
                     locationButton.classList.add(classes.localisationBtn)
                     map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(locationButton)
+                    locationButton.addEventListener('click', getUserLocation) */
+
+                    /* const locationDiv = document.getElementById('medalIcon')
+                    locationDiv.classList.add(classes.localisationBtn)
+                    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(locationDiv)
+                    locationDiv.addEventListener('click', getUserLocation) */
+                    const locationButton = document.createElement('img')
+                    locationButton.src = '/icon_focusmap.svg'
+                    locationButton.classList.add(classes.localisationBtn)
+                    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(locationButton)
                     locationButton.addEventListener('click', getUserLocation)
+
+                    map.addListener('zoom_changed', () => {
+                        closeDetail()
+                    })
+
+                    map.addListener('center_changed', () => {
+                        closeDetail()
+                    })
                 }}
                 onChange={({ zoom, bounds }) => {
                     setZoom(zoom)
@@ -224,19 +274,23 @@ function MainMap (props) {
                                     }}
                                     onClick={() => {
                                         // setActiveClusterId(cluster.id)
-                                        onClickCluster(cluster)
+                                        // onClickCluster(cluster)
                                         /* if (cluster.properties.cluster === true) {
                                             console.log(cluster.type)
                                             console.log(supercluster.getLeaves(cluster.id))
                                         } else {
                                             console.log('isnt')
-                                        }
-                                        /* const expansionZoom = Math.min(
+                                        } */
+                                        const expansionZoom = Math.min(
                                             supercluster.getClusterExpansionZoom(cluster.id),
-                                            20
+                                            16
                                         )
                                         mapRef.current.setZoom(expansionZoom)
-                                        mapRef.current.panTo({ lat: latitude, lng: longitude }) */
+                                        mapRef.current.panTo({ lat: latitude, lng: longitude })
+                                        console.log(mapRef.current.getZoom())
+                                        if (mapRef.current.getZoom() === 16) {
+                                            onClickCluster(cluster)
+                                        }
                                     }}
                                 >
                                     {pointCount}
@@ -250,8 +304,6 @@ function MainMap (props) {
                                 lat={latitude}
                                 lng={longitude}
                             >
-                                {console.log('active 0', activeClusterId[0])}
-                                {console.log('clust 0', cluster.geometry.coordinates[0])}
                                 <button className={(activeClusterId[0] === cluster.geometry.coordinates[0] && activeClusterId[1] === cluster.geometry.coordinates[1]) ? [classes.pointMarker, classes.activeCluster].join(' ') : classes.pointMarker} onClick={() => { onClickPoint(cluster) }}>
                                 </button>
                             </Marker>
@@ -267,8 +319,8 @@ function MainMap (props) {
                 className={classes.carouselContainer}
                 mouseTracking
                 items={imgList}
-                onSlideChanged={(e) => console.log(e)}
-                // responsive={responsive}
+                onSlideChange={(e) => console.log(e)}
+                responsive={responsive}
                 disableDotsControls={true}
             />}
         </div>
