@@ -207,7 +207,7 @@ function MainMap (props) {
     }
 
     return (
-        <div style={{ height: useHeight(), width: '100%' }}>
+        <div style={{ overflow: 'hidden', position: 'fixed', height: useHeight(), width: '100%' }}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyB-9foPM3YEbl15NVb54d12NUQxSFpbQRc' }}
                 defaultCenter={defaultProps.center}
