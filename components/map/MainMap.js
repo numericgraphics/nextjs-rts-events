@@ -137,7 +137,7 @@ function MainMap (props) {
             lat: cluster.geometry.coordinates[1],
             lng: cluster.geometry.coordinates[0]
         }
-        mapRef.current.setCenter(pos)
+        mapRef.current.panTo(pos)
         setActiveClusterId(cluster.id)
         setPointList(supercluster.getLeaves(cluster.id, Infinity))
     }
@@ -147,7 +147,7 @@ function MainMap (props) {
             lat: cluster.geometry.coordinates[1],
             lng: cluster.geometry.coordinates[0]
         }
-        mapRef.current.setCenter(pos)
+        mapRef.current.panTo(pos)
         closeDetail()
         setActiveClusterId(cluster.geometry.coordinates)
         setPointList([cluster])
