@@ -10,7 +10,7 @@ import 'react-alice-carousel/lib/alice-carousel.css'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Box from '@material-ui/core/Box'
 import { Typography } from '@material-ui/core'
-import AvatarEvent from '../../components/ui/avatar/avatarEvent'
+import { useHeight } from '../../hooks/useHeight'
 import Avatar from '@material-ui/core/Avatar'
 
 function MainMap (props) {
@@ -207,7 +207,7 @@ function MainMap (props) {
     }
 
     return (
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height: useHeight(), width: '100%' }}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyB-9foPM3YEbl15NVb54d12NUQxSFpbQRc' }}
                 defaultCenter={defaultProps.center}
