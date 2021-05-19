@@ -171,7 +171,7 @@ function MainMap (props) {
 
     function onClickImage (point) {
         console.log(point)
-        mapRef.current.setCenter({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] })
+        // mapRef.current.setCenter({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] })
         return null
     }
 
