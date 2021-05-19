@@ -10,6 +10,9 @@ export const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    activeCluster: {
+        backgroundColor: 'red!important'
+    },
     pointMarker: {
         color: '#fff',
         background: '#1978c8',

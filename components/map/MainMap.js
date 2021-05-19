@@ -19,9 +19,8 @@ function MainMap (props) {
     const [imgList, setImgList] = useState(null)
     const fetcher = (...args) => fetch(...args).then(response => response.json())
     const Marker = ({ children }) => children
-    const [activeIndex, setActiveIndex] = useState(0)
+    const [activeClusterId, setActiveClusterId] = useState(0)
     const onLoad = () => console.log(Date.now())
-    const onSlideChanged = ({ item }) => setActiveIndex(item)
 
     const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/RECOGEO1'
     const { data, error } = useSwr(url, { fetcher })
@@ -118,8 +117,7 @@ function MainMap (props) {
     }
 
     function onClickCluster (cluster) {
-        // const clusterId = cluster.id
-        const clusterLocation = cluster.geometry.coordinates
+        /* const clusterLocation = cluster.geometry.coordinates
         closeDetail()
         const points2 = points.map((point) => {
             point.distance = distanceBetweenCoordinates(point.geometry.coordinates, clusterLocation)
@@ -129,11 +127,15 @@ function MainMap (props) {
         console.log('miaou')
         points2.sort((a, b) => a.distance - b.distance)
 
-        setPointList(points2)
+        setPointList(points2) */
+        setActiveClusterId(cluster.id)
+        setPointList(supercluster.getLeaves(cluster.id, Infinity))
     }
 
     function onClickPoint (cluster) {
+        console.log(cluster)
         closeDetail()
+        setActiveClusterId(cluster.geometry.coordinates)
         setPointList([cluster])
     }
 
@@ -155,7 +157,7 @@ function MainMap (props) {
 
     function onClickImage (point) {
         console.log(point)
-        // mapRef.current.setCenter({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] })
+        mapRef.current.setCenter({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] })
         return null
     }
 
@@ -168,11 +170,9 @@ function MainMap (props) {
         }
     }, [pointList])
 
-    const responsive = {
-        0: { items: 1 },
-        568: { items: 3 },
-        1024: { items: 5 }
-    }
+    useEffect(() => {
+        console.log(imgList)
+    }, [imgList])
 
     return (
         <div style={{ height: '100vh', width: '100%' }}>
@@ -217,12 +217,13 @@ function MainMap (props) {
                                 lng={longitude}
                             >
                                 <div
-                                    className={classes.clusterMarker}
+                                    className={activeClusterId === cluster.id ? [classes.clusterMarker, classes.activeCluster].join(' ') : classes.clusterMarker}
                                     style={{
                                         width: `${10 + (pointCount / points.length) * 20}px`,
                                         height: `${10 + (pointCount / points.length) * 20}px`
                                     }}
                                     onClick={() => {
+                                        // setActiveClusterId(cluster.id)
                                         onClickCluster(cluster)
                                         /* if (cluster.properties.cluster === true) {
                                             console.log(cluster.type)
@@ -249,7 +250,9 @@ function MainMap (props) {
                                 lat={latitude}
                                 lng={longitude}
                             >
-                                <button className={classes.pointMarker} onClick={() => { onClickPoint(cluster) }}>
+                                {console.log('active 0', activeClusterId[0])}
+                                {console.log('clust 0', cluster.geometry.coordinates[0])}
+                                <button className={(activeClusterId[0] === cluster.geometry.coordinates[0] && activeClusterId[1] === cluster.geometry.coordinates[1]) ? [classes.pointMarker, classes.activeCluster].join(' ') : classes.pointMarker} onClick={() => { onClickPoint(cluster) }}>
                                 </button>
                             </Marker>
                         )
@@ -264,7 +267,8 @@ function MainMap (props) {
                 className={classes.carouselContainer}
                 mouseTracking
                 items={imgList}
-                responsive={responsive}
+                onSlideChanged={(e) => console.log(e)}
+                // responsive={responsive}
                 disableDotsControls={true}
             />}
         </div>
