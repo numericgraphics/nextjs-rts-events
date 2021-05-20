@@ -27,10 +27,34 @@ function MainMap (props) {
     const onLoad = () => console.log('loaded')
     const [loadedItem, setLoadedItem] = useState([])
 
-    const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
-    const { data, error } = useSwr(url, { fetcher })
-    const points = data && !error ? data.features : []
-    const boundCenter = data && !error ? data.properties.bound : false
+    // const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
+    // const { data, error } = useSwr(url, { fetcher })
+    // const points = data && !error ? data.features : []
+    // const boundCenter = data && !error ? data.properties.bound : false
+    const [points, setPoints] = useState([])
+    const [boundCenter, setBoundCenter] = useState(null)
+
+    async function fetchMarkers () {
+        try {
+            const response = await fetch('/api/fetchMapMarkers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ event: 'WF6', defi: 'CAC2020' })
+            })
+
+            if (response.status === 200) {
+                const content = await response.json()
+                setPoints(content.features)
+                setBoundCenter(content.properties.bound)
+                // console.log(content)
+            } else {
+                console.log('error')
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
     /* const points = crimes.map(crime => ({
         type: 'Feature',
         properties: { cluster: false, crimeId: crime.id, category: crime.category },
@@ -206,6 +230,14 @@ function MainMap (props) {
         1024: { items: 5 }
     }
 
+    useEffect(() => {
+        console.log('fetch not marker')
+        if (!points || !boundCenter) {
+            console.log('fetch marker')
+            fetchMarkers().then()
+        }
+    }, [])
+
     return (
         <div style={{ height: useHeight(), width: '100%' }}>
             <GoogleMapReact
@@ -260,6 +292,7 @@ function MainMap (props) {
                     } = cluster.properties
 
                     if (isCluster) {
+                        console.log('create')
                         return (
                             <Marker
                                 key={`cluster-${cluster.id}`}
