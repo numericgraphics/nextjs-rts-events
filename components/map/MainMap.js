@@ -25,7 +25,7 @@ function MainMap (props) {
     const Marker = ({ children }) => children
     const [activeClusterId, setActiveClusterId] = useState(0)
     const onLoad = () => console.log('loaded')
-    const [loadedItem, setLoadedItem] = useState([])
+    const [markers, setMarkers] = useState([])
 
     // const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     // const { data, error } = useSwr(url, { fetcher })
@@ -34,12 +34,19 @@ function MainMap (props) {
     const [points, setPoints] = useState([])
     const [boundCenter, setBoundCenter] = useState(null)
 
+    const { clusters, supercluster } = useSupercluster({
+        points,
+        bounds,
+        zoom,
+        options: { radius: 100, maxZoom: 15 }
+    })
+
     async function fetchMarkers () {
         try {
             const response = await fetch('/api/fetchMapMarkers', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ event: 'WF6', defi: 'CAC2020' })
+                body: JSON.stringify({ event: 'WF6', defi: 'RECOGEO1' })
             })
 
             if (response.status === 200) {
@@ -66,12 +73,6 @@ function MainMap (props) {
             ]
         }
     })) */
-    const { clusters, supercluster } = useSupercluster({
-        points,
-        bounds,
-        zoom,
-        options: { radius: 100, maxZoom: 30 }
-    })
 
     function toRadian (deg) {
         const pi = Math.PI
@@ -221,8 +222,71 @@ function MainMap (props) {
     }, [pointList])
 
     useEffect(() => {
-        console.log(imgList)
-    }, [imgList])
+        if (clusters && points) {
+            console.log(clusters)
+            var markers = []
+            clusters.map(cluster => {
+                const [longitude, latitude] = cluster.geometry.coordinates
+                const {
+                    cluster: isCluster,
+                    point_count: pointCount
+                } = cluster.properties
+
+                if (isCluster) {
+                    console.log('create')
+                    markers.push(
+                        <Marker
+                            key={`cluster-${cluster.id}`}
+                            lat={latitude}
+                            lng={longitude}
+                        >
+                            <div
+                                className={activeClusterId === cluster.id ? [classes.clusterMarker, classes.activeCluster].join(' ') : classes.clusterMarker}
+                                style={{
+                                    width: `${10 + (pointCount / points.length) * 20}px`,
+                                    height: `${10 + (pointCount / points.length) * 20}px`
+                                }}
+                                onClick={() => {
+                                // setActiveClusterId(cluster.id)
+                                // onClickCluster(cluster)
+                                /* if (cluster.properties.cluster === true) {
+                                    console.log(cluster.type)
+                                    console.log(supercluster.getLeaves(cluster.id))
+                                } else {
+                                    console.log('isnt')
+                                } */
+                                    const expansionZoom = Math.min(
+                                        supercluster.getClusterExpansionZoom(cluster.id),
+                                        16
+                                    )
+                                    mapRef.current.setZoom(expansionZoom)
+                                    mapRef.current.panTo({ lat: latitude, lng: longitude })
+                                    console.log(mapRef.current.getZoom())
+                                    if (mapRef.current.getZoom() === 16) {
+                                        onClickCluster(cluster)
+                                    }
+                                }}
+                            >
+                                {pointCount}
+                            </div>
+                        </Marker>
+                    )
+                } else {
+                    markers.push(
+                        <Marker
+                            key={cluster.id}
+                            lat={latitude}
+                            lng={longitude}
+                        >
+                            <button className={(activeClusterId[0] === cluster.geometry.coordinates[0] && activeClusterId[1] === cluster.geometry.coordinates[1]) ? [classes.pointMarker, classes.activeCluster].join(' ') : classes.pointMarker} onClick={() => { onClickPoint(cluster) }}>
+                            </button>
+                        </Marker>
+                    )
+                }
+            })
+            setMarkers(markers)
+        }
+    }, [clusters])
 
     const responsive = {
         0: { items: 1 },
@@ -237,6 +301,11 @@ function MainMap (props) {
             fetchMarkers().then()
         }
     }, [])
+
+    useEffect(() => {
+        console.log(supercluster)
+        console.log(clusters)
+    }, [supercluster])
 
     return (
         <div style={{ height: useHeight(), width: '100%' }}>
@@ -284,65 +353,8 @@ function MainMap (props) {
                     ])
                 }}
             >
-                {clusters.map(cluster => {
-                    const [longitude, latitude] = cluster.geometry.coordinates
-                    const {
-                        cluster: isCluster,
-                        point_count: pointCount
-                    } = cluster.properties
-
-                    if (isCluster) {
-                        console.log('create')
-                        return (
-                            <Marker
-                                key={`cluster-${cluster.id}`}
-                                lat={latitude}
-                                lng={longitude}
-                            >
-                                <div
-                                    className={activeClusterId === cluster.id ? [classes.clusterMarker, classes.activeCluster].join(' ') : classes.clusterMarker}
-                                    style={{
-                                        width: `${10 + (pointCount / points.length) * 20}px`,
-                                        height: `${10 + (pointCount / points.length) * 20}px`
-                                    }}
-                                    onClick={() => {
-                                        // setActiveClusterId(cluster.id)
-                                        // onClickCluster(cluster)
-                                        /* if (cluster.properties.cluster === true) {
-                                            console.log(cluster.type)
-                                            console.log(supercluster.getLeaves(cluster.id))
-                                        } else {
-                                            console.log('isnt')
-                                        } */
-                                        const expansionZoom = Math.min(
-                                            supercluster.getClusterExpansionZoom(cluster.id),
-                                            16
-                                        )
-                                        mapRef.current.setZoom(expansionZoom)
-                                        mapRef.current.panTo({ lat: latitude, lng: longitude })
-                                        console.log(mapRef.current.getZoom())
-                                        if (mapRef.current.getZoom() === 16) {
-                                            onClickCluster(cluster)
-                                        }
-                                    }}
-                                >
-                                    {pointCount}
-                                </div>
-                            </Marker>
-                        )
-                    } else {
-                        return (
-                            <Marker
-                                key={cluster.id}
-                                lat={latitude}
-                                lng={longitude}
-                            >
-                                <button className={(activeClusterId[0] === cluster.geometry.coordinates[0] && activeClusterId[1] === cluster.geometry.coordinates[1]) ? [classes.pointMarker, classes.activeCluster].join(' ') : classes.pointMarker} onClick={() => { onClickPoint(cluster) }}>
-                                </button>
-                            </Marker>
-                        )
-                    }
-                })}
+                {markers && markers}
+                <div>Miaou</div>
                 {userLocation && <UserLocation
                     lat={userLocation.lat}
                     lng={userLocation.lng}
