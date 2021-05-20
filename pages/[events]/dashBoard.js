@@ -17,6 +17,7 @@ import GiftsBox from '../../components/gifts/giftsBox'
 import Gift from '../../components/gifts/gift'
 import { useImagesServices } from '../../hooks/useImagesServices'
 import GiftResult from '../../components/gifts/giftResult'
+import CommunityDashboardWidget from '../../components/community/communityDashboardWidget'
 import BackGroundDisplay from '../../components/ui/background/BackGroundDisplay'
 import { useStylesGlobal } from '../../styles/jsx/global.style'
 import { useStyles } from '../../styles/jsx/pages/dashBoard.style'
@@ -41,7 +42,8 @@ export const ModalStates = Object.freeze({
     PROFILE: 'profile',
     MESSAGE: 'message',
     DESKTOP_RECO: 'desktopReco',
-    WIN: 'win'
+    WIN: 'win',
+    MAP: 'map'
 })
 
 function DashBoard (props) {
@@ -70,6 +72,7 @@ function DashBoard (props) {
     const [openFeedback, setOpenFeedback] = useState(false)
     const modalGiftRef = createRef()
     const modalEndGameRef = createRef()
+    const modalMapRef = createRef()
     const modalProfilRef = createRef()
     let timeout
 
@@ -171,6 +174,13 @@ function DashBoard (props) {
                 handleClose={closeModal}
                 open={open}
             />
+        case ModalStates.MAP:
+            return <Box
+                ref={modalMapRef}
+                handleClose={closeModal}
+                open={open}>
+                TODO PLOUF
+            </Box>
         }
     }
 
@@ -325,6 +335,16 @@ function DashBoard (props) {
                                 }
                             </CardContent>
                         </ColorCard>
+                        { dataProvider.getGameStats().hasCurrentRecoCom &&
+                            <ColorCard>
+                                <CardContent className={classes.cardContent}>
+                                    <CommunityDashboardWidget
+                                        onClick={() => onOpenModal(ModalStates.MAP)}
+                                        textContent={uiElements.recoComMessageChunk}
+                                    />
+                                </CardContent>
+                            </ColorCard>
+                        }
                     </Box>
                 </Slide>
                 <Slide
