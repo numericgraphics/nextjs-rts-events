@@ -10,8 +10,9 @@ import 'react-alice-carousel/lib/alice-carousel.css'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Box from '@material-ui/core/Box'
 import { Typography } from '@material-ui/core'
-import { useHeight } from '../../hooks/useHeight'
+import { useHeightMap } from '../../hooks/useHeightMap'
 import Avatar from '@material-ui/core/Avatar'
+import Div100vh from 'react-div-100vh'
 
 function MainMap (props) {
     const mapRef = useRef(null)
@@ -26,20 +27,30 @@ function MainMap (props) {
     const [activeClusterId, setActiveClusterId] = useState(0)
     const onLoad = () => console.log('loaded')
     const [markers, setMarkers] = useState([])
-
     // const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     // const { data, error } = useSwr(url, { fetcher })
     // const points = data && !error ? data.features : []
     // const boundCenter = data && !error ? data.properties.bound : false
     const [points, setPoints] = useState([])
-    const [boundCenter, setBoundCenter] = useState(null)
+    // const [boundCenter, setBoundCenter] = useState(null)
+
+    const { clusters2, supercluster2 } = useSupercluster({
+        points,
+        bounds,
+        zoom,
+        options: { radius: 75, maxZoom: 20 }
+    })
 
     const { clusters, supercluster } = useSupercluster({
         points,
         bounds,
         zoom,
-        options: { radius: 100, maxZoom: 15 }
+        options: { radius: 75, maxZoom: 20 }
     })
+
+    console.log('clusters', clusters)
+    console.log('clusters2', clusters2)
+    console.log('supercluster2', supercluster2)
 
     async function fetchMarkers () {
         try {
@@ -52,7 +63,7 @@ function MainMap (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 setPoints(content.features)
-                setBoundCenter(content.properties.bound)
+                // setBoundCenter(content.properties.bound)
                 // console.log(content)
             } else {
                 console.log('error')
@@ -113,20 +124,20 @@ function MainMap (props) {
         }
     }, [userLocation])
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (boundCenter && mapRef.current) {
             mapRef.current.fitBounds(boundCenter)
             // console.log(mapRef.current.getBounds().extend())
             console.log('set bounds')
         }
-    }, [boundCenter])
+    }, [boundCenter]) */
 
     const defaultProps = {
         center: {
             lat: 46.657505,
             lng: 7.099246
         },
-        zoom: 9
+        zoom: 10
     }
 
     const createMapOptions = function (maps) {
@@ -274,7 +285,7 @@ function MainMap (props) {
                 } else {
                     markers.push(
                         <Marker
-                            key={cluster.id}
+                            key={cluster.geometry.coordinates[0] + '-' + cluster.geometry.coordinates[1]}
                             lat={latitude}
                             lng={longitude}
                         >
@@ -296,7 +307,8 @@ function MainMap (props) {
 
     useEffect(() => {
         console.log('fetch not marker')
-        if (!points || !boundCenter) {
+        // || !boundCenter
+        if (points) {
             console.log('fetch marker')
             fetchMarkers().then()
         }
@@ -308,7 +320,7 @@ function MainMap (props) {
     }, [supercluster])
 
     return (
-        <div style={{ height: useHeight(), width: '100%' }}>
+        <Div100vh>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyB-9foPM3YEbl15NVb54d12NUQxSFpbQRc' }}
                 defaultCenter={defaultProps.center}
@@ -354,7 +366,6 @@ function MainMap (props) {
                 }}
             >
                 {markers && markers}
-                <div>Miaou</div>
                 {userLocation && <UserLocation
                     lat={userLocation.lat}
                     lng={userLocation.lng}
@@ -368,7 +379,7 @@ function MainMap (props) {
                 responsive={responsive}
                 disableDotsControls={true}
             />}
-        </div>
+        </Div100vh>
     )
 }
 export default MainMap
