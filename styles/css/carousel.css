@@ -1,0 +1,11 @@
+.alice-carousel {
+    position: absolute!important;
+    bottom: 0;
+}
+
+.alice-carousel__stage-item {
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+    border-radius: 30px;
+    text-align: center;
+}
