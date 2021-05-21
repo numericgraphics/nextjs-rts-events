@@ -8,7 +8,10 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         padding: '10px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
     },
     activeCluster: {
         backgroundColor: 'red!important'
@@ -20,7 +23,10 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         padding: '5px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
     },
     localisationBtn: {
         margin: '10px',

@@ -10,7 +10,6 @@ import 'react-alice-carousel/lib/alice-carousel.css'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Box from '@material-ui/core/Box'
 import { Typography } from '@material-ui/core'
-import { useHeightMap } from '../../hooks/useHeightMap'
 import Avatar from '@material-ui/core/Avatar'
 import Div100vh from 'react-div-100vh'
 
@@ -34,23 +33,12 @@ function MainMap (props) {
     const [points, setPoints] = useState([])
     // const [boundCenter, setBoundCenter] = useState(null)
 
-    const { clusters2, supercluster2 } = useSupercluster({
-        points,
-        bounds,
-        zoom,
-        options: { radius: 75, maxZoom: 20 }
-    })
-
     const { clusters, supercluster } = useSupercluster({
         points,
         bounds,
         zoom,
         options: { radius: 75, maxZoom: 20 }
     })
-
-    console.log('clusters', clusters)
-    console.log('clusters2', clusters2)
-    console.log('supercluster2', supercluster2)
 
     async function fetchMarkers () {
         try {
@@ -63,6 +51,10 @@ function MainMap (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 setPoints(content.features)
+                console.log(content.properties.bound)
+                // var bounds = new google.maps.LatLngBounds(content.properties.bound)
+                mapRef.current.fitBounds(content.properties.bound)
+                // setBounds()
                 // setBoundCenter(content.properties.bound)
                 // console.log(content)
             } else {
@@ -205,12 +197,6 @@ function MainMap (props) {
         }
     }
 
-    function onClickImage (point) {
-        console.log(point)
-        // mapRef.current.setCenter({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] })
-        return null
-    }
-
     const handleDragStart = (e) => e.preventDefault()
     useEffect(() => {
         if (pointList) {
@@ -224,7 +210,7 @@ function MainMap (props) {
                                 {point.properties.nickname}
                             </Typography>
                         </Box>
-                        <LazyLoadImage className={classes.slideImage} src={point.properties.imageURL} onLoad={() => console.log('is loaded')} onDragStart={handleDragStart} onClick={() => onClickImage(point)} />
+                        <LazyLoadImage className={classes.slideImage} src={point.properties.imageURL} onLoad={() => console.log('is loaded')} onDragStart={handleDragStart} />
                     </Box>
                 )
             })
@@ -313,11 +299,6 @@ function MainMap (props) {
             fetchMarkers().then()
         }
     }, [])
-
-    useEffect(() => {
-        console.log(supercluster)
-        console.log(clusters)
-    }, [supercluster])
 
     return (
         <Div100vh>
