@@ -3,13 +3,10 @@ import UserContext from '../../hooks/userContext'
 import { useRouter } from 'next/router'
 import { getAllEvents, getEventsData } from '../../lib/events'
 import ThemeFactory from '../../data/themeFactory'
-import Box from '@material-ui/core/Box'
-// import MainMap from '../../components/map/MainMap'
 import EventLayout from '../../components/ui/layout/eventLayout'
-import dynamic from 'next/dynamic'
-const MainMap = dynamic(() => import('../../components/map/MainMap'), {
-    ssr: false
-})
+import Div100vh from 'react-div-100vh'
+import MainMap from '../../components/map/MainMap'
+const queryString = require('query-string')
 
 function Map (props) {
     const router = useRouter()
@@ -17,6 +14,7 @@ function Map (props) {
     const { setTheme, setLoading, setEventName, setEventData, isGlobalLoading } = store
     const { events } = router.query
     const { eventData } = props
+    const defi = (typeof window !== 'undefined') && queryString.parse(location.search).defi
 
     useEffect(() => {
         if (isGlobalLoading) {
@@ -25,15 +23,17 @@ function Map (props) {
             setEventName(events)
             dataProvider.setEventData(eventData.content)
             setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
+        } else {
+            setLoading(false)
         }
     }, [isGlobalLoading])
 
     return (
         <React.Fragment>
             <EventLayout>
-                <Box className='content' >
-                    <MainMap/>
-                </Box>
+                <Div100vh className='content'>
+                    <MainMap defi={defi} />
+                </Div100vh>
             </EventLayout>
         </React.Fragment>
     )

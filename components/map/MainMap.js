@@ -9,10 +9,10 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Box from '@material-ui/core/Box'
 import { Typography } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
-import Div100vh from 'react-div-100vh'
 
 function MainMap (props) {
     const mapRef = useRef(null)
+    const { defi } = props
     const classes = useStyles()
     const [bounds, setBounds] = useState(null)
     const [zoom, setZoom] = useState(10)
@@ -41,7 +41,7 @@ function MainMap (props) {
             const response = await fetch('/api/fetchMapMarkers', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ event: 'WF6', defi: 'RECOGEO1' })
+                body: JSON.stringify({ event: 'WF6', defi: defi })
             })
 
             if (response.status === 200) {
@@ -255,7 +255,7 @@ function MainMap (props) {
     }, [])
 
     return (
-        <Div100vh>
+        <React.Fragment>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyB-9foPM3YEbl15NVb54d12NUQxSFpbQRc' }}
                 defaultCenter={defaultProps.center}
@@ -302,7 +302,7 @@ function MainMap (props) {
                 responsive={responsive}
                 disableDotsControls={true}
             />}
-        </Div100vh>
+        </React.Fragment>
     )
 }
 export default MainMap

@@ -6,7 +6,7 @@ function UserLocation (props) {
     const classes = useStyles()
 
     return (
-        <Box className={classes.markerBox}/>
+        <Box className={[classes.markerBox, classes.pulse].join(' ')}/>
     )
 }
 export default UserLocation

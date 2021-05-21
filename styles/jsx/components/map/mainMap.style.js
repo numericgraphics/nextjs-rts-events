@@ -11,7 +11,10 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     activeCluster: {
         backgroundColor: 'red!important'
@@ -26,7 +29,10 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         alignItems: 'center',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     localisationBtn: {
         margin: '10px',

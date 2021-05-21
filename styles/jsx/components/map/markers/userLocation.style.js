@@ -10,5 +10,17 @@ export const useStyles = makeStyles(() => ({
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -100%)'
+    },
+    pulse: {
+        animation: '$pulse-animation 2s infinite',
+        borderRadius: '50%'
+    },
+    '@keyframes pulse-animation': {
+        '0%': {
+            boxShadow: '0 0 0 0px rgba(0, 0, 0, 0.2)'
+        },
+        '100%': {
+            boxShadow: '0 0 0 20px rgba(0, 0, 0, 0)'
+        }
     }
 }))

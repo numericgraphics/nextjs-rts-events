@@ -31,6 +31,7 @@ import EndgameInformation from '../../components/dashboard/endGameInformation'
 import DesktopReco from '../../components/dashboard/desktopReco'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import MapModal from '../../components/map/MapModal'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -175,12 +176,11 @@ function DashBoard (props) {
                 open={open}
             />
         case ModalStates.MAP:
-            return <Box
+            return <MapModal
+                defi={gameStats.currentRecoComID}
                 ref={modalMapRef}
                 handleClose={closeModal}
-                open={open}>
-                TODO PLOUF
-            </Box>
+                open={open}/>
         }
     }
 
@@ -198,7 +198,7 @@ function DashBoard (props) {
     useEffect(() => {
         if (!availableChallenges) {
             timeout = setTimeout(() => {
-                dataProvider.getGameStats().availableChallengesCount > 0 ? onOpenModal(ModalStates.DESKTOP_RECO) : onOpenModal(ModalStates.END_GAME)
+                gameStats.availableChallengesCount > 0 ? onOpenModal(ModalStates.DESKTOP_RECO) : onOpenModal(ModalStates.END_GAME)
             }, 1000)
         }
     }, [availableChallenges])
@@ -335,7 +335,7 @@ function DashBoard (props) {
                                 }
                             </CardContent>
                         </ColorCard>
-                        { dataProvider.getGameStats().hasCurrentRecoCom &&
+                        { gameStats && gameStats.hasCurrentRecoCom &&
                             <ColorCard>
                                 <CardContent className={classes.cardContent}>
                                     <CommunityDashboardWidget
