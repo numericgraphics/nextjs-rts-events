@@ -2,8 +2,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme = useTheme) => ({
     clusterMarker: {
-        color: '#fff',
-        background: '#1978c8',
+        color: theme.palette.primary.contrastText,
+        background: theme.palette.primary.main,
         borderRadius: '50%',
         padding: '10px',
         display: 'flex',
@@ -17,11 +17,13 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         }
     },
     activeCluster: {
-        backgroundColor: 'red!important'
+        // backgroundColor: 'red!important',
+        border: 'solid 3px ' + theme.palette.secondary.contrastText + '!important',
+        color: theme.palette.secondary.contrastText + '!important'
     },
     pointMarker: {
-        color: '#fff',
-        background: '#1978c8',
+        color: theme.palette.primary.contrastText,
+        background: theme.palette.primary.main,
         borderRadius: '50%',
         padding: '5px',
         display: 'flex',
@@ -32,7 +34,10 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         transform: 'translate(-50%, -50%)',
         '&:hover': {
             cursor: 'pointer'
-        }
+        },
+        height: '18px',
+        width: '18px',
+        border: 'none'
     },
     localisationBtn: {
         margin: '10px',
@@ -66,7 +71,8 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         width: '100%',
         borderBottomLeftRadius: '10px',
         borderBottomRightRadius: '10px',
-        maxWidth: '300px'
+        maxWidth: '300px',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)'
     },
     avatar: {
         width: '1.5rem',

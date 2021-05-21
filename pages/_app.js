@@ -197,6 +197,7 @@ function MyApp ({ Component, pageProps }) {
                     type="text/javascript"
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhlXon0MaJbKeBOlZ2w4YmZ23YqkwdlTs&libraries=places"
                 />
+                <meta name="viewport" content= "width=device-width, user-scalable=no"/>
             </Head>
             { <ThemeProvider theme={ theme }>
                 <CssBaseline />

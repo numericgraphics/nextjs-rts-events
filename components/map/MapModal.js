@@ -55,7 +55,7 @@ function MapModal (props, ref) {
                         className={classes.buttonClose}
                     />
                     <Box style={{ width: '100%', height: '100%' }}>
-                        <MainMap defi={defi} />
+                        <MainMap defi={defi} isModal={true} />
                     </Box>
                 </Box>
             </Slide>

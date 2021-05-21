@@ -32,7 +32,7 @@ function Map (props) {
         <React.Fragment>
             <EventLayout>
                 <Div100vh className='content'>
-                    <MainMap defi={defi} />
+                    <MainMap defi={defi} isModal={false} />
                 </Div100vh>
             </EventLayout>
         </React.Fragment>

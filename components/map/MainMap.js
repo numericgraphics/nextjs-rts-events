@@ -12,7 +12,7 @@ import Avatar from '@material-ui/core/Avatar'
 
 function MainMap (props) {
     const mapRef = useRef(null)
-    const { defi } = props
+    const { defi, isModal } = props
     const classes = useStyles()
     const [bounds, setBounds] = useState(null)
     const [zoom, setZoom] = useState(10)
@@ -47,7 +47,7 @@ function MainMap (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 setPoints(content.features)
-                mapRef.current.fitBounds(content.properties.bound)
+                mapRef.current && mapRef.current.fitBounds(content.properties.bound)
             } else {
                 console.log('error')
             }
@@ -100,7 +100,6 @@ function MainMap (props) {
         }
     }, [userLocation])
 
-
     const defaultProps = {
         center: {
             lat: 46.657505,
@@ -124,6 +123,7 @@ function MainMap (props) {
 
     function closeDetail () {
         setImgList(false)
+        setActiveClusterId(0)
     }
 
     function onClickCluster (cluster) {
@@ -206,18 +206,21 @@ function MainMap (props) {
                             <div
                                 className={activeClusterId === cluster.id ? [classes.clusterMarker, classes.activeCluster].join(' ') : classes.clusterMarker}
                                 style={{
-                                    width: `${10 + (pointCount / points.length) * 20}px`,
-                                    height: `${10 + (pointCount / points.length) * 20}px`
+                                    width: `${10 + (pointCount / points.length) * 30}px`,
+                                    height: `${10 + (pointCount / points.length) * 30}px`
                                 }}
                                 onClick={() => {
-                                    const expansionZoom = Math.min(
-                                        supercluster.getClusterExpansionZoom(cluster.id),
-                                        16
-                                    )
-                                    mapRef.current.setZoom(expansionZoom)
                                     mapRef.current.panTo({ lat: latitude, lng: longitude })
-                                    if (mapRef.current.getZoom() === 16) {
+                                    console.log(mapRef.current.getZoom())
+                                    if (mapRef.current.getZoom() >= 9) {
+                                        console.log('true')
                                         onClickCluster(cluster)
+                                    } else {
+                                        const expansionZoom = Math.min(
+                                            supercluster.getClusterExpansionZoom(cluster.id),
+                                            9
+                                        )
+                                        mapRef.current.setZoom(expansionZoom)
                                     }
                                 }}
                             >
@@ -299,7 +302,7 @@ function MainMap (props) {
                 className={classes.carouselContainer}
                 mouseTracking
                 items={imgList}
-                responsive={responsive}
+                responsive={!isModal && responsive}
                 disableDotsControls={true}
             />}
         </React.Fragment>

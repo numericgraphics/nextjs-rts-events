@@ -33,7 +33,7 @@ function Map (props) {
     console.log('miaoiu')
     return (
         <Div100vh>
-            <MainMap defi={defi} />
+            <MainMap defi={defi} isModal={false} />
         </Div100vh>
     )
 }
