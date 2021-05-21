@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
-import useSwr from 'swr'
 import GoogleMapReact from 'google-map-react'
 import { useStyles } from '../../styles/jsx/components/map/mainMap.style.js'
 import useSupercluster from 'use-supercluster'
-import PointDetail from './PointsDetail'
 import UserLocation from './markers/UserLocation'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
@@ -21,10 +19,8 @@ function MainMap (props) {
     const [pointList, setPointList] = useState(null)
     const [userLocation, setUserLocation] = useState(null)
     const [imgList, setImgList] = useState(null)
-    const fetcher = (...args) => fetch(...args).then(response => response.json())
     const Marker = ({ children }) => children
     const [activeClusterId, setActiveClusterId] = useState(0)
-    const onLoad = () => console.log('loaded')
     const [markers, setMarkers] = useState([])
     // const url = 'https://zhihvqheg7.execute-api.eu-central-1.amazonaws.com/latest/events/WF6/GeoJSON/CAC2020'
     // const { data, error } = useSwr(url, { fetcher })
@@ -51,12 +47,7 @@ function MainMap (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 setPoints(content.features)
-                console.log(content.properties.bound)
-                // var bounds = new google.maps.LatLngBounds(content.properties.bound)
                 mapRef.current.fitBounds(content.properties.bound)
-                // setBounds()
-                // setBoundCenter(content.properties.bound)
-                // console.log(content)
             } else {
                 console.log('error')
             }
@@ -91,38 +82,24 @@ function MainMap (props) {
         const x = (λ2 - λ1) * Math.cos((φ1 + φ2) / 2)
         const y = (φ2 - φ1)
         const d = Math.sqrt(x * x + y * y) * R
-        // console.log(d)
         return d
     }
 
     useEffect(() => {
         if (userLocation) {
-            console.log(mapRef.current.getDiv())
             const userLocationArray = [userLocation.lng, userLocation.lat]
             const points2 = points.map((point) => {
                 point.distance = distanceBetweenCoordinates(point.geometry.coordinates, userLocationArray)
-                // console.log(distanceBetweenCoordinates(point.geometry.coordinates, userLocationArray))
                 return point
             })
-            console.log(points2.sort((a, b) => a.distance - b.distance))
             var bounds = new google.maps.LatLngBounds(userLocation)
             points2[0] && bounds.extend({ lat: points2[0].geometry.coordinates[1], lng: points2[0].geometry.coordinates[0] })
             points2[1] && bounds.extend({ lat: points2[1].geometry.coordinates[1], lng: points2[1].geometry.coordinates[0] })
             points2[2] && bounds.extend({ lat: points2[2].geometry.coordinates[1], lng: points2[2].geometry.coordinates[0] })
-            console.log(bounds)
             mapRef.current.fitBounds(bounds)
-            /* const newBounds = mapRef.current.getBounds().extend(userLocation)
-            mapRef.current.fitBounds(newBounds) */
         }
     }, [userLocation])
 
-    /* useEffect(() => {
-        if (boundCenter && mapRef.current) {
-            mapRef.current.fitBounds(boundCenter)
-            // console.log(mapRef.current.getBounds().extend())
-            console.log('set bounds')
-        }
-    }, [boundCenter]) */
 
     const defaultProps = {
         center: {
@@ -150,22 +127,12 @@ function MainMap (props) {
     }
 
     function onClickCluster (cluster) {
-        /* const clusterLocation = cluster.geometry.coordinates
-        closeDetail()
-        const points2 = points.map((point) => {
-            point.distance = distanceBetweenCoordinates(point.geometry.coordinates, clusterLocation)
-            // console.log(distanceBetweenCoordinates(point.geometry.coordinates, userLocationArray))
-            return point
-        })
-        console.log('miaou')
-        points2.sort((a, b) => a.distance - b.distance)
-
-        setPointList(points2) */
         const pos = {
             lat: cluster.geometry.coordinates[1],
             lng: cluster.geometry.coordinates[0]
         }
         mapRef.current.panTo(pos)
+        mapRef.current.panBy(0, 100)
         setActiveClusterId(cluster.id)
         setPointList(supercluster.getLeaves(cluster.id, Infinity))
     }
@@ -176,6 +143,7 @@ function MainMap (props) {
             lng: cluster.geometry.coordinates[0]
         }
         mapRef.current.panTo(pos)
+        mapRef.current.panBy(0, 100)
         closeDetail()
         setActiveClusterId(cluster.geometry.coordinates)
         setPointList([cluster])
@@ -210,7 +178,7 @@ function MainMap (props) {
                                 {point.properties.nickname}
                             </Typography>
                         </Box>
-                        <LazyLoadImage className={classes.slideImage} src={point.properties.imageURL} onLoad={() => console.log('is loaded')} onDragStart={handleDragStart} />
+                        <LazyLoadImage className={classes.slideImage} src={point.properties.imageURL} onDragStart={handleDragStart} />
                     </Box>
                 )
             })
@@ -220,7 +188,6 @@ function MainMap (props) {
 
     useEffect(() => {
         if (clusters && points) {
-            console.log(clusters)
             var markers = []
             clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates
@@ -230,7 +197,6 @@ function MainMap (props) {
                 } = cluster.properties
 
                 if (isCluster) {
-                    console.log('create')
                     markers.push(
                         <Marker
                             key={`cluster-${cluster.id}`}
@@ -244,21 +210,12 @@ function MainMap (props) {
                                     height: `${10 + (pointCount / points.length) * 20}px`
                                 }}
                                 onClick={() => {
-                                // setActiveClusterId(cluster.id)
-                                // onClickCluster(cluster)
-                                /* if (cluster.properties.cluster === true) {
-                                    console.log(cluster.type)
-                                    console.log(supercluster.getLeaves(cluster.id))
-                                } else {
-                                    console.log('isnt')
-                                } */
                                     const expansionZoom = Math.min(
                                         supercluster.getClusterExpansionZoom(cluster.id),
                                         16
                                     )
                                     mapRef.current.setZoom(expansionZoom)
                                     mapRef.current.panTo({ lat: latitude, lng: longitude })
-                                    console.log(mapRef.current.getZoom())
                                     if (mapRef.current.getZoom() === 16) {
                                         onClickCluster(cluster)
                                     }
@@ -292,10 +249,7 @@ function MainMap (props) {
     }
 
     useEffect(() => {
-        console.log('fetch not marker')
-        // || !boundCenter
         if (points) {
-            console.log('fetch marker')
             fetchMarkers().then()
         }
     }, [])
@@ -310,18 +264,7 @@ function MainMap (props) {
                 yesIWantToUseGoogleMapApiInternals
                 options={createMapOptions}
                 onGoogleApiLoaded={({ map }) => {
-                    console.log(map)
                     mapRef.current = map
-                    /* const locationButton = document.createElement('button')
-                    locationButton.textContent = '📍'
-                    locationButton.classList.add(classes.localisationBtn)
-                    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(locationButton)
-                    locationButton.addEventListener('click', getUserLocation) */
-
-                    /* const locationDiv = document.getElementById('medalIcon')
-                    locationDiv.classList.add(classes.localisationBtn)
-                    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(locationDiv)
-                    locationDiv.addEventListener('click', getUserLocation) */
                     const locationButton = document.createElement('img')
                     locationButton.src = '/icon_focusmap.svg'
                     locationButton.classList.add(classes.localisationBtn)
@@ -356,7 +299,6 @@ function MainMap (props) {
                 className={classes.carouselContainer}
                 mouseTracking
                 items={imgList}
-                onSlideChange={(e) => console.log(e)}
                 responsive={responsive}
                 disableDotsControls={true}
             />}
