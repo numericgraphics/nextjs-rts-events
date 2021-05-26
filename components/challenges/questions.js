@@ -12,7 +12,7 @@ import { ChallengeStates } from '../../data/challengeState'
 
 function Question (props) {
     const classes = useStyles()
-    const { quiz, title, duration } = props.content
+    const { quiz, title, duration, advancedType } = props.content
     const { question, answers } = quiz
     const [progress, setProgress] = useState(0)
     const [timeLeft, setTimeLeft] = useState(duration)
@@ -20,6 +20,7 @@ function Question (props) {
     const [disabled, setDisabled] = useState(false)
     const [answer, setAnswer] = useState(null)
     const intervalId = useRef()
+    const quizTrueFalse = advancedType.quiztruefalse
 
     function onAnswer (index) {
         if (progress > 0) {
@@ -93,12 +94,12 @@ function Question (props) {
                 </Box>
             </Slide>
             <Slide in={showComponent} timeout={200 + (100 * answers.length)} direction="up" >
-                <Box className='bottomZoneQuestions'>
+                <Box className={quizTrueFalse ? 'bottomZoneQuestionsTrueFalse' : 'bottomZoneQuestions'}>
                     {answers.map((item, index) => {
                         return (
                             <Slide key={index} in={showComponent} timeout={200 + (100 * index)} direction="up" >
                                 <Box className={classes.buttonWrapper} >
-                                    <CustomDisabledButton color="secondary" variant="contained" className={'questionButton'} disabled={disabled} onClick={() => {
+                                    <CustomDisabledButton color="secondary" variant="contained" className={ quizTrueFalse ? answers.length === index + 1 ? ['questionButton', classes.buttonTrue].join(' ') : ['questionButton', classes.buttonFalse].join(' ') : 'questionButton'} disabled={disabled} onClick={() => {
                                         onAnswer(index + 1)
                                     }}>
                                         {item}

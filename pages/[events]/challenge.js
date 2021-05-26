@@ -2,6 +2,7 @@ import React, { createRef, useContext, useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import UserContext from '../../hooks/userContext'
 import EventLayout from '../../components/ui/layout/eventLayout'
+// import Question from '../../components/challenges/questions'
 import Question from '../../components/challenges/questions'
 import QuestionsVideo from '../../components/challenges/questionsVideo'
 import Result from '../../components/challenges/result'
@@ -54,6 +55,7 @@ function Challenge () {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData({ challenge: content })
+                console.log(content)
                 setQuestionsContent(content)
             } else {
                 await Router.push('/[events]/dashBoard', {

@@ -218,7 +218,8 @@
 .bottomZone,
 .bottomZonePromo,
 .bottomZoneDashboard,
-.bottomZoneQuestions { /* Zone des boutons fixée en bas de page */
+.bottomZoneQuestions,
+.bottomZoneQuestionsTrueFalse { /* Zone des boutons fixée en bas de page */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -237,13 +238,15 @@
     padding: 1rem 0!important;
 }
 
-.bottomZoneQuestions {
+.bottomZoneQuestions,
+.bottomZoneQuestionsTrueFalse {
     padding: 4vw;
 }
 
 .bottomZone,
 .bottomZoneDashboard,
-.bottomZoneQuestions {
+.bottomZoneQuestions,
+.bottomZoneQuestionsTrueFalse {
     z-index: 1;
 }
 
@@ -251,8 +254,19 @@
     padding-bottom: 1rem;
 }
 
+.bottomZoneQuestionsTrueFalse div {
+    padding: 0 0.25rem 1rem 0.25rem;
+}
+
 .bottomZoneQuestions div:last-of-type{
     padding-bottom: 0;
+}
+
+.bottomZoneQuestionsTrueFalse {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 /*** COMPONENTS ***/
@@ -387,6 +401,7 @@
     .bottomZoneDashboard,
     .bottomZonePromo,
     .bottomZoneQuestions,
+    .bottomZoneQuestionsTrueFalse,
     .swipeableViews {
         max-width: 480px;
     }
@@ -435,6 +450,7 @@
     .bottomZonePromo,
     .bottomZoneQuestions,
     .bottomZoneDashboard,
+    .bottomZoneQuestionsTrueFalse,
     .swipeableViews {
         max-width: 55vh;
     }

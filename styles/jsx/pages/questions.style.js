@@ -61,5 +61,17 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     buttonProgress: {
         position: 'absolute'
+    },
+    buttonTrue: {
+        backgroundColor: 'green',
+        '&:hover': {
+            backgroundColor: 'green'
+        }
+    },
+    buttonFalse: {
+        backgroundColor: 'red',
+        '&:hover': {
+            backgroundColor: 'red'
+        }
     }
 }))
