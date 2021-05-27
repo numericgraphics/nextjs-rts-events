@@ -32,6 +32,7 @@ import DesktopReco from '../../components/dashboard/desktopReco'
 import Profile from '../../components/dashboard/profile'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import MapModal from '../../components/map/MapModal'
+import DailyPromoModal from '../../components/dashboard/DailyPromoModal'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -44,7 +45,8 @@ export const ModalStates = Object.freeze({
     MESSAGE: 'message',
     DESKTOP_RECO: 'desktopReco',
     WIN: 'win',
-    MAP: 'map'
+    MAP: 'map',
+    DAILYPROMO: 'dailypromo'
 })
 
 function DashBoard (props) {
@@ -54,6 +56,7 @@ function DashBoard (props) {
     const { events } = router.query
     const classes = useStyles()
     const [user, setUser] = useState({})
+    const [dailyPromo, setDailyPromo] = useState(null)
     const [availableChallenges, setAvailableChallenges] = useState(true)
     const [availableScores, setAvailableScores] = useState(false)
     const [availableResults, setAvailableResults] = useState(false)
@@ -87,6 +90,9 @@ function DashBoard (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
+                console.log(content)
+                content.dailyElements && setDailyPromo(content.dailyElements)
+                content.dailyElements && onOpenModal(ModalStates.DAILYPROMO)
                 initGame(content)
             } else {
                 setTimeStampMode({ enable: false })
@@ -178,6 +184,12 @@ function DashBoard (props) {
         case ModalStates.MAP:
             return <MapModal
                 defi={gameStats.currentRecoComID}
+                ref={modalMapRef}
+                handleClose={closeModal}
+                open={open}/>
+        case ModalStates.DAILYPROMO:
+            return <DailyPromoModal
+                dailyPromo={dailyPromo}
                 ref={modalMapRef}
                 handleClose={closeModal}
                 open={open}/>
