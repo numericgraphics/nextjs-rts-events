@@ -80,6 +80,21 @@ function DashBoard (props) {
     const modalProfilRef = createRef()
     let timeout
 
+    function shareClick () {
+        if (navigator.share) {
+            console.log(navigator)
+            navigator.share({
+                title: 'web.dev',
+                text: 'Check out web.dev.',
+                url: 'https://web.dev/'
+            })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error))
+        } else {
+            console.log('cant share')
+        }
+    }
+
     async function fetchData () {
         try {
             const bodyContent = { eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
@@ -375,6 +390,15 @@ function DashBoard (props) {
                             disabled={!availableChallenges}
                         >
                             {`${translation.dashBoardChallengesButton}`}
+                        </CustomDisabledButton>
+                        <CustomDisabledButton
+                            color="secondary"
+                            variant="contained"
+                            className={'button'}
+                            onClick={shareClick}
+                            disabled={false}
+                        >
+                            partager
                         </CustomDisabledButton>
                     </Box>
                 </Slide>
