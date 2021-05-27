@@ -33,7 +33,8 @@ class DataProvider {
             challenge: {},
             gameStats: {},
             uiElements: {},
-            gifts: []
+            gifts: [],
+            dailyPromosShowed: false
         }
     }
 
@@ -43,6 +44,10 @@ class DataProvider {
 
     setEventData (data) {
         return Object.assign(this.data, {}, { event: Object.assign(this.data.event, data) })
+    }
+
+    setDailyPromosShowed (data) {
+        return Object.assign(this.data, {}, { dailyPromosShowed: Object.assign(this.data.dailyPromosShowed, data) })
     }
 
     setUser (data) {
@@ -107,6 +112,10 @@ class DataProvider {
 
     getAvatars () {
         return this.data.event.avatars
+    }
+
+    getDailyPromosShowed () {
+        return this.data.dailyPromosShowed
     }
 }
 

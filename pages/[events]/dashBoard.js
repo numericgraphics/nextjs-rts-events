@@ -105,10 +105,16 @@ function DashBoard (props) {
             })
             if (response.status === 200) {
                 const content = await response.json()
-                console.log(content)
-                content.dailyElements && setDailyPromo(content.dailyElements)
-                content.dailyElements && onOpenModal(ModalStates.DAILYPROMO)
                 initGame(content)
+                console.log('content.dailyElements', content.dailyElements)
+                console.log('dataProvider.getDailyPromosShowed()', dataProvider.getDailyPromosShowed())
+                console.log('dataProvider.hasAvailableChallenges()', dataProvider.hasAvailableChallenges())
+                console.log('dataProvider.getGameStats()', dataProvider.getGameStats())
+                if (content.dailyElements && !dataProvider.getDailyPromosShowed() && dataProvider.hasAvailableChallenges()) {
+                    setDailyPromo(content.dailyElements)
+                    onOpenModal(ModalStates.DAILYPROMO)
+                    dataProvider.setDailyPromosShowed(true)
+                }
             } else {
                 setTimeStampMode({ enable: false })
                 await Router.push('/[events]', {
