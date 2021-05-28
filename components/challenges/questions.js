@@ -9,6 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import hasCountDownModal from '../../hoc/hasCountDownModal'
 import { useStyles } from '../../styles/jsx/pages/questions.style'
 import { ChallengeStates } from '../../data/challengeState'
+import CloseIcon from '@material-ui/icons/Close'
+import CheckIcon from '@material-ui/icons/Check'
 
 function Question (props) {
     const classes = useStyles()
@@ -102,6 +104,16 @@ function Question (props) {
                                     <CustomDisabledButton color="secondary" variant="contained" className={ quizTrueFalse ? answers.length === index + 1 ? ['questionButton', classes.buttonTrue].join(' ') : ['questionButton', classes.buttonFalse].join(' ') : 'questionButton'} disabled={disabled} onClick={() => {
                                         onAnswer(index + 1)
                                     }}>
+                                        {quizTrueFalse &&
+                                            answers.length === index + 1
+                                            ? <CheckIcon
+                                                fontSize="small"
+                                                className={classes.rateIcon}
+                                            />
+                                            : <CloseIcon
+                                                fontSize="small"
+                                                className={classes.rateIcon}
+                                            />}
                                         {item}
                                     </CustomDisabledButton>
                                     {(disabled && (answer === index + 1)) && <CircularProgress color={'secondary'} size={24} className={classes.buttonProgress} />}

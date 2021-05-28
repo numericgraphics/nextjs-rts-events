@@ -63,15 +63,24 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         position: 'absolute'
     },
     buttonTrue: {
-        backgroundColor: 'green',
+        backgroundColor: '#00B445',
+        color: '#FFF!important',
         '&:hover': {
             backgroundColor: 'green'
         }
     },
     buttonFalse: {
-        backgroundColor: 'red',
+        backgroundColor: '#FF0000',
+        color: '#FFF!important',
         '&:hover': {
             backgroundColor: 'red'
         }
+    },
+    rateIcon: {
+        display: 'inline',
+        width: '1rem',
+        height: '1rem',
+        marginRight: '0.2rem',
+        color: '#FFF!important'
     }
 }))
