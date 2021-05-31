@@ -66,14 +66,14 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         backgroundColor: '#00B445',
         color: '#FFF!important',
         '&:hover': {
-            backgroundColor: 'green'
+            backgroundColor: '#009c43'
         }
     },
     buttonFalse: {
         backgroundColor: '#FF0000',
         color: '#FFF!important',
         '&:hover': {
-            backgroundColor: 'red'
+            backgroundColor: '#b30202'
         }
     },
     rateIcon: {
