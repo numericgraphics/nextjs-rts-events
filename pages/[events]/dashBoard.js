@@ -85,9 +85,9 @@ function DashBoard (props) {
         if (navigator.share) {
             console.log(navigator)
             navigator.share({
-                title: 'J ai participé au défi !',
-                text: 'J ai atteint un score de x sur x. Viens me défier',
-                url: window.location.href
+                title: uiElements.sharingLead,
+                text: uiElements.sharingLead,
+                url: uiElements.sharingTargetUrl
             })
                 .then(() => console.log('Successful share'))
                 .catch((error) => console.log('Error sharing', error))
