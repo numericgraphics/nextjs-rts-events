@@ -5,10 +5,11 @@ import { useStyles } from '../../styles/jsx/components/modal/endGameInformation.
 import Grow from '@material-ui/core/Grow'
 import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
+import { ShareIcon } from '../../data/icon'
 
 function EndgameInformation (props, ref) {
     const classes = useStyles()
-    const { open, handleClose, translation, uiElements, handleOpenTypeForm, gameStats } = props
+    const { open, handleClose, translation, uiElements, handleOpenTypeForm, gameStats, shareClick } = props
     const [onTransition, setTransition] = useState(undefined)
 
     function onExited () {
@@ -38,6 +39,18 @@ function EndgameInformation (props, ref) {
                 tabIndex={'-1'} >
                 <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
                 <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}/>
+                <CustomDisabledButton
+                    color="secondary"
+                    variant="contained"
+                    className={'button'}
+                    onClick={shareClick}
+                    disabled={false}
+                >
+                    <Box className={classes.shareHeaderContent}>
+                        {ShareIcon({ className: classes.shareIcon })}
+                        <Typography variant='subtitle2' className={classes.shareHeaderText}>partager</Typography>
+                    </Box>
+                </CustomDisabledButton>
                 { gameStats.feedbackURL &&
                     <React.Fragment>
                         <Typography variant='h4' className={[].join(' ')}

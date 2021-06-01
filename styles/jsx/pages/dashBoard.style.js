@@ -111,5 +111,28 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     },
     avatarButton: {
         borderRadius: '50%'
+    },
+    smallShareBtn: {
+        position: 'absolute',
+        marginTop: 'min(3vw, 30px)',
+        marginRight: '10px',
+        top: 0,
+        right: 0,
+        width: '35%',
+        lineHeight: '1rem',
+        zIndex: '1'
+    },
+    shareIcon: {
+        fill: theme.palette.primary.contrastText
+    },
+    shareHeaderText: {
+        paddingLeft: '5px',
+        color: theme.palette.primary.contrastText
+    },
+    shareHeaderContent: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 }))

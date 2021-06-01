@@ -25,5 +25,18 @@ export const useStyles = makeStyles((theme) => ({
     },
     subTitle: {
         marginBottom: 'min(1rem, 30px)'
+    },
+    shareIcon: {
+        fill: theme.palette.primary.contrastText
+    },
+    shareHeaderText: {
+        paddingLeft: '5px',
+        color: theme.palette.primary.contrastText
+    },
+    shareHeaderContent: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 }))

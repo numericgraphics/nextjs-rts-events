@@ -198,3 +198,16 @@ export function MapIcon (props) {
         </SvgIcon>
     )
 }
+
+export function ShareIcon (props) {
+    return (
+        <SvgIcon viewBox="0 0 30 40" {...props}>
+            <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 30 40" enableBackground="new 0 0 30 40" xmlSpace="preserve">
+                <g>
+                    <polygon points="21.3,14 21.3,17.2 26.6,17.2 26.6,36.8 3.4,36.8 3.4,17.2 8.7,17.2 8.7,14 0,14 0,40 30,40 30,14 "/>
+                    <polygon points="13.3,6.6 13.3,27.9 16.6,27.9 16.6,6.3 21.8,11.7 24.3,9.6 15.1,0 5.7,9.7 8.2,11.9 "/>
+                </g>
+            </svg>
+        </SvgIcon>
+    )
+}
