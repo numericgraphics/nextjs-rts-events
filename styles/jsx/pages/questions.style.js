@@ -67,14 +67,16 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         color: '#FFF!important',
         '&:hover': {
             backgroundColor: '#009c43'
-        }
+        },
+        boxShadow: 'rgba(0, 0, 0, 0.3) 3px 3px!important'
     },
     buttonFalse: {
         backgroundColor: '#FF0000',
         color: '#FFF!important',
         '&:hover': {
             backgroundColor: '#b30202'
-        }
+        },
+        boxShadow: 'rgba(0, 0, 0, 0.3) 3px 3px!important'
     },
     rateIcon: {
         display: 'inline',
