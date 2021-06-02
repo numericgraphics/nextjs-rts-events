@@ -114,25 +114,24 @@ export const useStyles = makeStyles((theme = useTheme) => ({
     },
     smallShareBtn: {
         position: 'absolute',
-        marginTop: 'min(3vw, 30px)',
-        marginRight: '10px',
+        margin: 'min(3vw, 30px)',
         top: 0,
         right: 0,
-        width: '35%',
+        // width: 'none!important',
         lineHeight: '1rem',
-        zIndex: '1'
+        zIndex: '1',
+        minHeight: '34px',
+        minWidth: '34px',
+        width: '10vw',
+        height: '10vw',
+        maxWidth: '40px',
+        maxHeight: '40px',
+        backgroundColor: theme.palette.secondary.main,
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.dark
+        }
     },
     shareIcon: {
-        fill: theme.palette.primary.contrastText
-    },
-    shareHeaderText: {
-        paddingLeft: '5px',
-        color: theme.palette.primary.contrastText
-    },
-    shareHeaderContent: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        fill: theme.palette.secondary.contrastText
     }
 }))

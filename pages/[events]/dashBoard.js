@@ -35,6 +35,7 @@ import MapModal from '../../components/map/MapModal'
 import DailyPromoModal from '../../components/dashboard/DailyPromoModal'
 import Head from 'next/head'
 import { ShareIcon } from '../../data/icon'
+import IconButton from '@material-ui/core/IconButton'
 
 const PWAPrompt = dynamic(() => import('react-ios-pwa-prompt'), {
     ssr: false
@@ -277,18 +278,12 @@ function DashBoard (props) {
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
                 }
-                <CustomDisabledButton
-                    color="secondary"
-                    variant="contained"
-                    className={['button', classes.smallShareBtn].join(' ')}
+                <IconButton
                     onClick={shareClick}
-                    disabled={false}
-                >
-                    <Box className={classes.shareHeaderContent}>
-                        {ShareIcon({ className: classes.shareIcon })}
-                        <Typography variant='subtitle2' className={classes.shareHeaderText}>partager</Typography>
-                    </Box>
-                </CustomDisabledButton>
+                    color="secondary"
+                    className={classes.smallShareBtn}>
+                    {ShareIcon({ className: classes.shareIcon })}
+                </IconButton>
                 <Slide
                     in={!isLoading}
                     timeout={500}
