@@ -107,11 +107,11 @@ function Question (props) {
                                         {quizTrueFalse &&
                                             answers.length === index + 1
                                             ? <CheckIcon
-                                                fontSize="medium"
+                                                fontSize="large"
                                                 className={classes.rateIcon}
                                             />
                                             : <CloseIcon
-                                                fontSize="medium"
+                                                fontSize="large"
                                                 className={classes.rateIcon}
                                             />}
                                         {item}
