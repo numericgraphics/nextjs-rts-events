@@ -98,8 +98,9 @@ function DailyPromo (props) {
             </Box>
             {length > 0 &&
             <React.Fragment>
-                <SwipeableTemplates index={activeStep} className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
+                <SwipeableTemplates isInModal={true} index={activeStep} className='fadeInAnimation' data={startPageElements} indexCallBack={slideIndexCallBack} isModalOpen={props.isModalOpen}/>
                 <SlideShow
+                    promoInModal={true}
                     slides={startPageElements}
                     activeSlide={activeStep}
                     isModalOpen={props.isModalOpen}

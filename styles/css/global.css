@@ -42,7 +42,9 @@
 
 /*** BACKGROUNDS ***/
 .backgroundSlideShow,
+.backgroundSlideShowInModal,
 .backgroundSwipeableView,
+.backgroundSwipeableViewInModal,
 .backgroundModal,
 .backgroundModalGift,
 .backgroundVideo,
@@ -67,11 +69,20 @@
     z-index: 1!important;
 }
 
+.backgroundSwipeableViewInModal {
+    z-index: 2!important;
+}
+
 .backgroundSlideShow {
     z-index: -3!important;
 }
 
+.backgroundSlideShowInModal {
+    z-index: 1;
+}
+
 .backgroundSwipeableView,
+.backgroundSwipeableViewInModal,
 .background { /* Image background full screen fixée (div au lieu de background fixed pour les iPhones) */
     height: 100vh;
 }
@@ -384,7 +395,9 @@
     .containerModal,
     .background,
     .backgroundSwipeableView,
+    .backgroundSwipeableViewInModal,
     .backgroundSlideShow,
+    .backgroundSlideShowInModal,
     .backgroundModal,
     .backgroundModalGift,
     .backgroundVideo,
@@ -433,7 +446,9 @@
     .containerModal,
     .background,
     .backgroundSwipeableView,
+    .backgroundSwipeableViewInModal,
     .backgroundSlideShow,
+    .backgroundSlideShowInModal,
     .backgroundModal,
     .backgroundModalGift,
     .backgroundVideo,
@@ -457,7 +472,9 @@
 
     .background,
     .backgroundSwipeableView,
+    .backgroundSwipeableViewInModal,
     .backgroundSlideShow,
+    .backgroundSlideShowInModal,
     .backgroundGradientByTheme,
     .backgroundGradientTopBottom,
     .backgroundGradientTopBottomDashBoard,

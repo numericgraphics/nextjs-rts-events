@@ -38,7 +38,7 @@ function SwipeableTemplates (props) {
             enableMouseEvents={true}
             index={props.index}
             onChangeIndex={handleChangeIndex}
-            className='backgroundSwipeableView'
+            className={ props.isInModal ? 'backgroundSwipeableViewInModal' : 'backgroundSwipeableView'}
             axis={'y'}
             animateHeight={true}
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}

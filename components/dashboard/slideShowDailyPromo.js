@@ -23,7 +23,7 @@ export default function SlideShow (props) {
     console.log(!promoInModal)
     return (
         <Box
-            className={promoInModal ? 'backgroundSlideShowInModal' : 'backgroundSlideShow'}
+            className={!promoInModal && 'backgroundSlideShow'}
             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
         >
             {slides.map((slide, index) => {
