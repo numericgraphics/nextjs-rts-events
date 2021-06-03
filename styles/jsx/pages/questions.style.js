@@ -80,8 +80,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     rateIcon: {
         display: 'inline',
-        width: '1rem',
-        height: '1rem',
+        width: '1.4rem',
+        height: '1.4rem',
         marginRight: '0.2rem',
         color: '#FFF!important'
     }
