@@ -5,7 +5,7 @@ import SwipeableTemplates from '../startPage/swipeableTemplates'
 import UserContext from '../../hooks/userContext'
 import SlideShow from '../startPage/slideShow'
 import { Box } from '@material-ui/core'
-import { useStyles } from '../../styles/jsx/pages/startPage.style'
+import { useStyles } from '../../styles/jsx/pages/dailyPromoModal.style'
 import { ArrowIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import Typography from '@material-ui/core/Typography'
@@ -76,7 +76,7 @@ function DailyPromo (props) {
                     }
                 </Box>
                 {isMobile &&
-                    <Box className='bottomZonePromo'>
+                    <Box className='bottomZonePromo' style={{ zIndex: 2 }}>
                         {!isLastTemplate() &&
                         <Box className={[classes.arrowSwipeDown, classes.arrowSwipeDownMobile].join(' ')}>
                             <ArrowIcon/>
