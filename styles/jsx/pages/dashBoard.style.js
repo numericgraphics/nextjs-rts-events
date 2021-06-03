@@ -118,20 +118,16 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         top: 0,
         right: 0,
         // width: 'none!important',
-        lineHeight: '1rem',
         zIndex: '1',
-        minHeight: '34px',
-        minWidth: '34px',
-        width: '10vw',
-        height: '10vw',
-        maxWidth: '40px',
-        maxHeight: '40px',
         backgroundColor: theme.palette.secondary.main,
         '&:hover': {
             backgroundColor: theme.palette.secondary.dark
         }
     },
     shareIcon: {
-        fill: theme.palette.secondary.contrastText
+        fill: theme.palette.secondary.contrastText,
+        padding: '5px',
+        height: '1.3em',
+        width: '1.3em'
     }
 }))
