@@ -113,7 +113,8 @@ function DashBoard (props) {
                 console.log('dataProvider.getDailyPromosShowed()', dataProvider.getDailyPromosShowed())
                 console.log('dataProvider.hasAvailableChallenges()', dataProvider.hasAvailableChallenges())
                 console.log('dataProvider.getGameStats()', dataProvider.getGameStats())
-                if (content.dailyElements && !dataProvider.getDailyPromosShowed() && dataProvider.hasAvailableChallenges()) {
+                if (content.dailyElements && content.dailyElements.length !== 0 && !dataProvider.getDailyPromosShowed() && dataProvider.hasAvailableChallenges()) {
+                    console.log(content.dailyElements)
                     setDailyPromo(content.dailyElements)
                     onOpenModal(ModalStates.DAILYPROMO)
                     dataProvider.setDailyPromosShowed(true)
