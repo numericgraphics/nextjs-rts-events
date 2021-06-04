@@ -6,7 +6,7 @@ import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 import DailyPromo from './dailyPromo'
 
 function DailyPromoModal (props, ref) {
-    const { open, handleClose, dailyPromo } = props
+    const { open, handleClose, dailyPromo, translation } = props
     const classes = useStyles()
     const [onTransition, setTransition] = useState(undefined)
     const videoRef = useRef()

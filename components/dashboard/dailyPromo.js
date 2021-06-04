@@ -70,7 +70,7 @@ function DailyPromo (props) {
                             onClick={closeModal}
                             // style={{ filter: props.isModalOpen ? 'blur(4px)' : 'none' }}
                         >
-                            Fermer la pop-up
+                            {translation.dailyElementsButtonText}
                         </Button>
                     </Slide>
                     }
