@@ -31,6 +31,7 @@ export default class MyDocument extends Document {
             <Html>
                 <Head>
                     <script src="https://www.rts.ch/js/tools/stats-external.js" async/>
+                    <script src="https://hummingbird.rts.ch/hummingbird-static/js/rts-native-apps-bridge.min.js" async/>
 
                     <link rel='icon' type='image/x-icon' href={`https://res.cloudinary.com/plouf/image/upload/h_128,w_128/cdn-rts/icons/${this.query.events}/icon.ico`} />
 

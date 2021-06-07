@@ -34,7 +34,8 @@ class DataProvider {
             gameStats: {},
             uiElements: {},
             gifts: [],
-            dailyPromosShowed: false
+            dailyPromosShowed: false,
+            isWebView: undefined
         }
     }
 
@@ -48,6 +49,10 @@ class DataProvider {
 
     setDailyPromosShowed (data) {
         return Object.assign(this.data, {}, { dailyPromosShowed: Object.assign(this.data.dailyPromosShowed, data) })
+    }
+
+    setIsWebView (data) {
+        return Object.assign(this.data, {}, { isWebView: Object.assign(this.data.isWebView, data) })
     }
 
     setUser (data) {
@@ -116,6 +121,10 @@ class DataProvider {
 
     getDailyPromosShowed () {
         return this.data.dailyPromosShowed
+    }
+
+    getIsWebView () {
+        return this.data.isWebView
     }
 }
 

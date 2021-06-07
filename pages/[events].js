@@ -5,7 +5,6 @@ import { getAllEvents, getEventsData } from '../lib/events'
 import ThemeFactory from '../data/themeFactory'
 import EventLayout from '../components/ui/layout/eventLayout'
 import StartPage from '../components/startPage/startPage'
-import Head from 'next/head'
 
 function Events (props) {
     const { eventData, router } = props
@@ -44,13 +43,6 @@ function Events (props) {
     }, [isGlobalLoading, isPageReady])
     return (
         <EventLayout>
-            <Head>
-                <meta property="og:url" content="https://www.facebook.com/" />
-                <meta property="og:type" content="article" />
-                <meta property="og:title" content="Defi de la comm" />
-                <meta property="og:description" content="Participe avec moi au défi !" />
-                <meta property="og:image" content="https://www.rts.ch/2020/04/23/22/12/11271345.image/16x9/scale/width/650" />
-            </Head>
             {isLoading
                 ? null
                 : <StartPage/>

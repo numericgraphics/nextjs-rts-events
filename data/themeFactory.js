@@ -23,6 +23,10 @@ class ThemeFactory {
             background,
             error,
             onError,
+            success,
+            onSuccess,
+            formNoValidate,
+            formValidate,
             backgroundImageURL
         } = importedTheme
 
@@ -47,13 +51,17 @@ class ThemeFactory {
                 main: error,
                 contrastText: onError
             },
+            success: {
+                main: success,
+                contrastText: onSuccess
+            },
             action: {
                 disabledBackground: 'gray',
                 disabled: 'white'
             },
             onSecondary: onSecondary,
-            formNoValidate: 'rgb(255, 112, 0)',
-            formValidate: 'rgb(0, 183, 14)'
+            formNoValidate: formNoValidate,
+            formValidate: formValidate
         }
 
         const props = {

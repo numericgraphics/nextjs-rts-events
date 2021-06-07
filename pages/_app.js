@@ -67,6 +67,7 @@ function MyApp ({ Component, pageProps }) {
     }
 
     function sendStats (needToBeInitialized, shortName) {
+        const queryParams = (new URL(document.location)).searchParams
         try {
             /* eslint-disable */
             if (RTS === undefined ) {
@@ -75,22 +76,38 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            RTS.stats.send({
-                remp: {
-                    prefix: `rtschallenge`
-                },
-                comscore: {
-                    prefix: `rtschallenge`
-                },
-                tc: {
-                    navigation_environment:`preprod`,
-                    prefix:``,
-                    content_category_1:`rtschallenge`,
-                    content_category_2:`${shortName}`,
-                    navigation_app_sitename:`www.rts.ch`,
-                    navigation_level_0:``
-                }
-            })
+            if(RTS.stats.options.isWebView == undefined && queryParams.get('wv') !== null) {
+                RTS.stats.options.isWebView = true
+            } else if (RTS.stats.options.isWebView == undefined) {
+                RTS.stats.options.isWebView = false
+            }
+
+            console.log('ici', RTS.stats.options.isWebView)
+            // console.log('ici', dataProvider.getIsWebView())
+            if (RTS.stats.options.isWebView) {
+                RTSNativeAppsBridge.trackPageView("RTS Challenge", `/${shortName}`, {
+                  content_category_1: `rtschallenge`,
+                  content_category_2: `${shortName}`,
+                  navigation_app_sitename: `www.rts.ch`
+                })
+              } else {
+                RTS.stats.send({
+                    remp: {
+                        prefix: `rtschallenge`
+                    },
+                    comscore: {
+                        prefix: `rtschallenge`
+                    },
+                    tc: {
+                        navigation_environment:`preprod`,
+                        prefix:``,
+                        content_category_1:`rtschallenge`,
+                        content_category_2:`${shortName}`,
+                        navigation_app_sitename:`www.rts.ch`,
+                        navigation_level_0:``
+                    }
+                })
+            }
             /* eslint-enable */
         } catch (e) {
             console.log('_app - Stats - ERROR', e)
