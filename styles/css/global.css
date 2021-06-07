@@ -265,10 +265,6 @@
     padding-bottom: 1rem;
 }
 
-.bottomZoneQuestionsTrueFalse {
-    padding: 0 0.25rem 1rem 0.25rem;
-}
-
 .bottomZoneQuestions div:last-of-type{
     padding-bottom: 0;
 }

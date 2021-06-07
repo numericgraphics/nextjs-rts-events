@@ -84,5 +84,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         height: '1.4rem',
         marginRight: '0.2rem',
         color: '#FFF!important'
+    },
+    wrapperTrueFalse: {
+        padding: '0 0.25rem 1rem 0.25rem'
     }
 }))

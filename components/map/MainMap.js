@@ -211,9 +211,7 @@ function MainMap (props) {
                                 }}
                                 onClick={() => {
                                     mapRef.current.panTo({ lat: latitude, lng: longitude })
-                                    console.log(mapRef.current.getZoom())
                                     if (mapRef.current.getZoom() >= 9) {
-                                        console.log('true')
                                         onClickCluster(cluster)
                                     } else {
                                         const expansionZoom = Math.min(

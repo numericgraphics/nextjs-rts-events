@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export default function SlideShow (props) {
     const classes = useStyles()
     const { slides, activeSlide, promoInModal } = props
-    console.log(!promoInModal)
+
     return (
         <Box
             className={!promoInModal && 'backgroundSlideShow'}

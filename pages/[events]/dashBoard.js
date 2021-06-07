@@ -109,10 +109,6 @@ function DashBoard (props) {
             if (response.status === 200) {
                 const content = await response.json()
                 initGame(content)
-                console.log('content.dailyElements', content.dailyElements)
-                console.log('dataProvider.getDailyPromosShowed()', dataProvider.getDailyPromosShowed())
-                console.log('dataProvider.hasAvailableChallenges()', dataProvider.hasAvailableChallenges())
-                console.log('dataProvider.getGameStats()', dataProvider.getGameStats())
                 if (content.dailyElements && content.dailyElements.length !== 0 && !dataProvider.getDailyPromosShowed() && dataProvider.hasAvailableChallenges()) {
                     console.log(content.dailyElements)
                     setDailyPromo(content.dailyElements)

@@ -82,8 +82,6 @@ function MyApp ({ Component, pageProps }) {
                 RTS.stats.options.isWebView = false
             }
 
-            console.log('ici', RTS.stats.options.isWebView)
-            // console.log('ici', dataProvider.getIsWebView())
             if (RTS.stats.options.isWebView) {
                 RTSNativeAppsBridge.trackPageView("RTS Challenge", `/${shortName}`, {
                   content_category_1: `rtschallenge`,

@@ -100,7 +100,7 @@ function Question (props) {
                     {answers.map((item, index) => {
                         return (
                             <Slide key={index} in={showComponent} timeout={200 + (100 * index)} direction="up" >
-                                <Box className={classes.buttonWrapper} >
+                                <Box className={quizTrueFalse ? [classes.wrapperTrueFalse, classes.buttonWrapper].join(' ') : classes.buttonWrapper} >
                                     <CustomDisabledButton color="secondary" variant="contained" className={ quizTrueFalse ? answers.length === index + 1 ? ['questionButton', classes.buttonTrue].join(' ') : ['questionButton', classes.buttonFalse].join(' ') : 'questionButton'} disabled={disabled} onClick={() => {
                                         onAnswer(index + 1)
                                     }}>
