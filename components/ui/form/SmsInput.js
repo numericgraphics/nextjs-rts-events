@@ -94,14 +94,13 @@ function SmsInput (props) {
             }
             inpTab.push(<input {...inputProps}
                 key={i}
-                className={classes.input}
                 onKeyDown={KeyCheck}
                 autoComplete="one-time-code"
                 onInput={handleInput}
                 onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
-                style={(values[i][1].length > 0) ? styles.textFieldValidated : styles.textFieldNotValidated }
+                className={(values[i][1].length > 0) ? [classes.input, classes.textFieldValidated].join(' ') : [classes.input, classes.textFieldNotValidated].join(' ') }
                 type="number"
                 maxLength="1"
                 name={values[i][0]} />)

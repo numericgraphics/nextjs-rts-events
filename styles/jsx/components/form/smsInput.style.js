@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme = useTheme()) => ({
     input: {
         width: '2.1rem',
         height: '2.5rem',
@@ -11,16 +11,19 @@ export const useStyles = makeStyles({
         textAlign: 'center',
         border: 'none!important',
         borderRadius: 2
-    }
-})
-
-export const styles = {
+    },
     textFieldValidated: {
-        boxShadow: '0 0 0 0.2rem rgba(0, 255, 20, 1)',
+        boxShadow: `0 0 0 0.2rem ${theme.palette.formValidate}`,
         WebkitAppearance: 'none'
     },
     textFieldNotValidated: {
-        boxShadow: '0 0 0 0.2rem rgba(255, 112, 0, 1)',
+        boxShadow: `0 0 0 0.2rem ${theme.palette.formNoValidate}`,
         WebkitAppearance: 'none'
+    }
+}))
+
+export const styles = {
+    test: {
+        margin: '3px'
     }
 }

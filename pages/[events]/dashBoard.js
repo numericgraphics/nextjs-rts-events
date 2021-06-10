@@ -264,7 +264,6 @@ function DashBoard (props) {
                 <meta property="og:description" content={uiElements.sharingLead} />
                 <meta property="og:image" content={uiElements.sharingImageUrl} />
             </Head>}
-            {console.log(!(Object.keys(uiElements).length === 0))}
             { openFeedback && <HasTypeFormModal
                 gameStats={gameStats}
                 setOpenFeedback={setOpenFeedback}/> }
