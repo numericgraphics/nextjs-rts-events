@@ -120,7 +120,7 @@ export function playIcon (props) {
         <SvgIcon viewBox="0 0 60 60" {...props}>
             <svg id="icone_play" data-name="icone play" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
                 <g id="icon_play" transform="translate(21 20)">
-                    <path id="Polygone_2" data-name="Polygone 2" d="M13.375,1.45a1,1,0,0,1,1.72,0L27.575,22.49a1,1,0,0,1-.86,1.51H1.756A1,1,0,0,1,.9,22.49Z" transform="translate(23.5 -4.5) rotate(90)" fill="#fff"/>
+                    <path id="Polygone_2" data-name="Polygone 2" d="M13.375,1.45a1,1,0,0,1,1.72,0L27.575,22.49a1,1,0,0,1-.86,1.51H1.756A1,1,0,0,1,.9,22.49Z" transform="translate(23.5 -4.5) rotate(90)"/>
                 </g>
                 <rect id="Rectangle_2378" data-name="Rectangle 2378" width="60" height="60" fill="#fff" opacity="0"/>
             </svg>

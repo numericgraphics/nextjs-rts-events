@@ -60,7 +60,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     containerText: {
         position: 'relative',
-        padding: '1vw 4vw 4vw 4vw',
+        padding: '1vh 4vh 4vh 4vh',
         flexGrow: 0,
         color: theme.palette.primary.contrastText,
         backgroundColor: hexToRgbA(theme.palette.primary.main, 0.7)

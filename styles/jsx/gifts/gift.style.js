@@ -53,7 +53,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     containerText: {
         position: 'relative',
-        padding: '1vw 4vw 4vw 4vw',
+        padding: '1vh 4vh 4vh 4vh',
         flexGrow: 0,
         width: '100%',
         color: theme.palette.primary.contrastText,
@@ -89,7 +89,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         width: 'min(2.8rem, 65px)',
         height: 'min(2.8rem, 65px)',
         zIndex: 4,
-        fill: theme.palette.primary.contrastText
+        fill: theme.palette.secondary.contrastText
     },
     playButton: {
         width: 'min(2.8rem, 65px)',
