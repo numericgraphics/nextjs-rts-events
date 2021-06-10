@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         maxHeight: '50px',
         backgroundColor: theme.palette.secondary.main,
         '&:hover': {
-            backgroundColor: theme.palette.secondary.dark
+            backgroundColor: theme.palette.secondary.dark + '!important'
         }
     },
     containerGifts: {
