@@ -84,13 +84,6 @@ function Result (props) {
                                 className={classes.subTitle}
                                 dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}
                             />
-                            {uiElements.resultAnswerDetailsChunk &&
-                            <Typography
-                                variant="subtitle1"
-                                className={classes.subTitle}
-                                dangerouslySetInnerHTML={{ __html: uiElements.resultAnswerDetailsChunk }}
-                            />
-                            }
                             {!hasAvailableChallenges &&
                                 <Typography
                                     className={classes.secondCardTitle}
@@ -104,6 +97,13 @@ function Result (props) {
                                     variant={successVariant()}
                                     dangerouslySetInnerHTML={{ __html: `${uiElements.resultBoxChunk}` }}
                                 />
+                                {uiElements.resultAnswerDetailsChunk &&
+                                <Typography
+                                    variant="subtitle1"
+                                    className={classes.subTitle}
+                                    dangerouslySetInnerHTML={{ __html: uiElements.resultAnswerDetailsChunk }}
+                                />
+                                }
                                 {newUnlockedGifts.length ? <Typography
                                     variant="h3"
                                     className={classes.secondCardText}
