@@ -280,7 +280,7 @@
 
 .block-text-layout {
     color: white;
-    padding: 4vw;
+    padding: 0vh 4vh;
     overflow-wrap: break-word;
 }
 
