@@ -27,7 +27,7 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 'min(1rem, 30px)'
     },
     shareIcon: {
-        fill: theme.palette.primary.contrastText
+        marginRight: '5px'
     },
     shareHeaderText: {
         paddingLeft: '5px',
@@ -38,5 +38,8 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    sharingBtn: {
+        marginBottom: '4vh'
     }
 }))

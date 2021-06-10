@@ -42,13 +42,13 @@ function EndgameInformation (props, ref) {
                 <CustomDisabledButton
                     color="secondary"
                     variant="contained"
-                    className={'button'}
+                    className={gameStats.feedbackURL ? ['buttonModal', classes.sharingBtn].join(' ') : 'buttonModal'}
                     onClick={shareClick}
                     disabled={false}
                 >
                     <Box className={classes.shareHeaderContent}>
                         {ShareIcon({ className: classes.shareIcon })}
-                        <Typography variant='subtitle2' className={classes.shareHeaderText}>partager</Typography>
+                        partager
                     </Box>
                 </CustomDisabledButton>
                 { gameStats.feedbackURL &&
@@ -62,7 +62,7 @@ function EndgameInformation (props, ref) {
                         <CustomDisabledButton
                             color="secondary"
                             variant="contained"
-                            className={'button'}
+                            className={'buttonModal'}
                             onClick={handleOpenTypeForm} >
                             {`${translation.feedbackButtonOnDashboard}`}
                         </CustomDisabledButton>

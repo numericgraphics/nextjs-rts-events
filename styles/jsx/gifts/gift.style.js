@@ -49,15 +49,15 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0.7)} 100%)`
     },
     containerText: {
         position: 'relative',
-        padding: '3vw 6vw 6vw 6vw',
+        padding: '1vw 4vw 4vw 4vw',
         flexGrow: 0,
         width: '100%',
         color: theme.palette.primary.contrastText,
-        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
+        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.7)
     },
     title: {
         paddingBottom: '1.5vw'
@@ -73,7 +73,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     topGradient: {
         flexGrow: 3,
         width: '100%',
-        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${hexToRgbA(theme.palette.primary.main, 0.9)} 100%)`
+        background: `linear-gradient(${hexToRgbA(theme.palette.primary.main, 0)} 0%, ${hexToRgbA(theme.palette.primary.main, 0)} 80%,${hexToRgbA(theme.palette.primary.main, 0.7)} 100%)`
     },
     image: {
         position: 'absolute',

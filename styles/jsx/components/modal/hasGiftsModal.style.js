@@ -60,10 +60,10 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     containerText: {
         position: 'relative',
-        padding: '3vw 6vw 6vw 6vw',
+        padding: '1vw 4vw 4vw 4vw',
         flexGrow: 0,
         color: theme.palette.primary.contrastText,
-        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.9)
+        backgroundColor: hexToRgbA(theme.palette.primary.main, 0.7)
     },
     title: {
         paddingBottom: '1.5vw'

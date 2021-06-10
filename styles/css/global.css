@@ -323,6 +323,14 @@
     align-self: center;
 }
 
+.buttonModal
+{
+    width: 60%;
+    padding: 6px 20px!important;
+    border-radius: 30px!important;
+    align-self: center;
+}
+
 .button, .buttonAlt {
     margin-bottom: 1rem!important;
 }
