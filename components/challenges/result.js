@@ -84,6 +84,13 @@ function Result (props) {
                                 className={classes.subTitle}
                                 dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}
                             />
+                            {uiElements.resultAnswerDetailsChunk &&
+                            <Typography
+                                variant="subtitle1"
+                                className={classes.subTitle}
+                                dangerouslySetInnerHTML={{ __html: uiElements.resultAnswerDetailsChunk }}
+                            />
+                            }
                             {!hasAvailableChallenges &&
                                 <Typography
                                     className={classes.secondCardTitle}

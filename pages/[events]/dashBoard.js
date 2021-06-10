@@ -277,7 +277,7 @@ function DashBoard (props) {
                 }
                 <IconButton
                     onClick={shareClick}
-                    color="secondary"
+                    color="primary"
                     className={classes.smallShareBtn}>
                     {ShareIcon({ className: classes.shareIcon })}
                 </IconButton>
