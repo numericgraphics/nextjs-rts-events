@@ -55,7 +55,6 @@ function Challenge () {
             if (response.status === 200) {
                 const content = await response.json()
                 dataProvider.setData({ challenge: content })
-                console.log(content)
                 setQuestionsContent(content)
             } else {
                 await Router.push('/[events]/dashBoard', {

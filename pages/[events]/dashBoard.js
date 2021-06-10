@@ -85,7 +85,6 @@ function DashBoard (props) {
 
     function shareClick () {
         if (navigator.share) {
-            console.log(navigator)
             navigator.share({
                 title: uiElements.sharingLead,
                 text: uiElements.sharingLead,

@@ -16,9 +16,7 @@ function Map (props) {
     const defi = (typeof window !== 'undefined') && queryString.parse(location.search).defi
 
     useEffect(() => {
-        console.log(isGlobalLoading)
         if (isGlobalLoading) {
-            console.log('to false')
             setLoading(false)
             setEventData(eventData.content)
             setEventName(events)
@@ -28,9 +26,7 @@ function Map (props) {
             setLoading(false)
         }
     }, [isGlobalLoading])
-    console.log(isGlobalLoading)
-    console.log('loading', isLoading)
-    console.log('miaoiu')
+
     return (
         <Div100vh>
             <MainMap defi={defi} isModal={false} />
