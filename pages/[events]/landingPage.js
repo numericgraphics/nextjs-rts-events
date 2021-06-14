@@ -38,7 +38,7 @@ function Map (props) {
                         </Typography>
                         <Button variant="contained"
                                 className={['button', classes.button].join(' ')}
-                                onClick={() => {window.open('rtssport://webview/?path=https://defis.rts.ch/euro?wv=1&shouldTrack=false&allowInlinePlayback=true')}}
+                                onClick={() => {window.location.href = 'rtssport://webview/?path=https://defis.rts.ch/euro?wv=1&shouldTrack=false&allowInlinePlayback=true'}}
                         >
                             Jouer Maintenant
                         </Button>
