@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: 'white',
         margin: '5vw 6vw 10vw 6vw',
-        maxWidth: '360px'
+        maxWidth: '400px'
     },
 
     button: {
