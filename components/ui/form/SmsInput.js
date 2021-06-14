@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { useStyles, styles } from '../../../styles/jsx/components/form/smsInput.style'
+import { useStyles } from '../../../styles/jsx/components/form/smsInput.style'
 import Box from '@material-ui/core/Box'
 
 const digitState = () => {
@@ -16,8 +16,11 @@ const digitState = () => {
 function SmsInput (props) {
     const classes = useStyles()
     const input = useRef()
+    const { isWebView } = props
     const [values, setValues] = digitState()
     const lastDigit = useRef()
+
+    console.log(isWebView)
 
     function handleInput (e) {
         if (e.target.value === '' && e.target.previousElementSibling !== null) {

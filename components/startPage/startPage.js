@@ -19,6 +19,11 @@ function StartPage (props) {
     const { length } = startPageElements
     const [translation, setTranslation] = useState([])
     const { dataProvider } = useContext(UserContext)
+    const queryParams = (new URL(document.location)).searchParams
+
+    console.log(queryParams)
+
+
 
     function onStart () {
         props.openModal()

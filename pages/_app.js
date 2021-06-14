@@ -76,9 +76,10 @@ function MyApp ({ Component, pageProps }) {
             if (needToBeInitialized) {
                 RTS.stats.options.initialized = false
             }
-            if(RTS.stats.options.isWebView == undefined && queryParams.get('wv') !== null) {
+            
+            if(typeof RTS.stats.options.isWebView == 'undefined' && queryParams.get('wv') !== null) {
                 RTS.stats.options.isWebView = true
-            } else if (RTS.stats.options.isWebView == undefined) {
+            } else if (typeof RTS.stats.options.isWebView == 'undefined') {
                 RTS.stats.options.isWebView = false
             }
 
@@ -202,11 +203,11 @@ function MyApp ({ Component, pageProps }) {
             { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
             {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             <Head>
-                <title>RTS - Events</title>
+                <title>Défis de l’Euro</title>
                 < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
                 <meta
                     name="description"
-                    content={'RTS - Events'}
+                    content={'Défis de l’Euro'}
                 />
                 <script
                     type="text/javascript"

@@ -166,7 +166,7 @@ const hasLoginModal = WrappedComponent => {
                 return <Box className={classes.modalContent}>
                     <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: translation.modalLoginNumberText }}/>
                     <form className={'modal-textField-container'} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
-                        <SmsInput className={classes.smsInput} onChange={ setCode } />
+                        <SmsInput className={classes.smsInput} isWebView={dataProvider.getIsWebView()}onChange={ setCode } />
                         <CustomDisabledButton color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             {translation.send}
                         </CustomDisabledButton>
