@@ -21,8 +21,7 @@ export const useStyles = makeStyles((theme) => ({
 
     button: {
         backgroundColor: '#AF001E',
-        color: 'white',
-        width: '60%'
+        color: 'white'
     }
 
 }))
