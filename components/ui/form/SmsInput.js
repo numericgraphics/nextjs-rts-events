@@ -19,7 +19,7 @@ function SmsInput (props) {
     const { isWebView } = props
     const [values, setValues] = digitState()
     const lastDigit = useRef()
-
+    console.log(isWebView ? "off" : "one-time-code")
     console.log(isWebView)
 
     function handleInput (e) {
@@ -98,7 +98,7 @@ function SmsInput (props) {
             inpTab.push(<input {...inputProps}
                 key={i}
                 onKeyDown={KeyCheck}
-                autoComplete="one-time-code"
+                autoComplete={isWebView ? "off" : "one-time-code"}
                 onInput={handleInput}
                 onPaste={handlePaste}
                 value={values[i][1]}

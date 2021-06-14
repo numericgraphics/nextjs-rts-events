@@ -16,12 +16,14 @@ export const useStyles = makeStyles((theme) => ({
     textContent: {
         textAlign: 'center',
         color: 'white',
-        margin: '5vw 6vw 10vw 6vw'
+        margin: '5vw 6vw 10vw 6vw',
+        maxWidth: '360px'
     },
 
     button: {
         backgroundColor: '#AF001E',
-        color: 'white'
+        color: 'white',
+        maxWidth: '300px'
     }
 
 }))

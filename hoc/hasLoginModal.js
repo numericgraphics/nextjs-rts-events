@@ -40,6 +40,10 @@ const hasLoginModal = WrappedComponent => {
         const [checked, setChecked] = useState(false)
         const [phoneVerif, setPhoneVerif] = useState(false)
         const [counter, setCounter] = useState(0)
+        const queryParams = (new URL(document.location)).searchParams
+        const isWebView = queryParams.get('wv')
+
+        console.log('isWebView', isWebView)
 
         const handleOpen = () => {
             setOpen(true)
@@ -166,7 +170,7 @@ const hasLoginModal = WrappedComponent => {
                 return <Box className={classes.modalContent}>
                     <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: translation.modalLoginNumberText }}/>
                     <form className={'modal-textField-container'} autoComplete="on" noValidate onSubmit={handleSubmitNumberReceive}>
-                        <SmsInput className={classes.smsInput} isWebView={dataProvider.getIsWebView()}onChange={ setCode } />
+                        <SmsInput className={classes.smsInput} isWebView={isWebView} onChange={ setCode } />
                         <CustomDisabledButton color="secondary" variant="contained" className={[classes.button, 'button'].join(' ')} type="submit" disabled={/\d{4}/.test(code) ? null : true }>
                             {translation.send}
                         </CustomDisabledButton>
