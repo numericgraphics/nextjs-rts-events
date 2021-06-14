@@ -30,7 +30,6 @@ function Map (props) {
 
     return (
         <React.Fragment>
-            <EventLayout>
                 <Div100vh className='content'>
                     <Box className={classes.container}>
                         <img src='/landingPageHeaderLogo.png' />
@@ -45,7 +44,6 @@ function Map (props) {
                         </Button>
                     </Box>
                 </Div100vh>
-            </EventLayout>
         </React.Fragment>
     )
 }

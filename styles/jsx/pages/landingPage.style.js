@@ -23,7 +23,7 @@ export const useStyles = makeStyles((theme) => ({
     button: {
         backgroundColor: '#AF001E',
         color: 'white',
-        maxWidth: '300px'
+        maxWidth: '320px'
     }
 
 }))
