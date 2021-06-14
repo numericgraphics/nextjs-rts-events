@@ -43,8 +43,6 @@ const hasLoginModal = WrappedComponent => {
         const queryParams = (new URL(document.location)).searchParams
         const isWebView = queryParams.get('wv')
 
-        console.log('isWebView', isWebView)
-
         const handleOpen = () => {
             setOpen(true)
         }

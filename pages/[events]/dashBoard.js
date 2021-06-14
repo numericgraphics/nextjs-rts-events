@@ -109,7 +109,6 @@ function DashBoard (props) {
                 const content = await response.json()
                 initGame(content)
                 if (content.dailyElements && content.dailyElements.length !== 0 && !dataProvider.getDailyPromosShowed() && dataProvider.hasAvailableChallenges()) {
-                    console.log(content.dailyElements)
                     setDailyPromo(content.dailyElements)
                     onOpenModal(ModalStates.DAILYPROMO)
                     dataProvider.setDailyPromosShowed(true)

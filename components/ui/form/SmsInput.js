@@ -19,8 +19,6 @@ function SmsInput (props) {
     const { isWebView } = props
     const [values, setValues] = digitState()
     const lastDigit = useRef()
-    console.log(isWebView ? "off" : "one-time-code")
-    console.log(isWebView)
 
     function handleInput (e) {
         if (e.target.value === '' && e.target.previousElementSibling !== null) {
