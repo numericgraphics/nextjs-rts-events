@@ -36,12 +36,13 @@ function Map (props) {
                         <Typography variant='h3' className={classes.textContent} >
                             Distinguez le Vrai du Faux et gagnez de nombreux cadeaux !
                         </Typography>
-                        <Button variant="contained"
+                        {/* <Button variant="contained"
                                 className={['button', classes.button].join(' ')}
                                 onClick={(event) => { event.preventDefault(); window.location.href = 'rtssport://webview/?path=https://defis.rts.ch/euro?wv=1&shouldTrack=false&allowInlinePlayback=true'}}
                         >
                             Jouer Maintenant
-                        </Button>
+    </Button> */}
+                    <a className={classes.hrefBtn} title="Jouer Maintenant" href="rtssport://webview/?path=https://defis.rts.ch/euro?wv=1&shouldTrack=false&allowInlinePlayback=true" target="_blank">Jouer maintenant</a>
                     </Box>
                 </Div100vh>
         </React.Fragment>

@@ -24,6 +24,20 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: '#AF001E',
         color: 'white',
         maxWidth: '320px'
+    },
+    hrefBtn: {
+        backgroundColor: '#AF001E',
+        color: 'white',
+        maxWidth: '320px',
+        textAlign: 'center',
+        borderRadius: '30px',
+        width: '80%',
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'none',
+            backgroundColor: '#8a0017'
+
+        }
     }
 
 }))
