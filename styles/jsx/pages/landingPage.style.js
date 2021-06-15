@@ -19,13 +19,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: '5vw 6vw 10vw 6vw',
         maxWidth: '400px'
     },
-
     button: {
-        backgroundColor: '#AF001E',
-        color: 'white',
-        maxWidth: '320px'
-    },
-    hrefBtn: {
         backgroundColor: '#AF001E',
         color: 'white',
         maxWidth: '320px',
@@ -33,10 +27,16 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: '30px',
         width: '80%',
         textDecoration: 'none',
+        fontWeight: '500',
+        lineHeight: '1.75',
+        letterSpacing: '0.02857em',
+        textTransform: 'uppercase',
+        fontSize: '1.25rem',
+        fontFamily: 'srgssr-type-Md, sans-serif!important',
+        padding: '5px',
         '&:hover': {
             textDecoration: 'none',
-            backgroundColor: '#8a0017'
-
+            backgroundColor: '#d5d5d5'
         }
     }
 
