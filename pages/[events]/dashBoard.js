@@ -1,5 +1,5 @@
 import React, { createRef, useContext, useEffect, useState } from 'react'
-import { isSafari, isMobile, isIOS } from 'react-device-detect'
+import { isSafari, isMobile, isIOS, isTablet } from 'react-device-detect'
 import dynamic from 'next/dynamic'
 import UserContext from '../../hooks/userContext'
 import Typography from '@material-ui/core/Typography'
@@ -272,12 +272,12 @@ function DashBoard (props) {
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
                 }
-                <IconButton
+                {(isMobile || isTablet) && <IconButton
                     onClick={shareClick}
                     color="primary"
                     className={classes.smallShareBtn}>
                     {ShareIcon({ className: classes.shareIcon })}
-                </IconButton>
+                </IconButton>}
                 <Slide
                     in={!isLoading}
                     timeout={500}

@@ -6,6 +6,7 @@ import Grow from '@material-ui/core/Grow'
 import ButtonCloseModal from '../ui/modal/buttonCloseModal'
 import { CustomDisabledButton } from '../ui/button/CustomDisabledButton'
 import { ShareIcon } from '../../data/icon'
+import { isMobile, isTablet } from 'react-device-detect'
 
 function EndgameInformation (props, ref) {
     const classes = useStyles()
@@ -39,7 +40,7 @@ function EndgameInformation (props, ref) {
                 tabIndex={'-1'} >
                 <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
                 <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}/>
-                <CustomDisabledButton
+                {(isMobile || isTablet) && <CustomDisabledButton
                     color="secondary"
                     variant="contained"
                     className={gameStats.feedbackURL ? ['buttonModal', classes.sharingBtn].join(' ') : 'buttonModal'}
@@ -50,7 +51,7 @@ function EndgameInformation (props, ref) {
                         {ShareIcon({ className: classes.shareIcon })}
                         partager
                     </Box>
-                </CustomDisabledButton>
+                </CustomDisabledButton>}
                 { gameStats.feedbackURL &&
                     <React.Fragment>
                         <Typography variant='h4' className={[].join(' ')}
