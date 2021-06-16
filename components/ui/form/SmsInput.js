@@ -29,32 +29,51 @@ function SmsInput (props) {
             e.target.nextElementSibling.focus()
         }
     }
-    function handlePaste (ev) {
-        const paste = ev.clipboardData.getData('text')
-        if (!/\d{4}/.test(paste)) return ev.preventDefault()
-        const s = [...paste]
-        const init = [
-            ['digit1', s[0]],
-            ['digit2', s[1]],
-            ['digit3', s[2]],
-            ['digit4', s[3]]
-        ]
-        setValues(init)
-        getCode(paste)
-        lastDigit.current.focus()
-    }
 
     const handleChange = (event) => {
-        if (event.target.value !== '') {
-            if (/[^0-9]/.test(event.target.value) || !/^\d{1}$/.test(event.target.value)) return event.preventDefault()
-        }
-
-        for (let i = 0; i < values.length; i++) {
-            if (values[i][0] === event.target.name) {
-                values[i][1] = event.target.value
+        if (/\d{4}/.test(event.target.value)){
+            const s = [...event.target.value]
+            const init = [
+                ['digit1', s[0]],
+                ['digit2', s[1]],
+                ['digit3', s[2]],
+                ['digit4', s[3]]
+            ]
+            setValues(init)
+            getCode(event.target.value)
+            lastDigit.current.focus()
+        } else if (/\d{3}/.test(event.target.value)){
+            const s = [...event.target.value]
+            const init = [
+                ['digit1', s[0]],
+                ['digit2', s[1]],
+                ['digit3', s[2]],
+                ['digit4', '']
+            ]
+            setValues(init)
+            getCode(event.target.value)
+            lastDigit.current.focus()
+        } else if (/\d{2}/.test(event.target.value) && event.target.nextElementSibling !== null){
+            const s = [...event.target.value]
+            const init = [
+                ['digit1', s[0]],
+                ['digit2', s[1]],
+                ['digit3', ''],
+                ['digit4', '']
+            ]
+            setValues(init)
+            getCode(event.target.value)
+        } else {
+            if (event.target.value !== '') {
+                if (/[^0-9]/.test(event.target.value) || !/^\d{1}$/.test(event.target.value)) return event.preventDefault()
             }
-        }
-        getCode()
+            for (let i = 0; i < values.length; i++) {
+                if (values[i][0] === event.target.name) {
+                    values[i][1] = event.target.value
+                }
+            }
+            getCode()
+    }
     }
 
     function KeyCheck (event) {
@@ -96,14 +115,15 @@ function SmsInput (props) {
             inpTab.push(<input {...inputProps}
                 key={i}
                 onKeyDown={KeyCheck}
-                autoComplete={isWebView ? "off" : "one-time-code"}
+                autoComplete="one-time-code"
                 onInput={handleInput}
-                onPaste={handlePaste}
                 value={values[i][1]}
                 onChange={handleChange}
                 className={(values[i][1].length > 0) ? [classes.input, classes.textFieldValidated].join(' ') : [classes.input, classes.textFieldNotValidated].join(' ') }
-                type="number"
-                maxLength="1"
+                type="tel"
+                min="0"
+                max="9"
+                pattern="[0-9]"
                 name={values[i][0]} />)
         }
         return inpTab
