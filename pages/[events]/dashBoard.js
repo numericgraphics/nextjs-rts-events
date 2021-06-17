@@ -90,10 +90,23 @@ function DashBoard (props) {
                 text: uiElements.sharingLead,
                 url: uiElements.sharingTargetUrl
             })
-                .then(() => console.log('Successful share'))
-                .catch((error) => console.log('Error sharing', error))
+                .then(() => customCounter(events, 'successfulShared', true))
+                .catch(() => customCounter(events, 'failedShared', true))
         } else {
-            console.log('cant share')
+            customCounter(events, 'shareUnavailable', true)
+        }
+    }
+
+    async function customCounter (eventName, counterName, daily) {
+        try {
+            const bodyContent = { eventName, counterName, daily }
+            const response = await fetch('/api/customCounter', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyContent)
+            })
+        } catch (error) {
+            throw new Error(error.message)
         }
     }
 
