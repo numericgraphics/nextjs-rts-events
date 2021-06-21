@@ -8,6 +8,7 @@ import { lockIcon, playIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import VideoPlayerFloat from '../ui/video/VideoPlayerFloat'
 import ButtonCloseModal from '../ui/modal/buttonCloseModal'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export const ModalStates = Object.freeze({
     GIFT: 'gift',
@@ -16,9 +17,10 @@ export const ModalStates = Object.freeze({
 
 function Gift (props, ref) {
     const { open, handleClose, gift } = props
-    const { videoURL, imageURL, locked, title, message } = gift
+    const { videoURL, imageURL, locked, title, message, backgroundVideoURL } = gift
     const classes = useStyles()
     const height = useHeight()
+    const theme = useTheme()
     const [onTransition, setTransition] = useState(undefined)
     const [videoVisible, setVideoVisible] = useState(false)
     const boxTextRef = useRef()
@@ -70,10 +72,20 @@ function Gift (props, ref) {
                         handleClose={transitionClose}
                         className={classes.buttonClose}
                     />
-                    <Box
+                    {!backgroundVideoURL ? <Box
                         className={classes.image}
                         style={{ backgroundImage: `url(${imageURL})`, height: height }}
                     />
+                    :
+                    <video
+                    src={backgroundVideoURL}
+                    preload={'auto'}
+                    loop
+                    className={'backgroundVideo'}
+                    autoPlay={true}
+                    style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
+                />
+                    }
                     <Box
                         className={classes.content}
                     >
