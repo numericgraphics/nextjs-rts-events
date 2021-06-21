@@ -40,7 +40,7 @@ function EndgameInformation (props, ref) {
                 tabIndex={'-1'} >
                 <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
                 <Typography variant="h3" className={'modal-title'} align={'center'} dangerouslySetInnerHTML={{ __html: uiElements.noMoreChallengesChunk }}/>
-                {(isMobile || isTablet) && <CustomDisabledButton
+                {(isMobile || isTablet && typeof navigator.share !== 'undefined') && <CustomDisabledButton
                     color="secondary"
                     variant="contained"
                     className={gameStats.feedbackURL ? ['buttonModal', classes.sharingBtn].join(' ') : 'buttonModal'}
@@ -49,7 +49,7 @@ function EndgameInformation (props, ref) {
                 >
                     <Box className={classes.shareHeaderContent}>
                         {ShareIcon({ className: classes.shareIcon })}
-                        partager
+                        {translation.sharingButtonText}
                     </Box>
                 </CustomDisabledButton>}
                 { gameStats.feedbackURL &&
