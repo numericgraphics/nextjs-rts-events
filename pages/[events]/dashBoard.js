@@ -98,6 +98,7 @@ function DashBoard (props) {
     }
 
     async function customCounter (eventName, counterName, daily) {
+        console.log(counterName)
         try {
             const bodyContent = { eventName, counterName, daily }
             const response = await fetch('/api/customCounter', {
@@ -285,12 +286,12 @@ function DashBoard (props) {
                 { user.isAdmin &&
                     <DashBoardAdminToolBar timeStampMode={timeStampMode} />
                 }
-                {(isMobile || isTablet) && <IconButton
+                <IconButton
                     onClick={shareClick}
                     color="primary"
                     className={classes.smallShareBtn}>
                     {ShareIcon({ className: classes.shareIcon })}
-                </IconButton>}
+                </IconButton>
                 <Slide
                     in={!isLoading}
                     timeout={500}
