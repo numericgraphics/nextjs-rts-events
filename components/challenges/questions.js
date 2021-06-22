@@ -104,13 +104,14 @@ function Question (props) {
                                     <CustomDisabledButton color="secondary" variant="contained" className={ quizTrueFalse ? answers.length === index + 1 ? ['questionButton', classes.buttonTrue].join(' ') : ['questionButton', classes.buttonFalse].join(' ') : 'questionButton'} disabled={disabled} onClick={() => {
                                         onAnswer(index + 1)
                                     }}>
-                                        {quizTrueFalse &&
-                                            answers.length === index + 1
-                                            ? <CheckIcon
+                                        {quizTrueFalse && answers.length === index + 1 &&
+                                             <CheckIcon
                                                 fontSize="large"
                                                 className={classes.rateIcon}
                                             />
-                                            : <CloseIcon
+                                            }
+                                        {quizTrueFalse && answers.length !== index + 1 &&
+                                            <CloseIcon
                                                 fontSize="large"
                                                 className={classes.rateIcon}
                                             />}
