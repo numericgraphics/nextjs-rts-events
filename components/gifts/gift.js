@@ -26,6 +26,13 @@ function Gift (props, ref) {
     const boxTextRef = useRef()
     const lockIconRef = createRef()
     const videoRef = useRef()
+    const flashGift = useRef()
+
+    useEffect(() => {
+        console.log(flashGift)
+    }, [flashGift.current])
+
+    console.log(backgroundVideoURL)
 
     useEffect(() => {
         setTransition(open)
@@ -77,14 +84,23 @@ function Gift (props, ref) {
                         style={{ backgroundImage: `url(${imageURL})`, height: height }}
                     />
                     :
-                    <video
-                    src={backgroundVideoURL}
-                    preload={'auto'}
-                    loop
-                    className={'backgroundVideo'}
-                    autoPlay={true}
-                    style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
-                />
+                    // On ne peut pas mettre directemnt le tag <video> car l'attribut mute est ignoré par react. Ref : https://medium.com/@BoltAssaults/autoplay-muted-html5-video-safari-ios-10-in-react-673ae50ba1f5
+                    <div
+                    dangerouslySetInnerHTML={{
+                        __html:
+                        `<video
+                            style="min-height:100%; object-fit:cover; position:absolute; left:0;"
+                            loop
+                            class='backgroundVideo'
+                            playsinline
+                            autoplay
+                            muted
+                            preload='auto'
+                        >
+                            <source src='`+backgroundVideoURL +`' type="video/mp4" />
+                        </video>`
+                    }}
+                    />
                     }
                     <Box
                         className={classes.content}

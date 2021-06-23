@@ -1,0 +1,80 @@
+import React, { useContext, useEffect, useRef } from 'react'
+import UserContext from '../../hooks/userContext'
+import { useRouter } from 'next/router'
+import { getAllEvents, getEventsData } from '../../lib/events'
+import ThemeFactory from '../../data/themeFactory'
+import EventLayout from '../../components/ui/layout/eventLayout'
+import Div100vh from 'react-div-100vh'
+import useTheme from '@material-ui/core/styles/useTheme'
+
+function Map (props) {
+    const router = useRouter()
+    const { store, dataProvider } = useContext(UserContext)
+    const { setTheme, setLoading, setEventName, setEventData, isGlobalLoading } = store
+    const { events } = router.query
+    const { eventData } = props
+    const theme = useTheme()
+    const flashGift = useRef()
+
+    useEffect(() => {
+        if (isGlobalLoading) {
+            setLoading(false)
+            setEventData(eventData.content)
+            setEventName(events)
+            dataProvider.setEventData(eventData.content)
+            setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
+        } else {
+            setLoading(false)
+        }
+    }, [isGlobalLoading])
+
+    return (
+        <React.Fragment>
+            <EventLayout>
+                <Div100vh className='content'>
+                    <video
+                        src={'https://cdn.rts.ch/rtschallengeassets/events/euro2020/gift/ballon_or_opt.mp4'}
+                        preload={'auto'}
+                        loop
+                        className={'backgroundVideo'}
+                        playsInline={true}
+                        autoPlay={true}
+                        onPlay={() => console.log('played')}
+                        onLoadStart={() => console.log('Load start')}
+                        onLoadedMetadata={() => console.log('MetaData Loaded')}
+                        onLoadedData={() => console.log('Data Loaded')}
+                        onCanPlay={() => console.log('can play')}
+                        style={{ backgroundColor: theme.palette.primary.main, minHeight: '100%', objectFit: 'cover' }}
+                    />
+                </Div100vh>
+            </EventLayout>
+        </React.Fragment>
+    )
+}
+export default Map
+export async function getStaticPaths ({ locales }) {
+    const eventPaths = await getAllEvents()
+
+    const paths = []
+    eventPaths.forEach((path) => {
+        locales.forEach((locale) => {
+            paths.push({ ...path, locale })
+        })
+    })
+
+    return {
+        paths,
+        fallback: false
+    }
+}
+
+export async function getStaticProps ({ params, locale }) {
+    const eventData = await getEventsData(params.events, locale)
+    return {
+        props: {
+            eventData,
+            locale
+        },
+        revalidate: 1
+    }
+}
