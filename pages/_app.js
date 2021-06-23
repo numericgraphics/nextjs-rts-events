@@ -66,6 +66,8 @@ function MyApp ({ Component, pageProps }) {
         setIsEndedAnimationEnded(true)
     }
 
+    console.log(eventData.advancedSettings && eventData.advancedSettings.title)
+
     function sendStats (needToBeInitialized, shortName) {
         const queryParams = (new URL(document.location)).searchParams
         try {
@@ -203,11 +205,11 @@ function MyApp ({ Component, pageProps }) {
             { (isLoading && !isGlobalLoading && pageProps.statusCode !== 404) && <Progress/> }
             {(isGlobalLoading && pageProps.statusCode !== 404) && <SplashScreen startedCallBack={startedCallBack} endedCallBack={endedCallBack} animationState={isEndedAnimationStart}/>}
             <Head>
-                <title>Défis de l’Euro</title>
+                <title>{eventData.advancedSettings && eventData.advancedSettings.title}</title>
                 < meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
                 <meta
                     name="description"
-                    content={'Défis de l’Euro'}
+                    content={eventData.advancedSettings && eventData.advancedSettings.description}
                 />
                 <script
                     type="text/javascript"
