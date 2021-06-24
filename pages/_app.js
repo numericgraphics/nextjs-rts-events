@@ -66,8 +66,6 @@ function MyApp ({ Component, pageProps }) {
         setIsEndedAnimationEnded(true)
     }
 
-    console.log(eventData.advancedSettings && eventData.advancedSettings.title)
-
     function sendStats (needToBeInitialized, shortName) {
         const queryParams = (new URL(document.location)).searchParams
         try {

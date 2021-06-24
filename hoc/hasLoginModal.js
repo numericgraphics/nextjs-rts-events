@@ -55,7 +55,6 @@ const hasLoginModal = WrappedComponent => {
         }, [])
 
         useEffect(() => {
-            console.log(code)
             if (code) {
                 setUserData(Object.assign({}, userData, { code: code }))
             }

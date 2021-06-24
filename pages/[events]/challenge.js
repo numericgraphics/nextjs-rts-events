@@ -41,6 +41,9 @@ function Challenge () {
     const modalGiftRef = createRef()
     const modalInvalidImageRef = createRef()
     const modalGetLocation = createRef()
+    const { challengeID, reco } = dataProvider.getChallenge()
+
+    console.log('reco', reco)
 
     async function fetchQuestions () {
         try {
@@ -105,7 +108,6 @@ function Challenge () {
 
         try {
             let content
-            const { challengeID, reco } = dataProvider.getChallenge()
             const cleanB64 = rawImage ? await imageComp(rawImage) : null
             const position = location ? { lat: location.coords.latitude, lon: location.coords.longitude } : { lat: null, lon: null }
             const bodyContent = reco.geo ? { img: cleanB64, lat: position.lat, lon: position.lon, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) } : { img: cleanB64, challengeID, eventName: events, locale, ...(timeStampMode.enable && { date: timeStampMode.date, time: timeStampMode.time }) }
@@ -122,9 +124,11 @@ function Challenge () {
                     - check translation and uiElement
                  */
                 dataProvider.setData(content)
-                if (!content.success && position.lat !== null && position.lon !== null) {
-                    setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
-                    onOpenModal()
+                if (!content.success) {
+                    if(!reco.geo || (reco.geo && position.lat !== null && position.lon !== null)){
+                        setChallengeState(ChallengeStates.QUESTIONS_IMAGE_INVALID)
+                        onOpenModal()
+                    }
                 }
                 setResultContent(content)
             } else {
