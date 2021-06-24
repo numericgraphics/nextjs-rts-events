@@ -132,7 +132,7 @@ function Challenge () {
                 }
                 setResultContent(content)
             } else {
-                console.log(response)
+                console.log(response.json())
                 await Router.push('/[events]/dashBoard', {
                     pathname: `/${events}/dashBoard`,
                     query: { quiz: false }
