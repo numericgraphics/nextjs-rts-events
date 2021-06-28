@@ -11,6 +11,7 @@ import { ArrowIcon } from '../../data/icon'
 import Slide from '@material-ui/core/Slide/Slide'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import Head from 'next/head'
 
 function StartPage (props) {
     const classes = useStyles()
@@ -55,6 +56,13 @@ function StartPage (props) {
 
     return (
         <React.Fragment>
+            {!(Object.keys(translation).length === 0) && <Head>
+                <meta property="og:url" content={translation.sharingTargetUrl} />
+                <meta property="og:type" content="article" />
+                <meta property="og:title" content={translation.sharingTitle} />
+                <meta property="og:description" content={translation.sharingLead} />
+                <meta property="og:image" content={translation.sharingImageUrl} />
+            </Head>}
             <Box className='content'>
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {isLastTemplate() &&

@@ -272,7 +272,7 @@ function DashBoard (props) {
             {!(Object.keys(uiElements).length === 0) && <Head>
                 <meta property="og:url" content={uiElements.sharingTargetUrl} />
                 <meta property="og:type" content="article" />
-                <meta property="og:title" content={uiElements.sharingLead} />
+                <meta property="og:title" content={uiElements.sharingTitle} />
                 <meta property="og:description" content={uiElements.sharingLead} />
                 <meta property="og:image" content={uiElements.sharingImageUrl} />
             </Head>}
