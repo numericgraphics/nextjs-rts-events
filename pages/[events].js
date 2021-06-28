@@ -11,7 +11,6 @@ function Events (props) {
     const { content, events } = eventData
     const [isPageReady, setPageReady] = useState(false)
     const { dataProvider, store } = useContext(UserContext)
-    const [translation, setTranslation] = useState([])
     const { locale, setTheme, isLoading, setLoading, setEventName, setEventData, isGlobalLoading } = store
 
     async function handleVerify () {
@@ -32,7 +31,6 @@ function Events (props) {
     useEffect(() => {
         setEventData(content)
         setEventName(events)
-        setTranslation(dataProvider.getTranslation())
         dataProvider.setEventData(content)
         setTheme(ThemeFactory.createTheme(dataProvider.getTheme()))
         handleVerify().then()
@@ -44,14 +42,12 @@ function Events (props) {
         }
     }, [isGlobalLoading, isPageReady])
     return (
-        <React.Fragment>
             <EventLayout>
                 {isLoading
                     ? null
                     : <StartPage/>
                 }
             </EventLayout>
-        </React.Fragment>
     )
 }
 

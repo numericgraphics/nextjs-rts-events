@@ -425,8 +425,8 @@ function DashBoard (props) {
                     </Box>
                 </Slide>
                 <BackGroundDisplay
-                    addColor={1}
-                    addBlur={1}
+                    addColor={0}
+                    addBlur={0}
                     className={'background'}
                     imageURL={imageURL}
                 />

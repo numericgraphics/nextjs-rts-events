@@ -33,7 +33,7 @@ function BackGroundDisplay (props) {
                     <Box className={[stylesGlobal.backdropFilterOverImage, classes.overImage].join(' ')} />
                 </Fade>
                 <Fade in={!!addColor}>
-                    <Box className={classes.overImage} />
+                    <Box className={[stylesGlobal.colorOverImage, classes.overImage].join(' ')} />
                 </Fade>
             </KenBurnsImage>
         </Fade>
