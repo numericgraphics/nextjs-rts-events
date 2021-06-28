@@ -56,13 +56,6 @@ function StartPage (props) {
 
     return (
         <React.Fragment>
-            {!(Object.keys(translation).length === 0) && <Head>
-                <meta property="og:url" content={translation.sharingTargetUrl} />
-                <meta property="og:type" content="article" />
-                <meta property="og:title" content={translation.sharingTitle} />
-                <meta property="og:description" content={translation.sharingLead} />
-                <meta property="og:image" content={translation.sharingImageUrl} />
-            </Head>}
             <Box className='content'>
                 <Box className={['bottomZonePromo', classes.arrowSwipeDownDesktop].join(' ')}>
                     {isLastTemplate() &&
