@@ -27,6 +27,7 @@ function Result (props) {
     const [hasAvailableChallenges, setHasAvailableChallenges] = useState(true)
 
     async function continueGame () {
+        typeof gameStats !== 'undefined' && (!gameStats.hasAvailableChallengesDesktopStartingToday || !gameStats.hasAvailableChallengesStartingToday) && dataProvider.setPreviousDefiBtnShowed(true)
         setShowComponent(false)
         props.playGameCallBack()
     }
@@ -137,10 +138,10 @@ function Result (props) {
                             <Button key={'continueGame'}
                                 color="secondary"
                                 variant="contained"
-                                className={'button'}
+                                className={typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? 'button' : dataProvider.getPreviousDefiBtnShowed() ? 'button' : ['button', classes.buttonMultiLine].join(' ')}
                                 onClick={continueGame}
                             >
-                                {`${translation.challengeResultButtonContinue}`}
+                                {typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? translation.challengeResultButtonContinue : dataProvider.getPreviousDefiBtnShowed() ? translation.challengeResultButtonContinue : translation.challengeResultButtonContinuePrevious}
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>

@@ -167,6 +167,7 @@ function DashBoard (props) {
     }
 
     async function startGame () {
+        typeof gameStats !== 'undefined' && (!gameStats.hasAvailableChallengesDesktopStartingToday || !gameStats.hasAvailableChallengesStartingToday) && dataProvider.setPreviousDefiBtnShowed(true)
         await Router.push('/[events]/challenge', `/${events}/challenge`)
     }
 
@@ -416,11 +417,11 @@ function DashBoard (props) {
                         <CustomDisabledButton
                             color="secondary"
                             variant="contained"
-                            className={'button'}
+                            className={typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? 'button' : ['button', classes.buttonMultiLine].join(' ')}
                             onClick={startGame}
                             disabled={!availableChallenges}
                         >
-                            {`${translation.dashBoardChallengesButton}`}
+                            {typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? translation.dashBoardChallengesButton : translation.dashBoardChallengesButtonPrevious}
                         </CustomDisabledButton>
                     </Box>
                 </Slide>

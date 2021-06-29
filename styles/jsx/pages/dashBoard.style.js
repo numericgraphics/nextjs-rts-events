@@ -129,5 +129,9 @@ export const useStyles = makeStyles((theme = useTheme) => ({
         padding: '5px',
         height: '1.3em',
         width: '1.3em'
+    },
+    buttonMultiLine: {
+        lineHeight: '1.1',
+        marginBottom: '15px!important'
     }
 }))

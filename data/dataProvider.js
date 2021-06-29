@@ -35,7 +35,8 @@ class DataProvider {
             uiElements: {},
             gifts: [],
             dailyPromosShowed: false,
-            isWebView: undefined
+            isWebView: undefined,
+            previousDefiBtnShowed: false,
         }
     }
 
@@ -49,6 +50,10 @@ class DataProvider {
 
     setDailyPromosShowed (data) {
         return Object.assign(this.data, {}, { dailyPromosShowed: Object.assign(this.data.dailyPromosShowed, data) })
+    }
+
+    setPreviousDefiBtnShowed (data) {
+        return Object.assign(this.data, {}, { previousDefiBtnShowed: Object.assign(this.data.previousDefiBtnShowed, data) })
     }
 
     setIsWebView (data) {
@@ -121,6 +126,10 @@ class DataProvider {
 
     getDailyPromosShowed () {
         return this.data.dailyPromosShowed
+    }
+
+    getPreviousDefiBtnShowed () {
+        return this.data.previousDefiBtnShowed
     }
 
     getIsWebView () {
