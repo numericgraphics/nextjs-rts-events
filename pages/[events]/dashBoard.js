@@ -417,7 +417,7 @@ function DashBoard (props) {
                         <CustomDisabledButton
                             color="secondary"
                             variant="contained"
-                            className={typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? 'button' : ['button', classes.buttonMultiLine].join(' ')}
+                            className={typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? 'button' : ['button', 'buttonMultiLine'].join(' ')}
                             onClick={startGame}
                             disabled={!availableChallenges}
                         >

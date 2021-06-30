@@ -88,7 +88,7 @@ function Result (props) {
                             {!hasAvailableChallenges &&
                                 <Typography
                                     className={classes.secondCardTitle}
-                                    dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle} </br> ${uiElements.noMoreChallengesChunk}` }}/>
+                                    dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle}` }}/>
                             }
                         </Box>
                         <ColorCard className={classes.colorCard}>
@@ -138,7 +138,7 @@ function Result (props) {
                             <Button key={'continueGame'}
                                 color="secondary"
                                 variant="contained"
-                                className={typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? 'button' : dataProvider.getPreviousDefiBtnShowed() ? 'button' : ['button', classes.buttonMultiLine].join(' ')}
+                                className={typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? 'button' : dataProvider.getPreviousDefiBtnShowed() ? 'button' : ['button', 'buttonMultiLine'].join(' ')}
                                 onClick={continueGame}
                             >
                                 {typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? translation.challengeResultButtonContinue : dataProvider.getPreviousDefiBtnShowed() ? translation.challengeResultButtonContinue : translation.challengeResultButtonContinuePrevious}

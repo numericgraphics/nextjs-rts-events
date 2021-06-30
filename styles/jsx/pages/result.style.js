@@ -161,10 +161,6 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     },
     colorCard: {
         width: '90%'
-    },
-    buttonMultiLine: {
-        lineHeight: '1.1',
-        marginBottom: '15px!important'
     }
 
 }))
