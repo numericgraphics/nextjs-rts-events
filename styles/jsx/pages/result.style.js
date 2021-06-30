@@ -46,7 +46,8 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         fontSize: '1.5rem',
         textAlign: 'center',
         // lineHeight: '1.8rem',
-        marginBottom: 10,
+        marginBottom: 20,
+        width: '80%',
         color: theme.palette.primary.contrastText
     },
     secondCardText: {

@@ -85,11 +85,6 @@ function Result (props) {
                                 className={classes.subTitle}
                                 dangerouslySetInnerHTML={{ __html: uiElements.resultMessageChunk }}
                             />
-                            {!hasAvailableChallenges &&
-                                <Typography
-                                    className={classes.secondCardTitle}
-                                    dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle}` }}/>
-                            }
                         </Box>
                         <ColorCard className={classes.colorCard}>
                             <CardContent className={classes.cardContent}>
@@ -145,6 +140,10 @@ function Result (props) {
                             </Button>
                         </React.Fragment>
                         : <React.Fragment>
+                            <Typography
+                                    className={classes.secondCardTitle}
+                                    dangerouslySetInnerHTML={{ __html: `${translation.challengeResultInfoTitle}` }}
+                            />
                             { gameStats.feedbackURL &&
                             <ColorBorderButton
                                 key={'openFeedBackModal'}
