@@ -213,6 +213,7 @@ function DashBoard (props) {
         case ModalStates.DESKTOP_RECO:
             return <DesktopReco
                 handleClose={closeModal}
+                translation={translation}
                 open={open}
             />
         case ModalStates.MAP:

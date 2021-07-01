@@ -40,7 +40,7 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
         }
     },
     cameraIcon: {
-        fill: 'white',
+        fill: theme.palette.secondary.contrastText,
         padding: '5px',
         minHeight: '34px',
         minWidth: '34px',
@@ -58,5 +58,19 @@ export const useStyles = makeStyles((theme = useTheme()) => ({
     text: {
         textAlign: 'center',
         padding: '0 4vh 0 4vh'
+    },
+    btnContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        marginBottom: '10px'
+    },
+    replayBtn: {
+        width: '40%',
+        marginLeft: '30px',
+        textTransform: 'uppercase!important',
+        color: theme.palette.secondary.contrastText
     }
 }))

@@ -174,6 +174,7 @@ function Challenge () {
             return <QuestionImage
                 content={questionsContent}
                 answerCallBack={setRawImage}
+                translation={dataProvider.getTranslation()}
             />
         case ChallengeStates.GET_LOCATION:
             return null

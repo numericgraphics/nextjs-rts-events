@@ -7,7 +7,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 
 function QuestionImage (props) {
     const classes = useStyles()
-    const { answerCallBack, content } = props
+    const { answerCallBack, content, translation } = props
     const { title, reco } = content
     const { instructions } = reco && reco
     const [tempRawImage, setTempRawImage] = useState(null)
@@ -42,6 +42,7 @@ function QuestionImage (props) {
                 </Box>
                 <Box className={['bottomZoneQuestions', classes.bottomImageQuestion].join(' ')}>
                     <ImageCapture
+                        translation={translation}
                         result={setTempRawImage}
                         text={instructions}
                     />

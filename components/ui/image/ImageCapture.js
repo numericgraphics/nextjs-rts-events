@@ -4,16 +4,24 @@ import Box from '@material-ui/core/Box'
 import { useStyles } from '../../../styles/jsx/components/image/imageCapture.style'
 import Typography from '@material-ui/core/Typography'
 import { CameraIcon } from '../../../data/icon'
+import { CustomDisabledButton } from '../../ui/button/CustomDisabledButton'
+import Router, { useRouter } from 'next/router'
 
 function ImageCapture (props) {
     const classes = useStyles()
-    const { result, text } = props
+    const { result, text, translation } = props
+    const router = useRouter()
+    const { events } = router.query
 
     // Select the image
     const handleCapture = (target) => {
         if (target.files && target.files.length !== 0) {
             result(target.files[0])
         }
+    }
+
+    async function gotoDashBoard () {
+        await Router.push('/[events]/dashBoard', `/${events}/dashBoard`)
     }
 
     return (
@@ -31,16 +39,21 @@ function ImageCapture (props) {
                     {text}
                 </Typography>
 
-                <label htmlFor="icon-button-file">
-                    <IconButton
-                        color="secondary"
-                        aria-label="upload you picture"
-                        component="span"
-                        className={classes.captureBtn}
-                    >
-                        <CameraIcon className={classes.cameraIcon} />
-                    </IconButton>
-                </label>
+                <Box className={classes.btnContainer}>
+                    <label htmlFor="icon-button-file">
+                        <IconButton
+                            color="secondary"
+                            aria-label="upload you picture"
+                            component="span"
+                            className={classes.captureBtn}
+                        >
+                            <CameraIcon className={classes.cameraIcon} />
+                        </IconButton>
+                    </label>
+                    <CustomDisabledButton onClick={gotoDashBoard} color="secondary" variant="contained" className={['questionButton', classes.replayBtn].join(' ')}>
+                        {translation.challengeQuestionImageLater}
+                    </CustomDisabledButton>
+                </Box>
             </Box>
         </Box>
     )

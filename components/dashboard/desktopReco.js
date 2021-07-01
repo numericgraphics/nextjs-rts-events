@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 function DesktopReco (props, ref) {
     const classes = useStyles()
-    const { open, handleClose } = props
+    const { open, handleClose, translation } = props
     const [onTransition, setTransition] = useState(undefined)
     const router = useRouter()
     const { events } = router.query
@@ -43,7 +43,7 @@ function DesktopReco (props, ref) {
                 tabIndex={'-1'} >
                 <ButtonCloseModal handleClose={transitionClose} className={classes.buttonClose}/>
                 <Typography variant="subtitle1" className={'modal-title'} align={'center'}>
-                    Défi disponible uniquement sur Mobile ! Scan le code qr pour y jouer !
+                    {translation.recoOnDesktopMessage}
                 </Typography>
                 <Box className={classes.QRBox}>
                     <QRCode value={url} />
