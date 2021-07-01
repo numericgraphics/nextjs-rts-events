@@ -11,6 +11,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     imageValidationText: {
         textAlign: 'center',
-        marginTop: '10px'
+        marginTop: '10px',
+        color: theme.palette.primary.contrastText,
+        padding: '0px 15px'
     }
 }))

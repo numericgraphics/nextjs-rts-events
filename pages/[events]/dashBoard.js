@@ -321,7 +321,6 @@ function DashBoard (props) {
                                 align={'center'}
                                 dangerouslySetInnerHTML={{ __html: translation.dashBoardHeadText }} />
                         </Box>
-                        {availableChallenges &&
                             <Box className={classes.progressBarOverlay}>
                                 <Typography
                                     variant='subtitle1'
@@ -332,7 +331,7 @@ function DashBoard (props) {
                                     variant="determinate"
                                     progress={progress} />
                             </Box>
-                        }
+        
                         {availableScores &&
                         <ColorCard>
                             <CardContent className={classes.cardContent}>
@@ -421,7 +420,7 @@ function DashBoard (props) {
                             onClick={startGame}
                             disabled={!availableChallenges}
                         >
-                            {typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? translation.dashBoardChallengesButton : translation.dashBoardChallengesButtonPrevious}
+                            {typeof gameStats !== 'undefined' && (gameStats.hasAvailableChallengesDesktopStartingToday || gameStats.hasAvailableChallengesStartingToday) ? translation.dashBoardChallengesButton : !dataProvider.hasAvailableChallenges() ? translation.dashBoardChallengesButton : translation.dashBoardChallengesButtonPrevious}
                         </CustomDisabledButton>
                     </Box>
                 </Slide>
